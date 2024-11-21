@@ -14,7 +14,7 @@ test.describe('Testy logowania @logowanie', async () => {
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);
     
-    await page.goto(baseURL + '/logowanie', { waitUntil: 'load' });
+    await page.goto('/logowanie', { waitUntil: 'load' });
     await page.waitForTimeout(2000)
     await utility.addGlobalStyles(page);
   })
