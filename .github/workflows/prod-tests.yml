@@ -9,9 +9,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      URL: ${{ secrets.URL }}
-      EMAIL: ${{ secrets.EMAIL }}
-      PASSWORD: ${{ secrets.PASSWORD }}
+      URL: ${{ secrets.URL_SECRETS }}
+      EMAIL: ${{ secrets.EMAIL_SECRETS }}
+      PASSWORD: ${{ secrets.PASSWORD_SECRETS }}
 
     steps:
       - name: Checkout repository
