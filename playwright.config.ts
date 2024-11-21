@@ -33,16 +33,21 @@ export default defineConfig({
   },
 
   projects: [
+
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'],
+      testDir: './tests/web',
+      use: { 
+        ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080}
        },
     },
 
     {
       name: 'firefox',
+      testDir: './tests/web',
       use: { ...devices['Desktop Firefox'],
         viewport: { width: 1920, height: 1080}
        },
@@ -50,19 +55,25 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'],
+      testDir: './tests/web',
+      use: { 
+        ...devices['Desktop Safari'],
         viewport: { width: 1920, height: 1080}
        },
     },
+
     {
       name: 'Mobile Chrome',
+      testDir: './tests/mobile',
       use: {
         browserName: 'chromium',
         ...devices['Pixel 5']
       },
     },
+
     {
       name: 'Mobile Safari',
+      testDir: './tests/mobile',
       use: {
         browserName: 'webkit',
         ...devices['iPhone 14']
