@@ -1,0 +1,112 @@
+{
+    "LoginPage": {
+        "common": {
+            "emailInput": "#login_email",
+            "passwordInput": "#login_password",
+            "loginButton": "#login_submit_button",
+            "errorMessage": "div[role='status']"
+        }
+    },
+    "MainLogoutPage": {
+        "common": {
+        },
+        "web": {
+            "loginLink": "a[href='/logowanie']"
+        },
+        "mobile": {
+            "loginLink": "div[data-sentry-element='TabletContent'] div[class*='goeta-d'] div:nth-child(2)"
+        }
+    },
+    "MainPage": {
+        "common": {
+                "bannersSection": "section[data-sentry-component='BannersSection']"
+        },
+        "web": {
+        },
+        "mobile": {
+        }
+    },
+    "CartPage": {
+        "common": {
+            "clearCartButton": "#clear_cart_button",
+            "clearCartConfirmButton": "#clear_cart_modal_submit_button",
+            "emptyCartNotification": "div[data-sentry-source-file='CartProductsList.tsx'] div",
+            "productCartList": "div[data-sentry-element='InsideWrapper']",
+            "productCartListItemCount": "div[class*='cart-product-buttons'] button[class*='item_count_button']",
+            "productCartListPrice": "div[class*='cart-product-buttons'] + div",
+            "productCartListName": "div[data-sentry-element='ProductName']",
+            "deleteProductConfirmButton": "div[data-sentry-element='ButtonsWrapper'] button[variant='secondary']",
+            "clearCartCancelButton": "div[data-sentry-source-file='ClearCartModal.tsx'] button[variant='borderGray']",
+            "productCartIncreaseButton": "div[data-sentry-component='CartPage'] button[class*='add_to_cart_increment_button']",
+            "productCartDecreaseButton": "div[data-sentry-component='CartPage'] button[class*='add_to_cart_decrement_button']",
+            "cartTitle": "div[data-sentry-element='CartDrawerTitle']",
+            "cartCloseIconButton": "div[class='sc-718c60e8-4 fDhBpP'] svg",
+            "cartDrawer": "div[class*='MuiDrawer-paperAnchorRight']",
+            "cartDrawerToCartButton": "#to_cart_button",
+            "cartSummaryButton": "#cart_summary_proceed_payment_button",
+            "cartReturnButton": "#cart_return_button"
+        },
+        "web": {
+            "clearCartConfirmButton": "#clear_cart_modal_submit_button",
+            "cartButton": "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button",
+            "productsNumberButton": "div[data-sentry-element='WebContent'][data-sentry-source-file='Navigation.tsx'] #cart_button #productsNumber",
+            "showCartButton": "button:has-text('Pokaż koszyk')",
+            "deleteProductCartIcon": "div[data-sentry-element='WebIconSectionWrapper']",
+            "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='WebContent'] button",
+            "cartCodesTitle": "div[data-sentry-source-file='CartPromoCodesForm.tsx'] [data-sentry-element='WebContent'] div",
+            "cartDrawerSummaryTitle": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-element='SectionTitle']",
+            "cartDrawerProductsValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(1)",
+            "cartDrawerDeliveryCosts": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(2)",
+            "cartDrawerDeliveryMinimalValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(3)"
+        },
+        "mobile": {
+            "clearCartConfirmButton": "#clear_cart_modal_submit_button",
+            "cartButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile",
+            "productsNumberButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile #productsNumber",
+            "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='TabletContent'] button"
+        }
+    },
+    "NavigationPage": {
+        "mainCategoryButton": "nav button:has-text('Wszystkie kategorie')",
+        "navigationCategoriesList": "div[class='sc-b0f70adc-8 jZsiOh']",
+        "navigationCategoriesListKids": "div[class='sc-b0f70adc-8 jZsiOh'] > *"
+    },
+    "ProductsPage": {
+        "common": {
+            "productCardAddButton": "div[data-sentry-component='ProductCard'] button:has-text('Dodaj')",
+            "productCardIncreaseButton": "div[data-sentry-component='ProductCard'] button[class*='add_to_cart_increment_button']",
+            "productCardDecreaseButton": "div[data-sentry-component='ProductCard'] button[class*='add_to_cart_decrement_button']",
+            "productCardName": "div[data-sentry-component='ProductCard'] h3"
+        },
+        "web": {
+            "productCardBrand": "div[data-sentry-element='HubContent'] div[data-sentry-element='GlobalWrapper'] h4[data-sentry-element='MadeBy']"
+        },
+        "mobile": {
+            "productCardBrand": "div[data-sentry-element='TabletContent'] section[data-sentry-component='LazyLoader'] h4[data-sentry-element='MadeBy']"
+        }
+    },
+    "Searchbar": {
+        "common": {
+            "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent']",
+            "searchbarProductCardIncreaseButton": "div[data-testid='search-results'] button[class*='add_to_cart_increment_button']",
+            "searchbarProductCardDecreaseButton": "div[data-testid='search-results'] button[class*='add_to_cart_decrement_button']",
+            "searchbarProductItemCount": "div[data-testid='search-results'] button[class*='item_count_button']"
+        },
+        "web": {
+            "searchbarInput": "div[data-sentry-element='WebContent'] #search_hub_search_input"
+        },
+        "mobile": {
+            "searchbarInput": "div[data-sentry-element='TabletContent'] #search_hub_search_input"
+        }
+    },
+    "Newsletter": {
+        "newsletterPopUp": ".edrone-onsite-popup-content__content-wrapper",
+        "newsletterCloseIcon": ".edrone-onsite-popup-content__content-wrapper svg"
+    },
+    "Cookies": {
+        "cookiesButtonAccept": "#onetrust-accept-btn-handler"
+    },
+    "EdronePopup": {
+        "edroneButtonAccept": "#alert_box_btn_subscribe"
+    }
+}
