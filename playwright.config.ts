@@ -26,7 +26,6 @@ export default defineConfig({
     },
   }]],
   use: {
-    baseURL: process.env.URL,
     trace: 'retain-on-failure',
     screenshot: "only-on-failure",
     video: "on",
@@ -35,12 +34,13 @@ export default defineConfig({
   projects: [
 
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
-    
+
     {
       name: 'chromium',
       testDir: './tests/web',
       use: { 
         ...devices['Desktop Chrome'],
+        baseURL: process.env.URL,
         viewport: { width: 1920, height: 1080}
        },
     },
@@ -48,7 +48,9 @@ export default defineConfig({
     {
       name: 'firefox',
       testDir: './tests/web',
-      use: { ...devices['Desktop Firefox'],
+      use: { 
+        ...devices['Desktop Firefox'],
+        baseURL: process.env.URL,
         viewport: { width: 1920, height: 1080}
        },
     },
@@ -58,6 +60,7 @@ export default defineConfig({
       testDir: './tests/web',
       use: { 
         ...devices['Desktop Safari'],
+        baseURL: process.env.URL,
         viewport: { width: 1920, height: 1080}
        },
     },
@@ -67,7 +70,8 @@ export default defineConfig({
       testDir: './tests/mobile',
       use: {
         browserName: 'chromium',
-        ...devices['Pixel 5']
+        ...devices['Pixel 5'],
+        baseURL: process.env.URL,
       },
     },
 
@@ -76,7 +80,8 @@ export default defineConfig({
       testDir: './tests/mobile',
       use: {
         browserName: 'webkit',
-        ...devices['iPhone 14']
+        ...devices['iPhone 14'],
+        baseURL: process.env.URL,
       },
     },
   ]
