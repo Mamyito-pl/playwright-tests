@@ -9,10 +9,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      URL: ${{ secrets.URL_SECRETS }}
-      EMAIL: ${{ secrets.EMAIL_SECRETS }}
-      PASSWORD: ${{ secrets.PASSWORD_SECRETS }}
-
+      URL: ${{ secrets.PROD_URL_SECRET }}
+      EMAIL: ${{ secrets.EMAIL_SECRET }}
+      PASSWORD: ${{ secrets.PASSWORD_SECRET }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
