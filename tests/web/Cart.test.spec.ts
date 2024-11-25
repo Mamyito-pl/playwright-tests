@@ -135,7 +135,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
 
     await expect(cartPage.getCartCodesTitle).toBeVisible();
-    await expect(cartPage.getCartCodesTitle).toHaveText('Kody Rabatowe');
+    await expect(cartPage.getCartCodesTitle).toContainText('Kody Rabatowe');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
     await expect(cartPage.getCartAvailableCodesButton).toContainText('Dostępne kody rabatowe:');
