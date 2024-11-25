@@ -32,7 +32,7 @@ export const test = baseTest.extend<MyFixtures>({
       page.on('framenavigated', async () => {
         await utility.addGlobalStyles(page);
       });
-      await page.goto(baseURL + '/logowanie', { waitUntil: 'domcontentloaded' });
+      await page.goto('/logowanie', { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(2000)
       await loginPage.enterEmail(`${process.env.EMAIL}`);
       await loginPage.enterPassword(`${process.env.PASSWORD}`);
