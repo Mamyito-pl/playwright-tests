@@ -63,7 +63,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -84,7 +84,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -105,7 +105,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveText('2');
     await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('2');
