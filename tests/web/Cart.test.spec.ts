@@ -187,9 +187,11 @@ test.describe('Testy koszyka @koszyk', async () => {
 
     await addProduct(product);
     await cartPage.clickCartButton();
-    await expect(cartPage.getCartDrawerToCartButton).toBeEnabled()
+    await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
+    await page.waitForLoadState('load')
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryButton)
     await expect(cartPage.getCartSummaryButton).toBeVisible();
   })
 
