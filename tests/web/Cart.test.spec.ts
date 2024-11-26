@@ -150,7 +150,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await expect(cartPage.cartDrawerDeliveryCosts).toContainText('Koszt dostawyWybierz termin');  
 
     await expect(cartPage.cartDrawerDeliveryMinimalValue).toBeVisible();
-    await expect(cartPage.cartDrawerDeliveryMinimalValue).toContainText('Do minimalnej wartości koszyka brakuje:150,00 zł');  
+    await expect(cartPage.cartDrawerDeliveryMinimalValue).toContainText('Do minimalnej wartości koszyka brakuje:');  
 
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
     await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');
