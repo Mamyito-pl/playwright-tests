@@ -53,6 +53,7 @@ export const test = baseTest.extend<MyFixtures>({
       await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
       await page.waitForTimeout(2000)
       await cartPage.clickClearCartButton();
+      await page.waitForSelector(selectors.CartPage.common.deleteProductConfirmButton)
       await cartPage.clickClearCartConfirmButton();
       await page.waitForTimeout(2000)
       await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty')
@@ -81,7 +82,7 @@ export const test = baseTest.extend<MyFixtures>({
       await page.waitForTimeout(2000);
       await searchbarPage.enterProduct(product);
       await page.waitForTimeout(5000);
-      await page.locator(selectors.ProductsPage.common.productCardAddButton).first().click();
+      await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
       await page.waitForTimeout(2000);
     };
     await use(addProduct);

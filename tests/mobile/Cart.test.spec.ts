@@ -99,7 +99,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await page.waitForTimeout(3000);
     await searchbarPage.enterProduct('cytryna zieleniak');
     await page.waitForTimeout(4000);
-    await page.locator(selectors.ProductsPage.common.productCardAddButton).first().click();
+    await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(2000);
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
