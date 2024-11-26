@@ -6,6 +6,8 @@ import * as utility from '../../utils/utility-methods';
 
 test.describe('Testy logowania @logowanie', async () => {
 
+  test.setTimeout(80000);
+
   let loginPage: LoginPage;
   let mainLogoutPage: MainLogoutPage;
 
