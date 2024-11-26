@@ -1,3 +1,4 @@
+import { expect } from "@playwright/test";
 
 export async function addGlobalStyles(page) {
   const cssRules = `
@@ -7,9 +8,11 @@ export async function addGlobalStyles(page) {
   #edrone--main--popup--container { display: none !important; }
   `;
 
-  await page.addStyleTag({
-      content: cssRules
-  });
+  try {
+    await page.waitForSelector('body', { visible: true });
+    await page.addStyleTag({ content: cssRules });
+  } catch {
+  }
 }
 
 export const isMobile = (viewportWidth: number): boolean => {
