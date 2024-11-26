@@ -188,7 +188,7 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk');
+      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
       await page.waitForTimeout(2000);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
@@ -227,7 +227,7 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk');
+      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
       await page.waitForTimeout(2000);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
@@ -266,7 +266,7 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk');
+      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
       await page.waitForTimeout(2000);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
@@ -305,7 +305,7 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk');
+      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
       await page.waitForTimeout(2000);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
