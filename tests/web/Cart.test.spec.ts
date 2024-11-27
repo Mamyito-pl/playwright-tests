@@ -51,7 +51,7 @@ test.describe('Testy koszyka @koszyk', async () => {
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForTimeout(2000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList)
+    await page.waitForSelector(selectors.CartPage.common.productCartList);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -65,7 +65,7 @@ test.describe('Testy koszyka @koszyk', async () => {
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForTimeout(4000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList)
+    await page.waitForSelector(selectors.CartPage.common.productCartList);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -87,7 +87,7 @@ test.describe('Testy koszyka @koszyk', async () => {
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForTimeout(4000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList)
+    await page.waitForSelector(selectors.CartPage.common.productCartList);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -189,7 +189,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await cartPage.clickCartButton();
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
-    await page.waitForLoadState('load')
+    await page.waitForLoadState('load');
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
     await page.waitForSelector(selectors.CartPage.common.cartSummaryButton)
     await expect(cartPage.getCartSummaryButton).toBeVisible();

@@ -50,6 +50,7 @@ test.describe('Testy koszyka @koszyk', async () => {
 
     await page.goto('/koszyk');
     await page.waitForTimeout(2000);
+    await page.waitForSelector(selectors.CartPage.common.productCartList);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -61,8 +62,9 @@ test.describe('Testy koszyka @koszyk', async () => {
     
     await addProduct('cytryna zieleniak');
 
-    await page.goto('/koszyk');
-    await page.waitForTimeout(2000);
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForTimeout(4000);
+    await page.waitForSelector(selectors.CartPage.common.productCartList);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -82,8 +84,9 @@ test.describe('Testy koszyka @koszyk', async () => {
 
     await addProduct('cytryna zieleniak');
 
-    await page.goto('/koszyk');
-    await page.waitForTimeout(2000);
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForTimeout(4000);
+    await page.waitForSelector(selectors.CartPage.common.productCartList);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -154,6 +157,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await cartPage.clickCartButton();
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
+    await page.waitForLoadState('load');
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
     await expect(cartPage.getCartSummaryButton).toBeVisible();
   })
@@ -162,7 +166,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
     
-    await page.goto('/koszyk');
+    await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
     await expect(cartPage.getCartReturnButton).toBeVisible();
     await cartPage.getCartReturnButton.click();
@@ -188,8 +192,8 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-      await page.waitForTimeout(2000);
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartListName);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
     
@@ -227,8 +231,8 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-      await page.waitForTimeout(2000);
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartListName);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
     
@@ -266,8 +270,8 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-      await page.waitForTimeout(2000);
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartListName);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
     
@@ -305,8 +309,8 @@ test.describe('Testy koszyka @koszyk', async () => {
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
-      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
-      await page.waitForTimeout(2000);
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartListName);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
     
