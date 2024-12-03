@@ -1,0 +1,63 @@
+name: Playwright Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: MOBILE - Dzienny raport testów automatycznych na środowisku PROD
+      ALLURE_USERNAME:
+        description:
+        required: false
+
+env:
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  ALLURE_ENDPOINT: https://mamyito.testops.cloud/
+  ALLURE_PROJECT_ID: 1
+  ALLURE_RESULTS: build/allure-results
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      URL: ${{ secrets.PROD_URL_SECRET }}
+      EMAIL: ${{ secrets.EMAIL_SECRET }}
+      PASSWORD: ${{ secrets.PASSWORD_SECRET }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Install dependencies for playwright and allure framework integration
+        run: |
+          npm install -D allure-playwright
+
+      - name: install and configure allurectl using GH Action
+        uses: allure-framework/setup-allurectl@v1
+
+      - name: Run Playwright tests for Mobile Chrome
+        run: npx playwright test --project="Mobile Chrome"
+
+      - name: Run Playwright tests for Mobile Safari
+        run: npx playwright test --project="Mobile Safari"
+
+      - name: Upload results to Allure Testops
+        run: |
+          .\allurectl.exe upload --endpoint https://mamyito.testops.cloud \ --token ${{ secrets.ALLURE_TOKEN }} \ --project-id 1 \ --launch-name "MOBILE - Dzienny raport testów automatycznych PROD" \ path/to/allure-results
+      
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
