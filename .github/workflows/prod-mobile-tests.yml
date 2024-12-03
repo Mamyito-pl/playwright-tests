@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Mobile Tests PROD
 
 on:
   workflow_dispatch:
