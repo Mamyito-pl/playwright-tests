@@ -44,6 +44,10 @@ jobs:
 
       - name: install and configure allurectl using GH Action
         uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: https://mamyito.testops.cloud
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+          allure-project-id: 1
 
       - name: Run Playwright tests for Mobile Chrome
         run: npx playwright test --project="Mobile Chrome"
