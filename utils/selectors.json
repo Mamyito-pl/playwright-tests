@@ -35,7 +35,7 @@
             "productCartListItemCount": "div[class*='cart-product-buttons'] button[class*='item_count_button']",
             "productCartListPrice": "div[class*='cart-product-buttons'] + div",
             "productCartListName": "div[data-sentry-element='ProductName']",
-            "deleteProductConfirmButton": "div[data-sentry-element='ButtonsWrapper'] button[variant='secondary']",
+            "deleteProductConfirmButton": "#clear_cart_modal_submit_button",
             "clearCartCancelButton": "div[data-sentry-source-file='ClearCartModal.tsx'] button[variant='borderGray']",
             "productCartIncreaseButton": "div[data-sentry-component='CartPage'] button[class*='add_to_cart_increment_button']",
             "productCartDecreaseButton": "div[data-sentry-component='CartPage'] button[class*='add_to_cart_decrement_button']",
