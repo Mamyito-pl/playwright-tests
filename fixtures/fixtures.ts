@@ -50,10 +50,10 @@ export const test = baseTest.extend<MyFixtures>({
 
     const clearCart = async (): Promise<void> => {
 
-      await page.goto('/koszyk', { waitUntil: 'domcontentloaded'});
+      await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForTimeout(2000)
       await cartPage.clickClearCartButton();
-      await page.waitForSelector(selectors.CartPage.common.deleteProductConfirmButton)
+      await page.waitForSelector(selectors.CartPage.common.deleteProductConfirmButton, { state: 'visible' })
       await cartPage.clickClearCartConfirmButton();
       await page.waitForTimeout(2000)
       await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty')
