@@ -13,7 +13,8 @@ export default defineConfig({
 
   reporter: [['html'], ['allure-playwright', {
     detail: true,
-    outputFolder: "allure-results",
+    outputDir: 'build/allure-results',
+    //outputFolder: "allure-results",
     suiteTitle: true,
     categories: [
       {
