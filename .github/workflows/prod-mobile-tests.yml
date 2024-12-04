@@ -56,9 +56,6 @@ jobs:
       - name: Run Playwright tests for Mobile Safari
         run: npx playwright test --project="Mobile Safari" --reporter=line,allure-playwright
 
-      - name: Generate allure report
-        run: npx allure generate allure-results --clean
-
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
@@ -72,6 +69,9 @@ jobs:
           name: allure-results
           path: allure-results/
           retention-days: 30
+
+      - name: Generate allure report
+        run: npx allure generate allure-results --clean
 
       - name: Upload results to Allure Testops
         run: |
