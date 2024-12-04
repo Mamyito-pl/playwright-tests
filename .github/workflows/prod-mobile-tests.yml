@@ -19,6 +19,9 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
     env:
       URL: ${{ secrets.PROD_URL_SECRET }}
       EMAIL: ${{ secrets.EMAIL_SECRET }}
@@ -48,7 +51,7 @@ jobs:
           allure-endpoint: https://mamyito.testops.cloud
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 1
-          github-token:  ${{ secrets.ALLURE_GITBHUB_TOKEN }}
+          github-token:  ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
       - name: Run Playwright tests for Mobile Chrome
         run: npx playwright test --project="Mobile Chrome"
