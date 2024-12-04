@@ -48,6 +48,7 @@ jobs:
           allure-endpoint: https://mamyito.testops.cloud
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 1
+          github-token:  ${{ secrets.ALLURE_GITBHUB_TOKEN }}
 
       - name: Run Playwright tests for Mobile Chrome
         run: npx playwright test --project="Mobile Chrome"
@@ -57,7 +58,7 @@ jobs:
 
       - name: Upload results to Allure Testops
         run: |
-          .\allurectl.exe upload --endpoint https://mamyito.testops.cloud \ --token ${{ secrets.ALLURE_TOKEN }} \ --project-id 1 \ --launch-name "MOBILE - Dzienny raport testów automatycznych PROD" \ path/to/allure-results
+          allurectl upload --endpoint https://mamyito.testops.cloud \ --token ${{ secrets.ALLURE_TOKEN }} \ --project-id 1 \ --launch-name "MOBILE - Dzienny raport testów automatycznych PROD" \ build/allure-results
       
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
