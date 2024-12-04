@@ -11,7 +11,9 @@ export default defineConfig({
 
   workers: process.env.CI ? 4 : undefined,
 
-  reporter: [['html'], ['allure-playwright', {
+  reporter: process.env.CI ? 'dot' : 'list'
+
+  /*reporter: [['html'], ['allure-playwright', {
     detail: true,
     outputDir: 'build/allure-results',
     //outputFolder: "allure-results",
@@ -30,7 +32,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: "only-on-failure",
     video: "on",
-  },
+  },*/,
 
   projects: [
 
