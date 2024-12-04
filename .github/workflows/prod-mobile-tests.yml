@@ -57,7 +57,7 @@ jobs:
         run: npx playwright test --project="Mobile Safari" --reporter=line,allure-playwright
 
       - name: Generate allure report
-        run: npx allure generate allure-results
+        run: npx allure generate allure-results --clean
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
