@@ -54,7 +54,7 @@ jobs:
           github-token:  ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
       - name: Run Playwright tests for Mobile Safari
-        run: npx playwright test --project="Mobile Safari" --reporter=line,allure-playwright
+        run: npx playwright test --project="Mobile Safari"
         env:
           CI: 'true'
 
@@ -69,6 +69,4 @@ jobs:
         run: npx allure generate allure-results --clean
 
       - name: Build with Gradle
-        run: allurectl watch -- ./gradlew test
-        env:
-          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+        run: allurectl watch -- ./gradlew clean test
