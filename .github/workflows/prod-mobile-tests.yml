@@ -69,6 +69,6 @@ jobs:
         run: npx allure generate allure-results --clean
 
       - name: Build with Gradle
-        run: ./allurectl watch -- ./gradlew test
+        run: allurectl watch -- ./gradlew test
         env:
           ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
