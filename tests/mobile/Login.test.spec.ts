@@ -4,9 +4,9 @@ import MainLogoutPage from "../../page/MainLogout.page";
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 
-allure.tag("Mobile")
-
 test.describe('Testy logowania @logowanie', async () => {
+
+  allure.tag("Mobile")
 
   let loginPage: LoginPage;
   let mainLogoutPage: MainLogoutPage;

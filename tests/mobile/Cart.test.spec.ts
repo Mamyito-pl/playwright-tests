@@ -10,9 +10,9 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
-allure.tag("web")
-
 test.describe('Testy koszyka @koszyk', async () => {
+
+  allure.tag("web")
   
   test.describe.configure({ mode: 'serial'})
 
