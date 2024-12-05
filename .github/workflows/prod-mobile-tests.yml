@@ -5,16 +5,13 @@ on:
     inputs:
       ALLURE_JOB_RUN_ID:
         description: MOBILE - Dzienny raport testów automatycznych na środowisku PROD
-      ALLURE_USERNAME:
-        description:
-        required: false
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
   ALLURE_ENDPOINT: https://mamyito.testops.cloud/
   ALLURE_PROJECT_ID: 1
-  ALLURE_RESULTS: ""allure-results"
+  ALLURE_RESULTS: "allure-results"
 
 jobs:
   test:
@@ -34,19 +31,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-
-      - uses: actions/github-script@v4
-        id: allure-job-uid
-        with:
-          result-encoding: string
-          script: |
-            const result = await github.actions.getWorkflowRun({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.runId,
-            });
-            return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
-
+          
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
