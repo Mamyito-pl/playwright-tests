@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -74,4 +74,4 @@ jobs:
       - name: Build with Gradle
         run: ./allurectl watch -- ./gradlew test
         env:
-          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
