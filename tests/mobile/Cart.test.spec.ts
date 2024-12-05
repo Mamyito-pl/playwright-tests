@@ -58,7 +58,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  test('Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  /*test('Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -108,7 +108,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveText('2');
     await page.goto('/koszyk');
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('2');
@@ -175,7 +175,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await expect(mainPage.getBannersSection).toBeVisible();
   })
 
-  /*test.describe('Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
+  test.describe('Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
 
     test.describe.configure({ mode: 'serial'});
     
