@@ -5,6 +5,9 @@ on:
     inputs:
       ALLURE_JOB_RUN_ID:
         description: MOBILE - Dzienny raport testów automatycznych na środowisku PROD
+      ALLURE_USERNAME:
+        description:
+        required: false
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
@@ -26,11 +29,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -70,8 +68,6 @@ jobs:
       - name: Generate allure report
         run: npx allure generate allure-results --clean
 
-      - name: Prepare TestPlan
-      - name: Build with Gradle
-        run: ./allurectl watch -- ./gradlew test
-        env:
-          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+      - name: Upload results to Allure Testops
+        run: |
+          allurectl upload --endpoint https://mamyito.testops.cloud \ --token ${{ secrets.ALLURE_TOKEN }} \ --project-id 1 \ --launch-name "MOBILE - Dzienny raport testów automatycznych PROD" \ ./allure-results
