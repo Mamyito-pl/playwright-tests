@@ -68,6 +68,7 @@ jobs:
       - name: Generate allure report
         run: npx allure generate allure-results --clean
 
-      - name: Upload results to Allure Testops
-        run: |
-          allurectl upload --endpoint https://mamyito.testops.cloud \ --token ${{ secrets.ALLURE_TOKEN }} \ --project-id 1 \ --launch-name "MOBILE - Dzienny raport testów automatycznych PROD" \ ./allure-results
+      - name: Build with Gradle
+        run: ./allurectl watch -- ./gradlew test
+        env:
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
