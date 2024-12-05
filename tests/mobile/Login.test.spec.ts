@@ -6,12 +6,12 @@ import * as utility from '../../utils/utility-methods';
 
 test.describe('Testy logowania @logowanie', async () => {
 
-  allure.tag("Mobile")
-
   let loginPage: LoginPage;
   let mainLogoutPage: MainLogoutPage;
 
   test.beforeEach(async ({ page, baseURL }) => {
+
+    allure.tag("Mobile")
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);

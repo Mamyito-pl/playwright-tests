@@ -11,8 +11,6 @@ import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
 test.describe('Testy koszyka @koszyk', async () => {
-
-  allure.tag("web")
   
   test.describe.configure({ mode: 'serial'})
 
@@ -25,6 +23,8 @@ test.describe('Testy koszyka @koszyk', async () => {
   let searchbarPage : SearchbarPage;
 
   test.beforeEach(async ({ page, loginManual }) => {
+
+    allure.tag("web")
 
     await loginManual();
 
