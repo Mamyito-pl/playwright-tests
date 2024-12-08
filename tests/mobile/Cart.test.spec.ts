@@ -108,7 +108,7 @@ test.describe('Testy koszyka', async () => {
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveText('2');
     await cartPage.clickCartButton();
-    await cartPage.clickShowCartButton();
+    await page.locator(selectors.CartPage.common.cartDrawerToCartButton).click();
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('2');
