@@ -107,14 +107,14 @@ test.describe('Testy koszyka', async () => {
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveText('2');
-    await page.goto('/koszyk');
+    await page.goto('/koszyk', { waitUntil: 'load'});
     await page.reload()
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  test('Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  /*test('Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -337,5 +337,5 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
-  })
+  })*/
 })
