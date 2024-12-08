@@ -10,7 +10,7 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
-test.describe('Testy koszyka @koszyk', async () => {
+test.describe('Testy koszyka', async () => {
   
   test.describe.configure({ mode: 'serial'})
 
@@ -25,6 +25,8 @@ test.describe('Testy koszyka @koszyk', async () => {
   let searchbarPage : SearchbarPage;
 
   test.beforeEach(async ({ page, loginManual }) => {
+
+    allure.tags("Web", "Koszyk")
 
     await loginManual();
 
@@ -50,8 +52,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await page.waitForTimeout(2000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -64,8 +65,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await page.waitForTimeout(4000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -86,8 +86,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await page.waitForTimeout(4000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -99,16 +98,16 @@ test.describe('Testy koszyka @koszyk', async () => {
   test('Możliwość dodania produktu w ilości > 1 do koszyka', async ({ page }) => {
 
     await searchbarPage.clickSearchbar()
-    await page.waitForTimeout(2000);
+    await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
     await searchbarPage.enterProduct('cytryna zieleniak');
-    await page.waitForTimeout(4000);
+    await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(2000);
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveText('2');
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await page.waitForTimeout(4000);
+    await cartPage.clickCartButton();
+    await cartPage.clickShowCartButton();
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('2');
@@ -191,7 +190,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await cartPage.getCartDrawerToCartButton.click();
     await page.waitForLoadState('load');
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryButton)
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryButton, { timeout: 10000})
     await expect(cartPage.getCartSummaryButton).toBeVisible();
   })
 

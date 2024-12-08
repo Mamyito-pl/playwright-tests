@@ -13,6 +13,8 @@ test.describe('Testy logowania @logowanie', async () => {
 
   test.beforeEach(async ({ page, baseURL }) => {
 
+    allure.tags("Web", "Logowanie")
+
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);
     
@@ -39,8 +41,8 @@ test.describe('Testy logowania @logowanie', async () => {
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
     await loginPage.clickLoginButton();
-    expect(await loginPage.getErrorMessage).toBe("Podany adres email jest nieprawidłowy");
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
+    expect(await loginPage.getErrorMessage).toBe("Podany adres email jest nieprawidłowy");
   })
 
   test('Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
@@ -50,8 +52,8 @@ test.describe('Testy logowania @logowanie', async () => {
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
     await loginPage.clickLoginButton();
-    expect(await loginPage.getErrorMessage).toBe("Nieprawidłowe dane logowania");
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
+    expect(await loginPage.getErrorMessage).toBe("Nieprawidłowe dane logowania");
   })
 })
 
