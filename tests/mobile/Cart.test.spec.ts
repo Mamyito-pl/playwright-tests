@@ -9,8 +9,9 @@ import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
+import { TIMEOUT } from 'dns';
 
-test.describe('Testy koszyka @koszyk', async () => {
+test.describe('Testy koszyka', async () => {
   
   test.describe.configure({ mode: 'serial'})
 
@@ -24,7 +25,7 @@ test.describe('Testy koszyka @koszyk', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    allure.tag("web")
+    allure.tags("Mobile", "Koszyk")
 
     await loginManual();
 
@@ -51,8 +52,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk');
-    await page.waitForTimeout(2000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 5000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -60,13 +60,12 @@ test.describe('Testy koszyka @koszyk', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  /*test('Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await page.waitForTimeout(4000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 5000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
@@ -87,14 +86,13 @@ test.describe('Testy koszyka @koszyk', async () => {
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await page.waitForTimeout(4000);
-    await page.waitForSelector(selectors.CartPage.common.productCartList);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 5000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
     await cartPage.clickDecreaseProductButton();
     await cartPage.clickDeleteProductCartDecreaseConfirmButton();
-    await page.waitForTimeout(2000);
+    await page.reload()
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
   }) 
 
@@ -109,8 +107,7 @@ test.describe('Testy koszyka @koszyk', async () => {
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveText('2');
-    await page.goto('/koszyk');
-    await page.waitForTimeout(4000);
+    await page.goto('/koszyk', { waitUntil: 'load'});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('2');
@@ -339,5 +336,5 @@ test.describe('Testy koszyka @koszyk', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
-  })*/
+  })
 })

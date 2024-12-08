@@ -11,7 +11,7 @@ test.describe('Testy logowania @logowanie', async () => {
 
   test.beforeEach(async ({ page, baseURL }) => {
 
-    allure.tag("Mobile")
+    allure.tags("Mobile", "Logowanie")
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);
