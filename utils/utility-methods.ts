@@ -6,7 +6,8 @@ export async function addGlobalStyles(page) {
   #onetrust-consent-sdk { display: none !important; }
   #edrone--main--push--container { display: none !important; }
   #edrone--main--popup--container { display: none !important; }
-  div[data-sentry-component="ExternalWidget"]
+  div[class="tm-lemur-sticker-mobile mobile-left-3 size-mobile-medium mobile-position tm-slideModal-change-status-on-mouseclick"]
+  div[class="tm-lemur-position left-2"]
   `;
 
   try {

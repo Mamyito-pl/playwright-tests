@@ -94,12 +94,12 @@
             "searchbarProductItemCount": "div[data-testid='search-results'] button[class*='item_count_button']"
         },
         "web": {
-            "searchbarInput": "div[data-sentry-element='WebContent'] div[id='search_hub_close_button']",
-            "searchbarCloseButton": "div[data-sentry-element='WebContent'] #search_hub_search_input"
+            "searchbarInput": "div[data-sentry-element='WebContent'] #search_hub_search_input",
+            "searchbarCloseButton": "div[data-sentry-element='WebContent'] #search_hub_close_button"
         },
         "mobile": {
             "searchbarInput": "div[data-sentry-element='TabletContent'] #search_hub_search_input",
-            "searchbarCloseButton": "div[data-sentry-element='TabletContent'] div[id='search_hub_close_button']"
+            "searchbarCloseButton": "div[data-sentry-element='TabletContent'] #search_hub_close_button"
         }
     },
     "Newsletter": {
