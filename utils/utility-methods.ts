@@ -6,6 +6,7 @@ export async function addGlobalStyles(page) {
   #onetrust-consent-sdk { display: none !important; }
   #edrone--main--push--container { display: none !important; }
   #edrone--main--popup--container { display: none !important; }
+  div[data-sentry-component="ExternalWidget"]
   `;
 
   try {
