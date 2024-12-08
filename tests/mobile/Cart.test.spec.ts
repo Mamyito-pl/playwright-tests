@@ -99,9 +99,9 @@ test.describe('Testy koszyka', async () => {
   test('Możliwość dodania produktu w ilości > 1 do koszyka', async ({ page }) => {
 
     await searchbarPage.clickSearchbar();
-    await page.waitForTimeout(3000);
+    await expect(page.locator(selectors.Searchbar.mobile.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
     await searchbarPage.enterProduct('cytryna zieleniak');
-    await page.waitForTimeout(4000);
+    await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(2000);
     await searchbarPage.clickIncreaseProductButton();
