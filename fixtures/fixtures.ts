@@ -77,7 +77,7 @@ export const test = baseTest.extend<MyFixtures>({
     const addProduct = async (product) => {
 
       const searchbarInputSelector = mobile ? selectors.Searchbar.mobile.searchbarInput : selectors.Searchbar.web.searchbarInput;
-      const searchbarCloseButtonSelector = mobile ? selectors.CartPage.mobile.cartAvailableCodesButton : selectors.CartPage.web.cartAvailableCodesButton
+      const searchbarCloseButtonSelector = mobile ? selectors.Searchbar.mobile.searchbarCloseButton : selectors.Searchbar.web.searchbarCloseButton
 
       await page.locator(searchbarInputSelector).click();
       await expect(page.locator(searchbarCloseButtonSelector)).toBeVisible({ timeout: 15000 });
