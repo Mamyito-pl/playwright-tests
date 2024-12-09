@@ -10,7 +10,7 @@ on:
         required: false
   workflow_run:
     workflows:
-      - "Playwright Web Chrome Tests PROD"
+      - "Playwright Web Safari Tests PROD"
     types:
       - completed
 
