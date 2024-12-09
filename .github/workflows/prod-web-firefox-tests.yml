@@ -8,6 +8,11 @@ on:
       ALLURE_USERNAME:
         description:
         required: false
+  workflow_run:
+    workflows:
+      - "Playwright Web Chrome Tests PROD"
+    types:
+      - completed
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
