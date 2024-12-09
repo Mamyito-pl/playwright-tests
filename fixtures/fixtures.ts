@@ -55,6 +55,7 @@ export const test = baseTest.extend<MyFixtures>({
       await cartPage.clickClearCartButton();
       await page.waitForSelector(selectors.CartPage.common.clearCartConfirmButton, { state: 'visible', timeout: 10000 })
       await cartPage.clickClearCartConfirmButton();
+      await page.waitForTimeout(2000)
       await page.reload();
       await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty', { timeout: 10000})
     };
