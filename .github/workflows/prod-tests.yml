@@ -1,11 +1,29 @@
-name: Playwright Tests
+name: Playwright Web/Mobile Tests PROD
 
 on:
   workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: Web/Mobile - Dzienny raport testów automatycznych na środowisku PROD
+      ALLURE_USERNAME:
+        description:
+        required: false
+
+env:
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  ALLURE_ENDPOINT: https://mamyito.testops.cloud/
+  ALLURE_PROJECT_ID: 1
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_LAUNCH_NAME: "Web/Mobile - Dzienny raport testów automatycznych na środowisku PROD"
+  GITHUB-TOKEN: ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
     env:
       URL: ${{ secrets.PROD_URL_SECRET }}
       EMAIL: ${{ secrets.EMAIL_SECRET }}
@@ -18,6 +36,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+          check-latest: true
 
       - name: Install dependencies
         run: npm ci
@@ -25,24 +44,49 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests for Chromium Desktop
-        run: npx playwright test --project="chromium"
+      - name: Install dependencies for playwright and allure framework integration
+        run: |
+          npm install -D allure-playwright
 
-      - name: Run Playwright tests for Firefox Desktop
-        run: npx playwright test --project="firefox"
+      - name: Install and configure allurectl using Github Actions
+        uses: allure-framework/setup-allurectl@v1
 
-      - name: Run Playwright tests for WebKit Desktop
-        run: npx playwright test --project="webkit"
+      - name: Run Playwright tests for Mobile Safari with Allure
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="chromium"
+        env:
+          CI: 'true'
+        continue-on-error: true
 
-      - name: Run Playwright tests for Mobile Chrome
-        run: npx playwright test --project="Mobile Chrome"
+      - name: Run Playwright tests for Mobile Safari with Allure
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox"
+        env:
+          CI: 'true'
+        continue-on-error: true
 
-      - name: Run Playwright tests for Mobile Safari
-        run: npx playwright test --project="Mobile Safari"
+      - name: Run Playwright tests for Mobile Safari with Allure
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="webkit"
+        env:
+          CI: 'true'
+        continue-on-error: true
+
+      - name: Run Playwright tests for Mobile Safari with Allure
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome"
+        env:
+          CI: 'true'
+        continue-on-error: true
+
+      - name: Run Playwright tests for Mobile Safari with Allure
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Safari"
+        env:
+          CI: 'true'
+        continue-on-error: true
       
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: allure-results
+          path: allure-results/
           retention-days: 30
+          
+      - name: Generate allure report
+        run: npx allure generate allure-results --clean
