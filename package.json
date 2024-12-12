@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "prod": "npx playwright test --project='prod'",
-    "mobile-chrome": "npx playwright test --project='Mobile Chrome' mobile",
-    "mobile-safari": "npx playwright test --project='Mobile Safari' mobile",
-    "desktop-chrome": "npx playwright test --project='chromium' web",
-    "desktop-safari": "npx playwright test --project='webkit' web",
-    "desktop-firefox": "npx playwright test --project='firefox' web"
   },
   "keywords": [],
   "author": "",
