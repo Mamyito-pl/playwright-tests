@@ -63,7 +63,7 @@ jobs:
           CI: 'true'
         continue-on-error: true
 
-      - name: Run Playwright tests for Mobile Safari with Allure
+      - name: Run Playwright tests for Web Safari with Allure
         run: allurectl watch -- npx playwright test --max-failures=0 --project="webkit"
         env:
           CI: 'true'
