@@ -24,7 +24,7 @@ test.describe('Testy logowania', async () => {
     })
 
 
-  test('Logowanie z poprawnymi danymi', async ({ page, baseURL }) => {
+  test('M | Logowanie z poprawnymi danymi', async ({ page, baseURL }) => {
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -33,7 +33,7 @@ test.describe('Testy logowania', async () => {
     expect(mainLogoutPage.getLoginLink).toBeHidden();
   })
 
-  test('Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
+  test('M | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
     
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -42,7 +42,7 @@ test.describe('Testy logowania', async () => {
     expect(await loginPage.getErrorMessage).toBe("Podany adres email jest nieprawidłowy");
   })
 
-  test('Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
+  test('M | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
