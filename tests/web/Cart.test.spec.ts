@@ -49,7 +49,7 @@ test.describe('Testy koszyka', async () => {
   }
   }) 
   
-  test('M | Możliwość zwiększenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('W | Możliwość zwiększenia ilości produktu w koszyku', async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -62,7 +62,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  test('M | Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('W | Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -81,7 +81,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('1');
   }) 
 
-  test('M | Możliwość usunięcia produktu z koszyka', async ({ page, addProduct }) => {   
+  test('W | Możliwość usunięcia produktu z koszyka', async ({ page, addProduct }) => {   
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -97,7 +97,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
   }) 
 
-  test('M | Możliwość dodania produktu w ilości > 1 do koszyka', async ({ page }) => {
+  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', async ({ page }) => {
 
     await searchbarPage.clickSearchbar()
     await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
@@ -115,7 +115,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  test('M | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -160,7 +160,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');
   })
 
-  test('M | Szuflada koszyka zamyka się po kliknięciu poza nią', async ({ page }) => {
+  test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', async ({ page }) => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -171,7 +171,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawer).toBeHidden();
   })
 
-  test('M | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
+  test('W | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -182,7 +182,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawer).toBeHidden()
   })
 
-  test('M | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
+  test('W | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
     
     const product = 'woda';
 
@@ -196,7 +196,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartSummaryButton).toBeVisible();
   })
 
-  test('M | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
+  test('W | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
     
@@ -209,13 +209,13 @@ test.describe('Testy koszyka', async () => {
     await expect(mainPage.getBannersSection).toBeVisible();
   })
 
-  test.describe('M | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
+  test.describe('W | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
     
     test.describe.configure({ mode: 'serial'});
     
     test.setTimeout(80000);
 
-    test('M - Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
       
       const product = 'woda';
       const addedProduct: { name: string; price: string }[] = [];
@@ -255,7 +255,7 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
-    test('M - Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
       
       const product = 'bułka kajzerka putka';
       const addedProduct: { name: string; price: string }[] = [];
@@ -295,7 +295,7 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
-    test('M - Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
       
       const product = 'banan zieleniak';
       const addedProduct: { name: string; price: string }[] = [];
@@ -335,7 +335,7 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
-    test('M - Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
       
       const product = 'serek wiejski piątnica';
       const addedProduct: { name: string; price: string }[] = [];
