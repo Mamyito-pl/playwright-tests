@@ -9,7 +9,6 @@ import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
-import { TIMEOUT } from 'dns';
 
 test.describe('Testy koszyka', async () => {
   
@@ -25,7 +24,9 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    allure.tags("Mobile", "Koszyk")
+    await allure.tags("Mobile", "Koszyk")
+    await allure.parentSuite("Mobilne");
+    await allure.suite("Koszyk");
 
     await loginManual();
 

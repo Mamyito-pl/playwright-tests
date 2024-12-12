@@ -11,9 +11,11 @@ test.describe('Testy logowania @logowanie', async () => {
   let loginPage: LoginPage;
   let mainLogoutPage: MainLogoutPage;
 
-  test.beforeEach(async ({ page, baseURL }) => {
+  test.beforeEach(async ({ page }) => {
 
-    allure.tags("Web", "Logowanie")
+    await allure.tags("Web", "Logowanie")
+    await allure.parentSuite("Webowe");
+    await allure.suite("Logowanie");
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);

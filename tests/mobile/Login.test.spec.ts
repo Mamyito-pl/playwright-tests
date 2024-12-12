@@ -4,14 +4,16 @@ import MainLogoutPage from "../../page/MainLogout.page";
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 
-test.describe('Testy logowania @logowanie', async () => {
+test.describe('Testy logowania', async () => {
 
   let loginPage: LoginPage;
   let mainLogoutPage: MainLogoutPage;
 
-  test.beforeEach(async ({ page, baseURL }) => {
+  test.beforeEach(async ({ page }) => {
 
-    allure.tags("Mobile", "Logowanie")
+    await allure.tags("Mobile", "Logowanie")
+    await allure.parentSuite("Mobilne");
+    await allure.suite("Logowanie");
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);

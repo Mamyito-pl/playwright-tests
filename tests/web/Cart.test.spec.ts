@@ -26,7 +26,9 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk")
+    await allure.parentSuite("Webowe");
+    await allure.suite("Koszyk");
 
     await loginManual();
 
