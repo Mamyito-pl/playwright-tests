@@ -51,13 +51,13 @@ jobs:
       - name: Install and configure allurectl using Github Actions
         uses: allure-framework/setup-allurectl@v1
 
-      - name: Run Playwright tests for Mobile Safari with Allure
+      - name: Run Playwright tests for Web Chrome with Allure
         run: allurectl watch -- npx playwright test --max-failures=0 --project="chromium"
         env:
           CI: 'true'
         continue-on-error: true
 
-      - name: Run Playwright tests for Mobile Safari with Allure
+      - name: Run Playwright tests for Web Firefox with Allure
         run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox"
         env:
           CI: 'true'
@@ -69,7 +69,7 @@ jobs:
           CI: 'true'
         continue-on-error: true
 
-      - name: Run Playwright tests for Mobile Safari with Allure
+      - name: Run Playwright tests for Mobile Chrome with Allure
         run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome"
         env:
           CI: 'true'
