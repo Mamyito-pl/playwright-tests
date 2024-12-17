@@ -43,7 +43,9 @@
             "cartCloseIconButton": "div[class='sc-718c60e8-4 fDhBpP'] svg",
             "cartDrawer": "div[class*='MuiDrawer-paperAnchorRight']",
             "cartDrawerToCartButton": "#to_cart_button",
-            "cartSummaryButton": "#cart_summary_proceed_payment_button",
+            "cartSummaryButton": "#cart_summary_proceed_button",
+            "cartSummaryPaymentButton": "#cart_summary_proceed_payment_button",
+            "cartSummaryPaymentConfirmationButton": "#cart_summary_payment_confirmation",
             "cartReturnButton": "#cart_return_button"
         },
         "web": {
@@ -66,6 +68,24 @@
             "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='TabletContent'] button"
         }
     },
+    "DeliveryPage": {
+        "common": {
+            "deliverySlot": "button[data-sentry-component='DeliverySlotItem']"
+        }
+    },
+    "PaymentsPage": {
+        "common": {
+           "statueCheckbox": "span[data-sentry-element='CheckboxMark']",
+           "blikPaymentInput": "input[name='blikCode']",
+           "orderDetailsButton": "button:has-text('Szczegóły zamówienia')",
+           "repeatOrderButton": "button:has-text('Zamów ponownie')",
+           "backHomeButton": "button:has-text('Wróć do sklepu')",
+           "paymentOnDeliveryButton": "button:has-text('Zapłać przy odbiorze')",
+           "repeatPaymentButton": "button:has-text('Ponów płatność')",
+           "blikTextboxPlaceholder": "label[class*='MuiInputLabel-outlined']",
+           "blikTextboxHelperText": "p[class*='MuiFormHelperText-contained']"
+        }
+    },   
     "NavigationPage": {
         "mainCategoryButton": "nav button:has-text('Wszystkie kategorie')",
         "navigationCategoriesList": "div[class='sc-b0f70adc-8 jZsiOh']",
