@@ -1,0 +1,158 @@
+import { Page, expect } from '@playwright/test';
+import ProductsPage from '../../page/Products.page.ts';
+import MainPage from "../../page/Main.page.ts";
+import CartPage from '../../page/Cart.page.ts';
+import DeliveryPage from '../../page/Delivery.page.ts';
+import PaymentsPage from '../../page/Payments.page.ts';
+import SearchbarPage from '../../page/Searchbar.page.ts';
+import * as allure from "allure-js-commons";
+import * as selectors from '../../utils/selectors.json';
+import { test } from '../../fixtures/fixtures.ts';
+
+test.describe('Testy płatności', async () => {
+  
+  test.describe.configure({ mode: 'serial'})
+
+  let cartPage: CartPage;
+  let deliveryPage: DeliveryPage;
+  let paymentsPage: PaymentsPage;
+  let productsPage: ProductsPage;
+  let mainPage: MainPage;
+  let searchbarPage : SearchbarPage;
+
+  test.beforeEach(async ({ page, loginManual }) => {
+
+    await allure.tags("Mobile", "Płatności")
+    await allure.parentSuite("Mobilne");
+    await allure.suite("Płatności");
+
+    await loginManual();
+
+    mainPage = new MainPage(page);
+    cartPage = new CartPage(page);
+    deliveryPage = new DeliveryPage(page);
+    paymentsPage = new PaymentsPage(page);
+    productsPage = new ProductsPage(page);
+    searchbarPage = new SearchbarPage(page);
+  })
+  
+  test.afterEach(async ({ clearCart }) => {
+    
+    const shouldSkipClearCart = test.info().annotations.some(a => a.type === 'skipClearCart');
+
+    if (!shouldSkipClearCart) {
+      await clearCart();
+  }
+  }) 
+  
+  test.describe('Płatność BLIK', async () => {
+
+    test.describe.configure({ mode: 'serial'});
+    
+    test.skip('M | Zapłata prawidłowym kodem BLIK', async ({ page, addProduct }) => {
+
+      allure.subSuite('Płatność BLIK')
+
+      test.info().annotations.push({ type: 'skipClearCart' });
+    
+      test.setTimeout(130000);
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.enterBlikCode('777888');
+      await paymentsPage.checkStatue();
+      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 10000, state: 'hidden' });
+    
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+      await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+      await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+      await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 20000, state: 'hidden' });
+      await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 }),
+      await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 })
+    })
+
+    test.skip('M | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct }) => {
+
+      allure.subSuite('Płatność BLIK')
+      
+      test.info().annotations.push({ type: 'skipClearCart' });
+
+      test.setTimeout(150000);
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.enterBlikCode('123123');
+      await paymentsPage.checkStatue();
+      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 10000, state: 'hidden' });
+
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible(),
+      await expect(page.getByText('Nr zamówienia: ')).toBeVisible(),
+      await expect(paymentsPage.getOrderDetailsButton).toBeVisible(),
+      await expect(paymentsPage.getRepeatOrderButton).toBeVisible(),
+      await expect(paymentsPage.getBackHomeButton).toBeVisible()
+
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+    
+      await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 }),
+      await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 }),
+      await expect(page.getByText('Co chcesz zrobić?')).toBeVisible({ timeout: 5000 }),
+      await expect(paymentsPage.getPaymentOnDeliveryButton).toBeVisible({ timeout: 5000 }),
+      await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 })
+    })
+  
+    test('M | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
+    
+      allure.subSuite('Płatność BLIK')
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.checkStatue();
+      await cartPage.getCartPaymentButton.isDisabled();
+      await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
+      await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
+      await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
+      await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Kod blik jest wymagany');
+    })
+  })
+})
