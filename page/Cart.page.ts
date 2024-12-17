@@ -12,6 +12,15 @@ export default class CartPage {
         this.mobile = isMobile(viewport.width);
     }
 
+
+    async clickCartPaymentConfirmationButtonButton() {
+        await this.page.click(selectors.CartPage.common.cartSummaryPaymentConfirmationButton);
+    }
+    
+    async clickCartSummaryButton() {
+        await this.page.click(selectors.CartPage.common.cartSummaryButton);
+    }
+
     async clickShowCartButton() {
         await this.page.click(selectors.CartPage.web.showCartButton);
     }
@@ -113,5 +122,13 @@ export default class CartPage {
 
     get getCartDrawerCloseIconButton() {
         return this.page.locator(selectors.CartPage.common.cartCloseIconButton);
+    }
+
+    get getCartPaymentConfirmationButton() {
+        return this.page.locator(selectors.CartPage.common.cartSummaryPaymentConfirmationButton);
+    }
+
+    get getCartPaymentButton() {
+        return this.page.locator(selectors.CartPage.common.cartSummaryPaymentButton);
     }
 }
