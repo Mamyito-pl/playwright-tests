@@ -12,6 +12,15 @@ export default class PaymentsPage {
         this.mobile = isMobile(viewport.width);
     }
 
+    
+    async clickPaymentOnDeliveryButton() {
+        await this.page.click(selectors.PaymentsPage.common.paymentOnDeliveryButton);
+    }
+
+    async clickRepeatPaymentButton() {
+        await this.page.click(selectors.PaymentsPage.common.repeatPaymentButton);
+    }
+
     async checkStatue() {
         await this.page.check(selectors.PaymentsPage.common.statueCheckbox);
     }

@@ -10,7 +10,7 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
-test.describe('Testy koszyka', async () => {
+test('Testy koszyka', async () => {
   
   test.describe.configure({ mode: 'serial'})
 

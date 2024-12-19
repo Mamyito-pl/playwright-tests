@@ -3,8 +3,7 @@
         "common": {
             "emailInput": "#login_email",
             "passwordInput": "#login_password",
-            "loginButton": "#login_submit_button",
-            "errorMessage": "div[role='status']"
+            "loginButton": "#login_submit_button"
         }
     },
     "MainLogoutPage": {
@@ -133,6 +132,14 @@
         "edroneButtonAccept": "#alert_box_btn_subscribe"
     },
     "Common": {
-        "loader": "svg[class*='MuiCircularProgress-svg']"
+        "loader": "svg[class*='MuiCircularProgress-svg']",
+        "message": "div[role='status']"
+    },
+    "Przelewy24": {
+        "common": {
+            "mainBlikButton": "img[alt='blik']",
+            "chosenBlikButton" : "img[alt='BLIK']",
+            "payButton": "button:has-text('Zapłać')"
+        }
     }
 }

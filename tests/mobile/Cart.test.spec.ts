@@ -48,7 +48,7 @@ test.describe('Testy koszyka', async () => {
   }
   }) 
   
-  test('M|Możliwość zwiększenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('M | Możliwość zwiększenia ilości produktu w koszyku', async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
