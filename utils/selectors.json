@@ -139,7 +139,11 @@
         "common": {
             "mainBlikButton": "img[alt='blik']",
             "chosenBlikButton" : "img[alt='BLIK']",
-            "payButton": "button:has-text('Zapłać')"
+            "mainTransferButton": "img[alt='transfer']",
+            "chosenTransferButton": "img[alt='Bank PEKAO S.A.']",
+            "payButton": "button:has-text('Zapłać')",
+            "errorPayButton": "button:has-text('Błąd płatności')",
+            "backToShopButton": "div[role='button']"
         }
     }
 }

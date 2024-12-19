@@ -252,7 +252,7 @@ test.describe('Testy płatności', async () => {
       }
     })
                         
-    test.skip('M | Ponowna zapłata po nieudanej płatności BLIK', async ({ page, addProduct }) => {
+    test.skip('M | Ponowna zapłata po nieudanej płatności BLIK', async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -279,7 +279,7 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButtonButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 10000, state: 'hidden' });
 
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible(),
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -302,6 +302,7 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickPayButton();
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
+      await expect(page).toHaveURL(`${baseURL}` + '/podsumowanie');
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -366,5 +367,115 @@ test.describe('Testy płatności', async () => {
       await paymentsPage.getBackHomeButton.scrollIntoViewIfNeeded();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
+  })
+
+  test.describe('Płatności przelewem online', async () => {
+   
+    test.describe.configure({ mode: 'serial'});
+  
+    test('M | Zapłata przelewem online', async ({ page, addProduct, baseURL }) => {
+
+      allure.subSuite('Płatność przelewem online')
+
+      test.info().annotations.push({ type: 'skipClearCart' });
+
+      test.setTimeout(130000);
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1500);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Przelew online').check();
+      await paymentsPage.checkStatue();
+      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 10000, state: 'hidden' });
+
+      await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
+      await przelewy24Page.clickMainTransferButton();
+      await przelewy24Page.clickChosenTransferButton();
+      await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
+      await przelewy24Page.clickPayButton();
+      await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
+      await przelewy24Page.clickBackToShopButton();
+
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 5000 });
+      await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
+      await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
+      await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+
+      await paymentsPage.getOrderDetailsButton.scrollIntoViewIfNeeded();
+      await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+
+      await paymentsPage.getRepeatOrderButton.scrollIntoViewIfNeeded();
+      await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+
+      await paymentsPage.getBackHomeButton.scrollIntoViewIfNeeded();
+      await expect(paymentsPage.getBackHomeButton).toBeVisible();
+    }) 
+    
+    test('M | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
+
+      allure.subSuite('Płatność przelewem online')
+
+      test.info().annotations.push({ type: 'skipClearCart' });
+
+      test.setTimeout(130000);
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1500);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Przelew online').check();
+      await paymentsPage.checkStatue();
+      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 10000, state: 'hidden' });
+
+      await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
+      await przelewy24Page.clickMainTransferButton();
+      await przelewy24Page.clickChosenTransferButton();
+      await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
+      await przelewy24Page.clickErrorPayButton();
+      await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
+      await przelewy24Page.clickBackToShopButton();
+
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'));
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+      await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+      await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+      await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+
+      await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
+      await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
+      await expect(page.getByText('Co chcesz zrobić?')).toBeVisible({ timeout: 5000 });
+      await expect(paymentsPage.getPaymentOnDeliveryButton).toBeVisible({ timeout: 5000 });
+      await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 });
+
+      await paymentsPage.getOrderDetailsButton.scrollIntoViewIfNeeded();
+      await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+
+      await paymentsPage.getRepeatOrderButton.scrollIntoViewIfNeeded();
+      await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    }) 
   })
 })
