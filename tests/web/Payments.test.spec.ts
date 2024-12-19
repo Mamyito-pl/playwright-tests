@@ -49,7 +49,7 @@ test.describe('Testy płatności', async () => {
 
     test.describe.configure({ mode: 'serial'});
   
-    test.skip('W | Zapłata prawidłowym kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata prawidłowym kodem BLIK', async ({ page, addProduct }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -59,7 +59,7 @@ test.describe('Testy płatności', async () => {
 
       await addProduct('kapsułki somat');
 
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
           await page.waitForTimeout(1500);
       };
@@ -87,7 +87,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 })
     })
 
-    test.skip('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -97,7 +97,7 @@ test.describe('Testy płatności', async () => {
 
       await addProduct('kapsułki somat');
 
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
           await page.waitForTimeout(1000);
       };
@@ -135,7 +135,7 @@ test.describe('Testy płatności', async () => {
 
       await addProduct('kapsułki somat');
 
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
           await page.waitForTimeout(1000);
       };
@@ -153,6 +153,97 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
       await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Kod blik jest wymagany');
+    })
+
+    test('W | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
+
+      allure.subSuite('Płatność BLIK')
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.enterBlikCode('123');
+      await paymentsPage.checkStatue();
+      await cartPage.getCartPaymentButton.isDisabled();
+      await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
+      await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
+      await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
+      await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
+    })
+            
+    test('W | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
+
+      allure.subSuite('Płatność BLIK')
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.enterBlikCode('12345678');
+      await paymentsPage.checkStatue();
+      await cartPage.getCartPaymentButton.isDisabled();
+      await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
+      await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
+      await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
+      await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
+    })
+                
+    test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
+
+      allure.subSuite('Płatność BLIK')
+
+      const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"]
+
+      await addProduct('kapsułki somat');
+
+      for (let i = 0; i < 3; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(1000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.clickDeliverySlotButton();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.enterBlikCode('12345');
+
+      for (const symbol of symbols) {
+        await page.keyboard.press(symbol);
+        await page.waitForTimeout(1000);
+        await paymentsPage.checkStatue();
+        expect(paymentsPage.getStatueCheckbox.isChecked()).toBeTruthy();
+        expect(cartPage.getCartPaymentButton.isDisabled()).toBeTruthy();
+        await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
+        await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
+        await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
+        await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
+        await page.locator(selectors.PaymentsPage.common.blikPaymentInput).click();
+        await page.keyboard.press('Backspace');
+      }
     })
   })
 })

@@ -47,4 +47,8 @@ export default class PaymentsPage {
     get getBlikTextboxHelperText() {
         return this.page.locator(selectors.PaymentsPage.common.blikTextboxHelperText);
     }
+
+    get getStatueCheckbox() {
+        return this.page.locator(selectors.PaymentsPage.common.statueCheckbox);
+    }
 }
