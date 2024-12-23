@@ -13,12 +13,24 @@ export default class PaymentsPage {
     }
 
     
+    async clickOrderDetailsButton() {
+        await this.page.click(selectors.PaymentsPage.common.orderDetailsButton);
+    }
+
     async clickPaymentOnDeliveryButton() {
         await this.page.click(selectors.PaymentsPage.common.paymentOnDeliveryButton);
     }
 
     async clickRepeatPaymentButton() {
         await this.page.click(selectors.PaymentsPage.common.repeatPaymentButton);
+    }
+
+    async clickRepeatOrderButton() {
+        await this.page.click(selectors.PaymentsPage.common.repeatOrderButton);
+    }
+
+    async clickBackHomeButton() {
+        await this.page.click(selectors.PaymentsPage.common.backHomeButton);
     }
 
     async checkStatue() {
@@ -59,5 +71,17 @@ export default class PaymentsPage {
 
     get getStatueCheckbox() {
         return this.page.locator(selectors.PaymentsPage.common.statueCheckbox);
+    }
+
+    get getCloseIconButtonRepeatOrderWindow() {
+        return this.page.locator(selectors.PaymentsPage.common.closeIconButtonRepeatOrderWindow);
+    }
+
+    get getAddProductsButtonRepeatOrderWindow() {
+        return this.page.locator(selectors.PaymentsPage.common.addProductsButtonRepeatOrderWindow);
+    }
+
+    get getCancelButtonRepeatOrderWindow() {
+        return this.page.locator(selectors.PaymentsPage.common.cancelButtonRepeatOrderWindow);
     }
 }

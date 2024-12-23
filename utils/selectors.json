@@ -7,8 +7,7 @@
         }
     },
     "MainLogoutPage": {
-        "common": {
-        },
+        "common": {},
         "web": {
             "loginLink": "a[href='/logowanie']"
         },
@@ -18,12 +17,10 @@
     },
     "MainPage": {
         "common": {
-                "bannersSection": "section[data-sentry-component='BannersSection']"
+            "bannersSection": "section[data-sentry-component='BannersSection']"
         },
-        "web": {
-        },
-        "mobile": {
-        }
+        "web": {},
+        "mobile": {}
     },
     "CartPage": {
         "common": {
@@ -74,17 +71,28 @@
     },
     "PaymentsPage": {
         "common": {
-           "statueCheckbox": "span[data-sentry-element='CheckboxMark']",
-           "blikPaymentInput": "input[name='blikCode']",
-           "orderDetailsButton": "button:has-text('Szczegóły zamówienia')",
-           "repeatOrderButton": "button:has-text('Zamów ponownie')",
-           "backHomeButton": "button:has-text('Wróć do sklepu')",
-           "paymentOnDeliveryButton": "button:has-text('Zapłać przy odbiorze')",
-           "repeatPaymentButton": "button:has-text('Ponów płatność')",
-           "blikTextboxPlaceholder": "label[class*='MuiInputLabel-outlined']",
-           "blikTextboxHelperText": "p[class*='MuiFormHelperText-contained']"
+            "statueCheckbox": "span[data-sentry-element='CheckboxMark']",
+            "blikPaymentInput": "input[name='blikCode']",
+            "orderDetailsButton": "button:has-text('Szczegóły zamówienia')",
+            "repeatOrderButton": "button:has-text('Zamów ponownie')",
+            "backHomeButton": "button:has-text('Wróć do sklepu')",
+            "paymentOnDeliveryButton": "button:has-text('Zapłać przy odbiorze')",
+            "repeatPaymentButton": "button:has-text('Ponów płatność')",
+            "blikTextboxPlaceholder": "label[class*='MuiInputLabel-outlined']",
+            "blikTextboxHelperText": "p[class*='MuiFormHelperText-contained']",
+            "closeIconButtonRepeatOrderWindow": "svg[class='sc-f8f81ad2-4 fA-DbFc']",
+            "addProductsButtonRepeatOrderWindow": "button:has-text('Dodaj produkty')",
+            "cancelButtonRepeatOrderWindow": "button:has-text('Anuluj')"
         }
-    },   
+    },
+    "OrderDetailsPage": {
+        "common": {
+            "backToOrdersButton": "#profile_order_back_button",
+            "repeatOrderButton": "button:has-text('Zamów ponownie')",
+            "cancelOrderButton": "button:has-text('Anuluj')",
+            "PayButton": "button:has-text('Zapłać')"
+        }
+    },
     "NavigationPage": {
         "mainCategoryButton": "nav button:has-text('Wszystkie kategorie')",
         "navigationCategoriesList": "div[class='sc-b0f70adc-8 jZsiOh']",
@@ -138,12 +146,13 @@
     "Przelewy24": {
         "common": {
             "mainBlikButton": "img[alt='blik']",
-            "chosenBlikButton" : "img[alt='BLIK']",
+            "chosenBlikButton": "img[alt='BLIK']",
             "mainTransferButton": "img[alt='transfer']",
             "chosenTransferButton": "img[alt='Bank PEKAO S.A.']",
             "payButton": "button:has-text('Zapłać')",
             "errorPayButton": "button:has-text('Błąd płatności')",
-            "backToShopButton": "div[role='button']"
+            "refreshButton": "button:has-text('Odśwież')",
+            "backToShopButton": "button:has-text('Powrót do sklepu')"
         }
     }
 }

@@ -37,6 +37,10 @@ export default class Przelewy24Page {
     }
 
     async clickBackToShopButton() {
-        await this.page.click(selectors.Przelewy24.common.backToShopButton);
+        await this.getBackToShopButton.click();
+    }
+
+    get getBackToShopButton() {
+        return this.page.getByText('Powrót do sklepu');
     }
 }
