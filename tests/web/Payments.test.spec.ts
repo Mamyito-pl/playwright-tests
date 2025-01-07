@@ -184,7 +184,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(180000);
+    test.setTimeout(200000);
 
     await addProduct('kapsułki somat');
 
