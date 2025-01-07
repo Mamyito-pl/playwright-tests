@@ -62,7 +62,7 @@ jobs:
         with:
           name: allure-results
           path: allure-results/
-          retention-days: 30
+          retention-days: 1
 
       - name: Generate Allure Report
         run: npx allure generate allure-results --clean
