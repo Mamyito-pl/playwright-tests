@@ -143,7 +143,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartCodesTitle).toContainText('Kody Rabatowe');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
-    await expect(cartPage.getCartAvailableCodesButton).toContainText('Wpisz kod rabatowy');
+    await expect(cartPage.getCartAvailableCodesButton).toContainText('Dostępne kody rabatowe:');
     
     await expect(cartPage.getCartDrawerSummaryTitle).toBeVisible();
     await expect(cartPage.getCartDrawerSummaryTitle).toContainText('Podsumowanie');  
