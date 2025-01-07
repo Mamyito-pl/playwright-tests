@@ -56,15 +56,13 @@ test.describe('Testy płatności', async () => {
 
   test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
     test.setTimeout(130000);
 
     await addProduct('kapsułki somat');
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -101,6 +99,10 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getOrderDetailsButton).toBeHidden();
     await expect(paymentsPage.getRepeatOrderButton).toBeHidden();
     await expect(paymentsPage.getBackHomeButton).toBeHidden();
+
+    if (!test.info().status || test.info().status !== 'failed') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
   })
 
   test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
@@ -180,8 +182,6 @@ test.describe('Testy płatności', async () => {
 
   test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
     test.setTimeout(180000);
@@ -238,6 +238,10 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
     await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    if (!test.info().status || test.info().status !== 'failed') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
   })
   
   test.describe('Płatności BLIK', async () => {

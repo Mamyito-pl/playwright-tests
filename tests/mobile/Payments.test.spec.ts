@@ -830,7 +830,7 @@ test.describe('Testy płatności', async () => {
   
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Zapłata kartą przy odbiorze')
 
