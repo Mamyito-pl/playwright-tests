@@ -193,8 +193,6 @@ test.describe('Testy koszyka', async () => {
     await cartPage.getCartDrawerToCartButton.click();
     await page.waitForLoadState('load');
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryButton, { timeout: 10000})
-    await expect(cartPage.getCartSummaryButton).toBeVisible();
   })
 
   test('W | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {

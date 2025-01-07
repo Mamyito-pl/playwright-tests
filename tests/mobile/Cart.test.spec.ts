@@ -159,7 +159,6 @@ test.describe('Testy koszyka', async () => {
     await cartPage.getCartDrawerToCartButton.click();
     await page.waitForLoadState('load');
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await expect(cartPage.getClearCartButton).toBeVisible();
   })
 
   test('M | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {

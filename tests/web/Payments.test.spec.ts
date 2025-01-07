@@ -64,6 +64,8 @@ test.describe('Testy płatności', async () => {
 
     await addProduct('kapsułki somat');
 
+    await page.waitForTimeout(1000);
+
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
         await page.waitForTimeout(1000);
