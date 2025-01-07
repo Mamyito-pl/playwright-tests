@@ -226,6 +226,7 @@ test.describe('Testy płatności', async () => {
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
+    await page.waitForLoadState('load')
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
     await przelewy24Page.clickPayButton();
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
