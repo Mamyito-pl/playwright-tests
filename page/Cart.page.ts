@@ -38,10 +38,10 @@ export default class CartPage {
     }
 
     async clickDeleteProductCartIcon() {
-        await this.page.click(selectors.CartPage.web.deleteProductCartIcon);
+        await this.page.click(selectors.CartPage.common.deleteProductCartIcon);
     }
 
-    async clickDeleteProductCartDecreaseConfirmButton() {
+    async clickDeleteProductCartConfirmButton() {
         await this.page.click(selectors.CartPage.common.deleteProductConfirmButton)
     }
 

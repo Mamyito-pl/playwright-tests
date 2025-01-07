@@ -11,11 +11,10 @@ import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
-import { env } from 'process';
+
+test.describe.configure({ mode: 'serial'})
 
 test.describe('Testy płatności', async () => {
-  
-  test.describe.configure({ mode: 'serial'})
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
@@ -29,7 +28,7 @@ test.describe('Testy płatności', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    await allure.tags("Mobile", "Płatności")
+    await allure.tags("Mobilne", "Płatności")
     await allure.parentSuite("Mobilne");
     await allure.suite("Płatności");
 
@@ -177,7 +176,7 @@ test.describe('Testy płatności', async () => {
     await expect(orderDetailsPage.getCancelOrderButton).toBeVisible({ timeout: 5000 });
   })
 
-  test('M | Możliwość zapłaty za zamówienie z poziomu listy zamówień', async ({ page, addProduct, baseURL }) => {
+  test('M | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -238,10 +237,8 @@ test.describe('Testy płatności', async () => {
   })
   
   test.describe('Płatność BLIK', async () => {
-
-    test.describe.configure({ mode: 'serial'});
     
-    test('M | Zapłata prawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -444,7 +441,7 @@ test.describe('Testy płatności', async () => {
       }
     })
                         
-    test('M | Ponowna zapłata po nieudanej płatności BLIK', async ({ page, addProduct, baseURL }) => {
+    test('M | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -506,7 +503,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
                             
-    test('M | Zapłata przy odbiorze po nieudanej płatności BLIK', async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
       
@@ -570,10 +567,8 @@ test.describe('Testy płatności', async () => {
   })
 
   test.describe('Płatności przelewem online', async () => {
-   
-    test.describe.configure({ mode: 'serial'});
   
-    test('M | Zapłata przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
 
@@ -684,7 +679,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     }) 
                             
-    test('M | Ponowna zapłata po nieudanej płatności przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('M | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
 
@@ -760,7 +755,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
                                 
-    test('M | Zapłata przy odbiorze po nieudanej płatności przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
 
@@ -834,10 +829,8 @@ test.describe('Testy płatności', async () => {
   })
   
   test.describe('Zapłata kartą przy odbiorze', async () => {
-   
-    test.describe.configure({ mode: 'serial'});
   
-    test('W | Zapłata kartą przy odbiorze', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Zapłata kartą przy odbiorze')
 

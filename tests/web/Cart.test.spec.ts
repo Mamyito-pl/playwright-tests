@@ -10,9 +10,9 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
-test('Testy koszyka', async () => {
-  
-  test.describe.configure({ mode: 'serial'})
+test.describe.configure({ mode: 'serial'})
+
+test.describe('Testy koszyka', async () => {
 
   test.setTimeout(80000);
 
@@ -49,7 +49,7 @@ test('Testy koszyka', async () => {
   }
   }) 
   
-  test('W | Możliwość zwiększenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -62,7 +62,7 @@ test('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  test('W | Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('W | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -81,7 +81,7 @@ test('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('1');
   }) 
 
-  test('W | Możliwość usunięcia produktu z koszyka', async ({ page, addProduct }) => {   
+  test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {   
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -93,11 +93,12 @@ test('Testy koszyka', async () => {
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
     await cartPage.clickDeleteProductCartIcon();
+    await cartPage.clickDeleteProductCartConfirmButton();
     await page.waitForTimeout(2000);
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
   }) 
 
-  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', async ({ page }) => {
+  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
 
     await searchbarPage.clickSearchbar()
     await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
@@ -142,7 +143,7 @@ test('Testy koszyka', async () => {
     await expect(cartPage.getCartCodesTitle).toContainText('Kody Rabatowe');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
-    await expect(cartPage.getCartAvailableCodesButton).toContainText('Dostępne kody rabatowe:');
+    await expect(cartPage.getCartAvailableCodesButton).toContainText('Wpisz kod rabatowy');
     
     await expect(cartPage.getCartDrawerSummaryTitle).toBeVisible();
     await expect(cartPage.getCartDrawerSummaryTitle).toContainText('Podsumowanie');  
@@ -211,8 +212,6 @@ test('Testy koszyka', async () => {
 
   test.describe('W | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
     
-    test.describe.configure({ mode: 'serial'});
-    
     test.setTimeout(80000);
 
     test('W | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
@@ -255,6 +254,7 @@ test('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
+
     test('W | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
       
       const product = 'bułka kajzerka putka';
@@ -295,6 +295,7 @@ test('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
+
     test('W | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
       
       const product = 'banan zieleniak';
@@ -335,6 +336,7 @@ test('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
+
     test('W | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
       
       const product = 'serek wiejski piątnica';

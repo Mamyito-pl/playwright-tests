@@ -9,7 +9,7 @@ export default defineConfig({
 
   retries: process.env.CI ? 2 : 0,
 
-  workers: process.env.CI ? 4 : undefined,
+  workers: 1,
 
   reporter: [['html'], ['allure-playwright', {
     detail: true,
@@ -28,7 +28,7 @@ export default defineConfig({
   use: {
     trace: 'off',
     screenshot: "only-on-failure",
-    video: "on-first-retry",
+    video: "off",
   },
 
   projects: [

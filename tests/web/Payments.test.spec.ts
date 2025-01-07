@@ -12,9 +12,9 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
+test.describe.configure({ mode: 'serial'})
+
 test.describe('Testy płatności', async () => {
-  
-  test.describe.configure({ mode: 'serial'})
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
@@ -176,7 +176,7 @@ test.describe('Testy płatności', async () => {
     await expect(orderDetailsPage.getCancelOrderButton).toBeVisible({ timeout: 5000 });
   })
 
-  test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', async ({ page, addProduct, baseURL }) => {
+  test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -237,10 +237,8 @@ test.describe('Testy płatności', async () => {
   })
   
   test.describe('Płatności BLIK', async () => {
-
-    test.describe.configure({ mode: 'serial'});
   
-    test('W | Zapłata prawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -443,7 +441,7 @@ test.describe('Testy płatności', async () => {
       }
     })
                     
-    test('W | Ponowna zapłata po nieudanej płatności BLIK', async ({ page, addProduct, baseURL }) => {
+    test('W | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
 
@@ -505,7 +503,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
                          
-    test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
       
@@ -562,10 +560,8 @@ test.describe('Testy płatności', async () => {
   })
 
   test.describe('Płatności przelewem online', async () => {
-   
-    test.describe.configure({ mode: 'serial'});
   
-    test('W | Zapłata przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
 
@@ -664,7 +660,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     }) 
                         
-    test('W | Ponowna zapłata po nieudanej płatności przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
 
@@ -735,7 +731,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
                             
-    test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
 
@@ -809,10 +805,8 @@ test.describe('Testy płatności', async () => {
   })
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
-   
-    test.describe.configure({ mode: 'serial'});
   
-    test('W | Zapłata kartą przy odbiorze', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Zapłata kartą przy odbiorze')
 

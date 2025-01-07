@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import LoginPage from "../../page/Login.page";
+import CommonPage from "../../page/Common.page";
 import MainLogoutPage from "../../page/MainLogout.page";
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
@@ -7,15 +8,17 @@ import * as utility from '../../utils/utility-methods';
 test.describe('Testy logowania', async () => {
 
   let loginPage: LoginPage;
+  let commonPage: CommonPage;
   let mainLogoutPage: MainLogoutPage;
 
   test.beforeEach(async ({ page }) => {
 
-    await allure.tags("Mobile", "Logowanie")
+    await allure.tags("Mobilne", "Logowanie")
     await allure.parentSuite("Mobilne");
     await allure.suite("Logowanie");
 
     loginPage = new LoginPage(page);
+    commonPage = new CommonPage(page);
     mainLogoutPage = new MainLogoutPage(page);
     
     await page.goto('/logowanie', { waitUntil: 'load' });
@@ -23,8 +26,7 @@ test.describe('Testy logowania', async () => {
     await utility.addGlobalStyles(page);
     })
 
-
-  test('M | Logowanie z poprawnymi danymi', async ({ page, baseURL }) => {
+  test('M | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -39,7 +41,7 @@ test.describe('Testy logowania', async () => {
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
-    expect(await loginPage.getErrorMessage).toBe("Podany adres email jest nieprawidłowy");
+    await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 5000 })
   })
 
   test('M | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
@@ -48,7 +50,7 @@ test.describe('Testy logowania', async () => {
     await loginPage.enterPassword('invalidpassword');
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
-    expect(await loginPage.getErrorMessage).toBe("Nieprawidłowe dane logowania");
+    await expect(commonPage.getMessage).toHaveText("Nieprawidłowe dane logowania", { timeout: 5000 })
   })
 })
 

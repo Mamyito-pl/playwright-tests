@@ -2,14 +2,13 @@
   "name": "mamyitoui",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "1.47",
+    "@playwright/test": "^1.49.1",
     "@types/node": "^22.5.5",
     "allure-commandline": "^2.30.0",
     "allure-playwright": "^3.0.4"

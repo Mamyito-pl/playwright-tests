@@ -10,9 +10,9 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
+test.describe.configure({ mode: 'serial'})
+
 test.describe('Testy koszyka', async () => {
-  
-  test.describe.configure({ mode: 'serial'})
 
   let cartPage: CartPage;
   let productsPage: ProductsPage;
@@ -24,7 +24,7 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    await allure.tags("Mobile", "Koszyk")
+    await allure.tags("Mobilne", "Koszyk")
     await allure.parentSuite("Mobilne");
     await allure.suite("Koszyk");
 
@@ -48,7 +48,7 @@ test.describe('Testy koszyka', async () => {
   }
   }) 
   
-  test('M | Możliwość zwiększenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('M | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -61,7 +61,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('2');
   })
 
-  test('M | Możliwość zmniejszenia ilości produktu w koszyku', async ({ page, addProduct }) => {
+  test('M | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
     await addProduct('cytryna zieleniak');
 
@@ -80,7 +80,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveText('1');
   }) 
 
-  test('M | Możliwość usunięcia produktu z koszyka', async ({ page, addProduct }) => {   
+  test('M | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {   
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -91,13 +91,13 @@ test.describe('Testy koszyka', async () => {
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveText('1');
-    await cartPage.clickDecreaseProductButton();
-    await cartPage.clickDeleteProductCartDecreaseConfirmButton();
+    await cartPage.clickDeleteProductCartIcon();
+    await cartPage.clickDeleteProductCartConfirmButton();
     await page.reload()
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
   }) 
 
-  test('M | Możliwość dodania produktu w ilości > 1 do koszyka', async ({ page }) => {
+  test('M | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
 
     await searchbarPage.clickSearchbar();
     await expect(page.locator(selectors.Searchbar.mobile.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
@@ -131,7 +131,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
-    await expect(cartPage.getCartAvailableCodesButton).toContainText('Dostępne kody rabatowe:');
+    await expect(cartPage.getCartAvailableCodesButton).toContainText('Wpisz kod rabatowy');
     
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
     await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');
@@ -176,8 +176,6 @@ test.describe('Testy koszyka', async () => {
   })
 
   test.describe('M | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
-
-    test.describe.configure({ mode: 'serial'});
     
     test.setTimeout(80000);
     
@@ -220,6 +218,7 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
+
     test('M | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
       
       const product = 'bułka kajzerka putka';
@@ -259,6 +258,7 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
+
     test('M | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
       
       const product = 'banan zieleniak';
@@ -298,6 +298,7 @@ test.describe('Testy koszyka', async () => {
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
+    
     test('M | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
       
       const product = 'serek wiejski piątnica';

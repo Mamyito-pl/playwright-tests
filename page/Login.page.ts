@@ -18,8 +18,4 @@ export default class LoginPage {
     async clickLoginButton() {
         await this.page.click(selectors.LoginPage.common.loginButton);
     }
-
-    get getErrorMessage() {
-        return this.page.locator(selectors.LoginPage.common.errorMessage).textContent();
-    }
 }

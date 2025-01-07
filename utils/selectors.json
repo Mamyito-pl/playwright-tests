@@ -42,14 +42,14 @@
             "cartSummaryButton": "#cart_summary_proceed_button",
             "cartSummaryPaymentButton": "#cart_summary_proceed_payment_button",
             "cartSummaryPaymentConfirmationButton": "#cart_summary_payment_confirmation",
-            "cartReturnButton": "#cart_return_button"
+            "cartReturnButton": "#cart_return_button",
+            "deleteProductCartIcon": "#cart_remove_product"
         },
         "web": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
             "cartButton": "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button",
             "productsNumberButton": "div[data-sentry-element='WebContent'][data-sentry-source-file='Navigation.tsx'] #cart_button #productsNumber",
             "showCartButton": "button:has-text('Pokaż koszyk')",
-            "deleteProductCartIcon": "div[data-sentry-element='WebIconSectionWrapper']",
             "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='WebContent'] button",
             "cartCodesTitle": "div[data-sentry-source-file='CartPromoCodesForm.tsx'] [data-sentry-element='WebContent'] div",
             "cartDrawerSummaryTitle": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-element='SectionTitle']",
