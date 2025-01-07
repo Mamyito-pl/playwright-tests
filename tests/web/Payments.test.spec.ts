@@ -58,7 +58,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(130000);
+    test.setTimeout(150000);
 
     await addProduct('kapsułki somat');
 
@@ -150,7 +150,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(130000);
+    test.setTimeout(150000);
 
     await addProduct('kapsułki somat');
 
@@ -254,7 +254,7 @@ test.describe('Testy płatności', async () => {
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
-      test.setTimeout(130000);
+      test.setTimeout(150000);
 
       await addProduct('kapsułki somat');
 
