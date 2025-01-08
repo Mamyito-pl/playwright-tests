@@ -37,7 +37,7 @@ export const test = baseTest.extend<MyFixtures>({
       await loginPage.enterEmail(`${process.env.EMAIL}`);
       await loginPage.enterPassword(`${process.env.PASSWORD}`);
       await loginPage.clickLoginButton();
-      await page.waitForURL('/', { waitUntil: 'domcontentloaded'});
+      await page.waitForURL('/', { waitUntil: 'domcontentloaded', timeout: 3000 });
       await utility.addGlobalStyles(page);
       await expect(mainLogoutPage.getLoginLink).toBeHidden();
     };
@@ -64,7 +64,7 @@ export const test = baseTest.extend<MyFixtures>({
 
   addProduct: async ({ page }, use) => {
 
-    test.setTimeout(80000);
+    //test.setTimeout(80000);
 
     cartPage = new CartPage(page);
     searchbarPage = new SearchbarPage(page);
@@ -81,7 +81,7 @@ export const test = baseTest.extend<MyFixtures>({
       const searchbarCloseButtonSelector = mobile ? selectors.Searchbar.mobile.searchbarCloseButton : selectors.Searchbar.web.searchbarCloseButton
 
       await page.locator(searchbarInputSelector).click();
-      await expect(page.locator(searchbarCloseButtonSelector)).toBeVisible({ timeout: 15000 });
+      await expect(page.locator(searchbarCloseButtonSelector)).toBeVisible({ timeout: 10000 });
       await searchbarPage.enterProduct(product);
       await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
       await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();

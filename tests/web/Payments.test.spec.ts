@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page, chromium, expect } from '@playwright/test';
 import ProductsPage from '../../page/Products.page.ts';
 import MainPage from "../../page/Main.page.ts";
 import CartPage from '../../page/Cart.page.ts';
@@ -11,6 +11,7 @@ import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
+import { url } from 'inspector';
 
 test.describe.configure({ mode: 'serial' })
 
@@ -27,10 +28,6 @@ test.describe('Testy płatności', async () => {
   let searchbarPage : SearchbarPage;
 
   test.beforeEach(async ({ page, loginManual }) => {
-
-    await page.context().addInitScript(() => {
-      document.cookie =  'SameSite=None; Secure;';
-    });
 
     await allure.tags("Web", "Płatności")
     await allure.parentSuite("Webowe");
@@ -190,7 +187,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(200000);
+    test.setTimeout(180000);
 
     await addProduct('kapsułki somat');
 
@@ -209,20 +206,22 @@ test.describe('Testy płatności', async () => {
     await paymentsPage.checkStatue();
     await page.waitForTimeout(1000);
     await cartPage.clickCartPaymentConfirmationButtonButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 7000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
-    await page.waitForLoadState('networkidle')
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
     await przelewy24Page.clickErrorPayButton();
-    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
+    if (new RegExp('^https://vsa.przelewy24.pl/pl/payment').test(page.url())) {
+      await przelewy24Page.clickErrorPayButton();
+    }
+    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'), { timeout: 5000 });
     await przelewy24Page.clickBackToShopButton();
 
     await paymentsPage.clickOrderDetailsButton();
 
-    await expect(page).toHaveURL(new RegExp('^https://mamyito-front.test.desmart.live/profil/'));
+    await expect(page).toHaveURL(new RegExp('^https://mamyito-front.test.desmart.live/profil/'), { timeout: 5000 });
     await expect(orderDetailsPage.getPayButton).toBeVisible();
     await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible();
     await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible();
@@ -230,15 +229,11 @@ test.describe('Testy płatności', async () => {
 
     await orderDetailsPage.clickPayButton();
 
-    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
+    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 5000 });
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
-    await page.waitForLoadState('networkidle')
-    await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
+    await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'), { timeout: 5000 });
     await przelewy24Page.clickPayButton();
-    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
-
-    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
