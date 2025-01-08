@@ -29,7 +29,7 @@ export default class Przelewy24Page {
     }
 
     async clickPayButton() {
-        await this.page.click(selectors.Przelewy24.common.payButton);
+        await this.getPayButton.click({ force: true });
     }
 
     async clickErrorPayButton() {
@@ -46,5 +46,9 @@ export default class Przelewy24Page {
 
     get getErrorPayButton() {
         return this.page.locator("button:has-text('Błąd płatności')");
+    }
+
+    get getPayButton() {
+        return this.page.locator("button:has-text('Zapłać')");
     }
 }
