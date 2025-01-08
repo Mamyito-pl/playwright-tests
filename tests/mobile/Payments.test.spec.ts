@@ -200,7 +200,7 @@ test.describe('Testy płatności', async () => {
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButtonButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 7000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
     await przelewy24Page.clickMainTransferButton();

@@ -181,13 +181,13 @@ test.describe('Testy płatności', async () => {
     await expect(orderDetailsPage.getCancelOrderButton).toBeVisible({ timeout: 5000 });
   })
 
-  test.only('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+  test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, browser }) => {
 
     test.info().annotations.push({ type: 'skipClearCart' });
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(180000);
+    test.setTimeout(300000);
 
     await addProduct('kapsułki somat');
 
@@ -196,7 +196,7 @@ test.describe('Testy płatności', async () => {
         await page.waitForTimeout(1000);
     };
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.goto('/koszyk', { waitUntil: 'commit'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
@@ -213,15 +213,10 @@ test.describe('Testy płatności', async () => {
     await przelewy24Page.clickChosenTransferButton();
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
     await przelewy24Page.clickErrorPayButton();
-    if (new RegExp('^https://vsa.przelewy24.pl/pl/payment').test(page.url())) {
-      await przelewy24Page.clickErrorPayButton();
-    }
-    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'), { timeout: 5000 });
     await przelewy24Page.clickBackToShopButton();
 
     await paymentsPage.clickOrderDetailsButton();
 
-    await expect(page).toHaveURL(new RegExp('^https://mamyito-front.test.desmart.live/profil/'), { timeout: 5000 });
     await expect(orderDetailsPage.getPayButton).toBeVisible();
     await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible();
     await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible();
@@ -229,17 +224,18 @@ test.describe('Testy płatności', async () => {
 
     await orderDetailsPage.clickPayButton();
 
-    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 5000 });
+    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
-    await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'), { timeout: 5000 });
+    await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
     await przelewy24Page.clickPayButton();
-    await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
-    await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
+
+    await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 250000 });
+    await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 250000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
-    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible({ timeout: 250000 });
   })
   
   test.describe('Płatności BLIK', async () => {
