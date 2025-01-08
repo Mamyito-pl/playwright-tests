@@ -12,9 +12,9 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 
-test.describe.configure({ mode: 'serial'})
+test.describe.configure({ mode: 'serial' })
 
-test.describe.only('Testy płatności', async () => {
+test.describe('Testy płatności', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
@@ -180,7 +180,9 @@ test.describe.only('Testy płatności', async () => {
     await expect(orderDetailsPage.getCancelOrderButton).toBeVisible({ timeout: 5000 });
   })
 
-  test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+  test.only('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+
+    test.info().annotations.push({ type: 'skipClearCart' });
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
@@ -201,6 +203,7 @@ test.describe.only('Testy płatności', async () => {
     await cartPage.clickCartSummaryButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
     await cartPage.clickCartPaymentConfirmationButtonButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -238,10 +241,6 @@ test.describe.only('Testy płatności', async () => {
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
     await expect(paymentsPage.getBackHomeButton).toBeVisible();
-
-    if (!test.info().status || test.info().status !== 'failed') {
-      test.info().annotations.push({ type: 'skipClearCart' });
-    }
   })
   
   test.describe('Płatności BLIK', async () => {

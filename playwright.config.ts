@@ -26,9 +26,9 @@ export default defineConfig({
     },
   }]],
   use: {
-    trace: 'on-first-retry',
+    trace: 'off',
     screenshot: "only-on-failure",
-    video: "on-first-retry",
+    video: "on",
   },
 
   projects: [
