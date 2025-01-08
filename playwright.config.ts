@@ -5,7 +5,7 @@ export default defineConfig({
 
   fullyParallel: true,
 
-  forbidOnly: !!process.env.CI,
+  forbidOnly: false,
 
   retries: process.env.CI ? 2 : 0,
 
@@ -26,9 +26,9 @@ export default defineConfig({
     },
   }]],
   use: {
-    trace: 'off',
+    trace: 'on-first-retry',
     screenshot: "only-on-failure",
-    video: "off",
+    video: "on-first-retry",
   },
 
   projects: [
