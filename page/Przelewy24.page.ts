@@ -45,10 +45,10 @@ export default class Przelewy24Page {
     }
 
     get getErrorPayButton() {
-        return this.page.locator("button:has-text('Błąd płatności')");
+        return this.page.locator("#user_account_pbl_error");
     }
 
     get getPayButton() {
-        return this.page.locator("button:has-text('Zapłać')");
+        return this.page.locator("#user_account_pbl_correct");
     }
 }
