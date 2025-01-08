@@ -59,7 +59,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(150000);
+    test.setTimeout(200000);
 
     await addProduct('kapsułki somat');
 
@@ -101,7 +101,7 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getRepeatOrderButton).toBeHidden();
     await expect(paymentsPage.getBackHomeButton).toBeHidden();
 
-    if (!test.info().status || test.info().status !== 'failed') {
+    if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
   })
@@ -112,7 +112,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(150000);
+    test.setTimeout(200000);
 
     await addProduct('kapsułki somat');
 
@@ -121,7 +121,7 @@ test.describe('Testy płatności', async () => {
         await page.waitForTimeout(1000);
     };
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.goto('/koszyk', { waitUntil: 'commit'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
@@ -143,15 +143,17 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getCloseIconButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
     await expect(paymentsPage.getAddProductsButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
     await expect(paymentsPage.getCancelButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
+
+    if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
   })
 
   test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
-    test.setTimeout(150000);
+    test.setTimeout(200000);
 
     await addProduct('kapsułki somat');
 
@@ -179,11 +181,13 @@ test.describe('Testy płatności', async () => {
     await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible({ timeout: 5000 });
     await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible({ timeout: 5000 });
     await expect(orderDetailsPage.getCancelOrderButton).toBeVisible({ timeout: 5000 });
+
+    if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
   })
 
   test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, browser }) => {
-
-    test.info().annotations.push({ type: 'skipClearCart' });
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
   
@@ -236,6 +240,10 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
     await expect(paymentsPage.getBackHomeButton).toBeVisible({ timeout: 250000 });
+
+    if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
   })
   
   test.describe('Płatności BLIK', async () => {
@@ -243,8 +251,6 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -279,13 +285,15 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
 
     test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -324,6 +332,10 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Co chcesz zrobić?')).toBeVisible({ timeout: 5000 });
       await expect(paymentsPage.getPaymentOnDeliveryButton).toBeVisible({ timeout: 5000 });
       await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 });
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
 
     test('W | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
@@ -447,8 +459,6 @@ test.describe('Testy płatności', async () => {
 
       allure.subSuite('Płatność BLIK')
 
-      test.info().annotations.push({ type: 'skipClearCart' });
-
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
       test.setTimeout(180000);
@@ -503,13 +513,15 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
                          
     test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność BLIK')
-      
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -558,6 +570,10 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
   })
 
@@ -566,8 +582,6 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -605,13 +619,15 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     }) 
         
     test('W | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -661,13 +677,15 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     }) 
                         
     test('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -733,13 +751,15 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
                             
     test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Płatność przelewem online')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -806,6 +826,10 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
   })
 
@@ -814,8 +838,6 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       allure.subSuite('Zapłata kartą przy odbiorze')
-
-      test.info().annotations.push({ type: 'skipClearCart' });
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
@@ -846,6 +868,10 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      if (!test.info().status || test.info().status !== 'failed', 'timedOut', 'interrupted') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
     })
   })
 })
