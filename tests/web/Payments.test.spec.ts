@@ -28,6 +28,10 @@ test.describe('Testy płatności', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
+    await page.context().addInitScript(() => {
+      document.cookie =  'SameSite=None; Secure;';
+    });
+
     await allure.tags("Web", "Płatności")
     await allure.parentSuite("Webowe");
     await allure.suite("Płatności");
@@ -51,7 +55,7 @@ test.describe('Testy płatności', async () => {
 
     if (!shouldSkipClearCart) {
       await clearCart();
-  }
+    }
   }) 
 
   test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
