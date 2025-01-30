@@ -17,6 +17,7 @@ test.describe('Testy logowania', async () => {
 
     await allure.tags("Web", "Logowanie")
     await allure.parentSuite("Webowe");
+    await allure.suite('Logowanie') 
 
     loginPage = new LoginPage(page);
     commonPage = new CommonPage(page);

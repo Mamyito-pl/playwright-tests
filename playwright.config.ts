@@ -14,7 +14,7 @@ export default defineConfig({
   reporter: [['html'], ['allure-playwright', {
     detail: true,
     outputFolder: "allure-results",
-    suiteTitle: true,
+    suiteTitle: false,
     categories: [
       {
         name: "Outdated tests",

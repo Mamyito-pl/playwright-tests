@@ -31,6 +31,7 @@ test.describe('Testy płatności', async () => {
 
     await allure.tags("Web", "Płatności")
     await allure.parentSuite("Webowe");
+    await allure.suite("Płatności")
 
     await loginManual();
 

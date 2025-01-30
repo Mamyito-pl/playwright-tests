@@ -16,6 +16,7 @@ test.describe('Testy dostawy', async () => {
 
     await allure.tags("Web", "Dostawa")
     await allure.parentSuite("Webowe");
+    await allure.suite("Dostawa");
 
     await loginManual();
 

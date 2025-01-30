@@ -28,6 +28,7 @@ test.describe('Testy koszyka', async () => {
 
     await allure.tags("Web", "Koszyk")
     await allure.parentSuite("Webowe");
+    await allure.suite("Koszyk");
 
     await loginManual();
 
