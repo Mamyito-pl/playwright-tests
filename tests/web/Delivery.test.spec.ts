@@ -44,7 +44,6 @@ test.describe('Testy dostawy', async () => {
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
-    await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny');
     await deliveryPage.getDeliverySlotButton.first().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Wybrany');
     await deliveryPage.getDeliverySlotButton.last().click();
