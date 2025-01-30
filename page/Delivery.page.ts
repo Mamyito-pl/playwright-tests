@@ -59,7 +59,7 @@ export default class DeliveryPage {
     }
 
     get getAddressModalSaveButton() {
-        return this.page.getByText('Zapisz');
+        return this.page.getByRole('button', { name: 'Zapisz' })
     }
 
     get getAddressModalCancelButton() {
