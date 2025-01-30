@@ -12,7 +12,7 @@ import { test } from '../../fixtures/fixtures.ts';
 
 test.describe.configure({ mode: 'serial'})
 
-test.describe('Koszyk', async () => {
+test.describe('Testy koszyka', async () => {
 
   test.setTimeout(80000);
 
@@ -24,11 +24,18 @@ test.describe('Koszyk', async () => {
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeAll(async () => {
 
     await allure.tags("Web", "Koszyk")
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
+  })
+
+  test.beforeEach(async ({ page, loginManual }) => {
+
+    //await allure.tags("Web", "Koszyk")
+    //await allure.parentSuite("Webowe");
+    //await allure.suite("Koszyk");
 
     await loginManual();
 
