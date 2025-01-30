@@ -15,7 +15,7 @@ import { url } from 'inspector';
 
 test.describe.configure({ mode: 'serial' })
 
-test.describe('Testy płatności', async () => {
+test.describe('Płatności', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;

@@ -12,7 +12,7 @@ import { test } from '../../fixtures/fixtures.ts';
 
 test.describe.configure({ mode: 'serial'})
 
-test.describe('Testy koszyka', async () => {
+test.describe('Koszyk', async () => {
 
   test.setTimeout(80000);
 

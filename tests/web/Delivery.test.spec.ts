@@ -7,7 +7,7 @@ import { test } from '../../fixtures/fixtures.ts';
 
 test.describe.configure({ mode: 'serial'})
 
-test.describe('Testy dostawy', async () => {
+test.describe('Dostawa', async () => {
 
   let commonPage: CommonPage;
   let deliveryPage : DeliveryPage;
