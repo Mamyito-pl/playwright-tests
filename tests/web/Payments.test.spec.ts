@@ -27,10 +27,14 @@ test.describe('Płatności', async () => {
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeAll(async () => {
 
     await allure.tags("Web", "Płatności")
     await allure.parentSuite("Webowe");
+    await allure.suite('Płatności') 
+  })
+  
+  test.beforeEach(async ({ page, loginManual }) => {
 
     await loginManual();
 

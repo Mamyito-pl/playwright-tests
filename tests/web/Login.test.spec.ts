@@ -13,11 +13,14 @@ test.describe('Logowanie', async () => {
   let commonPage: CommonPage;
   let mainLogoutPage: MainLogoutPage;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeAll(async () => {
 
     await allure.tags("Web", "Logowanie")
     await allure.parentSuite("Webowe");
     await allure.suite('Logowanie') 
+  })
+
+  test.beforeEach(async ({ page }) => {
 
     loginPage = new LoginPage(page);
     commonPage = new CommonPage(page);

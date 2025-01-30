@@ -12,11 +12,14 @@ test.describe('Dostawa', async () => {
   let commonPage: CommonPage;
   let deliveryPage : DeliveryPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeAll(async () => {
 
     await allure.tags("Web", "Dostawa")
     await allure.parentSuite("Webowe");
     await allure.suite("Dostawa");
+  })
+
+  test.beforeEach(async ({ page, loginManual }) => {
 
     await loginManual();
 
