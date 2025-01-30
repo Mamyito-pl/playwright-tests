@@ -54,6 +54,9 @@ test.describe('Testy koszyka', async () => {
   
   test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
 
+    await allure.tags("Web", "Koszyk")
+    await allure.parentSuite("Webowe");
+    await allure.suite("Koszyk");
     await allure.allureId('437')
     
     await addProduct('cytryna zieleniak');
@@ -68,7 +71,10 @@ test.describe('Testy koszyka', async () => {
   })
 
   test('W | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
-
+    
+    await allure.tags("Web", "Koszyk")
+    await allure.parentSuite("Webowe");
+    await allure.suite("Koszyk");
     await allure.allureId('438')
     
     await addProduct('cytryna zieleniak');
@@ -90,6 +96,9 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {  
     
+    await allure.tags("Web", "Koszyk")
+    await allure.parentSuite("Webowe");
+    await allure.suite("Koszyk");
     await allure.allureId('435')
     
     test.info().annotations.push({ type: 'skipClearCart' });
