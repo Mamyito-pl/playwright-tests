@@ -47,10 +47,10 @@ test.describe('Testy koszyka', async () => {
   
   test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
-    await allure.allureId('437')
+    await allure.allureId('437');
     
     await addProduct('cytryna zieleniak');
 
@@ -65,11 +65,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
     await allure.subSuite("");
-    await allure.allureId('438')
+    await allure.allureId('438');
     
     await addProduct('cytryna zieleniak');
 
@@ -90,11 +90,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {  
     
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
     await allure.subSuite("");
-    await allure.allureId('435')
+    await allure.allureId('435');
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -113,11 +113,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
     await allure.subSuite("");
-    await allure.allureId('434')
+    await allure.allureId('434');
 
     await searchbarPage.clickSearchbar()
     await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
@@ -137,10 +137,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
-    await allure.allureId('442')
+    await allure.subSuite("");
+    await allure.allureId('442');
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -181,10 +182,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', async ({ page }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
-    await allure.allureId('439')
+    await allure.subSuite("");
+    await allure.allureId('439');
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -197,10 +199,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
-    await allure.allureId('440')
+    await allure.subSuite("");
+    await allure.allureId('440');
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -213,10 +216,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
-    await allure.allureId('443')
+    await allure.subSuite("");
+    await allure.allureId('443');
     
     const product = 'woda';
 
@@ -230,10 +234,11 @@ test.describe('Testy koszyka', async () => {
 
   test('W | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
 
-    await allure.tags("Web", "Koszyk")
+    await allure.tags("Web", "Koszyk");
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
-    await allure.allureId('496')
+    await allure.subSuite("");
+    await allure.allureId('496');
     
     test.info().annotations.push({ type: 'skipClearCart' });
     
@@ -255,9 +260,8 @@ test.describe('Testy koszyka', async () => {
       await allure.tags("Web", "Koszyk")
       await allure.parentSuite("Webowe");
       await allure.suite("Koszyk");
-      await allure.subSuite('Testy koszyka')
-      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
-      await allure.allureId('497')
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('497');
       
       const product = 'woda';
       const addedProduct: { name: string; price: string }[] = [];
@@ -303,9 +307,8 @@ test.describe('Testy koszyka', async () => {
       await allure.tags("Web", "Koszyk")
       await allure.parentSuite("Webowe");
       await allure.suite("Koszyk");
-      await allure.subSuite('Testy koszyka')
-      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
-      await allure.allureId('498')
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('498');
       
       const product = 'bułka kajzerka putka';
       const addedProduct: { name: string; price: string }[] = [];
@@ -348,11 +351,11 @@ test.describe('Testy koszyka', async () => {
 
     test('W | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
 
-      await allure.tags("Web", "Koszyk")
+      await allure.tags("Web", "Koszyk");
       await allure.parentSuite("Webowe");
       await allure.suite("Koszyk");
-      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
-      await allure.allureId('499')
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('499');
       
       const product = 'banan zieleniak';
       const addedProduct: { name: string; price: string }[] = [];
@@ -395,12 +398,11 @@ test.describe('Testy koszyka', async () => {
 
     test('W | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
 
-      await allure.tags("Web", "Koszyk")
+      await allure.tags("Web", "Koszyk");
       await allure.parentSuite("Webowe");
       await allure.suite("Koszyk");
-      await allure.subSuite('Testy koszyka')
-      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
-      await allure.allureId('500')
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('500');
       
       const product = 'serek wiejski piątnica';
       const addedProduct: { name: string; price: string }[] = [];
