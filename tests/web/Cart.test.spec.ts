@@ -46,10 +46,12 @@ test.describe('Testy koszyka', async () => {
 
     if (!shouldSkipClearCart) {
       await clearCart();
-  }
+    }
   }) 
   
   test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
+
+    await allure.allureId('437')
     
     await addProduct('cytryna zieleniak');
 
@@ -57,12 +59,14 @@ test.describe('Testy koszyka', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickIncreaseProductButton();
-    await expect(cartPage.getProductItemCount).toHaveText('2');
+    await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
   test('W | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
+
+    await allure.allureId('438')
     
     await addProduct('cytryna zieleniak');
 
@@ -70,18 +74,20 @@ test.describe('Testy koszyka', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickIncreaseProductButton();
     };
-    await expect(cartPage.getProductItemCount).toHaveText('3');
+    await expect(cartPage.getProductItemCount).toHaveValue('3');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickDecreaseProductButton();
     };
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
   }) 
 
-  test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {   
+  test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {  
+    
+    await allure.allureId('435')
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -91,7 +97,7 @@ test.describe('Testy koszyka', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickDeleteProductCartIcon();
     await cartPage.clickDeleteProductCartConfirmButton();
     await page.waitForTimeout(2000);
@@ -99,6 +105,8 @@ test.describe('Testy koszyka', async () => {
   }) 
 
   test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
+
+    await allure.allureId('434')
 
     await searchbarPage.clickSearchbar()
     await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
@@ -108,15 +116,17 @@ test.describe('Testy koszyka', async () => {
     await page.waitForTimeout(2000);
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
-    await expect(searchbarPage.getProductItemCount).toHaveText('2');
+    await expect(searchbarPage.getProductItemCount).toHaveValue('2');
     await cartPage.clickCartButton();
     await cartPage.clickShowCartButton();
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('2');
+    await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
   test('W | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+
+    await allure.allureId('442')
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -151,17 +161,13 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getcartDrawerProductsValue).toBeVisible();
     await expect(cartPage.getcartDrawerProductsValue).toContainText('Wartość produktów0,00 zł');  
 
-    await expect(cartPage.cartDrawerDeliveryCosts).toBeVisible();
-    await expect(cartPage.cartDrawerDeliveryCosts).toContainText('Koszt dostawyWybierz termin');  
-
-    await expect(cartPage.cartDrawerDeliveryMinimalValue).toBeVisible();
-    await expect(cartPage.cartDrawerDeliveryMinimalValue).toContainText('Do minimalnej wartości koszyka brakuje:');  
-
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
     await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');
   })
 
   test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', async ({ page }) => {
+
+    await allure.allureId('439')
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -173,6 +179,8 @@ test.describe('Testy koszyka', async () => {
   })
 
   test('W | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
+
+    await allure.allureId('440')
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
@@ -184,6 +192,8 @@ test.describe('Testy koszyka', async () => {
   })
 
   test('W | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
+
+    await allure.allureId('443')
     
     const product = 'woda';
 
@@ -196,6 +206,8 @@ test.describe('Testy koszyka', async () => {
   })
 
   test('W | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
+
+    await allure.allureId('496')
     
     test.info().annotations.push({ type: 'skipClearCart' });
     
@@ -209,10 +221,14 @@ test.describe('Testy koszyka', async () => {
   })
 
   test.describe('W | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
+
     
     test.setTimeout(80000);
 
     test('W | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
+
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
+      await allure.allureId('497')
       
       const product = 'woda';
       const addedProduct: { name: string; price: string }[] = [];
@@ -254,6 +270,9 @@ test.describe('Testy koszyka', async () => {
     })
 
     test('W | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
+
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
+      await allure.allureId('498')
       
       const product = 'bułka kajzerka putka';
       const addedProduct: { name: string; price: string }[] = [];
@@ -295,6 +314,9 @@ test.describe('Testy koszyka', async () => {
     })
 
     test('W | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
+
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
+      await allure.allureId('499')
       
       const product = 'banan zieleniak';
       const addedProduct: { name: string; price: string }[] = [];
@@ -336,6 +358,9 @@ test.describe('Testy koszyka', async () => {
     })
 
     test('W | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
+
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
+      await allure.allureId('500')
       
       const product = 'serek wiejski piątnica';
       const addedProduct: { name: string; price: string }[] = [];

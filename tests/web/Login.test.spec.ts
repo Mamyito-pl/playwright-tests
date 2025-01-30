@@ -30,6 +30,8 @@ test.describe('Testy logowania', async () => {
 
   test('W | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
 
+    await allure.allureId('445')
+
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
     await loginPage.clickLoginButton();
@@ -39,6 +41,8 @@ test.describe('Testy logowania', async () => {
 
   test('W | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
 
+    await allure.allureId('447')
+
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
     await loginPage.clickLoginButton();
@@ -47,6 +51,8 @@ test.describe('Testy logowania', async () => {
   })
 
   test('W | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
+
+    await allure.allureId('446')
     
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
