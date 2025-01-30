@@ -68,6 +68,7 @@ test.describe('Testy koszyka', async () => {
     await allure.tags("Web", "Koszyk")
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
+    await allure.subSuite("");
     await allure.allureId('438')
     
     await addProduct('cytryna zieleniak');
@@ -92,6 +93,7 @@ test.describe('Testy koszyka', async () => {
     await allure.tags("Web", "Koszyk")
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
+    await allure.subSuite("");
     await allure.allureId('435')
     
     test.info().annotations.push({ type: 'skipClearCart' });
@@ -114,6 +116,7 @@ test.describe('Testy koszyka', async () => {
     await allure.tags("Web", "Koszyk")
     await allure.parentSuite("Webowe");
     await allure.suite("Koszyk");
+    await allure.subSuite("");
     await allure.allureId('434')
 
     await searchbarPage.clickSearchbar()
@@ -348,7 +351,6 @@ test.describe('Testy koszyka', async () => {
       await allure.tags("Web", "Koszyk")
       await allure.parentSuite("Webowe");
       await allure.suite("Koszyk");
-      await allure.subSuite('Testy koszyka')
       await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów')
       await allure.allureId('499')
       
