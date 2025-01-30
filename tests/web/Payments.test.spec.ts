@@ -56,8 +56,6 @@ test.describe('Płatności', async () => {
 
   test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
-    await allure.suite("Płatności")
-
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
@@ -109,8 +107,6 @@ test.describe('Płatności', async () => {
 
   test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
 
-    await allure.suite("Płatności")
-
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
@@ -152,8 +148,6 @@ test.describe('Płatności', async () => {
 
   test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
-    await allure.suite("Płatności")
-
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
@@ -191,8 +185,6 @@ test.describe('Płatności', async () => {
   })
 
   test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, browser }) => {
-
-    await allure.suite("Płatności")
 
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
@@ -255,7 +247,6 @@ test.describe('Płatności', async () => {
   
     test('W | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -299,7 +290,6 @@ test.describe('Płatności', async () => {
 
     test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -347,7 +337,6 @@ test.describe('Płatności', async () => {
 
     test('W | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
       await allure.allureId('543')
 
@@ -377,7 +366,6 @@ test.describe('Płatności', async () => {
 
     test('W | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
       await allure.allureId('544')
 
@@ -408,7 +396,6 @@ test.describe('Płatności', async () => {
             
     test('W | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
       await allure.allureId('545')
 
@@ -439,7 +426,6 @@ test.describe('Płatności', async () => {
                 
     test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
       await allure.allureId('546')
 
@@ -480,7 +466,6 @@ test.describe('Płatności', async () => {
                     
     test('W | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -545,7 +530,6 @@ test.describe('Płatności', async () => {
                          
     test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność BLIK')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -606,7 +590,6 @@ test.describe('Płatności', async () => {
   
     test('W | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność przelewem online')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -653,7 +636,6 @@ test.describe('Płatności', async () => {
         
     test('W | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność przelewem online')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -712,7 +694,6 @@ test.describe('Płatności', async () => {
                         
     test('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność przelewem online')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -787,7 +768,6 @@ test.describe('Płatności', async () => {
                             
     test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Płatność przelewem online')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -866,7 +846,6 @@ test.describe('Płatności', async () => {
   
     test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.suite("Płatności")
       await allure.subSuite('Zapłata kartą przy odbiorze')
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
