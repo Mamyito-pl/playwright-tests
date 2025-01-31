@@ -12,13 +12,6 @@ test.describe('Dostawa', async () => {
   let commonPage: CommonPage;
   let deliveryPage : DeliveryPage;
 
-  test.beforeAll(async () => {
-
-    await allure.tags("Web", "Dostawa")
-    await allure.parentSuite("Webowe");
-    await allure.suite("Dostawa");
-  })
-
   test.beforeEach(async ({ page, loginManual }) => {
 
     await loginManual();
@@ -29,7 +22,11 @@ test.describe('Dostawa', async () => {
   
   test('W | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
-    await allure.allureId('533')
+    await allure.tags('Web', 'Dostawa');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Dostawa');
+    await allure.subSuite('');
+    await allure.allureId('533');
 
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
@@ -42,7 +39,11 @@ test.describe('Dostawa', async () => {
 
   test('W | Możliwość wyboru terminu dostawy', async ({ page }) => {
 
-    await allure.allureId('437')
+    await allure.tags('Web', 'Dostawa');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Dostawa');
+    await allure.subSuite('');
+    await allure.allureId('437');
 
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
@@ -58,8 +59,11 @@ test.describe('Dostawa', async () => {
     
     test('W | Możliwość dodania adresu dostawy', async ({ page }) => {
 
-      await allure.subSuite('Adres dostawy')
-      await allure.allureId('535')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('535');
 
       test.setTimeout(100000);
       
@@ -115,8 +119,11 @@ test.describe('Dostawa', async () => {
 
     test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
 
-      await allure.subSuite('Adres dostawy')
-      await allure.allureId('536')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('536');
 
       test.setTimeout(100000);
 
@@ -147,8 +154,11 @@ test.describe('Dostawa', async () => {
 
     test('W | Możliwość edycji adresu dostawy', async ({ page }) => {
 
-      await allure.subSuite('Adres dostawy')
-      await allure.allureId('537')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('537');
 
       test.setTimeout(100000);
 
@@ -222,8 +232,11 @@ test.describe('Dostawa', async () => {
     
     test('W | Możliwość usunięcia adresu dostawy', async ({ page }) => {
 
-      await allure.subSuite('Adres dostawy')
-      await allure.allureId('538')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('538');
 
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
@@ -245,8 +258,11 @@ test.describe('Dostawa', async () => {
     
     test('W | Możliwość dodania podmiotu do faktury', async ({ page }) => {
 
-      await allure.subSuite('Faktura')
-      await allure.allureId('539')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('539');
       
       test.setTimeout(120000);
       
@@ -293,8 +309,11 @@ test.describe('Dostawa', async () => {
 
     test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressDelivery }) => {
 
-      await allure.subSuite('Faktura')
-      await allure.allureId('540')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('540');
       
       test.setTimeout(100000);
 
@@ -325,8 +344,11 @@ test.describe('Dostawa', async () => {
 
     test('W | Możliwość edycji podmiotu do faktury', async ({ page }) => {
 
-      await allure.subSuite('Faktura')
-      await allure.allureId('541')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('541');
       
       test.setTimeout(120000);
 
@@ -391,8 +413,11 @@ test.describe('Dostawa', async () => {
     
     test('W | Możliwość usunięcia podmiotu do faktury', async ({ page }) => {
 
-      await allure.subSuite('Faktura')
-      await allure.allureId('542')
+      await allure.tags('Web', 'Dostawa');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('542');
       
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 

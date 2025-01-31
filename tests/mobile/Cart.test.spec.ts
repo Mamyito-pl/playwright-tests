@@ -24,10 +24,6 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    await allure.tags("Mobilne", "Koszyk")
-    await allure.parentSuite("Mobilne");
-    await allure.suite("Koszyk");
-
     await loginManual();
 
     loginPage = new LoginPage(page);
@@ -45,43 +41,61 @@ test.describe('Testy koszyka', async () => {
 
     if (!shouldSkipClearCart) {
       await clearCart();
-  }
+    }
   }) 
   
   test('M | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('465');
+
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickIncreaseProductButton();
-    await expect(cartPage.getProductItemCount).toHaveText('2');
+    await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
   test('M | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('466');
+
     await addProduct('cytryna zieleniak');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickIncreaseProductButton();
     };
-    await expect(cartPage.getProductItemCount).toHaveText('3');
+    await expect(cartPage.getProductItemCount).toHaveValue('3');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickDecreaseProductButton();
     };
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
   }) 
 
   test('M | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {   
     
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('467');
+
     test.info().annotations.push({ type: 'skipClearCart' });
 
     await addProduct('cytryna zieleniak');
@@ -90,7 +104,7 @@ test.describe('Testy koszyka', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('1');
+    await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickDeleteProductCartIcon();
     await cartPage.clickDeleteProductCartConfirmButton();
     await page.reload()
@@ -98,6 +112,12 @@ test.describe('Testy koszyka', async () => {
   }) 
 
   test('M | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('475');
 
     await searchbarPage.clickSearchbar();
     await expect(page.locator(selectors.Searchbar.mobile.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
@@ -107,15 +127,21 @@ test.describe('Testy koszyka', async () => {
     await page.waitForTimeout(2000);
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
-    await expect(searchbarPage.getProductItemCount).toHaveText('2');
+    await expect(searchbarPage.getProductItemCount).toHaveValue('2');
     await cartPage.clickCartButton();
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
-    await expect(cartPage.getProductItemCount).toHaveText('2');
+    await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
   test('M | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
     
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('471');
+
     test.info().annotations.push({ type: 'skipClearCart' });
 
     await cartPage.clickCartButton();
@@ -139,6 +165,12 @@ test.describe('Testy koszyka', async () => {
 
   test('M | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
     
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('472');
+
     test.info().annotations.push({ type: 'skipClearCart' });
 
     await expect(cartPage.getCartDrawer).toBeHidden();
@@ -149,6 +181,12 @@ test.describe('Testy koszyka', async () => {
   })
 
   test('M | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('469');
     
     const product = 'woda';
 
@@ -163,6 +201,12 @@ test.describe('Testy koszyka', async () => {
 
   test('M | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
     
+    await allure.tags('Mobilne', 'Koszyk');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Koszyk');
+    await allure.subSuite('');
+    await allure.allureId('474');
+
     test.info().annotations.push({ type: 'skipClearCart' });
     
     await page.goto('/koszyk', { waitUntil: 'load'});
@@ -180,6 +224,12 @@ test.describe('Testy koszyka', async () => {
     
     test('M | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
       
+      await allure.tags('Web', 'Koszyk');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Koszyk');
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('468');
+
       const product = 'woda';
       const addedProduct: { name: string; price: string }[] = [];
 
@@ -219,6 +269,12 @@ test.describe('Testy koszyka', async () => {
     })
 
     test('M | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
+
+      await allure.tags('Web', 'Koszyk');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Koszyk');
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('470');
       
       const product = 'bułka kajzerka putka';
       const addedProduct: { name: string; price: string }[] = [];
@@ -260,6 +316,12 @@ test.describe('Testy koszyka', async () => {
 
     test('M | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
       
+      await allure.tags('Web', 'Koszyk');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Koszyk');
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('473');
+
       const product = 'banan zieleniak';
       const addedProduct: { name: string; price: string }[] = [];
 
@@ -300,6 +362,12 @@ test.describe('Testy koszyka', async () => {
     
     test('M | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
       
+      await allure.tags('Web', 'Koszyk');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Koszyk');
+      await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
+      await allure.allureId('476');
+
       const product = 'serek wiejski piątnica';
       const addedProduct: { name: string; price: string }[] = [];
 

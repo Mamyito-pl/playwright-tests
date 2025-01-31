@@ -11,11 +11,10 @@ import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
-import { url } from 'inspector';
 
 test.describe.configure({ mode: 'serial' })
 
-test.describe('Płatności', async () => {
+test.describe('Testy płatności', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
@@ -26,13 +25,6 @@ test.describe('Płatności', async () => {
   let productsPage: ProductsPage;
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
-
-  test.beforeAll(async () => {
-
-    await allure.tags("Web", "Płatności")
-    await allure.parentSuite("Webowe");
-    await allure.suite('Płatności') 
-  })
   
   test.beforeEach(async ({ page, loginManual }) => {
 
@@ -60,11 +52,17 @@ test.describe('Płatności', async () => {
 
   test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
+    await allure.tags('Web', 'Płatności');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('448');
+
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(200000);
 
@@ -111,11 +109,17 @@ test.describe('Płatności', async () => {
 
   test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
 
+    await allure.tags('Web', 'Płatności');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('457');
+
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(200000);
 
@@ -152,11 +156,17 @@ test.describe('Płatności', async () => {
 
   test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
+    await allure.tags('Web', 'Płatności');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('455');
+
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(200000);
 
@@ -190,11 +200,17 @@ test.describe('Płatności', async () => {
 
   test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, browser }) => {
 
+    await allure.tags('Web', 'Płatności');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('463');
+
     if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(300000);
 
@@ -251,13 +267,17 @@ test.describe('Płatności', async () => {
   
     test('W | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność BLIK')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('464');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
       }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(150000);
 
@@ -294,13 +314,17 @@ test.describe('Płatności', async () => {
 
     test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność BLIK')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('451');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
       }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(150000);
 
@@ -341,8 +365,11 @@ test.describe('Płatności', async () => {
 
     test('W | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
 
-      await allure.subSuite('Płatność BLIK')
-      await allure.allureId('543')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('543');
 
       test.setTimeout(60000);
 
@@ -370,8 +397,11 @@ test.describe('Płatności', async () => {
 
     test('W | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
 
-      await allure.subSuite('Płatność BLIK')
-      await allure.allureId('544')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('544');
 
       test.setTimeout(60000);
 
@@ -400,8 +430,11 @@ test.describe('Płatności', async () => {
             
     test('W | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
 
-      await allure.subSuite('Płatność BLIK')
-      await allure.allureId('545')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('545');
 
       test.setTimeout(60000);
 
@@ -430,12 +463,15 @@ test.describe('Płatności', async () => {
                 
     test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
 
-      await allure.subSuite('Płatność BLIK')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
       await allure.allureId('546')
 
       test.setTimeout(130000);
 
-      const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"]
+      const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
       await addProduct('tabletki do mycia naczyń somat');
 
@@ -470,7 +506,11 @@ test.describe('Płatności', async () => {
                     
     test('W | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność BLIK')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('452');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
@@ -534,13 +574,17 @@ test.describe('Płatności', async () => {
                          
     test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność BLIK')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('462');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
       }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(150000);
 
@@ -594,13 +638,17 @@ test.describe('Płatności', async () => {
   
     test('W | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność przelewem online')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('459');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
       }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(130000);
 
@@ -640,13 +688,17 @@ test.describe('Płatności', async () => {
         
     test('W | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność przelewem online')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('453');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
       }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(130000);
 
@@ -698,13 +750,17 @@ test.describe('Płatności', async () => {
                         
     test('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.subSuite('Płatność przelewem online')
+      await allure.tags('Web', 'Płatności');
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('461');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
       }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(170000);
 
@@ -772,7 +828,11 @@ test.describe('Płatności', async () => {
                             
     test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
+      await allure.tags('Web', 'Płatności')
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
       await allure.subSuite('Płatność przelewem online')
+      await allure.allureId('460');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
@@ -850,7 +910,11 @@ test.describe('Płatności', async () => {
   
     test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
+      await allure.tags('Web', 'Płatności')
+      await allure.parentSuite('Webowe');
+      await allure.suite('Płatności');
       await allure.subSuite('Zapłata kartą przy odbiorze')
+      await allure.allureId('449');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });

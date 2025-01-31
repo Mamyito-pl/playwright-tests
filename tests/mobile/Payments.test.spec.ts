@@ -28,10 +28,6 @@ test.describe('Testy płatności', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    await allure.tags("Mobilne", "Płatności")
-    await allure.parentSuite("Mobilne");
-    await allure.suite("Płatności");
-
     await loginManual();
 
     mainPage = new MainPage(page);
@@ -51,18 +47,26 @@ test.describe('Testy płatności', async () => {
 
     if (!shouldSkipClearCart) {
       await clearCart();
-  }
+    }
   })
 
   test('M | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
+    await allure.tags('Mobilne', 'Płatności');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('480');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
 
-    await addProduct('kapsułki somat');
+    await addProduct('tabletki do mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -73,7 +77,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.clickDeliverySlotButton();
+    await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
@@ -103,13 +107,21 @@ test.describe('Testy płatności', async () => {
 
   test('M | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
+    await allure.tags('Mobilne', 'Płatności');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('481');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
 
-    await addProduct('kapsułki somat');
+    await addProduct('tabletki do mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -120,7 +132,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.clickDeliverySlotButton();
+    await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
@@ -142,13 +154,21 @@ test.describe('Testy płatności', async () => {
   
   test('M | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
+    await allure.tags('Mobilne', 'Płatności');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('482');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
 
-    await addProduct('kapsułki somat');
+    await addProduct('tabletki do mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -159,7 +179,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.clickDeliverySlotButton();
+    await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
@@ -178,13 +198,21 @@ test.describe('Testy płatności', async () => {
 
   test('M | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-    test.info().annotations.push({ type: 'skipClearCart' });
+    await allure.tags('Mobilne', 'Płatności');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Płatności');
+    await allure.subSuite('');
+    await allure.allureId('483');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+      test.info().annotations.push({ type: 'skipClearCart' });
+    }
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(180000);
 
-    await addProduct('kapsułki somat');
+    await addProduct('tabletki do mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -195,7 +223,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.clickDeliverySlotButton();
+    await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
@@ -240,15 +268,21 @@ test.describe('Testy płatności', async () => {
     
     test('M | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność BLIK')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('484');
+  
+      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
 
-      test.info().annotations.push({ type: 'skipClearCart' });
-
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
     
       test.setTimeout(130000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -259,7 +293,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('777888');
@@ -281,15 +315,21 @@ test.describe('Testy płatności', async () => {
 
     test('M | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność BLIK')
-      
-      test.info().annotations.push({ type: 'skipClearCart' });
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('485');
+  
+      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(150000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -300,7 +340,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
@@ -326,9 +366,13 @@ test.describe('Testy płatności', async () => {
   
     test('M | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
     
-      allure.subSuite('Płatność BLIK')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('484');
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -339,7 +383,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.checkStatue();
@@ -352,9 +396,13 @@ test.describe('Testy płatności', async () => {
     
     test('M | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
 
-      allure.subSuite('Płatność BLIK')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('48');
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -365,7 +413,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123');
@@ -379,9 +427,13 @@ test.describe('Testy płatności', async () => {
         
     test('M | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
 
-      allure.subSuite('Płatność BLIK')
-
-      await addProduct('kapsułki somat');
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('488');
+  
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -392,7 +444,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('12345678');
@@ -406,11 +458,16 @@ test.describe('Testy płatności', async () => {
                     
     test('M | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
 
-      allure.subSuite('Płatność BLIK')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('489');
 
-      const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"]
 
-      await addProduct('kapsułki somat');
+      const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
+
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -421,7 +478,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('12345');
@@ -443,15 +500,21 @@ test.describe('Testy płatności', async () => {
                         
     test('M | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność BLIK')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('490');
+  
+      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
 
-      test.info().annotations.push({ type: 'skipClearCart' });
-
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(180000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -462,7 +525,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123456');
@@ -505,15 +568,21 @@ test.describe('Testy płatności', async () => {
                             
     test('M | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność BLIK')
-      
-      test.info().annotations.push({ type: 'skipClearCart' });
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('491');
+  
+      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+        test.info().annotations.push({ type: 'skipClearCart' });
+      }
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(150000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -524,7 +593,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
@@ -570,15 +639,19 @@ test.describe('Testy płatności', async () => {
   
     test('M | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność przelewem online')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('492');
 
       test.info().annotations.push({ type: 'skipClearCart' });
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(130000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -589,7 +662,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
@@ -620,15 +693,19 @@ test.describe('Testy płatności', async () => {
     
     test('M | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność przelewem online')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('493');
 
       test.info().annotations.push({ type: 'skipClearCart' });
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(200000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -639,7 +716,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
@@ -681,15 +758,19 @@ test.describe('Testy płatności', async () => {
                             
     test('M | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność przelewem online')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('494');
 
       test.info().annotations.push({ type: 'skipClearCart' });
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(170000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -700,7 +781,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
@@ -757,15 +838,19 @@ test.describe('Testy płatności', async () => {
                                 
     test('M | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Płatność przelewem online')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('495');
 
       test.info().annotations.push({ type: 'skipClearCart' });
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(170000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -776,7 +861,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
@@ -832,15 +917,18 @@ test.describe('Testy płatności', async () => {
   
     test('M | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      allure.subSuite('Zapłata kartą przy odbiorze')
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Płatności');
+      await allure.subSuite('Zapłata kartą przy odbiorze');
 
       test.info().annotations.push({ type: 'skipClearCart' });
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(130000);
 
-      await addProduct('kapsułki somat');
+      await addProduct('tabletki do mycia naczyń somat');
 
       for (let i = 0; i < 3; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -851,7 +939,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.clickDeliverySlotButton();
+      await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Płatność kartą przy odbiorze').check();
       await paymentsPage.checkStatue();

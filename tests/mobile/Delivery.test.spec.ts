@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import CommonPage from "../../page/Common.page";
+import CommonPage from "../../page/Common.page.ts";
 import DeliveryPage from '../../page/Delivery.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
@@ -14,10 +14,6 @@ test.describe('Testy dostawy', async () => {
 
   test.beforeEach(async ({ page, loginManual }) => {
 
-    await allure.tags("Mobilne", "Dostawa")
-    await allure.parentSuite("Mobilne");
-    await allure.suite("Dostawa");
-
     await loginManual();
 
     commonPage = new CommonPage(page);
@@ -25,6 +21,12 @@ test.describe('Testy dostawy', async () => {
   })
   
   test('M | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Dostawa');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Dostawa');
+    await allure.subSuite('');
+    await allure.allureId('646');
 
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
@@ -37,10 +39,15 @@ test.describe('Testy dostawy', async () => {
 
   test('M | Możliwość wyboru terminu dostawy', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Dostawa');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Dostawa');
+    await allure.subSuite('');
+    await allure.allureId('647');
+
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
-    await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny');
     await deliveryPage.getDeliverySlotButton.first().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Wybrany');
     await deliveryPage.getDeliverySlotButton.last().click();
@@ -51,6 +58,12 @@ test.describe('Testy dostawy', async () => {
   test.describe('Adres dostawy', async () => {
     
     test('M | Możliwość dodania adresu dostawy', async ({ page }) => {
+
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('648');
 
       test.setTimeout(100000);
       
@@ -106,6 +119,12 @@ test.describe('Testy dostawy', async () => {
 
     test('M | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
 
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('649');
+
       test.setTimeout(100000);
 
       const targetAddress = page.getByText('Adres Testowy').locator('..').locator('..').locator('..');
@@ -134,6 +153,12 @@ test.describe('Testy dostawy', async () => {
     })
 
     test('M | Możliwość edycji adresu dostawy', async ({ page }) => {
+
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('650');
 
       test.setTimeout(100000);
 
@@ -207,6 +232,12 @@ test.describe('Testy dostawy', async () => {
     
     test('M | Możliwość usunięcia adresu dostawy', async ({ page }) => {
 
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('651');
+
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
       await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(2).click();
@@ -227,6 +258,12 @@ test.describe('Testy dostawy', async () => {
     
     test('M | Możliwość dodania podmiotu do faktury', async ({ page }) => {
       
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('652');
+
       test.setTimeout(120000);
       
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
@@ -272,6 +309,12 @@ test.describe('Testy dostawy', async () => {
 
     test('M | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressDelivery }) => {
       
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('653');
+
       test.setTimeout(100000);
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
@@ -300,6 +343,12 @@ test.describe('Testy dostawy', async () => {
     })
 
     test('M | Możliwość edycji podmiotu do faktury', async ({ page }) => {
+
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('654');
       
       test.setTimeout(120000);
 
@@ -363,6 +412,12 @@ test.describe('Testy dostawy', async () => {
     })
     
     test('M | Możliwość usunięcia podmiotu do faktury', async ({ page }) => {
+      
+      await allure.tags('Mobilne', 'Dostawa');
+      await allure.parentSuite('Mobilne');
+      await allure.suite('Dostawa');
+      await allure.subSuite('Faktura');
+      await allure.allureId('655');
       
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 

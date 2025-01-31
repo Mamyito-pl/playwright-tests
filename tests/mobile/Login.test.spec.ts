@@ -13,20 +13,21 @@ test.describe('Testy logowania', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await allure.tags("Mobilne", "Logowanie")
-    await allure.parentSuite("Mobilne");
-    await allure.suite("Logowanie");
-
     loginPage = new LoginPage(page);
     commonPage = new CommonPage(page);
     mainLogoutPage = new MainLogoutPage(page);
     
     await page.goto('/logowanie', { waitUntil: 'load' });
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(2000);
     await utility.addGlobalStyles(page);
     })
 
   test('M | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
+
+    await allure.tags('Mobilne', 'Logowanie');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Logowanie');
+    await allure.allureId('477');
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -36,21 +37,31 @@ test.describe('Testy logowania', async () => {
   })
 
   test('M | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
+
+    await allure.tags('Mobilne', 'Logowanie');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Logowanie');
+    await allure.allureId('478');
     
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
-    await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 5000 })
+    await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 5000 });
   })
 
   test('M | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
+
+    await allure.tags('Mobilne', 'Logowanie');
+    await allure.parentSuite('Mobilne');
+    await allure.suite('Logowanie');
+    await allure.allureId('479');
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
-    await expect(commonPage.getMessage).toHaveText("Nieprawidłowe dane logowania", { timeout: 5000 })
+    await expect(commonPage.getMessage).toHaveText("Nieprawidłowe dane logowania", { timeout: 5000 });
   })
 })
 

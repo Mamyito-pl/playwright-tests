@@ -5,20 +5,13 @@ import MainLogoutPage from "../../page/MainLogout.page";
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 
-test.describe('Logowanie', async () => {
+test.describe('Testy logowania', async () => {
 
   test.setTimeout(80000);
 
   let loginPage: LoginPage;
   let commonPage: CommonPage;
   let mainLogoutPage: MainLogoutPage;
-
-  test.beforeAll(async () => {
-
-    await allure.tags("Web", "Logowanie")
-    await allure.parentSuite("Webowe");
-    await allure.suite('Logowanie') 
-  })
 
   test.beforeEach(async ({ page }) => {
 
@@ -27,13 +20,17 @@ test.describe('Logowanie', async () => {
     mainLogoutPage = new MainLogoutPage(page);
     
     await page.goto('/logowanie', { waitUntil: 'load' });
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(2000);
     await utility.addGlobalStyles(page);
   })
 
   test('W | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
 
-    await allure.allureId('445')
+    await allure.tags('Web', 'Logowanie');
+    await allure.parentSuite('Webowe');
+    await allure.suite('Logowanie');
+    await allure.subSuite('');
+    await allure.allureId('445');
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -44,7 +41,11 @@ test.describe('Logowanie', async () => {
 
   test('W | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
 
-    await allure.allureId('447')
+    await allure.tags("Web", "Logowanie");
+    await allure.parentSuite("Webowe");
+    await allure.suite('Logowanie');
+    await allure.subSuite('');
+    await allure.allureId('447');
 
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -55,7 +56,11 @@ test.describe('Logowanie', async () => {
 
   test('W | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
 
-    await allure.allureId('446')
+    await allure.tags("Web", "Logowanie");
+    await allure.parentSuite("Webowe");
+    await allure.suite('Logowanie');
+    await allure.subSuite('');
+    await allure.allureId('446');
     
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
