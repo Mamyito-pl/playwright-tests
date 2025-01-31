@@ -51,6 +51,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('437');
     
     await addProduct('cytryna zieleniak');
@@ -70,6 +71,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('438');
     
     await addProduct('cytryna zieleniak');
@@ -95,6 +97,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('435');
     
     test.info().annotations.push({ type: 'skipClearCart' });
@@ -118,6 +121,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('434');
 
     await searchbarPage.clickSearchbar()
@@ -142,6 +146,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('442');
     
     test.info().annotations.push({ type: 'skipClearCart' });
@@ -187,6 +192,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('439');
     
     test.info().annotations.push({ type: 'skipClearCart' });
@@ -204,6 +210,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('440');
     
     test.info().annotations.push({ type: 'skipClearCart' });
@@ -221,6 +228,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('443');
     
     const product = 'woda';
@@ -239,6 +247,7 @@ test.describe.only('Testy koszyka', async () => {
     await allure.epic('Webowe');
     await allure.parentSuite('Koszyk');
     await allure.suite('Testy koszyka');
+    await allure.subSuite('');
     await allure.allureId('496');
     
     test.info().annotations.push({ type: 'skipClearCart' });
