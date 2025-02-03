@@ -24,8 +24,8 @@ test.describe('Testy dostawy', async () => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Dostawa');
+    await allure.parentSuite('Dostawa');
+    await allure.suite('Testy dostawy');
     await allure.subSuite('');
     await allure.allureId('646');
 
@@ -42,8 +42,8 @@ test.describe('Testy dostawy', async () => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Dostawa');
+    await allure.parentSuite('Dostawa');
+    await allure.suite('Testy dostawy');
     await allure.subSuite('');
     await allure.allureId('647');
 
@@ -63,8 +63,8 @@ test.describe('Testy dostawy', async () => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Adres dostawy');
       await allure.allureId('648');
 
@@ -124,8 +124,8 @@ test.describe('Testy dostawy', async () => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Adres dostawy');
       await allure.allureId('649');
 
@@ -160,8 +160,8 @@ test.describe('Testy dostawy', async () => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Adres dostawy');
       await allure.allureId('650');
 
@@ -239,8 +239,8 @@ test.describe('Testy dostawy', async () => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Adres dostawy');
       await allure.allureId('651');
 
@@ -266,8 +266,8 @@ test.describe('Testy dostawy', async () => {
       
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Faktura');
       await allure.allureId('652');
 
@@ -318,8 +318,8 @@ test.describe('Testy dostawy', async () => {
       
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Faktura');
       await allure.allureId('653');
 
@@ -354,8 +354,8 @@ test.describe('Testy dostawy', async () => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Faktura');
       await allure.allureId('654');
       
@@ -424,8 +424,8 @@ test.describe('Testy dostawy', async () => {
       
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Dostawa');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
       await allure.subSuite('Faktura');
       await allure.allureId('655');
       
