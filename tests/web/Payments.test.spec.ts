@@ -53,8 +53,9 @@ test.describe('Testy płatności', async () => {
   test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
-    await allure.parentSuite('Webowe');
-    await allure.suite('Płatności');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('448');
 
@@ -110,8 +111,9 @@ test.describe('Testy płatności', async () => {
   test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
-    await allure.parentSuite('Webowe');
-    await allure.suite('Płatności');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('457');
 
@@ -157,8 +159,9 @@ test.describe('Testy płatności', async () => {
   test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
-    await allure.parentSuite('Webowe');
-    await allure.suite('Płatności');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('455');
 
@@ -201,8 +204,9 @@ test.describe('Testy płatności', async () => {
   test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, browser }) => {
 
     await allure.tags('Web', 'Płatności');
-    await allure.parentSuite('Webowe');
-    await allure.suite('Płatności');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('463');
 
@@ -268,8 +272,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('464');
 
@@ -315,8 +320,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('451');
 
@@ -366,8 +372,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('543');
 
@@ -398,8 +405,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('544');
 
@@ -431,8 +439,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('545');
 
@@ -464,10 +473,11 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
-      await allure.allureId('546')
+      await allure.allureId('546');
 
       test.setTimeout(130000);
 
@@ -507,8 +517,9 @@ test.describe('Testy płatności', async () => {
     test('W | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('452');
 
@@ -575,8 +586,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('462');
 
@@ -639,8 +651,9 @@ test.describe('Testy płatności', async () => {
     test('W | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('459');
 
@@ -689,8 +702,9 @@ test.describe('Testy płatności', async () => {
     test('W | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('453');
 
@@ -751,8 +765,9 @@ test.describe('Testy płatności', async () => {
     test('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('461');
 
@@ -828,10 +843,11 @@ test.describe('Testy płatności', async () => {
                             
     test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.tags('Web', 'Płatności')
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
-      await allure.subSuite('Płatność przelewem online')
+      await allure.tags('Web', 'Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
+      await allure.subSuite('Płatność przelewem online');
       await allure.allureId('460');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
@@ -910,10 +926,11 @@ test.describe('Testy płatności', async () => {
   
     test('W | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.tags('Web', 'Płatności')
-      await allure.parentSuite('Webowe');
-      await allure.suite('Płatności');
-      await allure.subSuite('Zapłata kartą przy odbiorze')
+      await allure.tags('Web', 'Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
+      await allure.subSuite('Zapłata kartą przy odbiorze');
       await allure.allureId('449');
 
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {

@@ -23,6 +23,7 @@ test.describe('Testy dostawy', async () => {
   test('M | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Mobilne');
     await allure.suite('Dostawa');
     await allure.subSuite('');
@@ -40,6 +41,7 @@ test.describe('Testy dostawy', async () => {
   test('M | Możliwość wyboru terminu dostawy', async ({ page }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Mobilne');
     await allure.suite('Dostawa');
     await allure.subSuite('');
@@ -60,6 +62,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość dodania adresu dostawy', async ({ page }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Adres dostawy');
@@ -120,6 +123,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Adres dostawy');
@@ -155,6 +159,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość edycji adresu dostawy', async ({ page }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Adres dostawy');
@@ -233,6 +238,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość usunięcia adresu dostawy', async ({ page }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Adres dostawy');
@@ -259,6 +265,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość dodania podmiotu do faktury', async ({ page }) => {
       
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Faktura');
@@ -310,6 +317,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressDelivery }) => {
       
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Faktura');
@@ -345,6 +353,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość edycji podmiotu do faktury', async ({ page }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Faktura');
@@ -414,6 +423,7 @@ test.describe('Testy dostawy', async () => {
     test('M | Możliwość usunięcia podmiotu do faktury', async ({ page }) => {
       
       await allure.tags('Mobilne', 'Dostawa');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Mobilne');
       await allure.suite('Dostawa');
       await allure.subSuite('Faktura');

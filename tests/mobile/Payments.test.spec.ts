@@ -53,8 +53,9 @@ test.describe('Testy płatności', async () => {
   test('M | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Płatności');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('480');
 
@@ -108,8 +109,9 @@ test.describe('Testy płatności', async () => {
   test('M | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Płatności');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('481');
 
@@ -155,8 +157,9 @@ test.describe('Testy płatności', async () => {
   test('M | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Płatności');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('482');
 
@@ -199,8 +202,9 @@ test.describe('Testy płatności', async () => {
   test('M | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Płatności');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Płatności');
+    await allure.suite('Testy płatności');
     await allure.subSuite('');
     await allure.allureId('483');
 
@@ -269,8 +273,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata prawidłowym kodem BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('484');
   
@@ -316,8 +321,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('485');
   
@@ -367,8 +373,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
     
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('484');
 
@@ -397,8 +404,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('48');
 
@@ -428,8 +436,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('488');
   
@@ -459,8 +468,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('489');
 
@@ -501,8 +511,9 @@ test.describe('Testy płatności', async () => {
     test('M | Ponowna zapłata po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('490');
   
@@ -569,8 +580,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('491');
   
@@ -640,8 +652,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('492');
 
@@ -694,8 +707,9 @@ test.describe('Testy płatności', async () => {
     test('M | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('493');
 
@@ -759,8 +773,9 @@ test.describe('Testy płatności', async () => {
     test('M | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('494');
 
@@ -839,8 +854,9 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('495');
 
@@ -918,9 +934,11 @@ test.describe('Testy płatności', async () => {
     test('M | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
-      await allure.parentSuite('Mobilne');
-      await allure.suite('Płatności');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
       await allure.subSuite('Zapłata kartą przy odbiorze');
+      await allure.allureId('688');
 
       test.info().annotations.push({ type: 'skipClearCart' });
 

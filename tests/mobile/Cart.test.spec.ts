@@ -47,8 +47,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('465');
 
@@ -66,8 +67,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('466');
 
@@ -91,8 +93,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {   
     
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('467');
 
@@ -114,8 +117,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('475');
 
@@ -137,8 +141,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('471');
 
@@ -166,8 +171,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('472');
 
@@ -183,8 +189,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('469');
     
@@ -202,8 +209,9 @@ test.describe('Testy koszyka', async () => {
   test('M | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
-    await allure.parentSuite('Mobilne');
-    await allure.suite('Koszyk');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Koszyk');
+    await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('474');
 
@@ -224,9 +232,10 @@ test.describe('Testy koszyka', async () => {
     
     test('M | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
       
-      await allure.tags('Web', 'Koszyk');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Koszyk');
+      await allure.tags('Mobilne', 'Koszyk');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Koszyk');
+      await allure.suite('Testy koszyka');
       await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
       await allure.allureId('468');
 
@@ -270,9 +279,10 @@ test.describe('Testy koszyka', async () => {
 
     test('M | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
 
-      await allure.tags('Web', 'Koszyk');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Koszyk');
+      await allure.tags('Mobilne', 'Koszyk');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Koszyk');
+      await allure.suite('Testy koszyka');
       await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
       await allure.allureId('470');
       
@@ -316,9 +326,10 @@ test.describe('Testy koszyka', async () => {
 
     test('M | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
       
-      await allure.tags('Web', 'Koszyk');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Koszyk');
+      await allure.tags('Mobilne', 'Koszyk');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Koszyk');
+      await allure.suite('Testy koszyka');
       await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
       await allure.allureId('473');
 
@@ -362,9 +373,10 @@ test.describe('Testy koszyka', async () => {
     
     test('M | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
       
-      await allure.tags('Web', 'Koszyk');
-      await allure.parentSuite('Webowe');
-      await allure.suite('Koszyk');
+      await allure.tags('Mobilne', 'Koszyk');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Koszyk');
+      await allure.suite('Testy koszyka');
       await allure.subSuite('Możliwość dodania do koszyka najczęściej kupowanych produktów');
       await allure.allureId('476');
 

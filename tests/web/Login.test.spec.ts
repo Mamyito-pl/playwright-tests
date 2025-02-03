@@ -27,8 +27,9 @@ test.describe('Testy logowania', async () => {
   test('W | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');
-    await allure.parentSuite('Webowe');
-    await allure.suite('Logowanie');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Logowanie');
+    await allure.suite('Testy logowania');
     await allure.subSuite('');
     await allure.allureId('445');
 
@@ -41,9 +42,10 @@ test.describe('Testy logowania', async () => {
 
   test('W | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
 
-    await allure.tags("Web", "Logowanie");
-    await allure.parentSuite("Webowe");
-    await allure.suite('Logowanie');
+    await allure.tags('Web', 'Logowanie');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Logowanie');
+    await allure.suite('Testy logowania');
     await allure.subSuite('');
     await allure.allureId('447');
 
@@ -56,9 +58,10 @@ test.describe('Testy logowania', async () => {
 
   test('W | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
 
-    await allure.tags("Web", "Logowanie");
-    await allure.parentSuite("Webowe");
-    await allure.suite('Logowanie');
+    await allure.tags('Web', 'Logowanie');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Logowanie');
+    await allure.suite('Testy logowania');
     await allure.subSuite('');
     await allure.allureId('446');
     

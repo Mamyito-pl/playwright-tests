@@ -25,8 +25,10 @@ test.describe('Testy logowania', async () => {
   test('M | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Logowanie');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Mobilne');
-    await allure.suite('Logowanie');
+    await allure.suite('Testy logowania');
+    await allure.subSuite('');
     await allure.allureId('477');
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
@@ -39,8 +41,10 @@ test.describe('Testy logowania', async () => {
   test('M | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Logowanie');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Mobilne');
-    await allure.suite('Logowanie');
+    await allure.suite('Testy logowania');
+    await allure.subSuite('');
     await allure.allureId('478');
     
     await loginPage.enterEmail('invalidemail@gmail.com');
@@ -53,8 +57,10 @@ test.describe('Testy logowania', async () => {
   test('M | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Logowanie');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Mobilne');
-    await allure.suite('Logowanie');
+    await allure.suite('Testy logowania');
+    await allure.subSuite('');
     await allure.allureId('479');
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
