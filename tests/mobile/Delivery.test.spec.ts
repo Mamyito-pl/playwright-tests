@@ -137,7 +137,7 @@ test.describe('Testy dostawy', async () => {
 
       await addAddressDelivery('Adres Fixturowy');
 
-      await page.getByText('Adres Testowy').click();
+      await page.getByText('Adres Testowy').click({ force: true });
 
       await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
 

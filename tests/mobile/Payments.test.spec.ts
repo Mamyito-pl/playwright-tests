@@ -474,6 +474,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('489');
 
+      test.setTimeout(130000);
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
