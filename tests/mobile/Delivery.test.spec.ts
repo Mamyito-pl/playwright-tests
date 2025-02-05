@@ -138,7 +138,9 @@ test.describe('Testy dostawy', async () => {
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
       await addAddressDelivery('Adres Testowy');
+      await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
       await addAddressDelivery('Adres Fixturowy');
+      await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
       await page.getByText('Adres Testowy').click({ force: true });
 

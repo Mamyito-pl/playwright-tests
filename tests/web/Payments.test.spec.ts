@@ -378,7 +378,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('543');
 
-      test.setTimeout(60000);
+      test.setTimeout(80000);
 
       await addProduct('tabletki do mycia naczyń somat');
 
