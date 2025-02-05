@@ -59,7 +59,7 @@ test.describe('Testy dostawy', async () => {
 
   test.describe('Adres dostawy', async () => {
     
-    test('M | Możliwość dodania adresu dostawy', async ({ page }) => {
+    test('M | Możliwość dodania adresu dostawy', async ({ page, deleteAddressDelivery }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
@@ -118,6 +118,8 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText("Dane zostały zapisane", { timeout: 5000 })
 
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
+
+      await deleteAddressDelivery('Adres Testowy');
     })
 
     test('M | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
@@ -135,6 +137,7 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
+      await addAddressDelivery('Adres Testowy');
       await addAddressDelivery('Adres Fixturowy');
 
       await page.getByText('Adres Testowy').click({ force: true });
