@@ -267,7 +267,7 @@ test.describe('Testy dostawy', async () => {
 
   test.describe('Faktura', async () => {
     
-    test('W | Możliwość dodania podmiotu do faktury', async ({ page }) => {
+    test('W | Możliwość dodania podmiotu do faktury', async ({ page, deleteInvoiceAddressDelivery }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -317,6 +317,8 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
 
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
+
+      await deleteInvoiceAddressDelivery('Testowa nazwa podmiotu');
     })
 
     test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressDelivery }) => {
@@ -334,7 +336,10 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
+      await addInvoiceAddressDelivery('Testowa nazwa podmiotu');
+      await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
       await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
+      await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
 
       await page.getByText('Testowa nazwa podmiotu').click();
 
