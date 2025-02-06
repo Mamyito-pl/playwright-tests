@@ -390,9 +390,11 @@ test.describe('Testy płatności', async () => {
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.getCartSummaryButton.scrollIntoViewIfNeeded();
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
+      await cartPage.getCartSummaryButton.scrollIntoViewIfNeeded();
       await cartPage.clickCartSummaryButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.checkStatue();
