@@ -283,6 +283,7 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
       await deliveryPage.getDeliveryInvoiceCheckbox.check();
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+      await deliveryPage.getAddNewInvoiceAddressButton.scrollIntoViewIfNeeded();
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy podmiot');
