@@ -149,15 +149,6 @@ export const test = baseTest.extend<MyFixtures>({
     deliveryPage = new DeliveryPage(page);
 
     const addInvoiceAddressDelivery = async (addressName) => {
-
-      const isVisible = await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
-
-      if (isVisible) {
-      const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
-
-      if (!isChecked) {
-          await deliveryPage.getDeliveryInvoiceCheckbox.check();
-      }}
       
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();

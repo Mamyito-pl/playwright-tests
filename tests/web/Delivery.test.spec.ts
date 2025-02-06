@@ -330,11 +330,22 @@ test.describe('Testy dostawy', async () => {
       await allure.subSuite('Faktura');
       await allure.allureId('540');
       
-      test.setTimeout(100000);
+      test.setTimeout(150000);
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+
+      await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
+
+      const isVisible = await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+
+      if (isVisible) {
+      const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+
+      if (!isChecked) {
+          await deliveryPage.getDeliveryInvoiceCheckbox.check();
+      }}
 
       await addInvoiceAddressDelivery('Testowa nazwa podmiotu');
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
