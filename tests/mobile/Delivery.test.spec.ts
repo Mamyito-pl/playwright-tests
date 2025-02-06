@@ -267,7 +267,7 @@ test.describe('Testy dostawy', async () => {
 
   test.describe('Faktura', async () => {
     
-    test('M | Możliwość dodania podmiotu do faktury', async ({ page }) => {
+    test('M | Możliwość dodania podmiotu do faktury', async ({ page, deleteInvoiceAddressDelivery }) => {
       
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
@@ -317,6 +317,8 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
 
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
+
+      await deleteInvoiceAddressDelivery('Testowa nazwa podmiotu');
     })
 
     test('M | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressDelivery }) => {
@@ -328,13 +330,27 @@ test.describe('Testy dostawy', async () => {
       await allure.subSuite('Faktura');
       await allure.allureId('653');
 
-      test.setTimeout(100000);
+      test.setTimeout(150000);
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
+      await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
+
+      const isVisible = await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+
+      if (isVisible) {
+      const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+
+      if (!isChecked) {
+          await deliveryPage.getDeliveryInvoiceCheckbox.check();
+      }}
+
+      await addInvoiceAddressDelivery('Testowa nazwa podmiotu');
+      await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
       await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
+      await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
 
       await page.getByText('Testowa nazwa podmiotu').click();
 
