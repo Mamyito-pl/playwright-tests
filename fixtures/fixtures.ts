@@ -157,7 +157,7 @@ export const test = baseTest.extend<MyFixtures>({
 
       if (!isChecked) {
           await deliveryPage.getDeliveryInvoiceCheckbox.check();
-      }
+      }}
       
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
