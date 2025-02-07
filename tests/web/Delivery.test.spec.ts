@@ -45,7 +45,7 @@ test.describe('Testy dostawy', async () => {
     await allure.parentSuite('Dostawa');
     await allure.suite('Testy dostawy');
     await allure.subSuite('');
-    await allure.allureId('437');
+    await allure.allureId('787');
 
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });

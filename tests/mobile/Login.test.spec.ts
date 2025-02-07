@@ -26,7 +26,7 @@ test.describe('Testy logowania', async () => {
 
     await allure.tags('Mobilne', 'Logowanie');
     await allure.epic('Mobilne');
-    await allure.parentSuite('Mobilne');
+    await allure.parentSuite('Logowanie');
     await allure.suite('Testy logowania');
     await allure.subSuite('');
     await allure.allureId('477');
@@ -42,7 +42,7 @@ test.describe('Testy logowania', async () => {
 
     await allure.tags('Mobilne', 'Logowanie');
     await allure.epic('Mobilne');
-    await allure.parentSuite('Mobilne');
+    await allure.parentSuite('Logowanie');
     await allure.suite('Testy logowania');
     await allure.subSuite('');
     await allure.allureId('478');
@@ -58,7 +58,7 @@ test.describe('Testy logowania', async () => {
 
     await allure.tags('Mobilne', 'Logowanie');
     await allure.epic('Mobilne');
-    await allure.parentSuite('Mobilne');
+    await allure.parentSuite('Logowanie');
     await allure.suite('Testy logowania');
     await allure.subSuite('');
     await allure.allureId('479');
