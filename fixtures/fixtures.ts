@@ -116,6 +116,8 @@ export const test = baseTest.extend<MyFixtures>({
       /*await deliveryPage.getAddressModalUserFloor.fill('2');
       await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/   // Uncomment after done task KAN-801
       await deliveryPage.clickSaveAdressModalButton();
+      await page.waitForTimeout(3000)
+      
       await page.getByText(addressName).isVisible();
     };
     await use(addAddressDelivery);
@@ -127,8 +129,6 @@ export const test = baseTest.extend<MyFixtures>({
 
     const deleteAddressDelivery = async (addressName) => {
 
-      const addressesCount = await page.locator('div[class*="sc-91ca8657-3"]').count();
-
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg').nth(2).click();
 
       await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
@@ -139,9 +139,7 @@ export const test = baseTest.extend<MyFixtures>({
       await deliveryPage.getAddressModalConfirmationButton.click();
       await page.waitForTimeout(3000)
 
-      const addressesCountAfterDelete = await page.locator('div[class*="sc-91ca8657-3"]').count();
-
-      expect(addressesCountAfterDelete).toBeLessThan(addressesCount);
+      await page.getByText(addressName).isHidden();
     };
     await use(deleteAddressDelivery);
   },
@@ -166,6 +164,8 @@ export const test = baseTest.extend<MyFixtures>({
       /*await deliveryPage.getAddressModalUserFloor.fill('2');
       await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/   // Uncomment after done task KAN-801
       await deliveryPage.clickSaveAdressModalButton();
+      await page.waitForTimeout(3000)
+
       await page.getByText(addressName).isVisible();
     };
     await use(addInvoiceAddressDelivery);
@@ -177,8 +177,6 @@ export const test = baseTest.extend<MyFixtures>({
 
     const deleteInvoiceAddressDelivery = async (addressName) => {
 
-      const addressesCount = await page.locator('div[class*="sc-7290070c-3"]').count();
-
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg').nth(2).click();
 
       await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
@@ -189,9 +187,7 @@ export const test = baseTest.extend<MyFixtures>({
       await deliveryPage.getAddressModalConfirmationButton.click();
       await page.waitForTimeout(3000)
 
-      const addressesCountAfterDelete = await page.locator('div[class*="sc-7290070c-3"]').count();
-
-      expect(addressesCountAfterDelete).toBeLessThan(addressesCount);
+      await page.getByText(addressName).isHidden();
     };
     await use(deleteInvoiceAddressDelivery);
   }

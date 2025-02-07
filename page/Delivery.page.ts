@@ -17,7 +17,7 @@ export default class DeliveryPage {
     }
 
     async clickAddNewInvoiceAddressButton() {
-        await this.getAddNewInvoiceAddressButton.click();
+        await this.getAddNewInvoiceAddressButton.click({ force: true });
     }
 
     get getDeliverySlotButton() {

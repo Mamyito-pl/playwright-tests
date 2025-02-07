@@ -335,7 +335,7 @@ test.describe('Testy dostawy', async () => {
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
-      await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+      await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
       await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
 
