@@ -285,7 +285,7 @@ test.describe('Testy płatności', async () => {
       await allure.parentSuite('Płatności');
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
-      await allure.allureId('484');
+      await allure.allureId('788');
   
       if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
         test.info().annotations.push({ type: 'skipClearCart' });
