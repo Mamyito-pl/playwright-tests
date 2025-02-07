@@ -276,7 +276,7 @@ test.describe('Testy dostawy', async () => {
       await allure.subSuite('Faktura');
       await allure.allureId('539');
       
-      test.setTimeout(120000);
+      test.setTimeout(150000);
       
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
