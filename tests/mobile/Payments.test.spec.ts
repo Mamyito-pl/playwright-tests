@@ -424,7 +424,7 @@ test.describe('Testy płatności', async () => {
       await allure.parentSuite('Płatności');
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
-      await allure.allureId('48');
+      await allure.allureId('487');
 
       test.setTimeout(60000);
 
