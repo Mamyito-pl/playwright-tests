@@ -28,7 +28,7 @@ test.describe('Testy kategorii produktów', async () => {
     await allure.parentSuite('Kategorie produktów');
     await allure.suite('Testy kategorii produktów');
     await allure.subSuite('');
-    //await allure.allureId('823');
+    await allure.allureId('823');
 
     await expect(productsCategoriesPage.getProductsCategoriesTitle).toBeVisible();
     const tilesCount = await productsCategoriesPage.getProductsCategoriesTiles.count();
@@ -45,7 +45,7 @@ test.describe('Testy kategorii produktów', async () => {
     await allure.parentSuite('Kategorie produktów');
     await allure.suite('Testy kategorii produktów');
     await allure.subSuite('');
-    //await allure.allureId('824');
+    await allure.allureId('824');
 
     const warzywaOwoceLink = page.locator('a[href="/warzywa-i-owoce"]').last();
 
@@ -65,7 +65,7 @@ test.describe('Testy kategorii produktów', async () => {
     await allure.parentSuite('Kategorie produktów');
     await allure.suite('Testy kategorii produktów');
     await allure.subSuite('');
-    //await allure.allureId('825');
+    await allure.allureId('823');
 
     const warzywaOwoceSubCategoryLink = page.locator('a[href="/warzywa-i-owoce/owoce"] h3');
 
