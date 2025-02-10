@@ -22,14 +22,14 @@ export default class SearchbarPage {
     }
 
     async clickIncreaseProductButton() {
-        return this.page.locator(selectors.Searchbar.common.searchbarProductCardIncreaseButton).click()
+        return this.page.locator(selectors.Searchbar.common.searchbarProductCardIncreaseButton).click();
     }
 
     async clickDecreaseProductButton() {
-        return this.page.locator(selectors.Searchbar.common.searchbarProductCardDecreaseButton).click()
+        return this.page.locator(selectors.Searchbar.common.searchbarProductCardDecreaseButton).click();
     }
 
     get getProductItemCount() {
-        return this.page.locator(selectors.Searchbar.common.searchbarProductItemCount)
+        return this.page.locator(selectors.Searchbar.common.searchbarProductItemCount);
     }
 }

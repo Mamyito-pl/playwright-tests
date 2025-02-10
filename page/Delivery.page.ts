@@ -59,7 +59,7 @@ export default class DeliveryPage {
     }
 
     get getAddressModalSaveButton() {
-        return this.page.getByRole('button', { name: 'Zapisz' })
+        return this.page.getByRole('button', { name: 'Zapisz' });
     }
 
     get getAddressModalCancelButton() {
@@ -70,7 +70,7 @@ export default class DeliveryPage {
         return this.page.locator(`button:has-text("Potwierdź")`);
     }
 
-    getAddressModalDeleteAddressName(addressName) {
+    getAddressModalDeleteAddressName(addressName: string) {
         return this.page.locator(`div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 

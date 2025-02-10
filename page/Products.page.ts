@@ -12,10 +12,14 @@ export default class ProductsPage {
     }
 
     async clickIncreaseProductButton() {
-        return this.page.locator(selectors.ProductsPage.common.productCardIncreaseButton).click()
+        return this.page.locator(selectors.ProductsPage.common.productCardIncreaseButton).click();
     }
 
     async clickDecreaseProductButton() {
-        return this.page.locator(selectors.ProductsPage.common.productCardDecreaseButton).click()
+        return this.page.locator(selectors.ProductsPage.common.productCardDecreaseButton).click();
+    }
+
+    getProductCategoryTitle(titleName: string) {
+        return this.page.locator(this.mobile ? `div[data-sentry-element="TitleMobile"]:has-text("${titleName}")` : `div[data-sentry-element="Header"] h1:has-text("${titleName}")`);
     }
 }
