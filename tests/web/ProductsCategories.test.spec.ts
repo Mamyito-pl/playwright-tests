@@ -65,7 +65,7 @@ test.describe('Testy kategorii produktów', async () => {
     await allure.parentSuite('Kategorie produktów');
     await allure.suite('Testy kategorii produktów');
     await allure.subSuite('');
-    await allure.allureId('823');
+    await allure.allureId('825');
 
     const warzywaOwoceSubCategoryLink = page.locator('a[href="/warzywa-i-owoce/owoce"] h3');
 
