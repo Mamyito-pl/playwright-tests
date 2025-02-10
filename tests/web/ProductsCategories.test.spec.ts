@@ -2,12 +2,9 @@ import { expect } from '@playwright/test';
 import ProductsCategoriesPage from "../../page/ProductsCategories.page";
 import ProductsPage from "../../page/Products.page.ts";
 import * as allure from "allure-js-commons";
-import * as utility from '../../utils/utility-methods';
 import { test } from '../../fixtures/fixtures.ts';
 
 test.describe('Testy kategorii produktów', async () => {
-
-  test.setTimeout(80000);
 
   let productsCategoriesPage: ProductsCategoriesPage;
   let productsPage: ProductsPage;
