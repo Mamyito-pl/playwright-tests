@@ -71,7 +71,7 @@ export default class DeliveryPage {
     }
 
     getAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[class*="gHrfft"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
 

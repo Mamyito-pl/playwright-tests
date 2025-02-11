@@ -38,7 +38,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('M | Możliwość wyboru terminu dostawy', async ({ page }) => {
+  test('M | Możliwość wyboru terminu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
@@ -47,7 +47,14 @@ test.describe('Testy dostawy', async () => {
     await allure.subSuite('');
     await allure.allureId('647');
 
+    test.setTimeout(150000);
+
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+
+    await addAddressDelivery('Adres Testowy');
+    await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
+    await page.getByText('Adres Testowy').click({ force: true });
+
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
     await deliveryPage.getDeliverySlotButton.first().click();
@@ -55,6 +62,8 @@ test.describe('Testy dostawy', async () => {
     await deliveryPage.getDeliverySlotButton.last().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny');
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany');
+
+    await deleteAddressDelivery('Adres Testowy');
   })
 
   test.describe('Adres dostawy', async () => {

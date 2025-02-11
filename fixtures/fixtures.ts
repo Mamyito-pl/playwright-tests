@@ -5,6 +5,7 @@ import MainLogoutPage from "../page/MainLogout.page.ts";
 import CartPage from '../page/Cart.page.ts';
 import SearchbarPage from '../page/Searchbar.page.ts';
 import DeliveryPage from '../page/Delivery.page.ts';
+import DeliveryAddressesPage from '../page/Profile/DeliveryAddresses.page.ts'
 import * as selectors from '../utils/selectors.json';
 import * as utility from '../utils/utility-methods';
 
@@ -13,6 +14,7 @@ let mainLogoutPage: MainLogoutPage;
 let cartPage: CartPage;
 let searchbarPage : SearchbarPage;
 let deliveryPage : DeliveryPage;
+let deliveryAddressesPage : DeliveryAddressesPage;
 
 
 type MyFixtures = {
@@ -23,6 +25,8 @@ type MyFixtures = {
     deleteAddressDelivery: (addressName: any) => Promise<void>;
     addInvoiceAddressDelivery: (addressName: any) => Promise<void>;
     deleteInvoiceAddressDelivery: (addressName: any) => Promise<void>;
+    deleteAddressDeliveryProfile: (addressName: any) => Promise<void>;
+    addAddressDeliveryProfile: (addressName: any) => Promise<void>;
     getToken: () => Promise<string>;
 };
 
@@ -79,7 +83,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const mobile = utility.isMobile(viewport.width);
 
-    const addProduct = async (product) => {
+    const addProduct = async (product: string) => {
 
       const searchbarInputSelector = mobile ? selectors.Searchbar.mobile.searchbarInput : selectors.Searchbar.web.searchbarInput;
       const searchbarCloseButtonSelector = mobile ? selectors.Searchbar.mobile.searchbarCloseButton : selectors.Searchbar.web.searchbarCloseButton
@@ -98,7 +102,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     deliveryPage = new DeliveryPage(page);
 
-    const addAddressDelivery = async (addressName) => {
+    const addAddressDelivery = async (addressName: string) => {
 
       await deliveryPage.clickAddNewAddressButton();
       await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
@@ -127,9 +131,9 @@ export const test = baseTest.extend<MyFixtures>({
 
     deliveryPage = new DeliveryPage(page);
 
-    const deleteAddressDelivery = async (addressName) => {
+    const deleteAddressDelivery = async (addressName: string) => {
 
-      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg').nth(2).click();
+      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
 
       await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -148,7 +152,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     deliveryPage = new DeliveryPage(page);
 
-    const addInvoiceAddressDelivery = async (addressName) => {
+    const addInvoiceAddressDelivery = async (addressName: string) => {
       
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
@@ -175,7 +179,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     deliveryPage = new DeliveryPage(page);
 
-    const deleteInvoiceAddressDelivery = async (addressName) => {
+    const deleteInvoiceAddressDelivery = async (addressName: string) => {
 
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg').nth(2).click();
 
