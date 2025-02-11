@@ -38,7 +38,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('W | Możliwość wyboru terminu dostawy', async ({ page }) => {
+  test('W | Możliwość wyboru terminu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
 
     await allure.tags('Web', 'Dostawa');
     await allure.epic('Webowe');
@@ -47,7 +47,14 @@ test.describe('Testy dostawy', async () => {
     await allure.subSuite('');
     await allure.allureId('787');
 
+    test.setTimeout(150000);
+
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+
+    await addAddressDelivery('Adres Testowy');
+    await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
+    await page.getByText('Adres Testowy').click({ force: true });
+
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
     await deliveryPage.getDeliverySlotButton.first().click();
@@ -55,6 +62,8 @@ test.describe('Testy dostawy', async () => {
     await deliveryPage.getDeliverySlotButton.last().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny');
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany');
+
+    await deleteAddressDelivery('Adres Testowy');
   })
 
   test.describe('Adres dostawy', async () => {
@@ -83,7 +92,7 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getAddressModalUserName.fill('Jan');
 
       await expect(deliveryPage.getAddressModalUserSurname).toBeVisible();
-      await deliveryPage.getAddressModalUserSurname.fill('Kowalski')
+      await deliveryPage.getAddressModalUserSurname.fill('Kowalski');
 
       await expect(deliveryPage.getAddressModalUserPhoneNumber).toBeVisible();
       await deliveryPage.getAddressModalUserPhoneNumber.fill('555666777');
@@ -115,7 +124,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
+      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
 
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
 
@@ -179,7 +188,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj adres');
 
-      await expect(deliveryPage.getAddressModalAddressName).toHaveValue('Adres Fixturowy')
+      await expect(deliveryPage.getAddressModalAddressName).toHaveValue('Adres Fixturowy');
       await deliveryPage.getAddressModalAddressName.fill('Adres Edytowany');
 
       await expect(deliveryPage.getAddressModalUserName).toHaveValue('Jan');
