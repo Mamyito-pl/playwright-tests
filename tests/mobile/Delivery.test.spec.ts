@@ -38,7 +38,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('M | Możliwość wyboru terminu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
+  test('M | Możliwość wyboru terminu dostawy', async ({ page }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
@@ -51,9 +51,8 @@ test.describe('Testy dostawy', async () => {
 
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
-    await addAddressDelivery('Adres Testowy');
-    await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
-    await page.getByText('Adres Testowy').click({ force: true });
+    await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
+    await page.getByText('Adres Podstawowy').click({ force: true });
 
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
@@ -62,8 +61,6 @@ test.describe('Testy dostawy', async () => {
     await deliveryPage.getDeliverySlotButton.last().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny');
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany');
-
-    await deleteAddressDelivery('Adres Testowy');
   })
 
   test.describe('Adres dostawy', async () => {
@@ -142,16 +139,15 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(100000);
 
-      const targetAddress = page.getByText('Adres Testowy').locator('..').locator('..').locator('..');
+      const targetAddress = page.getByText('Adres Podstawowy').locator('..').locator('..').locator('..');
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
-      await addAddressDelivery('Adres Testowy');
-      await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
+      await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
       await addAddressDelivery('Adres Fixturowy');
       await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
-      await page.getByText('Adres Testowy').click({ force: true });
+      await page.getByText('Adres Podstawowy').click({ force: true });
 
       await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
 
@@ -166,8 +162,6 @@ test.describe('Testy dostawy', async () => {
       await page.getByText('Adres Fixturowy').click({ force: true });
 
       await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
-
-      await deleteAddressDelivery('Adres Testowy');
     })
 
     test('M | Możliwość edycji adresu dostawy', async ({ page }) => {
