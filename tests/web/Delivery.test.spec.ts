@@ -128,7 +128,7 @@ test.describe('Testy dostawy', async () => {
       await deleteAddressDelivery('Adres Testowy');
     })
 
-    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery, deleteAddressDelivery }) => {
+    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
