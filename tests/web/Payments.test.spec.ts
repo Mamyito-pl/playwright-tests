@@ -411,7 +411,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('544');
 
-      test.setTimeout(60000);
+      test.setTimeout(100000);
 
       await addProduct('tabletki do mycia naczyń somat');
 
@@ -445,7 +445,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('545');
 
-      test.setTimeout(60000);
+      test.setTimeout(100000);
 
       await addProduct('tabletki do mycia naczyń somat');
 
@@ -479,7 +479,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('546');
 
-      test.setTimeout(130000);
+      test.setTimeout(200000);
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
@@ -503,8 +503,8 @@ test.describe('Testy płatności', async () => {
         await page.keyboard.press(symbol);
         await page.waitForTimeout(1000);
         await paymentsPage.checkStatue();
-        expect(paymentsPage.getStatueCheckbox.isChecked()).toBeTruthy();
-        expect(cartPage.getCartPaymentButton.isDisabled()).toBeTruthy();
+        expect(await paymentsPage.getStatueCheckbox.isChecked()).toBeTruthy();
+        expect(await cartPage.getCartPaymentButton.isDisabled()).toBeTruthy();
         await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
         await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
         await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();

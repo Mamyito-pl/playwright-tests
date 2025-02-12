@@ -239,7 +239,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
 
-    await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(2).click();
+    await deliveryAddressesPage.clickDeleteAddressButton('Adres Edytowany');
 
     await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
     await expect(deliveryAddressesPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');

@@ -20,6 +20,10 @@ export default class DeliveryAdressesPage {
         return this.page.getByText(addressName).locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
     }
 
+    async clickDeleteAddressButton(addressName: string) {
+        return this.page.getByText(addressName).locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+    }
+
     get getAddNewAddressButton() {
         return this.page.getByText('Dodaj nowy adres');
     }
