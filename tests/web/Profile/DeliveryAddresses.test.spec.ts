@@ -208,7 +208,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
 
-    await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+    await deliveryAddressesPage.clickEditAddressButton('Adres Edytowany');
 
     await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
     await expect(deliveryAddressesPage.getAddressModal).toContainText('Edytuj adres');
