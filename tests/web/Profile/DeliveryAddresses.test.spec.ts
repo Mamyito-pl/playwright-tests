@@ -28,7 +28,8 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.parentSuite('Profil');
     await allure.suite('Testy adresy dostaw');
     await allure.subSuite('');
-    //await allure.allureId('533');
+    await allure.allureId('919');
+    
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
@@ -38,12 +39,12 @@ test.describe('Testy adresy dostaw', async () => {
 
   test('W | Możliwość dodania adresu dostawy', async ({ page }) => {
 
-    await allure.tags('Web', 'Dostawa');
+    await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
-    await allure.parentSuite('Dostawa');
-    await allure.suite('Testy dostawy');
-    await allure.subSuite('Adres dostawy');
-    //await allure.allureId('535');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy adresy dostaw');
+    await allure.subSuite('');
+    await allure.allureId('920');
 
     test.setTimeout(150000);
     
@@ -112,12 +113,12 @@ test.describe('Testy adresy dostaw', async () => {
 
   test('W | Możliwość ustawienia głównego adresu dostawy', async ({ page, addAddressDelivery }) => {
 
-    await allure.tags('Web', 'Dostawa');
+    await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
-    await allure.parentSuite('Dostawa');
-    await allure.suite('Testy dostawy');
-    await allure.subSuite('Adres dostawy');
-    await allure.allureId('536');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy adresy dostaw');
+    await allure.subSuite('');
+    await allure.allureId('921');
 
     test.setTimeout(120000);
     
@@ -150,18 +151,18 @@ test.describe('Testy adresy dostaw', async () => {
 
   test('W | Możliwość edycji adresu dostawy', async ({ page }) => {
 
-    await allure.tags('Web', 'Dostawa');
+    await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
-    await allure.parentSuite('Dostawa');
-    await allure.suite('Testy dostawy');
-    await allure.subSuite('Adres dostawy');
-    await allure.allureId('537');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy adresy dostaw');
+    await allure.subSuite('');
+    await allure.allureId('922');
 
     test.setTimeout(100000);
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
-    await page.getByText('Adres Fixturowy').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+    await deliveryAddressesPage.clickEditAddressButton('Adres Fixturowy');
 
     await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
     await expect(deliveryAddressesPage.getAddressModal).toContainText('Edytuj adres');
@@ -229,12 +230,12 @@ test.describe('Testy adresy dostaw', async () => {
   
   test('W | Możliwość usunięcia adresu dostawy', async ({ page }) => {
 
-    await allure.tags('Web', 'Dostawa');
+    await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
-    await allure.parentSuite('Dostawa');
-    await allure.suite('Testy dostawy');
-    await allure.subSuite('Adres dostawy');
-    await allure.allureId('538');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy adresy dostaw');
+    await allure.subSuite('');
+    await allure.allureId('923');
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
 
