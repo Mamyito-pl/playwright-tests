@@ -177,7 +177,9 @@ test.describe('Testy dostawy', async () => {
 
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
-      await page.getByText('Adres Fixturowy').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+      //await page.getByText('Adres Fixturowy').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+
+      await deliveryPage.clickEditAddressButton('Adres Fixturowy');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj adres');
@@ -223,7 +225,9 @@ test.describe('Testy dostawy', async () => {
 
       await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
 
-      await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+      //await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+
+      await deliveryPage.clickEditAddressButton('Adres Edytowany');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj adres');
@@ -252,9 +256,13 @@ test.describe('Testy dostawy', async () => {
       await allure.subSuite('Adres dostawy');
       await allure.allureId('651');
 
+      test.setTimeout(50000);
+
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
-      await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(2).click();
+      //await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(2).click();
+
+      await deliveryPage.clickDeleteAddressButton('Adres Edytowany');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');

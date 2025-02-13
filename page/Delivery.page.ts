@@ -20,6 +20,14 @@ export default class DeliveryPage {
         await this.getAddNewInvoiceAddressButton.click({ force: true });
     }
 
+    async clickEditAddressButton(addressName: string) {
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
+    }
+
+    async clickDeleteAddressButton(addressName: string) {
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+    }
+
     get getDeliverySlotButton() {
         return this.page.locator(selectors.DeliveryPage.common.deliverySlot);
     }
