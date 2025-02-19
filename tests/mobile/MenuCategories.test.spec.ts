@@ -1,0 +1,148 @@
+import { expect } from '@playwright/test';
+import MenuCategoriesPage from "../../page/MenuCategories.page";
+import ProductsPage from '../../page/Products.page.ts';
+import * as allure from "allure-js-commons";
+import { test } from '../../fixtures/fixtures.ts';
+
+test.describe('Testy menu kategorii', async () => {
+
+  let menuCategoriesPage: MenuCategoriesPage;
+  let productsPage: ProductsPage;
+
+  test.beforeEach(async ({ page, loginManual }) => {
+
+    await loginManual();
+
+    menuCategoriesPage = new MenuCategoriesPage(page);
+    productsPage = new ProductsPage(page);
+  })
+
+  test('M | Menu kategorii otwiera się z obecnymi kategoriami', async () => {
+
+    await allure.tags('Mobilne', 'Menu kategorii');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1018');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+    await expect(menuCategoriesPage.getMenuCategoriesTitle).toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
+
+    const categoriesCount = await menuCategoriesPage.getMenuCategories.count();
+
+    expect(categoriesCount).toBeGreaterThan(18);
+  })
+
+  test('M | Możliwość zamknięcia menu', async () => {
+
+    await allure.tags('Mobilne', 'Menu kategorii');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1019');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+    await expect(menuCategoriesPage.getMenuCategoriesTitle).toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
+
+    const categoriesCount = await menuCategoriesPage.getMenuCategories.count();
+
+    expect(categoriesCount).toBeGreaterThan(18);
+
+    await menuCategoriesPage.clickMenuCategoriesCloseIconButton();
+
+    await expect(menuCategoriesPage.getMenuCategoriesTitle).not.toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategories.locator('..')).not.toBeVisible();
+
+    const categoriesCountAfterClose = await menuCategoriesPage.getMenuCategories.count();
+
+    expect(categoriesCountAfterClose).toEqual(0);
+  })
+
+  test('M | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Menu kategorii');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1020');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.getByText('Warzywa i owoce').click();
+
+    await expect(menuCategoriesPage.getMenuCategoriesBackButton).toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategoriesCloseIconButton).toBeVisible();
+    (await menuCategoriesPage.getMenuCategoriesSubCategoryTitleMobile('Warzywa i owoce')).isVisible();
+    await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
+  })
+
+  test('M | Możliwość powrotu do głównego menu kategorii', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Menu kategorii');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1021');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.getByText('Warzywa i owoce').click();
+
+    await expect(menuCategoriesPage.getMenuCategoriesBackButton).toBeVisible();
+    
+    await menuCategoriesPage.getMenuCategoriesBackButton.click();
+
+    await expect(menuCategoriesPage.getMenuCategoriesBackButton).not.toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategoriesTitle).toBeVisible();
+  })
+
+  test('M | Możliwość przejścia do kategorii produktów', async ({ page, baseURL }) => {
+
+    await allure.tags('Mobilne', 'Menu kategorii');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1022');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.getByText('Warzywa i owoce').click();
+
+    await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
+
+    await menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton.click();
+
+    await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce');
+    await productsPage.getProductCategoryTitle('Warzywa i owoce').isVisible();
+  })
+
+  test('M | Możliwość przejścia do podkategorii produktów', async ({ page, baseURL }) => {
+
+    await allure.tags('Mobilne', 'Menu kategorii');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1023');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.getByText('Warzywa i owoce').click();
+    await page.getByText('Grzyby').click();
+
+    await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
+
+    await menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton.click();
+
+    await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce/grzyby');
+    await productsPage.getProductCategoryTitle('Grzyby').isVisible();
+  })
+})
+
