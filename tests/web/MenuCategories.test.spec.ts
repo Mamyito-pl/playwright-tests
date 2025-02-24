@@ -27,9 +27,9 @@ test.describe('Testy menu kategorii', async () => {
     await allure.allureId('1024');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
-    await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategories.locator('..').locator('..')).toBeVisible();
 
-    const categoriesCount = await menuCategoriesPage.getMenuCategories.count();
+    const categoriesCount = await menuCategoriesPage.getMenuCategories.locator('div').locator('div').locator('div').count();
 
     expect(categoriesCount).toBeGreaterThan(18);
   })
@@ -46,7 +46,7 @@ test.describe('Testy menu kategorii', async () => {
     await menuCategoriesPage.clickMenuCategoriesButton();
     await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
 
-    const categoriesCount = await menuCategoriesPage.getMenuCategories.count();
+    const categoriesCount = await menuCategoriesPage.getMenuCategories.locator('div').locator('div').locator('div').count();
 
     expect(categoriesCount).toBeGreaterThan(18);
 
@@ -54,11 +54,25 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.waitForSelector('div[maxdepth="4"]', { timeout: 5000, state: 'hidden' });
 
-    await expect(menuCategoriesPage.getMenuCategories.locator('..')).not.toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategories.locator('..').locator('..')).not.toBeVisible();
   })
 
-  /*test.skip('W | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
-  })*/
+  test('W | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+
+    await allure.tags('Web', 'Menu kategorii');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Menu kategorii');
+    await allure.suite('Testy menu kategorii');
+    await allure.subSuite('');
+    await allure.allureId('1028');
+
+    await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.getByText('Warzywa i owoce').hover();
+
+    await expect(menuCategoriesPage.getMenuCategoriesSubCategoryTitleWeb).toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategoriesSubCategoryTitleWeb).toHaveText('Warzywa i owoce');
+  })
 
   test('W | Możliwość przejścia do kategorii produktów', async ({ page, baseURL }) => {
 

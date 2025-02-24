@@ -21,7 +21,7 @@ export default class MenuCategories {
     }
 
     get getMenuCategories() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="Column"] div[class*="sc-4f3c45d1-4"]' : 'div[data-sentry-element="WebContent"] div[maxdepth="4"] div div div');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="Column"] div[class*="sc-4f3c45d1-4"]' : 'div[data-sentry-element="WebContent"] div[maxdepth="4"]');
     }
 
     // Mobile
