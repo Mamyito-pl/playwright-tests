@@ -54,7 +54,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('437');
     
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -74,7 +74,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('438');
     
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -102,7 +102,7 @@ test.describe('Testy koszyka', async () => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -126,7 +126,7 @@ test.describe('Testy koszyka', async () => {
 
     await searchbarPage.clickSearchbar()
     await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
-    await searchbarPage.enterProduct('tabletki do mycia naczyń somat');
+    await searchbarPage.enterProduct('mycia naczyń somat');
     await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(2000);

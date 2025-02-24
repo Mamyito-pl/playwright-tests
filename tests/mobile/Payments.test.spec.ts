@@ -67,7 +67,7 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(130000);
 
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -125,7 +125,7 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(130000);
 
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -175,7 +175,7 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(130000);
 
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -222,7 +222,7 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(180000);
 
-    await addProduct('tabletki do mycia naczyń somat');
+    await addProduct('mycia naczyń somat');
 
     for (let i = 0; i < 3; i++) {
         await searchbarPage.clickIncreaseProductButton();
@@ -295,7 +295,7 @@ test.describe('Testy płatności', async () => {
     
       test.setTimeout(130000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -345,7 +345,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -393,7 +393,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(80000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -428,7 +428,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(60000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -464,7 +464,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(60000);
   
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -502,7 +502,7 @@ test.describe('Testy płatności', async () => {
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -552,7 +552,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(180000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -623,7 +623,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -695,7 +695,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(130000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -752,7 +752,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(200000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -820,7 +820,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -903,7 +903,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -985,7 +985,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(130000);
 
-      await addProduct('tabletki do mycia naczyń somat');
+      await addProduct('mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();

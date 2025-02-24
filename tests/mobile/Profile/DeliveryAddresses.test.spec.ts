@@ -99,7 +99,7 @@ test.describe('Testy adresy dostaw', async () => {
     
     await page.getByText('Adres Testowy').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
 
-    await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
+    await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
     await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
     await expect(deliveryAddressesPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
     await expect(deliveryAddressesPage.getAddressModalDeleteAddressName('Adres Testowy')).toContainText('Adres Testowy');

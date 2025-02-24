@@ -33,7 +33,7 @@ export default class DeliveryPage {
     }
 
     get getDeliveryAddressTitle() {
-        return this.page.locator('div[class*="ghRAau"]');
+        return this.page.locator('div[class*="sc-91ca8657"] div[data-sentry-element="Title"]');
     }
 
     get getDeliveryAddressSubTitle() {
@@ -79,14 +79,14 @@ export default class DeliveryPage {
     }
 
     getAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[class*="gHrfft"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[class*="sc-f8f81ad2-1"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
 
     // Address Modal
 
     get getAddressModal() {
-        return this.page.locator('div[class*="gHrfft"]');
+        return this.page.locator('div[class*="sc-f8f81ad2-1"]');
     }
 
     get getAddressModalAddressName() {

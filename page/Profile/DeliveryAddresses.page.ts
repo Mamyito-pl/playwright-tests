@@ -67,14 +67,14 @@ export default class DeliveryAdressesPage {
     }
 
     getAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[class*="gHrfft"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[class*="sc-f8f81ad2-1"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
 
     // Address Modal
 
     get getAddressModal() {
-        return this.page.locator('div[class*="gHrfft"]');
+        return this.page.locator('div[class*="sc-f8f81ad2-1"]');
     }
 
     get getAddressModalMainAddressCheckbox() {

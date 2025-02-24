@@ -1,5 +1,5 @@
 // fixtures.ts
-import { test as baseTest } from '@playwright/test';
+import { test as baseTest, APIRequestContext, BrowserContext, Page } from '@playwright/test';
 import LoginPage from "../page/Login.page.ts";
 import MainLogoutPage from "../page/MainLogout.page.ts";
 import CartPage from '../page/Cart.page.ts';
@@ -19,6 +19,7 @@ let deliveryAddressesPage : DeliveryAddressesPage;
 
 type MyFixtures = {
     loginManual: () => Promise<void>;
+    loginViaAPI: (page: Page) => Promise<void>;
     clearCart: () => Promise<void>;
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
@@ -52,6 +53,41 @@ export const test = baseTest.extend<MyFixtures>({
       await expect(mainLogoutPage.getLoginLink).toBeHidden();
     };
     await use(login);
+  },
+
+  loginViaAPI: async ({ browser, request }, use) => {
+      const loginViaAPI = async (newPage: Page): Promise<void> => {
+
+      const loginResponse = await request.post(`https://api.mamyito.pl/api/login`, {
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      if (!loginResponse.ok()) {
+        throw new Error(`Failed to login, status: ${loginResponse.status()}`);
+      }
+
+      const responseBody = await loginResponse.json();
+      console.log('API response:', responseBody);
+      const accessToken = responseBody.data.token;
+      console.log('Access token:', accessToken);
+
+      const context = await browser.newContext({
+        extraHTTPHeaders: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const page = await context.newPage();
+      await page.goto('/');
+      await page.waitForURL('/', { waitUntil: 'domcontentloaded', timeout: 10000 });
+      await utility.addGlobalStyles(page);
+      await expect(mainLogoutPage.getLoginLink).toBeHidden();
+    };
+
+    await use(loginViaAPI);
   },
 
   clearCart: async ({ page }, use) => {
@@ -105,7 +141,7 @@ export const test = baseTest.extend<MyFixtures>({
     const addAddressDelivery = async (addressName: string) => {
 
       await deliveryPage.clickAddNewAddressButton();
-      await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await deliveryPage.getAddressModalAddressName.fill(addressName);
       await deliveryPage.getAddressModalUserName.fill('Jan');
@@ -135,7 +171,7 @@ export const test = baseTest.extend<MyFixtures>({
 
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
 
-      await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
       await expect(deliveryPage.getAddressModalDeleteAddressName(`${addressName}`)).toContainText(`${addressName}`);
@@ -155,7 +191,7 @@ export const test = baseTest.extend<MyFixtures>({
     const addInvoiceAddressDelivery = async (addressName: string) => {
       
       await deliveryPage.clickAddNewInvoiceAddressButton();
-      await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await deliveryPage.getInvoiceAddressModalAddressName.fill(addressName);
       await deliveryPage.getInvoiceAddressModalCompanyName.fill('Testowa firma');
@@ -183,7 +219,7 @@ export const test = baseTest.extend<MyFixtures>({
 
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg').nth(2).click();
 
-      await page.waitForSelector('div[class*="gHrfft"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
       await expect(deliveryPage.getAddressModalDeleteAddressName(`${addressName}`)).toContainText(`${addressName}`);

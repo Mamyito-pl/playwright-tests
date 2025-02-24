@@ -21,7 +21,7 @@ export default class MenuCategories {
     }
 
     get getMenuCategories() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="Column"] div[class*="sc-4f3c45d1-4"]' : 'div[maxdepth="4"] div[class*="sc-b0f70adc-9"]');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="Column"] div[class*="sc-4f3c45d1-4"]' : 'div[data-sentry-element="WebContent"] div[maxdepth="4"] div div div');
     }
 
     // Mobile
@@ -54,5 +54,9 @@ export default class MenuCategories {
 
     get getMenuCategoriesWrapper() {
         return this.page.locator('div[data-sentry-element="WebContent"] div[data-sentry-element="ListWrapper"]');
+    }
+
+    get getMenuCategoriesSubCategoryTitleWeb() {
+        return this.page.getByTestId('category-title');
     }
 }

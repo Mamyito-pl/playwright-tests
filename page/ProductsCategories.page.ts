@@ -17,6 +17,6 @@ export default class ProductsCategoriesPage {
     }
 
     get getProductsCategoriesTiles() {
-        return this.page.locator('div[class*="bNVRiV"]');
+        return this.page.locator('div[class*="sc-a7286818-2"]');
     }
 }
