@@ -15,8 +15,6 @@ test.describe('Testy adresy dostaw', async () => {
 
     await loginManual();
 
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
-
     commonPage = new CommonPage(page);
     deliveryAddressesPage = new DeliveryAddressesPage(page);
   })
