@@ -59,7 +59,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('448');
 
-    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
@@ -117,7 +117,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('457');
 
-    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
@@ -165,7 +165,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('455');
 
-    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
@@ -210,7 +210,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('463');
 
-    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
 
