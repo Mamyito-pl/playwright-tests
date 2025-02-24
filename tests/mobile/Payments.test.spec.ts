@@ -61,7 +61,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
   
@@ -119,7 +119,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
   
@@ -169,7 +169,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
   
@@ -216,7 +216,7 @@ test.describe('Testy płatności', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
+    if (!test.info().status || test.info().status === 'passed' || test.info().status === 'timedOut' || test.info().status === 'interrupted' || test.info().status === 'skipped') {
       test.info().annotations.push({ type: 'skipClearCart' });
     }
   
