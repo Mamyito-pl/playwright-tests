@@ -979,6 +979,8 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Zapłata kartą przy odbiorze');
       await allure.allureId('688');
 
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+
       test.info().annotations.push({ type: 'skipClearCart' });
 
       test.setTimeout(130000);
