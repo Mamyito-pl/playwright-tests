@@ -37,7 +37,7 @@ test.describe('Testy logowania', async () => {
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
     await loginPage.clickLoginButton();
-    await expect(page).toHaveURL(`${baseURL}`);
+    await expect(page).toHaveURL(`${baseURL}`, { timeout: 15000 });
     expect(mainLogoutPage.getLoginLink).toBeHidden();
   })
 

@@ -1,14 +1,14 @@
 import { expect, test as setup } from '@playwright/test';
-import LoginPage from "../../page/Login.page.ts";
-import MainLogoutPage from "../../page/MainLogout.page.ts";
-import * as utility from '../../utils/utility-methods';
+import LoginPage from "../page/Login.page.ts";
+import MainLogoutPage from "../page/MainLogout.page.ts";
+import * as utility from '../utils/utility-methods.ts';
 
 const authFile = 'playwright/.auth/user.json'
 
 let loginPage: LoginPage;
 let mainLogoutPage: MainLogoutPage;
 
-setup('Authenticate', async ({ page }) => {
+setup('Autoryzacja', async ({ page }) => {
 
   loginPage = new LoginPage(page);
   mainLogoutPage = new MainLogoutPage(page);
