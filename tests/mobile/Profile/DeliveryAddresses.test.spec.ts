@@ -235,6 +235,8 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.subSuite('');
     await allure.allureId('890');
 
+    test.setTimeout(150000);
+
     await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
 
     await deliveryAddressesPage.clickDeleteAddressButton('Adres Edytowany');

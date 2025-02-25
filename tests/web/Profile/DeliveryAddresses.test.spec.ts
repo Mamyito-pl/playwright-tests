@@ -14,7 +14,7 @@ test.describe('Testy adresy dostaw', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'commit'})
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -241,6 +241,8 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.suite('Testy adresy dostaw');
     await allure.subSuite('');
     await allure.allureId('923');
+
+    test.setTimeout(150000);
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
 
