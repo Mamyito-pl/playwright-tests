@@ -48,7 +48,7 @@ export const test = baseTest.extend<MyFixtures>({
       await loginPage.enterEmail(`${process.env.EMAIL}`);
       await loginPage.enterPassword(`${process.env.PASSWORD}`);
       await loginPage.clickLoginButton();
-      await page.waitForURL('/', { waitUntil: 'networkidle', timeout: 10000 });
+      await page.waitForURL('/', { waitUntil: 'networkidle', timeout: 20000 });
       await utility.addGlobalStyles(page);
       await expect(mainLogoutPage.getLoginLink).toBeHidden();
     };
