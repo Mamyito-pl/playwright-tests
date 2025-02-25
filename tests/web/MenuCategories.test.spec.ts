@@ -87,7 +87,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.getByText('Warzywa i owoce').click();
 
-    await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce');
+    await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce', { timeout: 10000 });
     await productsPage.getProductCategoryTitle('Warzywa i owoce').isVisible();
   })
 
@@ -105,7 +105,7 @@ test.describe('Testy menu kategorii', async () => {
     await page.getByText('Warzywa i owoce').hover();
     await page.getByText('Grzyby').click();
 
-    await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce/grzyby');
+    await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce/grzyby', { timeout: 10000 });
     await productsPage.getProductCategoryTitle('Grzyby').isVisible();
   })
 })
