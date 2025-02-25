@@ -4,6 +4,7 @@ import DeliveryPage from '../../page/Delivery.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
+import * as utility from '../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -12,9 +13,15 @@ test.describe('Testy dostawy', async () => {
   let commonPage: CommonPage;
   let deliveryPage : DeliveryPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeEach(async ({ page }) => {
 
-    await loginManual();
+    await page.goto('/', { waitUntil: 'commit'})
+
+    page.on('framenavigated', async () => {
+      await utility.addGlobalStyles(page);
+    });
+    
+    await utility.addGlobalStyles(page);
 
     commonPage = new CommonPage(page);
     deliveryPage = new DeliveryPage(page);
@@ -57,10 +64,10 @@ test.describe('Testy dostawy', async () => {
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
     await deliveryPage.getDeliverySlotButton.first().click();
-    await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Wybrany');
+    await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Wybrany', { timeout: 3000 });
     await deliveryPage.getDeliverySlotButton.last().click();
-    await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny');
-    await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany');
+    await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny', { timeout: 3000 });
+    await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
   })
 
   test.describe('Adres dostawy', async () => {

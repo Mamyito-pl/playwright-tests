@@ -24,6 +24,7 @@ test.describe('Testy logowania', async () => {
     await utility.addGlobalStyles(page);
   })
 
+  test.use({ storageState: { cookies: [], origins: [] }})
   test('W | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');
@@ -40,6 +41,7 @@ test.describe('Testy logowania', async () => {
     expect(mainLogoutPage.getLoginLink).toBeHidden();
   })
 
+  test.use({ storageState: { cookies: [], origins: [] }})
   test('W | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');
@@ -56,6 +58,7 @@ test.describe('Testy logowania', async () => {
     await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 5000 })
   })
 
+  test.use({ storageState: { cookies: [], origins: [] }})
   test('W | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');

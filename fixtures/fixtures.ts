@@ -1,11 +1,10 @@
 // fixtures.ts
-import { test as baseTest, APIRequestContext, BrowserContext, Page } from '@playwright/test';
+import { test as baseTest, Page } from '@playwright/test';
 import LoginPage from "../page/Login.page.ts";
 import MainLogoutPage from "../page/MainLogout.page.ts";
 import CartPage from '../page/Cart.page.ts';
 import SearchbarPage from '../page/Searchbar.page.ts';
 import DeliveryPage from '../page/Delivery.page.ts';
-import DeliveryAddressesPage from '../page/Profile/DeliveryAddresses.page.ts'
 import * as selectors from '../utils/selectors.json';
 import * as utility from '../utils/utility-methods';
 
@@ -14,13 +13,13 @@ let mainLogoutPage: MainLogoutPage;
 let cartPage: CartPage;
 let searchbarPage : SearchbarPage;
 let deliveryPage : DeliveryPage;
-let deliveryAddressesPage : DeliveryAddressesPage;
 
 
 type MyFixtures = {
     loginManual: () => Promise<void>;
     loginViaAPI: (page: Page) => Promise<void>;
     clearCart: () => Promise<void>;
+    clearCartViaAPI: () => Promise<void>;
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
     deleteAddressDelivery: (addressName: any) => Promise<void>;
@@ -55,40 +54,7 @@ export const test = baseTest.extend<MyFixtures>({
     await use(login);
   },
 
-  loginViaAPI: async ({ browser, request }, use) => {
-      const loginViaAPI = async (newPage: Page): Promise<void> => {
-
-      const loginResponse = await request.post(`https://api.mamyito.pl/api/login`, {
-        data: {
-          email: `${process.env.EMAIL}`,
-          password: `${process.env.PASSWORD}`,
-        },
-      });
-
-      if (!loginResponse.ok()) {
-        throw new Error(`Failed to login, status: ${loginResponse.status()}`);
-      }
-
-      const responseBody = await loginResponse.json();
-      console.log('API response:', responseBody);
-      const accessToken = responseBody.data.token;
-      console.log('Access token:', accessToken);
-
-      const context = await browser.newContext({
-        extraHTTPHeaders: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const page = await context.newPage();
-      await page.goto('/');
-      await page.waitForURL('/', { waitUntil: 'domcontentloaded', timeout: 10000 });
-      await utility.addGlobalStyles(page);
-      await expect(mainLogoutPage.getLoginLink).toBeHidden();
-    };
-
-    await use(loginViaAPI);
-  },
+  storageState: 'playwright/.auth/user.json',
 
   clearCart: async ({ page }, use) => {
 
@@ -111,6 +77,42 @@ export const test = baseTest.extend<MyFixtures>({
       }
     };
     await use(clearCart);
+  },
+
+  clearCartViaAPI: async ({ page, request }, use) => {
+    cartPage = new CartPage(page);
+    
+    const clearCartViaAPI = async (): Promise<void> => {
+      
+      const tokenResponse = await request.post('https://api.mamyito.pl/api/login', {
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+      const token = responseBodyToken.data.token;
+
+      const cartIDResponse = await request.post('https://api.mamyito.pl/api/cart/', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      const responseBodyCartID = await cartIDResponse.json();
+      const cart_id = responseBodyCartID.data.id;
+
+      const deleteItemsFromCart = await request.delete(`https://api.mamyito.pl/api/cart/${cart_id}/items`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      expect(deleteItemsFromCart.status()).toBe(200);
+    };
+    
+    await use(clearCartViaAPI);
   },
 
   addProduct: async ({ page }, use) => {
