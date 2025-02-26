@@ -4,6 +4,7 @@ import DeliveryPage from '../../page/Delivery.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
+import * as utility from '../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -12,9 +13,15 @@ test.describe('Testy dostawy', async () => {
   let commonPage: CommonPage;
   let deliveryPage : DeliveryPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeEach(async ({ page }) => {
 
-    await loginManual();
+    await page.goto('/', { waitUntil: 'commit'})
+
+    page.on('framenavigated', async () => {
+      await utility.addGlobalStyles(page);
+    });
+    
+    await utility.addGlobalStyles(page);
 
     commonPage = new CommonPage(page);
     deliveryPage = new DeliveryPage(page);

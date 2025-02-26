@@ -1,5 +1,4 @@
-import { Page, chromium, expect } from '@playwright/test';
-import ProductsPage from '../../page/Products.page.ts';
+import { expect } from '@playwright/test';
 import MainPage from "../../page/Main.page.ts";
 import CartPage from '../../page/Cart.page.ts';
 import DeliveryPage from '../../page/Delivery.page.ts';
@@ -23,7 +22,6 @@ test.describe('Testy płatności', async () => {
   let przelewy24Page: Przelewy24Page;
   let orderDetailsPage: OrderDetailsPage;
   let commonPage: CommonPage;
-  let productsPage: ProductsPage;
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
   
@@ -44,7 +42,6 @@ test.describe('Testy płatności', async () => {
     przelewy24Page = new Przelewy24Page(page);
     orderDetailsPage = new OrderDetailsPage(page);
     commonPage = new CommonPage(page);
-    productsPage = new ProductsPage(page);
     searchbarPage = new SearchbarPage(page);
   })
   

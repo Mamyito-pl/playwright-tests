@@ -3,6 +3,7 @@ import CommonPage from "../../../page/Common.page.ts";
 import DeliveryAddressesPage from '../../../page/Profile/DeliveryAddresses.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../../fixtures/fixtures.ts';
+import * as utility from '../../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -11,9 +12,15 @@ test.describe('Testy adresy dostaw', async () => {
   let commonPage: CommonPage;
   let deliveryAddressesPage : DeliveryAddressesPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeEach(async ({ page }) => {
 
-    await loginManual();
+    await page.goto('/', { waitUntil: 'commit'})
+
+    page.on('framenavigated', async () => {
+      await utility.addGlobalStyles(page);
+    });
+    
+    await utility.addGlobalStyles(page);
 
     commonPage = new CommonPage(page);
     deliveryAddressesPage = new DeliveryAddressesPage(page);

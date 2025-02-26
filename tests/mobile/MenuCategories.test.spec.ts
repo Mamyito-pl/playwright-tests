@@ -3,15 +3,22 @@ import MenuCategoriesPage from "../../page/MenuCategories.page";
 import ProductsPage from '../../page/Products.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
+import * as utility from '../../utils/utility-methods';
 
 test.describe('Testy menu kategorii', async () => {
 
   let menuCategoriesPage: MenuCategoriesPage;
   let productsPage: ProductsPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeEach(async ({ page }) => {
 
-    await loginManual();
+    await page.goto('/', { waitUntil: 'commit'})
+
+    page.on('framenavigated', async () => {
+      await utility.addGlobalStyles(page);
+    });
+
+    await utility.addGlobalStyles(page);
 
     menuCategoriesPage = new MenuCategoriesPage(page);
     productsPage = new ProductsPage(page);

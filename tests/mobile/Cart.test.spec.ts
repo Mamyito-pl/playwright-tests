@@ -9,6 +9,7 @@ import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
+import * as utility from '../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -22,9 +23,15 @@ test.describe('Testy koszyka', async () => {
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
 
-  test.beforeEach(async ({ page, loginManual }) => {
+  test.beforeEach(async ({ page }) => {
 
-    await loginManual();
+    await page.goto('/', { waitUntil: 'commit'})
+
+    page.on('framenavigated', async () => {
+      await utility.addGlobalStyles(page);
+    });
+    
+    await utility.addGlobalStyles(page);
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);
@@ -35,12 +42,12 @@ test.describe('Testy koszyka', async () => {
     searchbarPage = new SearchbarPage(page);
   })
 
-  test.afterEach(async ({ clearCart }) => {
+  test.afterEach(async ({ clearCartViaAPI }) => {
     
     const shouldSkipClearCart = test.info().annotations.some(a => a.type === 'skipClearCart');
 
     if (!shouldSkipClearCart) {
-      await clearCart();
+      await clearCartViaAPI();
     }
   }) 
   
