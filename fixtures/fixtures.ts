@@ -27,7 +27,6 @@ type MyFixtures = {
     deleteInvoiceAddressDelivery: (addressName: any) => Promise<void>;
     deleteAddressDeliveryProfile: (addressName: any) => Promise<void>;
     addAddressDeliveryProfile: (addressName: any) => Promise<void>;
-    getToken: () => Promise<string>;
 };
 
 export const test = baseTest.extend<MyFixtures>({
