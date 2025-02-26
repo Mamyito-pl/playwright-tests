@@ -132,7 +132,7 @@ test.describe('Testy koszyka', async () => {
     await allure.allureId('434');
 
     await searchbarPage.clickSearchbar()
-    await expect(page.locator(selectors.Searchbar.web.searchbarCloseButton)).toBeVisible({ timeout: 15000 });
+    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
     await searchbarPage.enterProduct('mycia naczyń somat');
     await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
@@ -140,7 +140,7 @@ test.describe('Testy koszyka', async () => {
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(1000);
     await expect(searchbarPage.getProductItemCount).toHaveValue('2');
-    await cartPage.clickCartButton();
+    await cartPage.clickCartDrawerButton();
     await cartPage.clickShowCartButton();
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
@@ -158,7 +158,7 @@ test.describe('Testy koszyka', async () => {
     
     test.info().annotations.push({ type: 'skipClearCart' });
 
-    await cartPage.clickCartButton();
+    await cartPage.clickCartDrawerButton();
     
     await expect(cartPage.getCartDrawer).toBeVisible();
 
@@ -205,7 +205,7 @@ test.describe('Testy koszyka', async () => {
     test.info().annotations.push({ type: 'skipClearCart' });
 
     await expect(cartPage.getCartDrawer).toBeHidden();
-    await cartPage.clickCartButton();
+    await cartPage.clickCartDrawerButton();
     await expect(cartPage.getCartDrawer).toBeVisible();
     await searchbarPage.clickSearchbar();
     await expect(cartPage.getCartDrawer).toBeHidden();
@@ -223,7 +223,7 @@ test.describe('Testy koszyka', async () => {
     test.info().annotations.push({ type: 'skipClearCart' });
 
     await expect(cartPage.getCartDrawer).toBeHidden();
-    await cartPage.clickCartButton();
+    await cartPage.clickCartDrawerButton();
     await expect(cartPage.getCartDrawer).toBeVisible();
     await cartPage.clickCloseDrawerIconButton();
     await expect(cartPage.getCartDrawer).toBeHidden()
@@ -241,7 +241,7 @@ test.describe('Testy koszyka', async () => {
     const product = 'woda';
 
     await addProduct(product);
-    await cartPage.clickCartButton();
+    await cartPage.clickCartDrawerButton();
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
     await page.waitForLoadState('load');

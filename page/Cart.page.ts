@@ -25,8 +25,8 @@ export default class CartPage {
         await this.page.click(selectors.CartPage.web.showCartButton);
     }
 
-    async clickCartButton() {
-        await this.page.click(this.mobile ? selectors.CartPage.mobile.cartButton : selectors.CartPage.web.cartButton);
+    async clickCartDrawerButton() {
+        await this.getCartDrawerButton.click();
     }
 
     async clickClearCartButton() {
@@ -102,6 +102,10 @@ export default class CartPage {
 
     get getClearCartButton() {
         return this.page.locator(selectors.CartPage.common.clearCartButton)
+    }
+
+    get getCartDrawerButton() {
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile" : "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button")
     }
 
     get getCartDrawerSummaryTitle() {

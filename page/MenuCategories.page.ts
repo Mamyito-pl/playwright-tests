@@ -2,7 +2,7 @@ import { Page } from "@playwright/test";
 import { isMobile } from '../utils/utility-methods.ts';
 
 
-export default class MenuCategories {
+export default class MenuCategoriesPage {
     private mobile: boolean;
 
     constructor(public page: Page) {

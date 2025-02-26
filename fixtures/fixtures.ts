@@ -123,15 +123,10 @@ export const test = baseTest.extend<MyFixtures>({
 
     if (!viewport) throw new Error('Viewport is null');
 
-    const mobile = utility.isMobile(viewport.width);
-
     const addProduct = async (product: string) => {
 
-      const searchbarInputSelector = mobile ? selectors.Searchbar.mobile.searchbarInput : selectors.Searchbar.web.searchbarInput;
-      const searchbarCloseButtonSelector = mobile ? selectors.Searchbar.mobile.searchbarCloseButton : selectors.Searchbar.web.searchbarCloseButton
-
-      await page.locator(searchbarInputSelector).click();
-      await expect(page.locator(searchbarCloseButtonSelector)).toBeVisible({ timeout: 10000 });
+      await searchbarPage.getSearchbarInput.click();
+      await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
       await searchbarPage.enterProduct(product);
       await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
       await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();

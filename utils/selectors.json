@@ -47,7 +47,6 @@
         },
         "web": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
-            "cartButton": "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button",
             "productsNumberButton": "div[data-sentry-element='WebContent'][data-sentry-source-file='Navigation.tsx'] #cart_button #productsNumber",
             "showCartButton": "button:has-text('Pokaż koszyk')",
             "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='WebContent'] button",
@@ -59,7 +58,6 @@
         },
         "mobile": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
-            "cartButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile",
             "productsNumberButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile #productsNumber",
             "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='TabletContent'] button"
         }
@@ -121,14 +119,6 @@
             "searchbarProductCardIncreaseButton": "div[data-testid='search-results'] button[class*='add_to_cart_increment_button']",
             "searchbarProductCardDecreaseButton": "div[data-testid='search-results'] button[class*='add_to_cart_decrement_button']",
             "searchbarProductItemCount": "div[data-testid='search-results'] div[data-sentry-element='StyledProductQuantityInput'] div input"
-        },
-        "web": {
-            "searchbarInput": "div[data-sentry-element='WebContent'] #search_hub_search_input",
-            "searchbarCloseButton": "div[data-sentry-element='WebContent'] #search_hub_close_button"
-        },
-        "mobile": {
-            "searchbarInput": "div[data-sentry-element='TabletContent'] #search_hub_search_input",
-            "searchbarCloseButton": "div[data-sentry-element='TabletContent'] #search_hub_close_button"
         }
     },
     "Newsletter": {

@@ -14,11 +14,11 @@ export default class SearchbarPage {
     }
 
     async enterProduct(product: string) {
-        await this.page.locator(this.mobile ? selectors.Searchbar.mobile.searchbarInput : selectors.Searchbar.web.searchbarInput).fill(product);
+        await this.getSearchbarInput.fill(product);
     }
 
     async clickSearchbar() {
-        await this.page.click(this.mobile ? selectors.Searchbar.mobile.searchbarInput : selectors.Searchbar.web.searchbarInput);
+        await this.getSearchbarInput.click();
     }
 
     async clickIncreaseProductButton() {
@@ -31,5 +31,13 @@ export default class SearchbarPage {
 
     get getProductItemCount() {
         return this.page.locator(selectors.Searchbar.common.searchbarProductItemCount);
+    }
+
+    get getSearchbarInput() {
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_search_input" : "div[data-sentry-element='WebContent'] #search_hub_search_input")
+    }
+
+    get getSearchbarCloseButton() {
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_close_button" : "div[data-sentry-element='WebContent'] #search_hub_close_button")
     }
 }
