@@ -25,13 +25,11 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-    
-    await utility.addGlobalStyles(page);
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);

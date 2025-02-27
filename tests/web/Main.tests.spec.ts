@@ -16,13 +16,11 @@ test.describe('Testy strony głównej', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-
-    await utility.addGlobalStyles(page);
 
     mainPage = new MainPage(page);
     menuCategoriesPage = new MenuCategoriesPage(page);

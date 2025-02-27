@@ -15,13 +15,11 @@ test.describe('Testy dostawy', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-    
-    await utility.addGlobalStyles(page);
 
     commonPage = new CommonPage(page);
     deliveryPage = new DeliveryPage(page);

@@ -12,13 +12,11 @@ test.describe('Testy menu kategorii', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-
-    await utility.addGlobalStyles(page);
 
     menuCategoriesPage = new MenuCategoriesPage(page);
     productsPage = new ProductsPage(page);

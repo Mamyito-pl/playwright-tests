@@ -19,8 +19,6 @@ test.describe('Testy adresy dostaw', async () => {
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-    
-    await utility.addGlobalStyles(page);
 
     commonPage = new CommonPage(page);
     deliveryAddressesPage = new DeliveryAddressesPage(page);

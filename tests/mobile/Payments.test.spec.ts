@@ -27,13 +27,11 @@ test.describe('Testy płatności', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-    
-    await utility.addGlobalStyles(page);
 
     mainPage = new MainPage(page);
     cartPage = new CartPage(page);
