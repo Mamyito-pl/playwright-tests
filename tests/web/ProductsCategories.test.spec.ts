@@ -17,8 +17,6 @@ test.describe('Testy kategorii produktów', async () => {
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
-    
-    await utility.addGlobalStyles(page);
 
     productsCategoriesPage = new ProductsCategoriesPage(page);
     productsPage = new ProductsPage(page);
