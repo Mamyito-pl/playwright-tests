@@ -30,6 +30,7 @@ jobs:
       actions: read
     env:
       URL: ${{ secrets.PROD_URL_SECRET }}
+      APIURL: ${{ secrets.PROD_APIURL_SECRET }}
       EMAIL: ${{ secrets.EMAIL_SECRET }}
       PASSWORD: ${{ secrets.PASSWORD_SECRET }}
     steps:
