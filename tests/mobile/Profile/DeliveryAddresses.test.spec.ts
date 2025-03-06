@@ -39,7 +39,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
   })
 
-  test('M | Możliwość dodania adresu dostawy', async ({ page }) => {
+  test('M | Możliwość dodania adresu dostawy', async ({ page, deleteDeliveryAddressViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -99,19 +99,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
 
-    
-    await page.getByText('Adres Testowy').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
-
-    await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
-    await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
-    await expect(deliveryAddressesPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
-    await expect(deliveryAddressesPage.getAddressModalDeleteAddressName('Adres Testowy')).toContainText('Adres Testowy');
-    await expect(deliveryAddressesPage.getAddressModalConfirmationButton).toBeVisible();
-    await deliveryAddressesPage.getAddressModalConfirmationButton.click();
-    await deliveryAddressesPage.getAddressModal.waitFor({ state: 'hidden', timeout: 5000 });
-    await commonPage.getMessage.getByText('Adres "Adres Testowy" został usunięty.').waitFor({ state: 'hidden', timeout: 10000 });
-
-    await page.getByText('Adres Testowy').isHidden({ timeout: 10000 });
+    await deleteDeliveryAddressViaAPI('Adres Testowy')
   })
 
   test('M | Możliwość ustawienia głównego adresu dostawy', async ({ page, addAddressDelivery }) => {

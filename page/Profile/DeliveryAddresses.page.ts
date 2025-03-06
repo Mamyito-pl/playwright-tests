@@ -37,7 +37,7 @@ export default class DeliveryAdressesPage {
     }
 
     getMainAddressInfo(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('div[class*="sc-26545276-2"]');
+        return this.page.getByText(addressName).locator('..').locator('..').locator('div[class*="sc-ad97832e-2"]');
     }
 
     // Address Modal

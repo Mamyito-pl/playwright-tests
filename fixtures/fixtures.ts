@@ -20,10 +20,13 @@ type MyFixtures = {
     loginViaAPI: (page: Page) => Promise<void>;
     clearCart: () => Promise<void>;
     clearCartViaAPI: () => Promise<void>;
+    newsletterSignOutViaAPI: () => Promise<void>;
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
     deleteAddressDelivery: (addressName: any) => Promise<void>;
+    deleteDeliveryAddressViaAPI: (addressName: any) => Promise<void>;
     addInvoiceAddressDelivery: (addressName: any) => Promise<void>;
+    deleteInvoiceAddressViaAPI: (addressName: any) => Promise<void>;
     deleteInvoiceAddressDelivery: (addressName: any) => Promise<void>;
     deleteAddressDeliveryProfile: (addressName: any) => Promise<void>;
     addAddressDeliveryProfile: (addressName: any) => Promise<void>;
@@ -83,7 +86,10 @@ export const test = baseTest.extend<MyFixtures>({
     
     const clearCartViaAPI = async (): Promise<void> => {
       
-      const tokenResponse = await request.post('https://api.mamyito.pl/api/login', {
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
         data: {
           email: `${process.env.EMAIL}`,
           password: `${process.env.PASSWORD}`,
@@ -91,9 +97,10 @@ export const test = baseTest.extend<MyFixtures>({
       });
 
       const responseBodyToken = await tokenResponse.json();
+
       const token = responseBodyToken.data.token;
 
-      const cartIDResponse = await request.post('https://api.mamyito.pl/api/cart/', {
+      const cartIDResponse = await request.post(`${process.env.APIURL}/api/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,13 +109,46 @@ export const test = baseTest.extend<MyFixtures>({
       const responseBodyCartID = await cartIDResponse.json();
       const cart_id = responseBodyCartID.data.id;
 
-      const deleteItemsFromCart = await request.delete(`https://api.mamyito.pl/api/cart/${cart_id}/items`, {
+      const deleteItemsFromCart = await request.delete(`${process.env.APIURL}/api/cart/${cart_id}/items`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       expect(deleteItemsFromCart.status()).toBe(200);
+    };
+    
+    await use(clearCartViaAPI);
+  },
+
+  newsletterSignOutViaAPI: async ({ request }, use) => {
+    
+    const clearCartViaAPI = async (): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const newsletterSignOutResponse = await request.post(`${process.env.APIURL}/api/newsletter/sign-out`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+          data: {
+            email: `${process.env.EMAIL}`,
+          },
+      });
+
+      expect(newsletterSignOutResponse.status()).toBe(200);
     };
     
     await use(clearCartViaAPI);
@@ -185,6 +225,50 @@ export const test = baseTest.extend<MyFixtures>({
     await use(deleteAddressDelivery);
   },
 
+  
+  deleteDeliveryAddressViaAPI: async ({ request }, use) => {
+    
+    const deleteDeliveryAddressViaAPI = async (addressName: string): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const deliveryAddressesResponse = await request.get(`${process.env.APIURL}/api/addresses/delivery`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      const responseBodyAddresses = await deliveryAddressesResponse.json();
+      const addresses = responseBodyAddresses.data
+
+      const addressToDelete = addresses.find(address => address.name === addressName);
+
+      const deliveryAddress_id = addressToDelete.id
+
+      const deleteDeliveryAddress = await request.delete(`${process.env.APIURL}/api/addresses/${deliveryAddress_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      expect(deleteDeliveryAddress.status()).toBe(204);
+    };
+    
+    await use(deleteDeliveryAddressViaAPI);
+  },
+
   addInvoiceAddressDelivery: async ({ page }, use) => {
 
     deliveryPage = new DeliveryPage(page);
@@ -218,7 +302,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const deleteInvoiceAddressDelivery = async (addressName: string) => {
 
-      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg').nth(2).click();
+      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg [class="tabler-icon tabler-icon-trash"]').last().click();
 
       await page.waitForSelector('div[class*="sc-f8f81ad2-1"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -231,6 +315,49 @@ export const test = baseTest.extend<MyFixtures>({
       await page.getByText(addressName).isHidden();
     };
     await use(deleteInvoiceAddressDelivery);
+  },
+
+  deleteInvoiceAddressViaAPI: async ({ request }, use) => {
+    
+    const deleteInvoiceAddressViaAPI = async (addressName: string): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const invoiceAddressesResponse = await request.get(`${process.env.APIURL}/api/addresses/invoice`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      const responseBodyAddresses = await invoiceAddressesResponse.json();
+      const addresses = responseBodyAddresses.data
+
+      const addressToDelete = addresses.find(address => address.name === addressName);
+
+      const invoiceAddress_id = addressToDelete.id
+
+      const deleteInvoiceAddress = await request.delete(`${process.env.APIURL}/api/addresses/${invoiceAddress_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      expect(deleteInvoiceAddress.status()).toBe(204);
+    };
+    
+    await use(deleteInvoiceAddressViaAPI);
   }
 });
 

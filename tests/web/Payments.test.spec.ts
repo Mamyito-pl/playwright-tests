@@ -69,11 +69,11 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(200000);
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('do mycia naczyń somat');
 
     await page.waitForTimeout(2000);
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
         await page.waitForTimeout(1000);
     };
@@ -127,9 +127,9 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(200000);
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('do mycia naczyń somat');
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
         await page.waitForTimeout(1000);
     };
@@ -175,9 +175,9 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(200000);
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('do mycia naczyń somat');
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
         await page.waitForTimeout(1000);
     };
@@ -220,9 +220,9 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(300000);
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('do mycia naczyń somat');
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
         await page.waitForTimeout(1000);
     };
@@ -288,7 +288,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -336,7 +336,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -382,7 +382,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(80000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -415,7 +415,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(100000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -449,7 +449,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(100000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -485,7 +485,7 @@ test.describe('Testy płatności', async () => {
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -533,7 +533,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(180000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -602,7 +602,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -667,7 +667,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(130000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -718,7 +718,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(130000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -781,7 +781,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -860,7 +860,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
@@ -943,7 +943,7 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(130000);
 
-      await addProduct('mycia naczyń somat');
+      await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();

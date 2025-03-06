@@ -33,7 +33,7 @@ export default class DeliveryPage {
     }
 
     get getDeliveryAddressTitle() {
-        return this.page.locator('div[class*="sc-91ca8657"] div[data-sentry-element="Title"]');
+        return this.page.locator('div[data-sentry-element="Title"]').getByText('Adres dostawy');
     }
 
     get getDeliveryAddressSubTitle() {

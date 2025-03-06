@@ -43,7 +43,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('W | Możliwość wyboru terminu dostawy', async ({ page }) => {
+  test('W | Możliwość wyboru terminu dostawy', { tag: ['@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Dostawa');
     await allure.epic('Webowe');
@@ -68,9 +68,9 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
   })
 
-  test.describe('Adres dostawy', async () => {
+  test.describe('Adres dostawy', { tag: ['@Smoke'] }, async () => {
     
-    test('W | Możliwość dodania adresu dostawy', async ({ page, deleteAddressDelivery }) => {
+    test('W | Możliwość dodania adresu dostawy', async ({ page, deleteDeliveryAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -130,7 +130,7 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
 
-      await deleteAddressDelivery('Adres Testowy');
+      await deleteDeliveryAddressViaAPI('Adres Testowy');
     })
 
     test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery }) => {
@@ -281,9 +281,9 @@ test.describe('Testy dostawy', async () => {
     })
   })
 
-  test.describe('Faktura', async () => {
+  test.describe('Faktura', { tag: ['@Smoke'] }, async () => {
     
-    test('W | Możliwość dodania podmiotu do faktury', async ({ page, deleteInvoiceAddressDelivery }) => {
+    test('W | Możliwość dodania podmiotu do faktury', async ({ page, deleteInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -334,10 +334,10 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
 
-      await deleteInvoiceAddressDelivery('Testowa nazwa podmiotu');
+      await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu')
     })
 
-    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressDelivery }) => {
+    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -384,7 +384,7 @@ test.describe('Testy dostawy', async () => {
 
       await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 3000 });
 
-      await deleteInvoiceAddressDelivery('Testowa nazwa podmiotu');
+      await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu');
     })
 
     test('W | Możliwość edycji podmiotu do faktury', async ({ page }) => {
