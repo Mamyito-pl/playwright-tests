@@ -24,6 +24,6 @@ export default class ProductsPage {
     }
 
     getSpecialProductCategoryTitle(titleName: string) {
-        return this.page.locator(`div[data-sentry-element="Title"]:has-text("${titleName}")`);
+        return this.page.locator(`h1[data-sentry-element="Title"]:has-text("${titleName}")`);
     }
 }
