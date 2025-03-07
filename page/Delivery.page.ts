@@ -24,8 +24,16 @@ export default class DeliveryPage {
         return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
     }
 
+    async clickEditInvoiceAddressButton(addressName: string) {
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
+    }
+
     async clickDeleteAddressButton(addressName: string) {
         return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+    }
+
+    async clickDeleteInvoiceAddressButton(addressName: string) {
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
     }
 
     get getDeliverySlotButton() {

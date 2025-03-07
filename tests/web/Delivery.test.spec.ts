@@ -407,7 +407,7 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { timeout: 5000, state: 'visible' });
 
-      await page.getByText('Fixturowy adres podmiotu').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
+      await deliveryPage.clickEditInvoiceAddressButton('Fixturowy adres podmiotu');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
@@ -444,7 +444,7 @@ test.describe('Testy dostawy', async () => {
       
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { timeout: 5000, state: 'visible' });
 
-      await page.getByText('Edytowana nazwa podmiotu').locator('..').locator('..').locator('..').locator('svg').nth(1).click({ force: true });
+      await deliveryPage.clickEditInvoiceAddressButton('Edytowana nazwa podmiotu');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
@@ -471,7 +471,7 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
-      await page.getByText('Edytowana nazwa podmiotu').locator('..').locator('..').locator('..').locator('svg').nth(2).click();
+      await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
 
       await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 3000 });
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
