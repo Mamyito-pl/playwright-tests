@@ -57,7 +57,7 @@ export default class DeliveryPage {
     }
 
     get getDeliveryInvoiceCheckbox() {
-        return this.page.getByText('Chcę otrzymać F-Vat');
+        return this.page.locator('span[data-sentry-element="CheckboxMark"]');
     }
 
     get getDeliveryDateTitle() {
