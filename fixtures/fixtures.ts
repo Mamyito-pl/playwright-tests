@@ -23,9 +23,11 @@ type MyFixtures = {
     newsletterSignOutViaAPI: () => Promise<void>;
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
+    addAddressDeliveryViaAPI: (addressName: any) => Promise<void>;
     deleteAddressDelivery: (addressName: any) => Promise<void>;
     deleteDeliveryAddressViaAPI: (addressName: any) => Promise<void>;
     addInvoiceAddressDelivery: (addressName: any) => Promise<void>;
+    addInvoiceAddressViaAPI: (addressName: any) => Promise<void>;
     deleteInvoiceAddressViaAPI: (addressName: any) => Promise<void>;
     deleteInvoiceAddressDelivery: (addressName: any) => Promise<void>;
     deleteAddressDeliveryProfile: (addressName: any) => Promise<void>;
@@ -204,6 +206,54 @@ export const test = baseTest.extend<MyFixtures>({
     await use(addAddressDelivery);
   },
 
+  addAddressDeliveryViaAPI: async ({ request }, use) => {
+    
+    const addAddressDeliveryViaAPI = async (addressName: string): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const addDeliveryAddress = await request.post(`${process.env.APIURL}/api/addresses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          city: "Warszawa",
+          first_name: "Jan",
+          last_name: "Kowalski",
+          house_number: "1",
+          icon_color: "#ffa31a",
+          icon_type: "home",
+          is_default: false,
+          latitude: 11,
+          longitude: 11,
+          name: `${addressName}`,
+          phone_number: "555666777",
+          postal_code: "00-828",
+          street: "aleja Jana Pawła II",
+          staircase_number: "1",
+          flat_number: "30",
+          type: "delivery"
+        },
+      });
+
+      expect(addDeliveryAddress.status()).toBe(201);
+    };
+    
+    await use(addAddressDeliveryViaAPI);
+  },
+
   deleteAddressDelivery: async ({ page }, use) => {
 
     deliveryPage = new DeliveryPage(page);
@@ -225,7 +275,6 @@ export const test = baseTest.extend<MyFixtures>({
     await use(deleteAddressDelivery);
   },
 
-  
   deleteDeliveryAddressViaAPI: async ({ request }, use) => {
     
     const deleteDeliveryAddressViaAPI = async (addressName: string): Promise<void> => {
@@ -294,6 +343,50 @@ export const test = baseTest.extend<MyFixtures>({
       await page.getByText(addressName).isVisible();
     };
     await use(addInvoiceAddressDelivery);
+  },
+  
+  addInvoiceAddressViaAPI: async ({ request }, use) => {
+    
+    const addInvoiceAddressViaAPI = async (addressName: string): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const addDeliveryAddress = await request.post(`${process.env.APIURL}/api/addresses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          city: "Warszawa",
+          house_number: "1",
+          nip: "8140667487",
+          company_name: "Testowa firma",
+          icon_color: "#ffa31a",
+          icon_type: "company",
+          is_default: false,
+          name: `${addressName}`,
+          postal_code: "00-828",
+          street: "aleja Jana Pawła II",
+          flat_number: "30",
+          type: "invoice"
+        },
+      });
+
+      expect(addDeliveryAddress.status()).toBe(201);
+    };
+    
+    await use(addInvoiceAddressViaAPI);
   },
 
   deleteInvoiceAddressDelivery: async ({ page }, use) => {

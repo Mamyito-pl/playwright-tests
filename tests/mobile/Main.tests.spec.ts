@@ -49,11 +49,11 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1261');
 
     await page.evaluate(async () => {
-      window.scrollBy(0, 1500)
+      window.scrollBy(0, 1000)
       await new Promise(r => setTimeout(r, 700));
-      window.scrollBy(0, 2500)
+      window.scrollBy(0, 1000)
       await new Promise(r => setTimeout(r, 700));
-      window.scrollBy(0, 3500)
+      window.scrollBy(0, 1000)
       await new Promise(r => setTimeout(r, 700));
     })
 
@@ -189,7 +189,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getSectionShowAllLink('bestsellery').click();
     await expect(page).toHaveURL(`${baseURL}` + '/bestsellery', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 10000 });
+    await expect(productsPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 10000 });
   })
     
   test('M | Możliwość przewijania slidera kategorii', async ({ page, browser }) => {
@@ -296,13 +296,13 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async() => {
         window.scrollBy(0, 1550)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 2050)
+        window.scrollBy(0, 500)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
       await page.mouse.wheel(0, 1500);
       await page.waitForTimeout(700);
-      await page.mouse.wheel(0, 2000);
+      await page.mouse.wheel(0, 500);
       await page.waitForTimeout(700);
     }
 
@@ -332,19 +332,19 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async () => {
         window.scrollBy(0, 1550)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 2050)
+        window.scrollBy(0, 500)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
       await page.mouse.wheel(0, 1500);
       await page.waitForTimeout(700);
-      await page.mouse.wheel(0, 2000);
+      await page.mouse.wheel(0, 500);
       await page.waitForTimeout(700);
     }
 
     await mainPage.getSectionShowAllLink('nowosci').click();
     await expect(page).toHaveURL(`${baseURL}` + '/nowosci', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Nowości')).toBeVisible({ timeout: 10000 });
+    await expect(productsPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 10000 });
   })
 
   test('M | Możliwość przewijania slidera najczęściej kupowanych produktów', async ({ page, browser }) => {
@@ -362,13 +362,13 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async () => {
         window.scrollBy(0, 1550)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 2250)
+        window.scrollBy(0, 500)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
       await page.mouse.wheel(0, 1500);
       await page.waitForTimeout(700);
-      await page.mouse.wheel(0, 2200);
+      await page.mouse.wheel(0, 500);
       await page.waitForTimeout(700);
     }
 
@@ -398,20 +398,20 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async() => {
         window.scrollBy(0, 1550)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 2250)
+        window.scrollBy(0, 500)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
       await page.mouse.wheel(0, 1500);
       await page.waitForTimeout(700);
-      await page.mouse.wheel(0, 2200);
+      await page.mouse.wheel(0, 500);
       await page.waitForTimeout(700);
     }
 
     await mainPage.getSectionShowAllLink('najczesciej-kupowane').click();
     await page.waitForLoadState();
     await expect(page).toHaveURL(`${baseURL}` + '/najczesciej-kupowane', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
+    await expect(productsPage.getSpecialProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
   })
 
   test('M | Możliwość przejścia do "Strefa Mamity" poprzez przycisk menu', async ({ page, baseURL }) => {
@@ -453,7 +453,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getNewProductsButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/nowosci', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Nowości')).toBeVisible({ timeout: 15000 });
+    await expect(productsPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 15000 });
   })
       
   test('M | Możliwość przejścia do "Bestsellery" poprzez przycisk menu', async ({ page, baseURL }) => {
@@ -467,7 +467,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getBestsellersButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/bestsellery', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 15000 });
+    await expect(productsPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 15000 });
   })
   
   test('M | Możliwość przejścia do "Ulubione" poprzez przycisk menu', async ({ page, baseURL }) => {

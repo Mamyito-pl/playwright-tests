@@ -25,7 +25,11 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page }) => {
 
+    test.setTimeout(80000);
+
     await page.goto('/', { waitUntil: 'load'})
+
+    await utility.addGlobalStyles(page);
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);

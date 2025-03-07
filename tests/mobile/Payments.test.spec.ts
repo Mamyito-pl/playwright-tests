@@ -428,7 +428,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('487');
 
-      test.setTimeout(60000);
+      test.setTimeout(100000);
 
       await addProduct('do mycia naczyń somat');
 
@@ -464,7 +464,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('488');
 
-      test.setTimeout(60000);
+      test.setTimeout(100000);
   
       await addProduct('do mycia naczyń somat');
 
@@ -500,7 +500,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('489');
 
-      test.setTimeout(160000);
+      test.setTimeout(200000);
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 

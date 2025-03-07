@@ -133,7 +133,7 @@ test.describe('Testy dostawy', async () => {
       await deleteDeliveryAddressViaAPI('Adres Testowy');
     })
 
-    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDelivery }) => {
+    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -144,12 +144,13 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(100000);
 
+      await addAddressDeliveryViaAPI('Adres Fixturowy');
+
       const targetAddress = page.getByText('Adres Podstawowy').locator('..').locator('..').locator('..');
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
       await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
-      await addAddressDelivery('Adres Fixturowy');
       await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
       await page.getByText('Adres Podstawowy').click({ force: true });
@@ -181,8 +182,6 @@ test.describe('Testy dostawy', async () => {
       test.setTimeout(100000);
 
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
-
-      //await page.getByText('Adres Fixturowy').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
 
       await deliveryPage.clickEditAddressButton('Adres Fixturowy');
 
@@ -230,8 +229,6 @@ test.describe('Testy dostawy', async () => {
 
       await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
 
-      //await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(1).click();
-
       await deliveryPage.clickEditAddressButton('Adres Edytowany');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -264,8 +261,6 @@ test.describe('Testy dostawy', async () => {
       test.setTimeout(50000);
 
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
-
-      //await page.getByText('Adres Edytowany').locator('..').locator('..').locator('..').locator('svg').nth(2).click();
 
       await deliveryPage.clickDeleteAddressButton('Adres Edytowany');
 
@@ -337,7 +332,7 @@ test.describe('Testy dostawy', async () => {
       await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu')
     })
 
-    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressDelivery, deleteInvoiceAddressViaAPI }) => {
+    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI, deleteInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -347,6 +342,9 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('540');
       
       test.setTimeout(150000);
+
+      await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
+      await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
@@ -363,9 +361,7 @@ test.describe('Testy dostawy', async () => {
           await deliveryPage.getDeliveryInvoiceCheckbox.check();
       }}
 
-      await addInvoiceAddressDelivery('Testowa nazwa podmiotu');
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
-      await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
 
       await page.getByText('Testowa nazwa podmiotu').click();

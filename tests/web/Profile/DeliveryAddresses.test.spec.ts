@@ -103,7 +103,7 @@ test.describe('Testy adresy dostaw', async () => {
     await deleteDeliveryAddressViaAPI('Adres Testowy')
   })
 
-  test('W | Możliwość ustawienia głównego adresu dostawy', async ({ page, addAddressDelivery }) => {
+  test('W | Możliwość ustawienia głównego adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -113,11 +113,12 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.allureId('921');
 
     test.setTimeout(120000);
+
+    await addAddressDeliveryViaAPI('Adres Fixturowy');
     
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
     await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
-    await addAddressDelivery('Adres Fixturowy');
     await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
     await deliveryAddressesPage.clickEditAddressButton('Adres Fixturowy');

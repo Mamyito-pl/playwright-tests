@@ -78,11 +78,11 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.getByText('Warzywa i owoce').click();
+    await page.locator('div[data-sentry-element="Column"]').getByText('Warzywa i owoce').click();
 
     await expect(menuCategoriesPage.getMenuCategoriesBackButton).toBeVisible();
     await expect(menuCategoriesPage.getMenuCategoriesCloseIconButton).toBeVisible();
-    (await menuCategoriesPage.getMenuCategoriesSubCategoryTitleMobile('Warzywa i owoce')).isVisible();
+    await expect(await menuCategoriesPage.getMenuCategoriesSubCategoryTitleMobile('Warzywa i owoce')).toBeVisible();
     await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
   })
 
@@ -97,7 +97,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.getByText('Warzywa i owoce').click();
+    await page.locator('div[data-sentry-element="Column"]').getByText('Warzywa i owoce').click();
 
     await expect(menuCategoriesPage.getMenuCategoriesBackButton).toBeVisible();
     
@@ -118,7 +118,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.getByText('Warzywa i owoce').click();
+    await page.locator('div[data-sentry-element="Column"]').getByText('Warzywa i owoce').click();
 
     await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
 
@@ -139,8 +139,8 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.getByText('Warzywa i owoce').click();
-    await page.getByText('Grzyby').click();
+    await page.locator('div[data-sentry-element="Column"]').getByText('Warzywa i owoce').click();
+    await page.locator('div[data-sentry-element="Column"]').getByText('Grzyby').click();
 
     await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
 
