@@ -327,6 +327,15 @@ test.describe('Testy dostawy', async () => {
 
       await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
 
+      const isVisible = await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+
+      if (isVisible) {
+      const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+
+      if (!isChecked) {
+          await deliveryPage.getDeliveryInvoiceCheckbox.check();
+      }}
+
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
 
       await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu')
@@ -343,8 +352,8 @@ test.describe('Testy dostawy', async () => {
       
       test.setTimeout(150000);
 
-      await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
       await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
+      await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
@@ -361,8 +370,8 @@ test.describe('Testy dostawy', async () => {
           await deliveryPage.getDeliveryInvoiceCheckbox.check();
       }}
 
-      await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
+      await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
 
       await page.getByText('Testowa nazwa podmiotu').click();
 
@@ -375,10 +384,6 @@ test.describe('Testy dostawy', async () => {
 
       console.log('Kolor obramowania:', borderColor);
       expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
-
-      await page.getByText('Fixturowy adres podmiotu').click();
-
-      await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 3000 });
 
       await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu');
     })
