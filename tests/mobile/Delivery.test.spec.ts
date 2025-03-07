@@ -292,7 +292,7 @@ test.describe('Testy dostawy', async () => {
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
-      await deliveryPage.getDeliveryInvoiceCheckbox.check();
+      await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
       await deliveryPage.getAddNewInvoiceAddressButton.scrollIntoViewIfNeeded();
       await deliveryPage.clickAddNewInvoiceAddressButton();
@@ -334,7 +334,7 @@ test.describe('Testy dostawy', async () => {
       const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
 
       if (!isChecked) {
-          await deliveryPage.getDeliveryInvoiceCheckbox.check();
+          await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       }}
 
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
@@ -368,7 +368,7 @@ test.describe('Testy dostawy', async () => {
       const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
 
       if (!isChecked) {
-          await deliveryPage.getDeliveryInvoiceCheckbox.check();
+          await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       }}
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
@@ -403,7 +403,7 @@ test.describe('Testy dostawy', async () => {
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
-      await deliveryPage.getDeliveryInvoiceCheckbox.check();
+      await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { timeout: 5000, state: 'visible' });
