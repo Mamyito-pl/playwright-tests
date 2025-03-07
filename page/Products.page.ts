@@ -20,6 +20,6 @@ export default class ProductsPage {
     }
 
     getProductCategoryTitle(titleName: string) {
-        return this.page.locator(this.mobile ? `div[data-sentry-element="TitleMobile"]:has-text("${titleName}")` : `div[data-sentry-element="Header"] h1:has-text("${titleName}")`);
+        return this.page.locator(this.mobile ? `h1[data-sentry-element="Title"]:has-text("${titleName}")` : `div[data-sentry-element="Header"] h1:has-text("${titleName}")`);
     }
 }
