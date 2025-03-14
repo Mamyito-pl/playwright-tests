@@ -13,6 +13,10 @@ export default class CommonPage {
     }
 
     get getMessage() {
-        return this.page.locator(selectors.Common.message);
+        return this.page.locator('div[role="status"]');
+    }
+
+    get getLoader() {
+        return this.page.locator('svg[class*="MuiCircularProgress-svg"]')
     }
 }

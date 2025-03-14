@@ -10,6 +10,7 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
+import CommonPage from '../../page/Common.page.ts';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -22,6 +23,7 @@ test.describe('Testy koszyka', async () => {
   let mainPage: MainPage;
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
+  let commonPage : CommonPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -42,6 +44,7 @@ test.describe('Testy koszyka', async () => {
     productsPage = new ProductsPage(page);
     navigationPage = new NavigationPage(page);
     searchbarPage = new SearchbarPage(page);
+    commonPage = new CommonPage(page);
   })
 
   test.afterEach(async ({ clearCartViaAPI }) => {
@@ -135,7 +138,7 @@ test.describe('Testy koszyka', async () => {
     await searchbarPage.clickSearchbar();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
     await searchbarPage.enterProduct('mycia naczyń somat');
-    await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
+    await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(2000);
     await searchbarPage.clickIncreaseProductButton();

@@ -131,10 +131,6 @@
     "EdronePopup": {
         "edroneButtonAccept": "#alert_box_btn_subscribe"
     },
-    "Common": {
-        "loader": "svg[class*='MuiCircularProgress-svg']",
-        "message": "div[role='status']"
-    },
     "Przelewy24": {
         "common": {
             "mainBlikButton": "img[alt='blik']",

@@ -1,5 +1,3 @@
-import { expect } from "@playwright/test";
-
 export async function addGlobalStyles(page) {
   const cssRules = `
   div[data-sentry-element='PromptContainer'] { display: none !important; }
