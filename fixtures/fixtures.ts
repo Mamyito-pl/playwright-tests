@@ -5,6 +5,7 @@ import MainLogoutPage from "../page/MainLogout.page.ts";
 import CartPage from '../page/Cart.page.ts';
 import SearchbarPage from '../page/Searchbar.page.ts';
 import DeliveryPage from '../page/Delivery.page.ts';
+import CommonPage from '../page/Common.page.ts'
 import * as selectors from '../utils/selectors.json';
 import * as utility from '../utils/utility-methods';
 
@@ -13,6 +14,7 @@ let mainLogoutPage: MainLogoutPage;
 let cartPage: CartPage;
 let searchbarPage : SearchbarPage;
 let deliveryPage : DeliveryPage;
+let commonPage: CommonPage;
 
 
 type MyFixtures = {
@@ -160,6 +162,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     cartPage = new CartPage(page);
     searchbarPage = new SearchbarPage(page);
+    commonPage = new CommonPage(page);
 
     const viewport = page.viewportSize();
 
@@ -170,7 +173,7 @@ export const test = baseTest.extend<MyFixtures>({
       await searchbarPage.getSearchbarInput.click();
       await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
       await searchbarPage.enterProduct(product);
-      await expect(page.locator(selectors.Common.loader)).toBeHidden({ timeout: 15000 });
+      await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
       await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
       await page.waitForTimeout(2000);
     };
