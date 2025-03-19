@@ -5,6 +5,7 @@ export async function addGlobalStyles(page) {
   #edrone--main--push--container { display: none !important; }
   #edrone--main--popup--container { display: none !important; }
   div[data-sentry-component="ExternalWidget"] { display: none !important; }
+  #cookiescript_injected_wrapper { display: none !important; }
   `;
 
   try {
