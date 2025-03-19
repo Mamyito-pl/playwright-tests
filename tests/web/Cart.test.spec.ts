@@ -133,7 +133,7 @@ test.describe('Testy koszyka', async () => {
 
     await searchbarPage.clickSearchbar()
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
-    await searchbarPage.enterProduct('mycia naczyń somat');
+    await searchbarPage.enterProduct('cebula czerwona');
     await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(2000);

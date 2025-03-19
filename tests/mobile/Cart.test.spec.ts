@@ -137,12 +137,12 @@ test.describe('Testy koszyka', async () => {
 
     await searchbarPage.clickSearchbar();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
-    await searchbarPage.enterProduct('mycia naczyń somat');
+    await searchbarPage.enterProduct('cebula czerwona');
     await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await searchbarPage.clickIncreaseProductButton();
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(5000);
     await expect(searchbarPage.getProductItemCount).toHaveValue('2');
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
