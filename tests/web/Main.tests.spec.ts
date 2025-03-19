@@ -319,18 +319,22 @@ test.describe('Testy strony głównej', async () => {
     
     await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);
-    await page.mouse.wheel(0, 2200);
+    await page.mouse.wheel(0, 1000);
     await page.waitForTimeout(700);
 
-    const firstItemInSlider = page.locator('#most_frequently_bought div[class*="jkNhBn"]').first()
+    const firstItemInSlider = page.locator('#most_frequently_bought div[class*="jkNhBn"]').first();
+    const recentlyBoughtProductsCount = await page.locator('#most_frequently_bought div[data-sentry-component="ProductCard"]').count();
 
-    await mainPage.getSectionGetLeftButton.nth(4).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(4).click();
-    await expect(firstItemInSlider).not.toBeInViewport();
-    await mainPage.getSectionGetLeftButton.nth(4).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(4).click();
-    await expect(firstItemInSlider).toBeInViewport();
-    await mainPage.getSectionGetLeftButton.nth(4).isDisabled();
+    if (recentlyBoughtProductsCount > 7) {
+        await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();
+        await mainPage.getSectionGetRightButton.nth(4).click();
+        await expect(firstItemInSlider).not.toBeInViewport();
+        await mainPage.getSectionGetLeftButton.nth(4).click();
+        await expect(firstItemInSlider).toBeInViewport();
+    } else {
+        await expect(mainPage.getSectionGetLeftButton.nth(4)).toBeDisabled();
+        await expect(mainPage.getSectionGetRightButton.nth(4)).toBeDisabled();
+    }
   })
   
   test('W | Możliwość przejścia do najczęściej kupowanych produktów poprzez link slidera', async ({ page, baseURL }) => {
@@ -344,7 +348,7 @@ test.describe('Testy strony głównej', async () => {
 
     await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);
-    await page.mouse.wheel(0, 2200);
+    await page.mouse.wheel(0, 1000);
     await page.waitForTimeout(700);
 
     await mainPage.getSectionShowAllLink('najczesciej-kupowane').click();

@@ -130,10 +130,13 @@ test.describe('Testy listy produktów', async () => {
     await page.waitForTimeout(10000);
 
     const allSortedPrices = await productsPage.getProductPricesPerGrammar.allTextContents();
+    console.log('raw prices', allSortedPrices)
 
     const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
+    console.log('cleaned raw prices', sortedPrices)
 
     const expectedSortedPrices = [...sortedPrices].sort((a, b) => a - b);
+    console.log('cleaned sorted prices', expectedSortedPrices)
 
     const pricesCount = sortedPrices.length;
 
@@ -366,7 +369,7 @@ test.describe('Testy listy produktów', async () => {
     
     expect((await productsPage.getFilter('Typ produktu')).isVisible);
     await productsPage.getFilterSelect('Typ produktu','Bez laktozy');
-    await page.waitForTimeout(10000);
+    await page.waitForTimeout(7000);
     
     const allProductNames = await productsPage.getProductName.allTextContents();
 
@@ -383,7 +386,7 @@ test.describe('Testy listy produktów', async () => {
     test('W | Możliwość filtrowania po cenie poniżej 10 zł', async ({ page }) => {
 
       await productsPage.getFilterSelect('Cena','poniżej 10zł');
-      await page.waitForTimeout(10000);
+      await page.waitForTimeout(7000);
 
       const allProductPrices = await productsPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -404,7 +407,7 @@ test.describe('Testy listy produktów', async () => {
     test('W | Możliwość filtrowania po cenie od 10 zł do 20 zł', async ({ page }) => {
 
       await productsPage.getFilterSelect('Cena','od 10zł do 20zł');
-      await page.waitForTimeout(10000);
+      await page.waitForTimeout(7000);
 
       const allProductPrices = await productsPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -429,7 +432,7 @@ test.describe('Testy listy produktów', async () => {
     test('W | Możliwość filtrowania po cenie od 20 zł 50 zł', async ({ page }) => {
 
       await productsPage.getFilterSelect('Cena','od 20zł do 50zł');
-      await page.waitForTimeout(10000);
+      await page.waitForTimeout(7000);
 
       const allProductPrices = await productsPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -454,7 +457,7 @@ test.describe('Testy listy produktów', async () => {
     test('W | Możliwość filtrowania po cenie powyżej 50 zł', async ({ page }) => {
 
       await productsPage.getFilterSelect('Cena','powyżej 50zł');
-      await page.waitForTimeout(10000);
+      await page.waitForTimeout(7000);
 
       const allProductPrices = await productsPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -479,9 +482,9 @@ test.describe('Testy listy produktów', async () => {
     test('W | Możliwość filtrowania po cenie niestandardowej', async ({ page }) => {
 
       await productsPage.getFilterCustomPriceFromSet('Cena', '2');
-      await page.waitForTimeout(10000);
+      await page.waitForTimeout(7000);
       await productsPage.getFilterCustomPriceToSet('Cena', '4');
-      await page.waitForTimeout(10000);
+      await page.waitForTimeout(7000);
 
       const allProductPrices = await productsPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -496,11 +499,80 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(2);
           expect(productPrice).toBeLessThanOrEqual(4);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
+          console.log('cena produktu', productPrice);
         }
       } else {
           await expect(productsPage.getNoProductsResult).toBeVisible();
       }
+    })
+    
+    test('W | Możliwość filtrowania po nazwie producenta', async ({ page }) => {
+
+      expect((await productsPage.getFilter('Producent')).isVisible);
+      await productsPage.getFilterSelect('Producent','MLEKOVITA');
+      await page.waitForTimeout(7000);
+      
+      const allProductBrands = await productsPage.getProductBrand.allTextContents();
+  
+      for (const productBrandName of allProductBrands) {
+        expect(productBrandName).toContain('MLEKOVITA');
+      }
+  
+      const productsCount = allProductBrands.length;
+  
+      expect(productsCount).toBeGreaterThanOrEqual(1);
+    })
+        
+    test('W | Możliwość wyczyszczenia filtrowania', async ({ page }) => {
+
+      await expect(productsPage.getClearFiltersButton).not.toBeVisible();
+
+      await productsPage.getFilterCustomPriceToSet('Cena', '4');
+      await page.waitForTimeout(7000);
+      
+      expect((await productsPage.getFilter('Typ produktu')).isVisible);
+      await productsPage.getFilterSelect('Typ produktu','Bez laktozy');
+      await page.waitForTimeout(7000);
+
+      expect((await productsPage.getFilter('Producent')).isVisible);
+      await productsPage.getFilterSelect('Producent','MLEKOVITA');
+      await page.waitForTimeout(7000);
+
+      const allProductNames = await productsPage.getProductName.allTextContents();
+      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      console.log('all products prices raw', allProductPrices)
+      const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
+      const allProductBrands = await productsPage.getProductBrand.allTextContents();
+  
+      for (let i = 0; i < allProductNames.length; i++) {
+        expect(allProductNames[i].toLocaleLowerCase()).toContain('bez laktozy');
+        console.log('allProductNames[i]', allProductNames)
+        expect(allProductCleanedPrices[i]).toBeGreaterThan(0);
+        console.log('allProductCleanedPrices[i]', allProductCleanedPrices)
+        expect(allProductCleanedPrices[i]).toBeLessThanOrEqual(4);
+        console.log('allProductCleanedPrices[i]', allProductCleanedPrices[i])
+        expect(allProductBrands[i]).toContain('MLEKOVITA');
+        console.log('allProductBrands[i]', allProductBrands)
+      }
+  
+      const productsCount = allProductBrands.length;
+  
+      expect(productsCount).toBeGreaterThan(1);
+      expect(productsCount).toBeLessThan(10);
+
+      await expect(productsPage.getClearFiltersButton).toBeVisible();
+      await productsPage.getClearFiltersButton.click();
+      await page.waitForTimeout(7000);
+
+      const allProductNamesAfterClearFilter = await productsPage.getProductName.allTextContents();
+ 
+      await expect(productsPage.getClearFiltersButton).not.toBeVisible();
+
+      const productsCountAfterClearFilter = allProductNamesAfterClearFilter.length;
+
+      expect(productsCountAfterClearFilter).toBeGreaterThanOrEqual(50);
+
+      await expect(productsPage.getClearFiltersButton).not.toBeVisible();
     })
   })
 })

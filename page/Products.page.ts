@@ -27,13 +27,12 @@ export default class ProductsPage {
             : await this.getFilter(filterName);
 
         const filterSelect = this.mobile 
-            ? this.getSettingsDrawer.getByText(selectName, { exact: true })
-            : (await this.getFilterDropdown(filterName)).getByText(selectName, { exact: true });
+            ? this.getSettingsDrawer.getByText(selectName)
+            : (await this.getFilterDropdown(filterName)).getByText(selectName);
     
         await filter.click();
         await filterSelect.click();
     }
-
     
     async getFilterCustomPriceFromSet(filterName: string, priceFrom: string) {
 
@@ -168,19 +167,29 @@ export default class ProductsPage {
     }
     
     get getProductPrices() {
-        return this.page.locator('p[data-sentry-element="CurrentPrice"]');
+        return this.page.locator('div[data-sentry-element="ListingWrapper"] p[data-sentry-element="CurrentPrice"]');
     }
 
     get getProductPricesPerGrammar() {
-        return this.page.locator('p[data-sentry-element="PricePerGrammar"]');
+        return this.page.locator('div[data-sentry-element="ListingWrapper"] p[data-sentry-element="PricePerGrammar"]');
     }
 
     get getProductName() {
-        return this.page.locator('h3[data-sentry-element="Name"]');
+        return this.page.locator('div[data-sentry-element="ListingWrapper"] h3[data-sentry-element="Name"]');
+    }
+
+    get getProductBrand() {
+        return this.page.locator('div[data-sentry-element="ListingWrapper"] h4[data-sentry-element="MadeBy"]');
     }
 
     get getApplyButton() {
         return this.page.getByRole('button', { name: 'Zastosuj' });
+    }
+
+    get getClearFiltersButton() {
+        return this.mobile 
+        ? this.page.getByRole('button', { name: 'Wyczyść', exact: true })
+        : this.page.getByRole('button', { name: 'Wyczyść filtry', exact: true });
     }
 
     get getNoProductsResult() {
