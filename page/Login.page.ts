@@ -8,14 +8,18 @@ export default class LoginPage {
     }
 
     async enterEmail(email: string) {
-        await this.page.locator(selectors.LoginPage.common.emailInput).fill(email);
+        await this.page.locator('#login_email').fill(email);
     }
 
     async enterPassword(password: string) {
-        await this.page.locator(selectors.LoginPage.common.passwordInput).fill(password);
+        await this.page.locator('#login_password').fill(password);
     }
 
     async clickLoginButton() {
-        await this.page.click(selectors.LoginPage.common.loginButton, { force: true, delay: 300 });
+        await this.getLoginButton.click({ force: true });
+    }
+
+    get getLoginButton() {
+        return this.page.getByRole('button', { name: 'Zaloguj się' })
     }
 }

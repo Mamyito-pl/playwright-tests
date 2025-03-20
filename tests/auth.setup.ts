@@ -10,9 +10,10 @@ let mainLogoutPage: MainLogoutPage;
 
 setup('Autoryzacja', async ({ page, baseURL }) => {
 
+  page.setDefaultTimeout(80000);
+
   loginPage = new LoginPage(page);
   mainLogoutPage = new MainLogoutPage(page);
-  
   page.on('framenavigated', async () => {
     await utility.addGlobalStyles(page);
   });
@@ -20,6 +21,7 @@ setup('Autoryzacja', async ({ page, baseURL }) => {
   await page.waitForTimeout(2000);
   await loginPage.enterEmail(`${process.env.EMAIL}`);
   await loginPage.enterPassword(`${process.env.PASSWORD}`);
+  await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
   await loginPage.clickLoginButton();
   await page.waitForURL(`${process.env.URL}` + '/logowanie', { waitUntil: 'networkidle', timeout: 20000 });
   await utility.addGlobalStyles(page);

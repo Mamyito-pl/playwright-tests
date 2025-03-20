@@ -1,11 +1,4 @@
 {
-    "LoginPage": {
-        "common": {
-            "emailInput": "#login_email",
-            "passwordInput": "#login_password",
-            "loginButton": "#login_submit_button"
-        }
-    },
     "MainLogoutPage": {
         "common": {},
         "web": {

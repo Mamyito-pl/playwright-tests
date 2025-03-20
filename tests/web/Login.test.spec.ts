@@ -36,6 +36,7 @@ test.describe('Testy logowania', async () => {
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
+    await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}`, { timeout: 15000 });
     expect(mainLogoutPage.getLoginLink).toBeHidden();
@@ -53,6 +54,7 @@ test.describe('Testy logowania', async () => {
 
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
+    await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
     await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 10000 })
@@ -70,6 +72,7 @@ test.describe('Testy logowania', async () => {
     
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
+    await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
     await expect(commonPage.getMessage).toHaveText("Nieprawidłowe dane logowania", { timeout: 10000 })
