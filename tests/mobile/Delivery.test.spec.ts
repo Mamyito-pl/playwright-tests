@@ -321,6 +321,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalConfirmationButton).toBeVisible();
       await deliveryPage.getAddressModalConfirmationButton.click();
       await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został usunięty.', { timeout: 5000 })
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
       await page.waitForSelector('text=Adres Edytowany', { state: 'hidden' });
     })
@@ -538,6 +539,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalConfirmationButton).toBeVisible();
       await deliveryPage.getAddressModalConfirmationButton.click();
       await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
       if (!isVisible) {
         await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });

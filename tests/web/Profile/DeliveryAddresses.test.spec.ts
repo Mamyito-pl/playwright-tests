@@ -253,6 +253,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalConfirmationButton).toBeVisible();
     await deliveryAddressesPage.getAddressModalConfirmationButton.click();
     await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został usunięty.', { timeout: 5000 })
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
     await page.waitForSelector('text=Adres Edytowany', { strict: true , state: 'hidden' });
   })
