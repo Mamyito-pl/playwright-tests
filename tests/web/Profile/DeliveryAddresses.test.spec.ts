@@ -58,7 +58,9 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(150000);
     
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
+    await page.goto('profil/adresy-dostaw');
+
+    await deliveryAddressesPage.getDeliveryAdressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
     await deliveryAddressesPage.clickAddNewAddressButton();
     await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
@@ -242,7 +244,9 @@ test.describe('Testy adresy dostaw', async () => {
 
     await addAddressDeliveryViaAPI('Adres Edytowany');
 
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
+    await page.goto('profil/adresy-dostaw');
+
+    await deliveryAddressesPage.getDeliveryAdressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
     await deliveryAddressesPage.clickDeleteAddressButton('Adres Edytowany');
 

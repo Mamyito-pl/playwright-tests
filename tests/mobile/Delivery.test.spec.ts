@@ -92,7 +92,9 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(100000);
       
-      await page.goto('/dostawa', { waitUntil: 'networkidle' });
+      await page.goto('/dostawa');
+
+      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
       await deliveryPage.clickAddNewAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -261,7 +263,7 @@ test.describe('Testy dostawy', async () => {
       */
     })
     
-    test('M | Możliwość usunięcia adresu dostawy', async ({ page, request }) => {
+    test('M | Możliwość usunięcia adresu dostawy', async ({ page, deleteDeliveryAddressViaAPI }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
@@ -272,45 +274,11 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(50000);
 
-      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
-        headers: {
-          'Accept': 'application/json'
-      },
-        data: {
-          email: `${process.env.EMAIL}`,
-          password: `${process.env.PASSWORD}`,
-        },
-      });
+      await deleteDeliveryAddressViaAPI('Adres Edytowany');
 
-      const responseBodyToken = await tokenResponse.json();
+      await page.goto('/dostawa');
 
-      const token = responseBodyToken.data.token;
-
-      const addDeliveryAddress = await request.post(`${process.env.APIURL}/api/addresses`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          city: "Warszawa",
-          first_name: "Jan1",
-          last_name: "Kowalski1",
-          house_number: "4",
-          icon_color: "#ffa31a",
-          icon_type: "home",
-          is_default: false,
-          latitude: 11,
-          longitude: 11,
-          name: 'Adres Edytowany',
-          phone_number: "777666555",
-          postal_code: "05-506",
-          street: "Oficerska",
-          staircase_number: "2",
-          flat_number: "3",
-          type: "delivery"
-        },
-      });
-
-      await page.goto('/dostawa', { waitUntil: 'networkidle' });
+      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
       await deliveryPage.clickDeleteAddressButton('Adres Edytowany');
 
@@ -340,7 +308,9 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(150000);
       
-      await page.goto('/dostawa', { waitUntil: 'networkidle' });
+      await page.goto('/dostawa');
+
+      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
@@ -405,7 +375,9 @@ test.describe('Testy dostawy', async () => {
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
-      await page.goto('/dostawa', { waitUntil: 'networkidle' });
+      await page.goto('/dostawa');
+
+      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
       await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
 
@@ -444,7 +416,9 @@ test.describe('Testy dostawy', async () => {
 
       await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
-      await page.goto('/dostawa', { waitUntil: 'networkidle' });
+      await page.goto('/dostawa');
+
+      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
@@ -522,7 +496,9 @@ test.describe('Testy dostawy', async () => {
 
       await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
       
-      await page.goto('/dostawa', { waitUntil: 'networkidle' });
+      await page.goto('/dostawa');
+
+      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
       const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
 
