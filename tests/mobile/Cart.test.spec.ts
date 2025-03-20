@@ -90,10 +90,12 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickIncreaseProductButton();
+      await page.waitForTimeout(5000);
     };
     await expect(cartPage.getProductItemCount).toHaveValue('3');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickDecreaseProductButton();
+      await page.waitForTimeout(5000);
     };
     await expect(cartPage.getProductItemCount).toHaveValue('1');
   }) 

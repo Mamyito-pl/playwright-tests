@@ -66,6 +66,7 @@ test.describe('Testy koszyka', async () => {
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickIncreaseProductButton();
+    await page.waitForTimeout(5000);
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
@@ -87,10 +88,12 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickIncreaseProductButton();
+      await page.waitForTimeout(5000);
     };
     await expect(cartPage.getProductItemCount).toHaveValue('3');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickDecreaseProductButton();
+      await page.waitForTimeout(5000);
     };
     await expect(cartPage.getProductItemCount).toHaveValue('1');
   }) 
@@ -131,9 +134,9 @@ test.describe('Testy koszyka', async () => {
     await searchbarPage.enterProduct('cebula czerwona');
     await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await searchbarPage.clickIncreaseProductButton();
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(5000);
     await expect(searchbarPage.getProductItemCount).toHaveValue('2');
     await cartPage.clickCartDrawerButton();
     await cartPage.clickShowCartButton();
