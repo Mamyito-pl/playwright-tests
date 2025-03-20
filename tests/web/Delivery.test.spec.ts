@@ -274,7 +274,7 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(50000);
 
-      await addAddressDeliveryViaAPI('Adres Edytowany')
+      await addAddressDeliveryViaAPI('Adres Edytowany');
 
       await page.goto('/dostawa');
 
@@ -312,7 +312,14 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
+      }
+
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
       await deliveryPage.clickAddNewInvoiceAddressButton();
@@ -379,10 +386,12 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
 
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
       }
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
@@ -418,7 +427,14 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
+      }
+
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
 
@@ -459,10 +475,10 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 5000 })
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
-
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
       }
       
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { timeout: 5000, state: 'visible' });
@@ -498,10 +514,12 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
-
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
       }
 
       await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
@@ -515,8 +533,10 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 });
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
       }
 
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { strict: true , state: 'hidden' });
