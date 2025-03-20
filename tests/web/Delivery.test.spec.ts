@@ -24,6 +24,17 @@ test.describe('Testy dostawy', async () => {
     commonPage = new CommonPage(page);
     deliveryPage = new DeliveryPage(page);
   })
+
+  test.afterEach(async ({ deleteDeliveryAddressViaAPI, deleteInvoiceAddressViaAPI }) => {
+
+    await deleteDeliveryAddressViaAPI('Adres Testowy');
+    await deleteDeliveryAddressViaAPI('Adres Fixturowy');
+    await deleteDeliveryAddressViaAPI('Adres Edytowany');
+    
+    await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu')
+    await deleteInvoiceAddressViaAPI('Fixturowy adres podmiotu')
+    await deleteInvoiceAddressViaAPI('Edytowana nazwa podmiotu')
+  })
   
   test('W | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
@@ -70,7 +81,7 @@ test.describe('Testy dostawy', async () => {
 
   test.describe('Adres dostawy', { tag: ['@Smoke'] }, async () => {
     
-    test('W | Możliwość dodania adresu dostawy', async ({ page, deleteDeliveryAddressViaAPI }) => {
+    test('W | Możliwość dodania adresu dostawy', async ({ page }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -129,8 +140,6 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
 
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
-
-      await deleteDeliveryAddressViaAPI('Adres Testowy');
     })
 
     test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
@@ -170,7 +179,7 @@ test.describe('Testy dostawy', async () => {
       await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
     })
 
-    test('W | Możliwość edycji adresu dostawy', async ({ page }) => {
+    test('W | Możliwość edycji adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -180,6 +189,8 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('537');
 
       test.setTimeout(100000);
+
+      await addAddressDeliveryViaAPI('Adres Fixturowy');
 
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
@@ -228,6 +239,7 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.clickSaveAdressModalButton();
 
       await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
       await deliveryPage.clickEditAddressButton('Adres Edytowany');
 
@@ -249,7 +261,7 @@ test.describe('Testy dostawy', async () => {
       */
     })
     
-    test('W | Możliwość usunięcia adresu dostawy', async ({ page }) => {
+    test('W | Możliwość usunięcia adresu dostawy', async ({ page, request }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -259,6 +271,44 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('538');
 
       test.setTimeout(50000);
+
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const addDeliveryAddress = await request.post(`${process.env.APIURL}/api/addresses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          city: "Warszawa",
+          first_name: "Jan1",
+          last_name: "Kowalski1",
+          house_number: "4",
+          icon_color: "#ffa31a",
+          icon_type: "home",
+          is_default: false,
+          latitude: 11,
+          longitude: 11,
+          name: 'Adres Edytowany',
+          phone_number: "777666555",
+          postal_code: "05-506",
+          street: "Oficerska",
+          staircase_number: "2",
+          flat_number: "3",
+          type: "delivery"
+        },
+      });
 
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
@@ -278,7 +328,7 @@ test.describe('Testy dostawy', async () => {
 
   test.describe('Faktura', { tag: ['@Smoke'] }, async () => {
     
-    test('W | Możliwość dodania podmiotu do faktury', async ({ page, deleteInvoiceAddressViaAPI }) => {
+    test('W | Możliwość dodania podmiotu do faktury', async ({ page }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -327,21 +377,16 @@ test.describe('Testy dostawy', async () => {
 
       await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
 
-      const isVisible = await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
 
-      if (isVisible) {
-      const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
-
-      if (!isChecked) {
-          await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
-      }}
+      if (!isVisible) {
+        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      }
 
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
-
-      await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu')
     })
 
-    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI, deleteInvoiceAddressViaAPI }) => {
+    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -361,14 +406,11 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
 
-      const isVisible = await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
+      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
 
-      if (isVisible) {
-      const isChecked = await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
-
-      if (!isChecked) {
-          await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
-      }}
+      if (!isVisible) {
+        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      }
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
@@ -384,11 +426,9 @@ test.describe('Testy dostawy', async () => {
 
       console.log('Kolor obramowania:', borderColor);
       expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
-
-      await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu');
     })
 
-    test('W | Możliwość edycji podmiotu do faktury', async ({ page }) => {
+    test('W | Możliwość edycji podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -398,6 +438,8 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('541');
       
       test.setTimeout(120000);
+
+      await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
 
@@ -440,7 +482,13 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.clickSaveAdressModalButton();
 
       await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 5000 })
-      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 })
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+
+      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
+
+      if (!isVisible) {
+        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      }
       
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { timeout: 5000, state: 'visible' });
 
@@ -458,7 +506,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('200');
     })
     
-    test('W | Możliwość usunięcia podmiotu do faktury', async ({ page }) => {
+    test('W | Możliwość usunięcia podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -468,8 +516,16 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('542');
 
       test.setTimeout(120000);
+
+      await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
       
       await page.goto('/dostawa', { waitUntil: 'networkidle' });
+
+      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
+
+      if (!isVisible) {
+        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      }
 
       await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
 
@@ -479,7 +535,13 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalCancelButton).toBeVisible();
       await expect(deliveryPage.getAddressModalConfirmationButton).toBeVisible();
       await deliveryPage.getAddressModalConfirmationButton.click();
-      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 })
+      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 });
+
+      if (!isVisible) {
+        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      }
+
+      await page.waitForSelector('text=Edytowana nazwa podmiotu', { strict: true , state: 'hidden' });
     })
   })
 })

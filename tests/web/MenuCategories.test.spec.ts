@@ -14,6 +14,8 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.goto('/', { waitUntil: 'load'})
 
+    await utility.addGlobalStyles(page);
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
@@ -22,7 +24,7 @@ test.describe('Testy menu kategorii', async () => {
     productsPage = new ProductsPage(page);
   })
 
-  test('W | Menu kategorii otwiera się z obecnymi kategoriami', async () => {
+  test('W | Menu kategorii otwiera się z obecnymi kategoriami', async ({ page }) => {
 
     await allure.tags('Web', 'Menu kategorii');
     await allure.epic('Webowe');
@@ -32,9 +34,12 @@ test.describe('Testy menu kategorii', async () => {
     await allure.allureId('1024');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
-    await expect(menuCategoriesPage.getMenuCategories.locator('..').locator('..')).toBeVisible();
 
-    const categoriesCount = await menuCategoriesPage.getMenuCategories.locator('div').locator('div').locator('div').count();
+    await page.waitForSelector('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]', { state: 'visible', timeout: 10000 });
+
+    await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
+
+    const categoriesCount = await page.locator('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]').count();
 
     expect(categoriesCount).toBeGreaterThan(18);
   })
@@ -49,17 +54,20 @@ test.describe('Testy menu kategorii', async () => {
     await allure.allureId('1025');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.waitForSelector('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]', { state: 'visible', timeout: 10000 });
+    
     await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
 
-    const categoriesCount = await menuCategoriesPage.getMenuCategories.locator('div').locator('div').locator('div').count();
+    const categoriesCount = await page.locator('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]').count();
 
     expect(categoriesCount).toBeGreaterThan(18);
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.waitForSelector('div[maxdepth="4"]', { timeout: 5000, state: 'hidden' });
+    await page.waitForSelector('div[data-sentry-element="WebContent"] div[data-sentry-element="ListWrapper"]', { timeout: 5000, state: 'hidden' });
 
-    await expect(menuCategoriesPage.getMenuCategories.locator('..').locator('..')).not.toBeVisible();
+    await expect(menuCategoriesPage.getMenuCategories).not.toBeVisible();
   })
 
   test('W | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {

@@ -24,6 +24,13 @@ test.describe('Testy adresy dostaw', async () => {
     deliveryAddressesPage = new DeliveryAddressesPage(page);
   })
   
+  test.afterEach(async ({ deleteDeliveryAddressViaAPI }) => {
+
+    await deleteDeliveryAddressViaAPI('Adres Testowy');
+    await deleteDeliveryAddressViaAPI('Adres Fixturowy');
+    await deleteDeliveryAddressViaAPI('Adres Edytowany');
+  })
+  
   test('M | Strona adresy dostaw pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
@@ -39,7 +46,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
   })
 
-  test('M | Możliwość dodania adresu dostawy', async ({ page, deleteDeliveryAddressViaAPI }) => {
+  test('M | Możliwość dodania adresu dostawy', async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -95,11 +102,9 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalSaveButton).toBeVisible();
     await deliveryAddressesPage.clickSaveAdressModalButton();
 
-    await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
+    await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
 
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
-
-    await deleteDeliveryAddressViaAPI('Adres Testowy')
   })
 
   test('M | Możliwość ustawienia głównego adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
@@ -141,7 +146,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).not.toBeAttached();
   })
 
-  test('M | Możliwość edycji adresu dostawy', async ({ page }) => {
+  test('M | Możliwość edycji adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -151,6 +156,8 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.allureId('889');
 
     test.setTimeout(100000);
+
+    await addAddressDeliveryViaAPI('Adres Fixturowy');
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
@@ -199,6 +206,7 @@ test.describe('Testy adresy dostaw', async () => {
     await deliveryAddressesPage.clickSaveAdressModalButton();
 
     await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
     await deliveryAddressesPage.clickEditAddressButton('Adres Edytowany');
 
@@ -220,7 +228,7 @@ test.describe('Testy adresy dostaw', async () => {
     */
   })
   
-  test('M | Możliwość usunięcia adresu dostawy', async ({ page }) => {
+  test('M | Możliwość usunięcia adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -230,6 +238,8 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.allureId('890');
 
     test.setTimeout(150000);
+
+    await addAddressDeliveryViaAPI('Adres Edytowany');
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'networkidle' });
 

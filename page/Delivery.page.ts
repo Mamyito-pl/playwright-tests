@@ -44,6 +44,10 @@ export default class DeliveryPage {
         return this.page.locator('div[data-sentry-element="Title"]').getByText('Adres dostawy');
     }
 
+    get getInvoiceAddressTitle() {
+        return this.page.getByText('Dane podmiotu');
+    }
+
     get getDeliveryAddressSubTitle() {
         return this.page.getByText('Wybierz adres dostawy lub dodaj nowy');
     }

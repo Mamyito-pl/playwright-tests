@@ -286,13 +286,13 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(150000);
+      test.setTimeout(170000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -334,13 +334,13 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(150000);
+      test.setTimeout(170000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -380,13 +380,13 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('543');
 
-      test.setTimeout(100000);
+      test.setTimeout(150000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -413,13 +413,13 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('544');
 
-      test.setTimeout(100000);
+      test.setTimeout(120000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -447,13 +447,13 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('545');
 
-      test.setTimeout(100000);
+      test.setTimeout(120000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -481,7 +481,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('546');
 
-      test.setTimeout(200000);
+      test.setTimeout(220000);
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
@@ -489,7 +489,7 @@ test.describe('Testy płatności', async () => {
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -531,13 +531,13 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(180000);
+      test.setTimeout(200000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -600,13 +600,13 @@ test.describe('Testy płatności', async () => {
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(150000);
+      test.setTimeout(170000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -665,13 +665,13 @@ test.describe('Testy płatności', async () => {
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(130000);
+      test.setTimeout(150000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -716,13 +716,13 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(200000);
+      test.setTimeout(220000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -779,13 +779,13 @@ test.describe('Testy płatności', async () => {
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(170000);
+      test.setTimeout(190000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -858,13 +858,13 @@ test.describe('Testy płatności', async () => {
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
-      test.setTimeout(170000);
+      test.setTimeout(190000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});
@@ -941,13 +941,13 @@ test.describe('Testy płatności', async () => {
 
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
 
-      test.setTimeout(130000);
+      test.setTimeout(150000);
 
       await addProduct('do mycia naczyń somat');
 
       for (let i = 0; i < 4; i++) {
           await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(1500);
+          await page.waitForTimeout(5000);
       };
 
       await page.goto('/koszyk', { waitUntil: 'load'});

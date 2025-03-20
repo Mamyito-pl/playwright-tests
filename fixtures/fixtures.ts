@@ -303,11 +303,15 @@ export const test = baseTest.extend<MyFixtures>({
       });
       
       const responseBodyAddresses = await deliveryAddressesResponse.json();
-      const addresses = responseBodyAddresses.data
+      const addresses = responseBodyAddresses.data;
 
       const addressToDelete = addresses.find(address => address.name === addressName);
 
-      const deliveryAddress_id = addressToDelete.id
+      if (!addressToDelete) {
+        return;
+      }
+
+      const deliveryAddress_id = addressToDelete.id;
 
       const deleteDeliveryAddress = await request.delete(`${process.env.APIURL}/api/addresses/${deliveryAddress_id}`, {
         headers: {
@@ -438,11 +442,15 @@ export const test = baseTest.extend<MyFixtures>({
       });
       
       const responseBodyAddresses = await invoiceAddressesResponse.json();
-      const addresses = responseBodyAddresses.data
+      const addresses = responseBodyAddresses.data;
 
       const addressToDelete = addresses.find(address => address.name === addressName);
 
-      const invoiceAddress_id = addressToDelete.id
+      if (!addressToDelete) {
+        return;
+      }
+
+      const invoiceAddress_id = addressToDelete.id;
 
       const deleteInvoiceAddress = await request.delete(`${process.env.APIURL}/api/addresses/${invoiceAddress_id}`, {
         headers: {
