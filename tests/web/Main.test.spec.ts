@@ -320,10 +320,10 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);
     await page.mouse.wheel(0, 1000);
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1000);
 
-    const firstItemInSlider = page.locator('#most_frequently_bought div[class*="jkNhBn"]').first();
     const recentlyBoughtProductsCount = await page.locator('#most_frequently_bought div[data-sentry-component="ProductCard"]').count();
+    const firstItemInSlider = page.locator('#most_frequently_bought div[class*="jkNhBn"]').first();
 
     if (recentlyBoughtProductsCount > 7) {
         await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();

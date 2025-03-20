@@ -46,12 +46,13 @@ export default class CartPage {
     }
 
     async clickIncreaseProductButton() {
-        await this.page.click(selectors.CartPage.common.productCartIncreaseButton);
+        return this.page.locator('div[data-sentry-component="CartPage"] button[class*="add_to_cart_increment_button"]').click({ force: true, delay: 300 });
     }
 
     async clickDecreaseProductButton() {
-        await this.page.click(selectors.CartPage.common.productCartDecreaseButton);
+        return this.page.locator('div[data-sentry-component="CartPage"] button[class*="add_to_cart_decrement_button"]').click({ force: true, delay: 300 });
     }
+    
     async clickCloseDrawerIconButton() {
         await this.page.click(selectors.CartPage.common.cartCloseIconButton);
     }

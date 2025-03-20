@@ -26,8 +26,6 @@
             "productCartListName": "div[data-sentry-element='ProductName']",
             "deleteProductConfirmButton": "div[data-sentry-element='ButtonsWrapper'] button[variant='secondary']",
             "clearCartCancelButton": "div[data-sentry-source-file='ClearCartModal.tsx'] button[variant='borderGray']",
-            "productCartIncreaseButton": "div[data-sentry-component='CartPage'] button[class*='add_to_cart_increment_button']",
-            "productCartDecreaseButton": "div[data-sentry-component='CartPage'] button[class*='add_to_cart_decrement_button']",
             "cartTitle": "div[data-sentry-element='CartDrawerTitle']",
             "cartCloseIconButton": "div[class*='sc-718c60e8-4'] svg",
             "cartDrawer": "div[class*='MuiDrawer-paperAnchorRight']",
