@@ -61,7 +61,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('465');
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('cebula czerwona');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -81,7 +81,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('466');
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('cebula czerwona');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -109,7 +109,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('467');
 
-    await addProduct('mycia naczyń somat');
+    await addProduct('cebula czerwona');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
