@@ -312,8 +312,13 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
-      await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
+      }
+
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
       await deliveryPage.getAddNewInvoiceAddressButton.scrollIntoViewIfNeeded();
       await deliveryPage.clickAddNewInvoiceAddressButton();
@@ -420,8 +425,13 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      await deliveryPage.getDeliveryInvoiceCheckbox.isVisible();
-      await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      await checkbox.waitFor({ state: 'visible' });
+      
+      if (!(await checkbox.isChecked())) {
+        await checkbox.click({ force: true, delay: 1000 });
+      }
+
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { timeout: 5000, state: 'visible' });
