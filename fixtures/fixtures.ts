@@ -111,7 +111,12 @@ export const test = baseTest.extend<MyFixtures>({
       });
       
       const responseBodyCartID = await cartIDResponse.json();
+      const items = responseBodyCartID.data.items;
       const cart_id = responseBodyCartID.data.id;
+
+      if (!items || items.length === 0) {
+        return;
+      }
 
       const deleteItemsFromCart = await request.delete(`${process.env.APIURL}/api/cart/${cart_id}/items`, {
         headers: {

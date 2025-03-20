@@ -45,11 +45,8 @@ test.describe('Testy koszyka', async () => {
   })
 
   test.afterEach(async ({ clearCartViaAPI }) => {
-    const shouldSkipClearCart = test.info().annotations.some(a => a.type === 'skipClearCart');
 
-    if (!shouldSkipClearCart) {
-      await clearCartViaAPI();
-    }
+    await clearCartViaAPI();
   }) 
   
   test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
@@ -106,8 +103,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('435');
-    
-    test.info().annotations.push({ type: 'skipClearCart' });
 
     await addProduct('mycia naczyń somat');
 
@@ -155,8 +150,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('442');
-    
-    test.info().annotations.push({ type: 'skipClearCart' });
 
     await cartPage.clickCartDrawerButton();
     
@@ -201,8 +194,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('439');
-    
-    test.info().annotations.push({ type: 'skipClearCart' });
 
     await expect(cartPage.getCartDrawer).toBeHidden();
     await cartPage.clickCartDrawerButton();
@@ -219,8 +210,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('440');
-    
-    test.info().annotations.push({ type: 'skipClearCart' });
 
     await expect(cartPage.getCartDrawer).toBeHidden();
     await cartPage.clickCartDrawerButton();
@@ -256,8 +245,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('496');
-    
-    test.info().annotations.push({ type: 'skipClearCart' });
     
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');

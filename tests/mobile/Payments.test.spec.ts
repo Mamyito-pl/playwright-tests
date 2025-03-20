@@ -44,12 +44,8 @@ test.describe('Testy płatności', async () => {
   })
   
   test.afterEach(async ({ clearCartViaAPI }) => {
-    
-    const shouldSkipClearCart = test.info().annotations.some(a => a.type === 'skipClearCart');
 
-    if (!shouldSkipClearCart) {
-      await clearCartViaAPI();
-    }
+    await clearCartViaAPI();
   })
 
   test('M | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
@@ -61,10 +57,6 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('480');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-      test.info().annotations.push({ type: 'skipClearCart' });
-    }
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
@@ -73,7 +65,7 @@ test.describe('Testy płatności', async () => {
 
     for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(5000);
     };
 
     await page.goto('/koszyk', { waitUntil: 'load'});
@@ -119,10 +111,6 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('481');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-      test.info().annotations.push({ type: 'skipClearCart' });
-    }
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
@@ -131,7 +119,7 @@ test.describe('Testy płatności', async () => {
 
     for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(5000);
     };
 
     await page.goto('/koszyk', { waitUntil: 'load'});
@@ -169,10 +157,6 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('482');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-      test.info().annotations.push({ type: 'skipClearCart' });
-    }
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
@@ -181,7 +165,7 @@ test.describe('Testy płatności', async () => {
 
     for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(5000);
     };
 
     await page.goto('/koszyk', { waitUntil: 'load'});
@@ -216,10 +200,6 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('483');
 
-    if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-      test.info().annotations.push({ type: 'skipClearCart' });
-    }
-
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(180000);
@@ -228,7 +208,7 @@ test.describe('Testy płatności', async () => {
 
     for (let i = 0; i < 4; i++) {
         await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(5000);
     };
 
     await page.goto('/koszyk', { waitUntil: 'load'});
@@ -289,10 +269,6 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('788');
   
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
-  
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
     
       test.setTimeout(145000);
@@ -338,10 +314,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('485');
-  
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
@@ -546,10 +518,6 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('490');
   
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
-  
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(195000);
@@ -616,10 +584,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('491');
-  
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
@@ -690,10 +654,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('492');
-
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
@@ -749,10 +709,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('493');
-
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
@@ -819,10 +775,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('494');
-
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
@@ -904,10 +856,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('495');
-
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
@@ -988,10 +936,6 @@ test.describe('Testy płatności', async () => {
       await allure.suite('Testy płatności');
       await allure.subSuite('Zapłata kartą przy odbiorze');
       await allure.allureId('688');
-
-      if (!test.info().status || test.info().status == 'passed', 'timedOut', 'interrupted', 'skipped') {
-        test.info().annotations.push({ type: 'skipClearCart' });
-      }
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 

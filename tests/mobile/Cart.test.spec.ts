@@ -49,11 +49,7 @@ test.describe('Testy koszyka', async () => {
 
   test.afterEach(async ({ clearCartViaAPI }) => {
     
-    const shouldSkipClearCart = test.info().annotations.some(a => a.type === 'skipClearCart');
-
-    if (!shouldSkipClearCart) {
-      await clearCartViaAPI();
-    }
+    await clearCartViaAPI();
   }) 
   
   test('M | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
@@ -111,8 +107,6 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('467');
 
-    test.info().annotations.push({ type: 'skipClearCart' });
-
     await addProduct('mycia naczyń somat');
 
     await page.goto('/koszyk', { waitUntil: 'load'});
@@ -160,8 +154,6 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('471');
 
-    test.info().annotations.push({ type: 'skipClearCart' });
-
     await cartPage.clickCartDrawerButton();
 
     await expect(cartPage.getCartDrawer).toBeVisible();
@@ -189,8 +181,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('472');
-
-    test.info().annotations.push({ type: 'skipClearCart' });
 
     await expect(cartPage.getCartDrawer).toBeHidden();
     await cartPage.clickCartDrawerButton();
@@ -227,8 +217,6 @@ test.describe('Testy koszyka', async () => {
     await allure.suite('Testy koszyka');
     await allure.subSuite('');
     await allure.allureId('474');
-
-    test.info().annotations.push({ type: 'skipClearCart' });
     
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
