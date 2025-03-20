@@ -263,7 +263,7 @@ test.describe('Testy dostawy', async () => {
       */
     })
     
-    test('M | Możliwość usunięcia adresu dostawy', async ({ page, deleteDeliveryAddressViaAPI }) => {
+    test('M | Możliwość usunięcia adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
@@ -274,7 +274,7 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(50000);
 
-      await deleteDeliveryAddressViaAPI('Adres Edytowany');
+      await addAddressDeliveryViaAPI('Adres Edytowany');
 
       await page.goto('/dostawa');
 
