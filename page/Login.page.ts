@@ -12,14 +12,14 @@ export default class LoginPage {
     }
 
     async enterPassword(password: string) {
-        await this.page.locator('#login_password').fill(password);
+        await this.page.locator('#login_password').type(password, { delay: 50 });
     }
 
     async clickLoginButton() {
-        await this.getLoginButton.click({ force: true });
+        await this.getLoginButton.click();
     }
 
     get getLoginButton() {
-        return this.page.getByRole('button', { name: 'Zaloguj się' })
+        return this.page.locator('#login_submit_button')
     }
 }

@@ -36,6 +36,7 @@ test.describe('Testy logowania', async () => {
 
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
+    await loginPage.getLoginButton.waitFor({ state: 'visible', timeout: 5000 });
     await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}`, { timeout: 15000 });
@@ -54,6 +55,7 @@ test.describe('Testy logowania', async () => {
 
     await loginPage.enterEmail('invalidemail@gmail.com');
     await loginPage.enterPassword(`${process.env.PASSWORD}`);
+    await loginPage.getLoginButton.waitFor({ state: 'visible', timeout: 5000 });
     await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
@@ -72,6 +74,7 @@ test.describe('Testy logowania', async () => {
     
     await loginPage.enterEmail(`${process.env.EMAIL}`);
     await loginPage.enterPassword('invalidpassword');
+    await loginPage.getLoginButton.waitFor({ state: 'visible', timeout: 5000 });
     await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
