@@ -313,10 +313,20 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
-      await checkbox.waitFor({ state: 'visible' });
-      
-      if (!(await checkbox.isChecked())) {
-        await checkbox.click({ force: true, delay: 1000 });
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
@@ -355,10 +365,17 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
-
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
 
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
@@ -386,10 +403,21 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      let attempts = 0;
+      const maxAttempts = 3;
 
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
 
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
@@ -426,10 +454,20 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
-      await checkbox.waitFor({ state: 'visible' });
-      
-      if (!(await checkbox.isChecked())) {
-        await checkbox.click({ force: true, delay: 1000 });
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
@@ -471,10 +509,17 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 5000 })
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
-
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
       
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { timeout: 5000, state: 'visible' });
@@ -510,10 +555,21 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      const isVisible = await deliveryPage.getInvoiceAddressTitle.isVisible();
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      let attempts = 0;
+      const maxAttempts = 3;
 
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
 
       await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
@@ -527,8 +583,17 @@ test.describe('Testy dostawy', async () => {
       await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 });
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
-      if (!isVisible) {
-        await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
       }
 
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { strict: true , state: 'hidden' });
