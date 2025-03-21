@@ -1,4 +1,4 @@
-/*import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import ProductsPage from '../../page/Products.page';
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
@@ -576,4 +576,3 @@ test.describe('Testy listy produktów', async () => {
     })
   })
 })
-*/

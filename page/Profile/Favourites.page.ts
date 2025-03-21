@@ -11,8 +11,31 @@ export default class FavouritesPage {
         this.mobile = isMobile(viewport.width);
     }
 
+    async getSortSelect(sortName: string) {
+        return this.getSortDropdown.getByRole('option', { name: sortName, exact: true }).click();
+    }
+
     get getFavouritesProdutsTitle() {
         return this.page.locator('div[id="profile_details_favourites"]:has-text("Ulubione produkty")');
     }
 
+    get getProductPrices() {
+        return this.page.locator('div[data-sentry-source-file="ProfileFavourites.tsx"] p[data-sentry-element="CurrentPrice"]');
+    }
+
+    get getProductPricesPerGrammar() {
+        return this.page.locator('div[data-sentry-source-file="ProfileFavourites.tsx"] p[data-sentry-element="PricePerGrammar"]');
+    }
+
+    get getSortButton() {
+        return this.page.locator('div[data-sentry-element="SortingInputWrapper"]');
+    }
+
+    get getSortDropdown() {
+        return this.page.locator('ul[role="listbox"]');
+    }
+
+    get getProductName() {
+        return this.page.locator('div[data-sentry-source-file="ProfileFavourites.tsx"] h3[data-sentry-element="Name"]');
+    }
 }

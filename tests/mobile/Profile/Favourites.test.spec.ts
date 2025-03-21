@@ -1,0 +1,372 @@
+import { expect } from '@playwright/test';
+import CommonPage from "../../../page/Common.page.ts";
+import FavouritesPage from '../../../page/Profile/Favourites.page.ts';
+import MainPage from '../../../page/Main.page.ts';
+import * as allure from "allure-js-commons";
+import { test } from '../../../fixtures/fixtures.ts';
+import * as utility from '../../../utils/utility-methods';
+
+test.describe.configure({ mode: 'serial'})
+
+test.describe('Testy adresy dostaw', async () => {
+
+  let commonPage: CommonPage;
+  let mainPage: MainPage;
+  let favouritesPage : FavouritesPage;
+
+  test.beforeEach(async ({ page }) => {
+
+    await page.goto('/', { waitUntil: 'commit'})
+
+    page.on('framenavigated', async () => {
+      await utility.addGlobalStyles(page);
+    });
+
+    commonPage = new CommonPage(page);
+    mainPage = new MainPage(page);
+    favouritesPage = new FavouritesPage(page);
+  })
+  
+  test('M | Strona ulubionych produktów pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+
+    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+  })
+
+  test('M | Możliwość dodania i usunięcia ulubionego produktu', async ({ page }) => {
+
+    test.setTimeout(130000);
+
+    const firstItemName = page.locator('#promocje div[class*="jkNhBn"] h3').first();
+    const firstItemNameText = await firstItemName.textContent() || '';
+
+    const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click();
+    clickAddFristItemToFavourites;
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 });
+
+    const allProductNames = await favouritesPage.getProductName.allTextContents();
+    const allProductCount = allProductNames.length
+    
+    const productFound = allProductNames.some(name => name.includes(firstItemNameText));
+    expect(productFound).toBe(true);
+
+    const addedFavouriteProductName = page.getByText(firstItemNameText);
+    const clickRemoveAddedFavouriteProduct = await addedFavouriteProductName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click();
+    clickRemoveAddedFavouriteProduct;
+
+    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 10000 });
+
+    await page.reload();
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 });
+
+    const updatedProductNames = await favouritesPage.getProductName.allTextContents();
+    expect(updatedProductNames.length).toBe(allProductCount - 1);
+
+    const productNotFound = !updatedProductNames.some(name => name.includes(firstItemNameText));
+    expect(productNotFound).toBe(true);
+  })
+
+  test('M | Możliwość sortowania po najtańszych produktach', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+
+    await expect(favouritesPage.getSortButton).toBeVisible();
+    await favouritesPage.getSortButton.click();
+    await favouritesPage.getSortSelect('Najtańsze');
+
+    await page.waitForTimeout(10000);
+
+    const allSortedPrices = await favouritesPage.getProductPrices.allTextContents();
+
+    const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
+
+    const expectedSortedPrices = [...sortedPrices].sort((a, b) => a - b);
+
+    const pricesCount = sortedPrices.length;
+
+    expect(sortedPrices).toEqual(expectedSortedPrices);
+
+    expect(pricesCount).toBeGreaterThan(1);
+  })
+  
+  test('M | Możliwość sortowania po najdroższych produktach', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+
+    await expect(favouritesPage.getSortButton).toBeVisible();
+    await favouritesPage.getSortButton.click();
+    await favouritesPage.getSortSelect('Najdroższe');
+
+    await page.waitForTimeout(10000);
+
+    const allSortedPrices = await favouritesPage.getProductPrices.allTextContents();
+
+    const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
+
+    const expectedSortedPrices = [...sortedPrices].sort((a, b) => b - a);
+
+    const pricesCount = sortedPrices.length;
+
+    expect(sortedPrices).toEqual(expectedSortedPrices);
+
+    expect(pricesCount).toBeGreaterThan(1);
+  })  
+
+  test('M | Możliwość sortowania po najtańszych produktach za kg/l', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    
+    await expect(favouritesPage.getSortButton).toBeVisible();
+    await favouritesPage.getSortButton.click();
+    await favouritesPage.getSortSelect('Najtańsze za kg/litr');
+
+    await page.waitForTimeout(10000);
+
+    const allSortedPrices = await favouritesPage.getProductPricesPerGrammar.allTextContents();
+    console.log('raw prices', allSortedPrices)
+
+    const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
+    console.log('cleaned raw prices', sortedPrices)
+
+    const expectedSortedPrices = [...sortedPrices].sort((a, b) => a - b);
+    console.log('cleaned sorted prices', expectedSortedPrices)
+
+    const pricesCount = sortedPrices.length;
+
+    expect(sortedPrices).toEqual(expectedSortedPrices);
+
+    expect(pricesCount).toBeGreaterThan(1);
+  })
+
+  test('M | Możliwość sortowania po najdroższych produktach za kg/l', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    
+    await expect(favouritesPage.getSortButton).toBeVisible();
+    await favouritesPage.getSortButton.click();
+    await favouritesPage.getSortSelect('Najdroższe za kg/litr');
+
+    await page.waitForTimeout(10000);
+
+    const allSortedPrices = await favouritesPage.getProductPricesPerGrammar.allTextContents();
+
+    const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
+
+    const expectedSortedPrices = [...sortedPrices].sort((a, b) => b - a);
+
+    const pricesCount = sortedPrices.length;
+
+    expect(sortedPrices).toEqual(expectedSortedPrices);
+
+    expect(pricesCount).toBeGreaterThan(1);
+  })
+
+  
+  test('M | Możliwość sortowania od A do Z', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    
+    await expect(favouritesPage.getSortButton).toBeVisible();
+    await favouritesPage.getSortButton.click();
+    await favouritesPage.getSortSelect('od A do Z');
+
+    await page.waitForTimeout(5000);
+    
+    const allProductNames = await favouritesPage.getProductName.allTextContents();
+    
+    const cleanedProductNames = allProductNames.map(name =>
+        name.replace(/\s+/g, ' ').replace(/\s+%/, '%').trim()
+    );
+
+    const isSingleLetter = (word: any) => /^[a-zA-Z]$/.test(word);
+
+    const findWordsStartingWith = (str: any, letter: any) => 
+        str.split(' ').filter((word: any) => 
+            word.toLowerCase().startsWith(letter.toLowerCase()) && 
+            word.length > 1
+        );
+
+    const extractNumber = (word: any) => {
+        const match = word.match(/(\d+(?:,\d+)?)/);
+        return match ? parseFloat(match[1].replace(',', '.')) : null;
+    };
+
+    const compareNumbers = (wordA: any, wordB: any) => {
+        const numA = extractNumber(wordA);
+        const numB = extractNumber(wordB);
+        
+        if (numA === null || numB === null) return null;
+        if (Math.abs(numA - numB) < 0.0001) return wordA.length - wordB.length;
+        return numA - numB;
+    };
+
+    const normalizePolishCharacters = (str: any) => {
+        const polishAccentMap = {
+            'a': ['a', 'ą', 'Ą'],
+            'c': ['c', 'ć', 'Ć'],
+            'e': ['e', 'ę', 'Ę'],
+            'l': ['l', 'ł', 'Ł'],
+            'n': ['n', 'ń', 'Ń'],
+            'o': ['o', 'ó', 'Ó'],
+            's': ['s', 'ś', 'Ś'],
+            'z': ['z', 'ź', 'ż', 'Ż', 'Ź'],
+        };
+        return str.replace(/[ąĄćĆęĘłŁńŃóÓśŚźŹżŻ]/g, (match: any) => {
+            for (const key in polishAccentMap) {
+                if (polishAccentMap[key].includes(match)) return key;
+            }
+            return match;
+        }).toLowerCase();
+    };
+
+    const compareStrings = (a: any, b: any) => {
+        const normalizedA = normalizePolishCharacters(a);
+        const normalizedB = normalizePolishCharacters(b);
+        const wordsA = normalizedA.split(' ');
+        const wordsB = normalizedB.split(' ');
+
+        const minLength = Math.min(wordsA.length, wordsB.length);
+        for (let i = 0; i < minLength; i++) {
+            const wordA = wordsA[i];
+            const wordB = wordsB[i];
+
+            if (wordA !== wordB) {
+                const numberComparison = compareNumbers(wordA, wordB);
+                if (numberComparison !== null) {
+                    if (numberComparison === 0) continue;
+                    return numberComparison;
+                }
+
+                const aIsSingle = isSingleLetter(wordA);
+                const bIsSingle = isSingleLetter(wordB);
+
+                if (aIsSingle && !bIsSingle) {
+                    if (findWordsStartingWith(b, wordA).length > 0) return 1;
+                }
+                if (!aIsSingle && bIsSingle) {
+                    if (findWordsStartingWith(a, wordB).length > 0) return -1;
+                }
+
+                return wordA.localeCompare(wordB);
+            }
+        }
+
+        return wordsA.length - wordsB.length;
+    };
+
+    const expectedSortedNames = [...cleanedProductNames].sort(compareStrings);
+
+    const productsCount = cleanedProductNames.length;
+    
+    expect(cleanedProductNames).toEqual(expectedSortedNames);
+
+    expect(productsCount).toBeGreaterThan(1);
+  })
+
+  test('M | Możliwość sortowania od Z do A', async ({ page }) => {
+
+    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    
+    await expect(favouritesPage.getSortButton).toBeVisible();
+    await favouritesPage.getSortButton.click();
+    await favouritesPage.getSortSelect('od Z do A');
+
+    await page.waitForTimeout(5000);
+    
+    const allProductNames = await favouritesPage.getProductName.allTextContents();
+    
+    const cleanedProductNames = allProductNames.map(name =>
+        name.replace(/\s+/g, ' ').replace(/\s+%/, '%').trim()
+    );
+
+    const isSingleLetter = (word: any) => /^[a-zA-Z]$/.test(word);
+
+    const findWordsStartingWith = (str: any, letter: any) => 
+        str.split(' ').filter((word: any) => 
+            word.toLowerCase().startsWith(letter.toLowerCase()) && 
+            word.length > 1
+        );
+
+    const extractNumber = (word: any) => {
+        const match = word.match(/(\d+(?:,\d+)?)/);
+        return match ? parseFloat(match[1].replace(',', '.')) : null;
+    };
+
+    const compareNumbers = (wordA: any, wordB: any) => {
+        const numA = extractNumber(wordA);
+        const numB = extractNumber(wordB);
+        
+        if (numA === null || numB === null) return null;
+        if (Math.abs(numA - numB) < 0.0001) return wordB.length - wordA.length;
+        return numB - numA;
+    };
+
+    const normalizePolishCharacters = (str: any) => {
+        const polishAccentMap = {
+            'a': ['a', 'ą', 'Ą'],
+            'c': ['c', 'ć', 'Ć'],
+            'e': ['e', 'ę', 'Ę'],
+            'l': ['l', 'ł', 'Ł'],
+            'n': ['n', 'ń', 'Ń'],
+            'o': ['o', 'ó', 'Ó'],
+            's': ['s', 'ś', 'Ś'],
+            'z': ['z', 'ź', 'ż', 'Ż', 'Ź'],
+        };
+        return str.replace(/[ąĄćĆęĘłŁńŃóÓśŚźŹżŻ]/g, (match: any) => {
+            for (const key in polishAccentMap) {
+                if (polishAccentMap[key].includes(match)) return key;
+            }
+            return match;
+        }).toLowerCase();
+    };
+
+    const compareStrings = (a: any, b: any) => {
+        const normalizedA = normalizePolishCharacters(a);
+        const normalizedB = normalizePolishCharacters(b);
+        const wordsA = normalizedA.split(' ');
+        const wordsB = normalizedB.split(' ');
+
+        const minLength = Math.min(wordsA.length, wordsB.length);
+        for (let i = 0; i < minLength; i++) {
+            const wordA = wordsA[i];
+            const wordB = wordsB[i];
+
+            if (wordA !== wordB) {
+                const numberComparison = compareNumbers(wordA, wordB);
+                if (numberComparison !== null) {
+                    if (numberComparison === 0) continue;
+                    return numberComparison;
+                }
+
+                const aIsSingle = isSingleLetter(wordA);
+                const bIsSingle = isSingleLetter(wordB);
+
+                if (aIsSingle && !bIsSingle) {
+                    if (findWordsStartingWith(b, wordA).length > 0) return -1;
+                }
+                if (!aIsSingle && bIsSingle) {
+                    if (findWordsStartingWith(a, wordB).length > 0) return 1;
+                }
+
+                return wordB.localeCompare(wordA);
+            }
+        }
+
+        return wordsB.length - wordsA.length;
+    };
+
+    const expectedSortedNames = [...cleanedProductNames].sort(compareStrings);
+
+    const productsCount = cleanedProductNames.length;
+    
+    expect(cleanedProductNames).toEqual(expectedSortedNames);
+
+    expect(productsCount).toBeGreaterThan(1);
+  })
+})
