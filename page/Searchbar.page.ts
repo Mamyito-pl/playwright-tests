@@ -34,10 +34,42 @@ export default class SearchbarPage {
     }
 
     get getSearchbarInput() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_search_input" : "div[data-sentry-element='WebContent'] #search_hub_search_input")
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_search_input" : "div[data-sentry-element='WebContent'] #search_hub_search_input");
     }
 
     get getSearchbarCloseButton() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_close_button" : "div[data-sentry-element='WebContent'] #search_hub_close_button")
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_close_button:has-text('Zamknij ')" : "div[data-sentry-element='WebContent'] #search_hub_close_button:has-text('Zamknij ')");
+    }
+
+    get getSearchbarClearButton() {
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_clear_button:has-text('wyczyść')" : "div[data-sentry-element='WebContent'] #search_hub_clear_button:has-text('wyczyść')");
+    }
+
+    get getOurDiscountsTitle() {
+        return this.page.getByText('Nasze promocje');
+    }
+
+    get getSectionShowAllLink() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="HubContent"] div[data-sentry-element="Controls"] a[href="/promocje"]:has-text("Zobacz wszystkie")' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="HubContent"] div[data-sentry-element="Controls"] a[href="/promocje"]:has-text("Zobacz wszystkie")');
+    }
+
+    get getOurDiscountsSection() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="HubContent"] div[class*="AmJZC"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="HubContent"] div[class*="AmJZC"]');
+    }
+
+    get getBigBanner() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="HubContent"] div[data-sentry-component="BannerListing"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="HubContent"] div[data-sentry-component="BannerListing"]');
+    }
+
+    get getSearchbarProductTiles() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-testid="search-results"] div[data-sentry-component="ProductCard"]' : 'div[data-sentry-element="WebContent"] div[data-testid="search-results"] div[data-sentry-component="ProductCard"]')
+    }
+
+    get getSliderLeftButton() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-left"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
+    }
+
+    get getSliderRightButton() {
+        return this.page.locator(this.mobile ?'div[data-sentry-element="TabletContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-right"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
     }
 }
