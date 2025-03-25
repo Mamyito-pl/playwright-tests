@@ -6,6 +6,7 @@ import CartPage from '../../page/Cart.page.ts';
 import ProductsPage from '../../page/Products.page.ts';
 import ProductsCategoriesPage from '../../page/ProductsCategories.page.ts';
 import FavouritesPage from '../../page/Profile/Favourites.page.ts';
+import CommonPage from '../../page/Common.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods.ts';
@@ -19,6 +20,7 @@ test.describe('Testy strony głównej', async () => {
   let productsPage: ProductsPage;
   let productsCategoriesPage: ProductsCategoriesPage;
   let favouritesPage: FavouritesPage;
+  let commonPage: CommonPage;
 
   test.beforeEach(async ({ page }) => {
     
@@ -37,6 +39,7 @@ test.describe('Testy strony głównej', async () => {
     productsPage = new ProductsPage(page)
     productsCategoriesPage = new ProductsCategoriesPage(page)
     favouritesPage = new FavouritesPage(page)
+    commonPage = new CommonPage(page)
   })
 
   test('M | Strona główna otwiera się ze wszystkimi wymaganymi polami', async ({ page }) => {
@@ -484,10 +487,40 @@ test.describe('Testy strony głównej', async () => {
     await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 15000 });
   })
 
-  /*test('M | Możliwość zapisania się do newslettera', async ({ page }) => {
+  test('M | Możliwość zapisania się do newslettera', async ({ page, browser }) => {
 
-  After done task KAN-876
+    const userEmail = 'daniel.lalak@mamyito.pl'
 
-  })*/
+    const project = browser.browserType().name();
+
+    if (project === 'webkit') {
+      await page.evaluate(async () => {
+        window.scrollBy(0, 1550)
+        await new Promise(r => setTimeout(r, 700));
+        window.scrollBy(0, 1700)
+        await new Promise(r => setTimeout(r, 700));
+      });
+    } else {
+      await page.mouse.wheel(0, 1500);
+      await page.waitForTimeout(700);
+      await page.mouse.wheel(0, 1700);
+      await page.waitForTimeout(700);
+    }
+
+    await expect(mainPage.getNewsletterSection).toBeVisible();
+    await expect(mainPage.getNewsletterInput).toBeVisible();
+    await expect(mainPage.getNewsletterSubscribeButton).toBeVisible();
+    await expect(mainPage.getNewsletterSubscribeButton).toBeDisabled();
+    await expect(mainPage.getNewsletterCheckbox).toBeVisible();
+    expect(mainPage.getNewsletterCheckbox).not.toBeChecked;
+
+    await mainPage.getNewsletterInput.fill(userEmail);
+    await expect(mainPage.getNewsletterInput).toHaveValue(userEmail);
+    await mainPage.getNewsletterCheckbox.check();
+    await expect(mainPage.getNewsletterCheckbox).toBeChecked();
+    await expect(mainPage.getNewsletterSubscribeButton).toBeEnabled();
+    await mainPage.getNewsletterSubscribeButton.click();
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano do newslettera', { timeout: 10000 })
+  })
 })
 
