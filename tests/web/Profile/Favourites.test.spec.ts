@@ -7,7 +7,7 @@ import * as utility from '../../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
-test.describe('Testy adresy dostaw', async () => {
+test.describe('Testy ulubionych produktów', async () => {
 
   let commonPage: CommonPage;
   let favouritesPage : FavouritesPage;
@@ -24,7 +24,7 @@ test.describe('Testy adresy dostaw', async () => {
     favouritesPage = new FavouritesPage(page);
   })
   
-  test('W | Strona adresy dostaw pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Strona ulubionych produktów pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 

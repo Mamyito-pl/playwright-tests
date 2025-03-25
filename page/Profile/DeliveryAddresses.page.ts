@@ -70,9 +70,6 @@ export default class DeliveryAdressesPage {
         return this.page.locator(`div[class*="sc-f8f81ad2-1"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
-
-    // Address Modal
-
     get getAddressModal() {
         return this.page.locator('div[class*="sc-f8f81ad2-1"]');
     }

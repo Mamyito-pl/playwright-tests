@@ -121,11 +121,12 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(120000);
 
+    await addAddressDeliveryViaAPI('Adres Testowy');
     await addAddressDeliveryViaAPI('Adres Fixturowy');
     
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
-    await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
+    await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
     await deliveryAddressesPage.clickEditAddressButton('Adres Fixturowy');
@@ -139,12 +140,12 @@ test.describe('Testy adresy dostaw', async () => {
     await deliveryAddressesPage.getAddressModalMainAddressCheckbox.isHidden();
     await deliveryAddressesPage.clickCancelAdressModalButton();
 
-    await deliveryAddressesPage.clickEditAddressButton('Adres Podstawowy');
+    await deliveryAddressesPage.clickEditAddressButton('Adres Testowy');
     await deliveryAddressesPage.getAddressModalMainAddressCheckbox.check();
     await deliveryAddressesPage.getAddressModalMainAddressCheckbox.isChecked();
     await deliveryAddressesPage.clickSaveAdressModalButton();
-    await deliveryAddressesPage.getMainAddressInfo('Adres Podstawowy').isVisible();
-    await expect(deliveryAddressesPage.getMainAddressInfo('Adres Podstawowy')).toHaveText('Główny');
+    await deliveryAddressesPage.getMainAddressInfo('Adres Testowy').isVisible();
+    await expect(deliveryAddressesPage.getMainAddressInfo('Adres Testowy')).toHaveText('Główny');
     await deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy').isHidden();
     await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).not.toBeAttached();
   })
