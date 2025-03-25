@@ -446,7 +446,7 @@ test.describe('Testy strony głównej', async () => {
 
   test('W | Możliwość zapisania się do newslettera', async ({ page }) => {
 
-    const userEmail = 'daniel.lalak@mamyito.pl'
+    const userEmail = `${process.env.EMAIL}`
 
     await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);

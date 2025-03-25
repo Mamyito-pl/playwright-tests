@@ -489,7 +489,7 @@ test.describe('Testy strony głównej', async () => {
 
   test('M | Możliwość zapisania się do newslettera', async ({ page, browser }) => {
 
-    const userEmail = 'daniel.lalak@mamyito.pl'
+    const userEmail = `${process.env.EMAIL}`
 
     const project = browser.browserType().name();
 
