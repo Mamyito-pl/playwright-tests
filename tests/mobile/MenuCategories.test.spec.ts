@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import MenuCategoriesPage from "../../page/MenuCategories.page";
-import ProductsPage from '../../page/Products.page.ts';
+import ProductsListPage from '../../page/ProductsList.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
@@ -8,7 +8,7 @@ import * as utility from '../../utils/utility-methods';
 test.describe('Testy menu kategorii', async () => {
 
   let menuCategoriesPage: MenuCategoriesPage;
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -19,7 +19,7 @@ test.describe('Testy menu kategorii', async () => {
     });
 
     menuCategoriesPage = new MenuCategoriesPage(page);
-    productsPage = new ProductsPage(page);
+    productsListPage = new ProductsListPage(page);
   })
 
   test('M | Menu kategorii otwiera się z obecnymi kategoriami', async () => {
@@ -125,7 +125,7 @@ test.describe('Testy menu kategorii', async () => {
     await menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton.click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce', { timeout: 10000 });
-    await productsPage.getProductCategoryTitle('Warzywa i owoce').isVisible();
+    await productsListPage.getProductCategoryTitle('Warzywa i owoce').isVisible();
   })
 
   test('M | Możliwość przejścia do podkategorii produktów', async ({ page, baseURL }) => {
@@ -147,7 +147,7 @@ test.describe('Testy menu kategorii', async () => {
     await menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton.click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce/grzyby', { timeout: 10000 });
-    await productsPage.getProductCategoryTitle('Grzyby').isVisible();
+    await productsListPage.getProductCategoryTitle('Grzyby').isVisible();
   })
 })
 

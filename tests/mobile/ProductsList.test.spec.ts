@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import ProductsPage from '../../page/Products.page';
+import ProductsListPage from '../../page/ProductsList.page';
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 
@@ -7,11 +7,11 @@ test.describe('Testy listy produktów', async () => {
 
   test.setTimeout(80000);
 
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
 
   test.beforeEach(async ({ page }) => {
 
-    productsPage = new ProductsPage(page);
+    productsListPage = new ProductsListPage(page);
     
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
@@ -24,26 +24,47 @@ test.describe('Testy listy produktów', async () => {
 
   test('M | Lista produktów otwiera się ze wszystkimi wymaganymi polami', async () => {
 
-    await expect(productsPage.getBreadcrumbs).toBeVisible();
-    await expect(productsPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne');
-    await expect(productsPage.getProductCategoryTitle('Mleko i napoje mleczne')).toBeVisible();
-    await expect(productsPage.getFiltersButton).toBeVisible();
-    await expect(productsPage.getSortButton).toBeVisible();
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1626');
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+    await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne');
+    await expect(productsListPage.getProductCategoryTitle('Mleko i napoje mleczne')).toBeVisible();
+    await expect(productsListPage.getFiltersButton).toBeVisible();
+    await expect(productsListPage.getSortButton).toBeVisible();
   })
 
   test('M | Możliwość przejścia do innej kategorii poprzez breadcrumb', async ({ page }) => {
 
-    await expect(productsPage.getBreadcrumbs).toBeVisible();
-    await productsPage.getBreadcrumbs.getByText('Nabiał').click();
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1627');
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+    await productsListPage.getBreadcrumbs.getByText('Nabiał').click();
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Nabiał')).toBeVisible();
-    await expect(productsPage.getBreadcrumbs).toBeVisible();
-    await expect(productsPage.getBreadcrumbs).toContainText('Nabiał');
+    await expect(productsListPage.getProductCategoryTitle('Nabiał')).toBeVisible();
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+    await expect(productsListPage.getBreadcrumbs).toContainText('Nabiał');
   })
 
   test('M | Po zescrollowaniu w dół następne produkty są załadowywane', async ({ page }) => {
 
-    const productsBeforeScroll = await productsPage.getProductTiles.count();
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1628');
+
+    const productsBeforeScroll = await productsListPage.getProductTiles.count();
     expect(productsBeforeScroll).toEqual(60);
 
     await page.evaluate(async () => {
@@ -55,19 +76,26 @@ test.describe('Testy listy produktów', async () => {
         await new Promise(r => setTimeout(r, 700));
       })
 
-    const productsAfterScroll = await productsPage.getProductTiles.count();
+    const productsAfterScroll = await productsListPage.getProductTiles.count();
     expect(productsAfterScroll).toBeGreaterThan(60);
   })
   
   test('M | Możliwość sortowania po najtańszych produktach', async ({ page }) => {
 
-    await expect(productsPage.getSortButton).toBeVisible();
-    await productsPage.getSortButton.click();
-    await productsPage.getSortSelect('Najtańsze');
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1629');
+
+    await expect(productsListPage.getSortButton).toBeVisible();
+    await productsListPage.getSortButton.click();
+    await productsListPage.getSortSelect('Najtańsze');
 
     await page.waitForTimeout(10000);
 
-    const allSortedPrices = await productsPage.getProductPrices.allTextContents();
+    const allSortedPrices = await productsListPage.getProductPrices.allTextContents();
 
     const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
 
@@ -78,13 +106,20 @@ test.describe('Testy listy produktów', async () => {
   
   test('M | Możliwość sortowania po najdroższych produktach', async ({ page }) => {
 
-    await expect(productsPage.getSortButton).toBeVisible();
-    await productsPage.getSortButton.click();
-    await productsPage.getSortSelect('Najdroższe');
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1630');
+
+    await expect(productsListPage.getSortButton).toBeVisible();
+    await productsListPage.getSortButton.click();
+    await productsListPage.getSortSelect('Najdroższe');
 
     await page.waitForTimeout(10000);
 
-    const allSortedPrices = await productsPage.getProductPrices.allTextContents();
+    const allSortedPrices = await productsListPage.getProductPrices.allTextContents();
 
     const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
 
@@ -98,14 +133,21 @@ test.describe('Testy listy produktów', async () => {
   })  
 
   test('M | Możliwość sortowania po najtańszych produktach za kg/l', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1631');
     
-    await expect(productsPage.getSortButton).toBeVisible();
-    await productsPage.getSortButton.click();
-    await productsPage.getSortSelect('Najtańsze za kg/litr');
+    await expect(productsListPage.getSortButton).toBeVisible();
+    await productsListPage.getSortButton.click();
+    await productsListPage.getSortSelect('Najtańsze za kg/litr');
 
     await page.waitForTimeout(10000);
 
-    const allSortedPrices = await productsPage.getProductPricesPerGrammar.allTextContents();
+    const allSortedPrices = await productsListPage.getProductPricesPerGrammar.allTextContents();
 
     const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
 
@@ -119,14 +161,21 @@ test.describe('Testy listy produktów', async () => {
   })
 
   test('M | Możliwość sortowania po najdroższych produktach za kg/l', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1632');
     
-    await expect(productsPage.getSortButton).toBeVisible();
-    await productsPage.getSortButton.click();
-    await productsPage.getSortSelect('Najdroższe za kg/litr');
+    await expect(productsListPage.getSortButton).toBeVisible();
+    await productsListPage.getSortButton.click();
+    await productsListPage.getSortSelect('Najdroższe za kg/litr');
 
     await page.waitForTimeout(10000);
 
-    const allSortedPrices = await productsPage.getProductPricesPerGrammar.allTextContents();
+    const allSortedPrices = await productsListPage.getProductPricesPerGrammar.allTextContents();
 
     const sortedPrices = allSortedPrices.map(price => parseFloat(price.replace(/[^0-9,.-]/g, '').replace(',', '.')))
 
@@ -140,14 +189,21 @@ test.describe('Testy listy produktów', async () => {
   })
 
   test('M | Możliwość sortowania od A do Z', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1633');
     
-    await expect(productsPage.getSortButton).toBeVisible();
-    await productsPage.getSortButton.click();
-    await productsPage.getSortSelect('od A do Z');
+    await expect(productsListPage.getSortButton).toBeVisible();
+    await productsListPage.getSortButton.click();
+    await productsListPage.getSortSelect('od A do Z');
 
     await page.waitForTimeout(5000);
     
-    const allProductNames = await productsPage.getProductName.allTextContents();
+    const allProductNames = await productsListPage.getProductName.allTextContents();
     console.log("Raw product names:", allProductNames);
     
     const cleanedProductNames = allProductNames.map(name =>
@@ -242,14 +298,21 @@ test.describe('Testy listy produktów', async () => {
   })
   
   test('M | Możliwość sortowania od Z do A', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1634');
     
-    await expect(productsPage.getSortButton).toBeVisible();
-    await productsPage.getSortButton.click();
-    await productsPage.getSortSelect('od Z do A');
+    await expect(productsListPage.getSortButton).toBeVisible();
+    await productsListPage.getSortButton.click();
+    await productsListPage.getSortSelect('od Z do A');
 
     await page.waitForTimeout(5000);
     
-    const allProductNames = await productsPage.getProductName.allTextContents();
+    const allProductNames = await productsListPage.getProductName.allTextContents();
     
     const cleanedProductNames = allProductNames.map(name =>
         name.replace(/\s+/g, ' ').replace(/\s+%/, '%').trim()
@@ -341,13 +404,20 @@ test.describe('Testy listy produktów', async () => {
   })
   
   test('M | Możliwość filtrowania po typie produktu', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('1635');
     
-    await productsPage.getFiltersButton.click();
-    await productsPage.getFilterSelect('Typ produktu','Bez laktozy');
-    await productsPage.clickApplyButton();
+    await productsListPage.getFiltersButton.click();
+    await productsListPage.getFilterSelect('Typ produktu','Bez laktozy');
+    await productsListPage.clickApplyButton();
     await page.waitForTimeout(7000);
     
-    const allProductNames = await productsPage.getProductName.allTextContents();
+    const allProductNames = await productsListPage.getProductName.allTextContents();
 
     for (const productName of allProductNames) {
       expect(productName.toLocaleLowerCase()).toContain('bez laktozy');
@@ -361,12 +431,19 @@ test.describe('Testy listy produktów', async () => {
   test.describe('Filtrowanie po cenie', async () => {
     test('M | Możliwość filtrowania po cenie poniżej 10 zł', async ({ page }) => {
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterSelect('Cena','poniżej 10zł');
-      await productsPage.clickApplyButton();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1636');
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterSelect('Cena','poniżej 10zł');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
 
       const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
@@ -384,12 +461,19 @@ test.describe('Testy listy produktów', async () => {
 
     test('M | Możliwość filtrowania po cenie od 10 zł do 20 zł', async ({ page }) => {
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterSelect('Cena','od 10zł do 20zł');
-      await productsPage.clickApplyButton();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1637');
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterSelect('Cena','od 10zł do 20zł');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
 
       const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
@@ -405,18 +489,25 @@ test.describe('Testy listy produktów', async () => {
           console.log('cena produktu', productPrice)
         }
       } else {
-          await expect(productsPage.getNoProductsResult).toBeVisible();
+          await expect(productsListPage.getNoProductsResult).toBeVisible();
       }
     })     
 
     test('M | Możliwość filtrowania po cenie od 20 zł 50 zł', async ({ page }) => {
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterSelect('Cena','od 20zł do 50zł');
-      await productsPage.clickApplyButton();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1638');
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterSelect('Cena','od 20zł do 50zł');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
 
       const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
@@ -432,18 +523,25 @@ test.describe('Testy listy produktów', async () => {
           console.log('cena produktu', productPrice)
         }
       } else {
-          await expect(productsPage.getNoProductsResult).toBeVisible();
+          await expect(productsListPage.getNoProductsResult).toBeVisible();
       }
     })  
     
     test('M | Możliwość filtrowania po cenie powyżej 50 zł', async ({ page }) => {
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterSelect('Cena','powyżej 50zł');
-      await productsPage.clickApplyButton();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1639');
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterSelect('Cena','powyżej 50zł');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
 
       const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
@@ -459,22 +557,29 @@ test.describe('Testy listy produktów', async () => {
           console.log('cena produktu', productPrice)
         }
       } else {
-          await expect(productsPage.getNoProductsResult).toBeVisible();
+          await expect(productsListPage.getNoProductsResult).toBeVisible();
       }
     })
 
     test('M | Możliwość filtrowania po cenie niestandardowej', async ({ page }) => {
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterCustomPriceFromSet('Cena', '2');
-      await productsPage.clickApplyButton();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1640');
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterCustomPriceFromSet('Cena', '2');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterCustomPriceToSet('Cena', '4');
-      await productsPage.clickApplyButton();
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterCustomPriceToSet('Cena', '4');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
 
       const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
@@ -490,18 +595,25 @@ test.describe('Testy listy produktów', async () => {
           console.log('cena produktu', productPrice)
         }
       } else {
-          await expect(productsPage.getNoProductsResult).toBeVisible();
+          await expect(productsListPage.getNoProductsResult).toBeVisible();
       }
     })
         
     test('M | Możliwość filtrowania po nazwie producenta', async ({ page }) => {
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterSelect('Producent','MLEKOVITA');
-      await productsPage.clickApplyButton();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1641');
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterSelect('Producent','MLEKOVITA');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
       
-      const allProductBrands = await productsPage.getProductBrand.allTextContents();
+      const allProductBrands = await productsListPage.getProductBrand.allTextContents();
   
       for (const productBrandName of allProductBrands) {
         expect(productBrandName).toContain('MLEKOVITA');
@@ -514,30 +626,37 @@ test.describe('Testy listy produktów', async () => {
 
     test('M | Możliwość wyczyszczenia filtrowania', async ({ page }) => {
 
-      await expect(productsPage.getClearFiltersButton).not.toBeVisible();
+      await allure.tags('Mobilne', 'Lista produktów');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Lista produktów');
+      await allure.suite('Testy listy produktów');
+      await allure.subSuite('');
+      await allure.allureId('1642');
 
-      await productsPage.getFiltersButton.click();
-      await productsPage.getFilterCustomPriceToSet('Cena', '4');
-      await productsPage.clickApplyButton();
+      await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
+
+      await productsListPage.getFiltersButton.click();
+      await productsListPage.getFilterCustomPriceToSet('Cena', '4');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
       
-      await productsPage.getFiltersButton.click();
-      expect((await productsPage.getFilter('Typ produktu')).isVisible);
-      await productsPage.getFilterSelect('Typ produktu','Bez laktozy');
-      await productsPage.clickApplyButton();
+      await productsListPage.getFiltersButton.click();
+      expect((await productsListPage.getFilter('Typ produktu')).isVisible);
+      await productsListPage.getFilterSelect('Typ produktu','Bez laktozy');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      await productsPage.getFiltersButton.click();
-      expect((await productsPage.getFilter('Producent')).isVisible);
-      await productsPage.getFilterSelect('Producent','MLEKOVITA');
-      await productsPage.clickApplyButton();
+      await productsListPage.getFiltersButton.click();
+      expect((await productsListPage.getFilter('Producent')).isVisible);
+      await productsListPage.getFilterSelect('Producent','MLEKOVITA');
+      await productsListPage.clickApplyButton();
       await page.waitForTimeout(7000);
 
-      const allProductNames = await productsPage.getProductName.allTextContents();
-      const allProductPrices = await productsPage.getProductPrices.allTextContents();
+      const allProductNames = await productsListPage.getProductName.allTextContents();
+      const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('all products prices raw', allProductPrices)
       const allProductCleanedPrices = allProductPrices.map(price => parseFloat(price.replace(/[^\d,.-]/g, '').replace(',', '.')));
-      const allProductBrands = await productsPage.getProductBrand.allTextContents();
+      const allProductBrands = await productsListPage.getProductBrand.allTextContents();
   
       for (let i = 0; i < allProductNames.length; i++) {
         expect(allProductNames[i].toLocaleLowerCase()).toContain('bez laktozy');
@@ -555,20 +674,20 @@ test.describe('Testy listy produktów', async () => {
       expect(productsCount).toBeGreaterThan(1);
       expect(productsCount).toBeLessThan(10);
 
-      await productsPage.getFiltersButton.click();
-      await expect(productsPage.getClearFiltersButton).toBeVisible();
-      await productsPage.getClearFiltersButton.click();
+      await productsListPage.getFiltersButton.click();
+      await expect(productsListPage.getClearFiltersButton).toBeVisible();
+      await productsListPage.getClearFiltersButton.click();
       await page.waitForTimeout(7000);
 
-      const allProductNamesAfterClearFilter = await productsPage.getProductName.allTextContents();
+      const allProductNamesAfterClearFilter = await productsListPage.getProductName.allTextContents();
  
-      await expect(productsPage.getClearFiltersButton).not.toBeVisible();
+      await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
 
       const productsCountAfterClearFilter = allProductNamesAfterClearFilter.length;
 
       expect(productsCountAfterClearFilter).toBeGreaterThanOrEqual(50);
 
-      await expect(productsPage.getClearFiltersButton).not.toBeVisible();
+      await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
     })
   })
 })

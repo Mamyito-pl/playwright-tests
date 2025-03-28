@@ -33,6 +33,13 @@ test.describe('Testy dane do faktury', async () => {
   
   test('M | Strona dane do faktury otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy dane do faktury');
+    await allure.subSuite('');
+    await allure.allureId('1478');
+
     await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
 
     await expect(invoiceAddressesPage.getInvoiceAddressTitle).toBeVisible();
@@ -40,6 +47,13 @@ test.describe('Testy dane do faktury', async () => {
   })
   
   test('M | Możliwość dodania danych do faktury', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy dane do faktury');
+    await allure.subSuite('');
+    await allure.allureId('1479');
 
     test.setTimeout(100000);
     
@@ -84,6 +98,13 @@ test.describe('Testy dane do faktury', async () => {
   })
     
   test('M | Możliwość edycji danych do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy dane do faktury');
+    await allure.subSuite('');
+    await allure.allureId('1480');
 
     test.setTimeout(120000);
 
@@ -148,6 +169,13 @@ test.describe('Testy dane do faktury', async () => {
     
   test('M | Możliwość ustawienia głównych danych do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
 
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy dane do faktury');
+    await allure.subSuite('');
+    await allure.allureId('1481');
+
     test.setTimeout(120000);
     
     await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
@@ -180,6 +208,13 @@ test.describe('Testy dane do faktury', async () => {
   })
         
   test('M | Możliwość usunięcia danych do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy dane do faktury');
+    await allure.subSuite('');
+    await allure.allureId('1482');
       
     test.setTimeout(120000);
 

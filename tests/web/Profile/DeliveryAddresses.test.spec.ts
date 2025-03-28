@@ -40,7 +40,6 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.subSuite('');
     await allure.allureId('919');
     
-
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
     await expect(deliveryAddressesPage.getDeliveryAdressesTitle).toBeVisible();

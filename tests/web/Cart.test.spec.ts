@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import LoginPage from "../../page/Login.page.ts";
-import ProductsPage from '../../page/Products.page.ts';
+import ProductsListPage from '../../page/ProductsList.page.ts';
 import MainLogoutPage from "../../page/MainLogout.page.ts";
 import MainPage from "../../page/Main.page.ts";
 import CartPage from '../../page/Cart.page.ts';
@@ -18,7 +18,7 @@ test.describe('Testy koszyka', async () => {
   test.setTimeout(80000);
 
   let cartPage: CartPage;
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
   let loginPage: LoginPage;
   let mainLogoutPage: MainLogoutPage;
   let mainPage: MainPage;
@@ -26,7 +26,7 @@ test.describe('Testy koszyka', async () => {
   let searchbarPage : SearchbarPage;
 
   test.beforeEach(async ({ page }) => {
-    
+
     await page.goto('/', { waitUntil: 'load'})
 
     page.on('framenavigated', async () => {
@@ -39,7 +39,7 @@ test.describe('Testy koszyka', async () => {
     mainLogoutPage = new MainLogoutPage(page);
     mainPage = new MainPage(page);
     cartPage = new CartPage(page);
-    productsPage = new ProductsPage(page);
+    productsListPage = new ProductsListPage(page);
     navigationPage = new NavigationPage(page);
     searchbarPage = new SearchbarPage(page);
   })
@@ -276,7 +276,7 @@ test.describe('Testy koszyka', async () => {
 
       await addProduct(product);
     
-      const productBrand = (await page.locator(selectors.ProductsPage.web.productCardBrand).first().innerText()).toUpperCase();
+      const productBrand = (await page.locator(selectors.ProductsListPage.web.productCardBrand).first().innerText()).toUpperCase();
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
@@ -324,7 +324,7 @@ test.describe('Testy koszyka', async () => {
 
       await addProduct(product);
     
-      const productBrand = (await page.locator(selectors.ProductsPage.web.productCardBrand).first().innerText()).toUpperCase();
+      const productBrand = (await page.locator(selectors.ProductsListPage.web.productCardBrand).first().innerText()).toUpperCase();
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
@@ -372,7 +372,7 @@ test.describe('Testy koszyka', async () => {
 
       await addProduct(product);
     
-      const productBrand = (await page.locator(selectors.ProductsPage.web.productCardBrand).first().innerText()).toUpperCase();
+      const productBrand = (await page.locator(selectors.ProductsListPage.web.productCardBrand).first().innerText()).toUpperCase();
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     
@@ -420,7 +420,7 @@ test.describe('Testy koszyka', async () => {
 
       await addProduct(product);
     
-      const productBrand = (await page.locator(selectors.ProductsPage.web.productCardBrand).first().innerText()).toUpperCase();
+      const productBrand = (await page.locator(selectors.ProductsListPage.web.productCardBrand).first().innerText()).toUpperCase();
       const productPrice = (await page.locator(selectors.Searchbar.common.searchbarProductPrice.replace(/[\s\u200B]+$/, '')).first().innerText());
       addedProduct.push({ name: productBrand, price: productPrice });
     

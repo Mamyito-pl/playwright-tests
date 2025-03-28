@@ -26,6 +26,13 @@ test.describe('Testy ulubionych produktów', async () => {
   
   test('W | Strona ulubionych produktów pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1496');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
     await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
@@ -33,6 +40,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   
   test('W | Możliwość dodania i usunięcia ulubionego produktu', async ({ page }) => {
+
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1497');
 
     test.setTimeout(70000);
 
@@ -72,6 +86,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test('W | Możliwość sortowania po najtańszych produktach', async ({ page }) => {
 
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1498');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -95,6 +116,13 @@ test.describe('Testy ulubionych produktów', async () => {
   
   test('W | Możliwość sortowania po najdroższych produktach', async ({ page }) => {
 
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1499');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -117,6 +145,13 @@ test.describe('Testy ulubionych produktów', async () => {
   })  
 
   test('W | Możliwość sortowania po najtańszych produktach za kg/l', async ({ page }) => {
+
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1500');
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     
@@ -144,6 +179,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test('W | Możliwość sortowania po najdroższych produktach za kg/l', async ({ page }) => {
 
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1501');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -167,6 +209,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   
   test('W | Możliwość sortowania od A do Z', async ({ page }) => {
+
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1502');
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     
@@ -268,6 +317,13 @@ test.describe('Testy ulubionych produktów', async () => {
   })
 
   test('W | Możliwość sortowania od Z do A', async ({ page }) => {
+
+    await allure.tags('Web', 'Profil');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1503');
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     

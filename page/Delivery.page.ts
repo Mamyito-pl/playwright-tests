@@ -65,7 +65,7 @@ export default class DeliveryPage {
     }
 
     get getDeliveryDateTitle() {
-        return this.page.getByText('Termin dostawy');
+        return this.page.locator('div[data-sentry-element="Title"]').getByText('Termin dostawy');
     }
 
     // Address/Invoice Modal

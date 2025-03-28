@@ -29,12 +29,26 @@ test.describe('Testy ulubionych produktów', async () => {
   
   test('M | Strona ulubionych produktów pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1488');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
     await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
   })
 
   test('M | Możliwość dodania i usunięcia ulubionego produktu', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1489');
 
     test.setTimeout(130000);
 
@@ -74,6 +88,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test('M | Możliwość sortowania po najtańszych produktach', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1490');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -97,6 +118,13 @@ test.describe('Testy ulubionych produktów', async () => {
   
   test('M | Możliwość sortowania po najdroższych produktach', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1491');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -119,6 +147,13 @@ test.describe('Testy ulubionych produktów', async () => {
   })  
 
   test('M | Możliwość sortowania po najtańszych produktach za kg/l', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1492');
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     
@@ -146,6 +181,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test('M | Możliwość sortowania po najdroższych produktach za kg/l', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1493');
+
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -169,6 +211,13 @@ test.describe('Testy ulubionych produktów', async () => {
 
   
   test('M | Możliwość sortowania od A do Z', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1494');
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     
@@ -270,6 +319,13 @@ test.describe('Testy ulubionych produktów', async () => {
   })
 
   test('M | Możliwość sortowania od Z do A', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Profil');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy ulubionych produktów');
+    await allure.subSuite('');
+    await allure.allureId('1495');
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
     

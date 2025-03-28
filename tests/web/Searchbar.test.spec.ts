@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import SearchbarPage from '../../page/Searchbar.page.ts';
-import ProductsPage from '../../page/Products.page.ts';
+import ProductsListPage from '../../page/ProductsList.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
@@ -8,7 +8,7 @@ import * as utility from '../../utils/utility-methods';
 test.describe('Testy wyszukiwarki', async () => {
 
   let searchbarPage: SearchbarPage;
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -21,10 +21,17 @@ test.describe('Testy wyszukiwarki', async () => {
     });
 
     searchbarPage = new SearchbarPage(page);
-    productsPage = new ProductsPage(page);
+    productsListPage = new ProductsListPage(page);
   })
 
   test('W | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', async () => {
+
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1517');
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -36,6 +43,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
 
   test('W | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', async () => {
+
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1518');
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -56,6 +70,13 @@ test.describe('Testy wyszukiwarki', async () => {
   
   test('W | Wyszukanie nieistniejącego produktu', async ({ page }) => {
 
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1519');
+
     const notExistingProduct = 'nieistniejacyprodukt';
 
     await searchbarPage.getSearchbarInput.click();
@@ -66,6 +87,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
 
   test('W | Produkt wpisany dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1520');
 
     const productToSearch = 'MANGO';
 
@@ -86,6 +114,13 @@ test.describe('Testy wyszukiwarki', async () => {
   
   test('W | Produkt wpisany małymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
 
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1521');
+
     const productToSearch = 'mango';
 
     await searchbarPage.getSearchbarInput.click();
@@ -105,6 +140,13 @@ test.describe('Testy wyszukiwarki', async () => {
       
   test('W | Produkt wpisany małymi i dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
 
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1522');
+
     const productToSearch = 'manGO';
 
     await searchbarPage.getSearchbarInput.click();
@@ -123,6 +165,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
 
   test('W | Możliwość wyczyszczenia wyszukiwarki', async ({ page }) => {
+
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1523');
 
     const productToSearch = 'mango';
 
@@ -144,6 +193,13 @@ test.describe('Testy wyszukiwarki', async () => {
     
   test('W | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', async ({ page }) => {
 
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1524');
+
     const productToSearch = '   mango';
 
     await searchbarPage.getSearchbarInput.click();
@@ -162,6 +218,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
 
   test('W | Możliwość wyszukania produktów po nazwie marki', async ({ page }) => {
+
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1525');
 
     const brandToSearch = 'zieleniak';
 
@@ -182,6 +245,13 @@ test.describe('Testy wyszukiwarki', async () => {
       
   test('W | Możliwość przwijania slidera nasze promocje', async () => {
 
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1526');
+
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
 
@@ -200,11 +270,18 @@ test.describe('Testy wyszukiwarki', async () => {
 
   test('W | Możliwość przejścia do naszych promocji poprzez link slidera', async ({ page, baseURL}) => {
 
+    await allure.tags('Web', 'Wyszukiwarka');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1527');
+
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
     await searchbarPage.getSectionShowAllLink.click();
     await expect(page).toHaveURL(`${baseURL}` + '/promocje', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Promocje')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getProductCategoryTitle('Promocje')).toBeVisible({ timeout: 15000 });
   })
 })

@@ -42,7 +42,7 @@ export default class CartPage {
     }
 
     async clickDeleteProductCartConfirmButton() {
-        await this.page.click(selectors.CartPage.common.deleteProductConfirmButton)
+        await this.getProductCartConfirmButton.click();
     }
 
     async clickIncreaseProductButton() {
@@ -55,6 +55,10 @@ export default class CartPage {
     
     async clickCloseDrawerIconButton() {
         await this.page.click(selectors.CartPage.common.cartCloseIconButton);
+    }
+
+    get getProductCartConfirmButton() {
+        return this.page.locator('div[data-sentry-element="ModalContent"]').getByText('Potwierdź');
     }
 
     get getEmptyCartNotification() {

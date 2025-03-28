@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import SearchbarPage from '../../page/Searchbar.page.ts';
-import ProductsPage from '../../page/Products.page.ts';
+import ProductsListPage from '../../page/ProductsList.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
@@ -8,7 +8,7 @@ import * as utility from '../../utils/utility-methods';
 test.describe('Testy wyszukiwarki', async () => {
 
   let searchbarPage: SearchbarPage;
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -21,10 +21,17 @@ test.describe('Testy wyszukiwarki', async () => {
     });
 
     searchbarPage = new SearchbarPage(page);
-    productsPage = new ProductsPage(page);
+    productsListPage = new ProductsListPage(page);
   })
 
-  test('M | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', async ({ page }) => {
+  test('M | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', async () => {
+
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1506');
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -35,6 +42,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
 
   test('M | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', async () => {
+
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1507');
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -53,6 +67,13 @@ test.describe('Testy wyszukiwarki', async () => {
   
   test('M | Wyszukanie nieistniejącego produktu', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1508');
+
     const notExistingProduct = 'nieistniejacyprodukt';
 
     await searchbarPage.getSearchbarInput.click();
@@ -63,6 +84,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
 
   test('M | Produkt wpisany dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1509');
 
     const productToSearch = 'MANGO';
 
@@ -83,6 +111,13 @@ test.describe('Testy wyszukiwarki', async () => {
   
   test('M | Produkt wpisany małymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1510');
+
     const productToSearch = 'mango';
 
     await searchbarPage.getSearchbarInput.click();
@@ -102,6 +137,13 @@ test.describe('Testy wyszukiwarki', async () => {
     
   test('M | Produkt wpisany małymi i dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1511');
+
     const productToSearch = 'manGO';
 
     await searchbarPage.getSearchbarInput.click();
@@ -120,6 +162,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
   
   test('M | Możliwość wyczyszczenia wyszukiwarki', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1512');
 
     const productToSearch = 'mango';
 
@@ -141,6 +190,13 @@ test.describe('Testy wyszukiwarki', async () => {
   
   test('M | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', async ({ page }) => {
 
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1513');
+
     const productToSearch = '   mango';
 
     await searchbarPage.getSearchbarInput.click();
@@ -159,6 +215,13 @@ test.describe('Testy wyszukiwarki', async () => {
   })
   
   test('M | Możliwość wyszukania produktów po nazwie marki', async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1514');
 
     const brandToSearch = 'zieleniak';
 
@@ -179,6 +242,13 @@ test.describe('Testy wyszukiwarki', async () => {
     
   test('M | Możliwość przwijania slidera nasze promocje', async () => {
 
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1515');
+
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
 
@@ -197,12 +267,19 @@ test.describe('Testy wyszukiwarki', async () => {
 
   test('M | Możliwość przejścia do naszych promocji poprzez link slidera', async ({ page, baseURL}) => {
 
+    await allure.tags('Mobilne', 'Wyszukiwarka');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Wyszukiwarka');
+    await allure.suite('Testy wyszukiwarki');
+    await allure.subSuite('');
+    await allure.allureId('1516');
+
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
     await searchbarPage.getSectionShowAllLink.click();
     await expect(page).toHaveURL(`${baseURL}` + '/promocje', { timeout: 10000 });
-    await expect(productsPage.getProductCategoryTitle('Promocje')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getProductCategoryTitle('Promocje')).toBeVisible({ timeout: 15000 });
   })
 })
 

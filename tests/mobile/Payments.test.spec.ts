@@ -25,7 +25,9 @@ test.describe('Testy płatności', async () => {
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, addAddressDeliveryViaAPI }) => {
+
+    await addAddressDeliveryViaAPI('Adres Testowy');
 
     await page.goto('/', { waitUntil: 'load'})
 
@@ -43,8 +45,9 @@ test.describe('Testy płatności', async () => {
     searchbarPage = new SearchbarPage(page);
   })
   
-  test.afterEach(async ({ clearCartViaAPI }) => {
+  test.afterEach(async ({ clearCartViaAPI, deleteDeliveryAddressViaAPI }) => {
 
+    await deleteDeliveryAddressViaAPI('Adres Testowy');
     await clearCartViaAPI();
   })
 

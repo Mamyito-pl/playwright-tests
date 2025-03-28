@@ -54,7 +54,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('W | Możliwość wyboru terminu dostawy', { tag: ['@Smoke'] }, async ({ page }) => {
+  test('W | Możliwość wyboru terminu dostawy', { tag: ['@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Web', 'Dostawa');
     await allure.epic('Webowe');
@@ -65,10 +65,12 @@ test.describe('Testy dostawy', async () => {
 
     test.setTimeout(150000);
 
+    await addAddressDeliveryViaAPI('Adres Testowy');
+
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
-    await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
-    await page.getByText('Adres Podstawowy').click({ force: true });
+    await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
+    await page.getByText('Adres Testowy').click({ force: true });
 
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
@@ -155,16 +157,17 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(100000);
 
+      await addAddressDeliveryViaAPI('Adres Testowy');
       await addAddressDeliveryViaAPI('Adres Fixturowy');
 
-      const targetAddress = page.getByText('Adres Podstawowy').locator('..').locator('..').locator('..');
+      const targetAddress = page.getByText('Adres Testowy').locator('..').locator('..').locator('..');
       
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
-      await page.waitForSelector('text=Adres Podstawowy', { state: 'visible' });
+      await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
       await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
-      await page.getByText('Adres Podstawowy').click({ force: true, delay: 300 });
+      await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
 
       await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
 

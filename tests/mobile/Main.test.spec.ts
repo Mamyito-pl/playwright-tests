@@ -3,7 +3,7 @@ import MainPage from '../../page/Main.page.ts';
 import MenuCategoriesPage from "../../page/MenuCategories.page.ts";
 import SearchbarPage from '../../page/Searchbar.page.ts';
 import CartPage from '../../page/Cart.page.ts';
-import ProductsPage from '../../page/Products.page.ts';
+import ProductsListPage from '../../page/ProductsList.page.ts';
 import ProductsCategoriesPage from '../../page/ProductsCategories.page.ts';
 import FavouritesPage from '../../page/Profile/Favourites.page.ts';
 import CommonPage from '../../page/Common.page.ts';
@@ -17,7 +17,7 @@ test.describe('Testy strony głównej', async () => {
   let menuCategoriesPage: MenuCategoriesPage;
   let searchbarPage: SearchbarPage;
   let cartPage: CartPage;
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
   let productsCategoriesPage: ProductsCategoriesPage;
   let favouritesPage: FavouritesPage;
   let commonPage: CommonPage;
@@ -36,7 +36,7 @@ test.describe('Testy strony głównej', async () => {
     menuCategoriesPage = new MenuCategoriesPage(page);
     searchbarPage = new SearchbarPage(page);
     cartPage = new CartPage(page);
-    productsPage = new ProductsPage(page)
+    productsListPage = new ProductsListPage(page)
     productsCategoriesPage = new ProductsCategoriesPage(page)
     favouritesPage = new FavouritesPage(page)
     commonPage = new CommonPage(page)
@@ -192,7 +192,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getSectionShowAllLink('bestsellery').click();
     await expect(page).toHaveURL(`${baseURL}` + '/bestsellery', { timeout: 10000 });
-    await expect(productsPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 10000 });
+    await expect(productsListPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 10000 });
   })
     
   test('M | Możliwość przewijania slidera kategorii', async ({ page, browser }) => {
@@ -347,7 +347,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getSectionShowAllLink('nowosci').click();
     await expect(page).toHaveURL(`${baseURL}` + '/nowosci', { timeout: 10000 });
-    await expect(productsPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 10000 });
+    await expect(productsListPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 10000 });
   })
 
   test('M | Możliwość przewijania slidera najczęściej kupowanych produktów', async ({ page, browser }) => {
@@ -414,7 +414,7 @@ test.describe('Testy strony głównej', async () => {
     await mainPage.getSectionShowAllLink('najczesciej-kupowane').click();
     await page.waitForLoadState();
     await expect(page).toHaveURL(`${baseURL}` + '/najczesciej-kupowane', { timeout: 10000 });
-    await expect(productsPage.getSpecialProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getSpecialProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
   })
 
   test('M | Możliwość przejścia do "Strefa Mamity" poprzez przycisk menu', async ({ page, baseURL }) => {
@@ -456,7 +456,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getNewProductsButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/nowosci', { timeout: 10000 });
-    await expect(productsPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 15000 });
   })
       
   test('M | Możliwość przejścia do "Bestsellery" poprzez przycisk menu', async ({ page, baseURL }) => {
@@ -470,7 +470,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getBestsellersButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/bestsellery', { timeout: 10000 });
-    await expect(productsPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 15000 });
   })
   
   test('M | Możliwość przejścia do "Ulubione" poprzez przycisk menu', async ({ page, baseURL }) => {

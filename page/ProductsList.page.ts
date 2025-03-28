@@ -2,7 +2,7 @@ import { Page, Locator } from "@playwright/test";
 import * as selectors from '../utils/selectors.json';
 import { isMobile } from '../utils/utility-methods.ts';
 
-export default class ProductsPage {
+export default class ProductsListPage {
     private mobile: boolean;
 
     constructor(public page: Page) {

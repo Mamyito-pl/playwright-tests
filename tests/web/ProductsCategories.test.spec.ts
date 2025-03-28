@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import ProductsCategoriesPage from "../../page/ProductsCategories.page";
-import ProductsPage from "../../page/Products.page.ts";
+import ProductsListPage from "../../page/ProductsList.page.ts";
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
@@ -8,7 +8,7 @@ import * as utility from '../../utils/utility-methods';
 test.describe('Testy kategorii produktów', async () => {
 
   let productsCategoriesPage: ProductsCategoriesPage;
-  let productsPage: ProductsPage;
+  let productsListPage: ProductsListPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -19,7 +19,7 @@ test.describe('Testy kategorii produktów', async () => {
     });
 
     productsCategoriesPage = new ProductsCategoriesPage(page);
-    productsPage = new ProductsPage(page);
+    productsListPage = new ProductsListPage(page);
   })
 
   test('W | Strona kategorii produktów wyświetla się ze wszystkimi wymaganymi polami', async () => {
@@ -56,7 +56,7 @@ test.describe('Testy kategorii produktów', async () => {
 
     await expect(page).toHaveURL('/warzywa-i-owoce', { timeout: 10000 });
 
-    await expect(productsPage.getProductCategoryTitle('Warzywa i owoce')).toBeVisible();
+    await expect(productsListPage.getProductCategoryTitle('Warzywa i owoce')).toBeVisible();
   })
 
   test('W | Możliwość przejścia do wybranej podkategorii danej kategorii', async ({ page }) => {
@@ -76,7 +76,7 @@ test.describe('Testy kategorii produktów', async () => {
 
     await expect(page).toHaveURL('/warzywa-i-owoce/owoce', { timeout: 10000 });
 
-    await expect(productsPage.getProductCategoryTitle('Owoce')).toBeVisible();
+    await expect(productsListPage.getProductCategoryTitle('Owoce')).toBeVisible();
   })
 })
 
