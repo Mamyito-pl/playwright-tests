@@ -297,6 +297,72 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
+    
+    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+
+      await allure.tags('Web', 'Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
+      await allure.subSuite('Płatność BLIK');
+      await allure.allureId('1695');
+
+      test.setTimeout(350000);
+
+      await addProduct('do mycia naczyń somat');
+
+      for (let i = 0; i < 4; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(5000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.getDeliverySlotButton.first().click();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Kod BLIK').check();
+      await paymentsPage.enterBlikCode('123123');
+      await paymentsPage.checkStatue();
+      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+      await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+      await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+      await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      await paymentsPage.clickOrderDetailsButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+      const statusBeforeCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+        const textContent = element.textContent || '';
+        return textContent.includes('Oczekuje na płatność') || textContent.includes('Nowe');
+      });
+      
+      expect(statusBeforeCancelIsVisible).toBe(true);
+      await orderDetailsPage.clickCancelOrderButton();
+
+      await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
+      await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
+      await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
+      await orderDetailsPage.getCancelConfirmationButton.click();
+      await expect(orderDetailsPage.getCancelOrderModal).not.toBeVisible({ timeout: 10000 });
+
+      await page.waitForTimeout(5000);
+
+      const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+        const textContent = element.textContent || '';
+        return textContent.includes('Anulowane');
+      });
+
+      expect(statusAfterCancelIsVisible).toBe(true);
+
+      await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
+    })
 
     test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
 
@@ -873,6 +939,76 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
+        
+    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+
+      await allure.tags('Web', 'Płatności');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Płatności');
+      await allure.suite('Testy płatności');
+      await allure.subSuite('Płatność przelewem online');
+      await allure.allureId('1696');
+
+      test.setTimeout(300000);
+
+      await addProduct('do mycia naczyń somat');
+
+      for (let i = 0; i < 4; i++) {
+          await searchbarPage.clickIncreaseProductButton();
+          await page.waitForTimeout(5000);
+      };
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      await cartPage.clickCartSummaryButton();
+      await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+      await deliveryPage.getDeliverySlotButton.first().click();
+      await cartPage.clickCartSummaryButton();
+      await page.getByLabel('Przelew online').check();
+      await paymentsPage.checkStatue();
+      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 25000, state: 'hidden' });
+
+      if (`${process.env.URL}` == 'https://mamyito.pl') {
+        await expect(page).toHaveURL(new RegExp('^https://go.przelewy24.pl/trnRequest/'), { timeout: 20000 });
+      } else {
+        await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 20000 });
+      };
+
+      await page.goto('profil/zamówienia', { waitUntil: 'load'});
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia'), { timeout: 20000 });
+    
+      const lastOrderDetailsButton = page.locator('svg[class="tabler-icon tabler-icon-eye"]');
+      await lastOrderDetailsButton.first().click();
+
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+      const statusBeforeCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+        const textContent = element.textContent || '';
+        return textContent.includes('Oczekuje na płatność') || textContent.includes('Nowe');
+      });
+
+      expect(statusBeforeCancelIsVisible).toBe(true);
+      await orderDetailsPage.clickCancelOrderButton();
+
+      await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
+      await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
+      await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
+      await orderDetailsPage.getCancelConfirmationButton.click();
+      await expect(orderDetailsPage.getCancelOrderModal).not.toBeVisible({ timeout: 10000 });
+
+      await page.waitForTimeout(4000);
+
+      const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+        const textContent = element.textContent || '';
+        return textContent.includes('Anulowane');
+      });
+
+      expect(statusAfterCancelIsVisible).toBe(true);
+
+      await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
+
+    }) 
   })
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
@@ -886,9 +1022,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Zapłata kartą przy odbiorze');
       await allure.allureId('449');
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia')
-
-      test.setTimeout(150000);
+      test.setTimeout(300000);
 
       await addProduct('do mycia naczyń somat');
 
@@ -915,6 +1049,36 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+      await paymentsPage.clickOrderDetailsButton();
+
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+      const statusBeforeCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+        const textContent = element.textContent || '';
+        return textContent.includes('Przyjęte do realizacji');
+      });
+      
+      expect(statusBeforeCancelIsVisible).toBe(true);
+      await orderDetailsPage.clickCancelOrderButton();
+
+      await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
+      await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
+      await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
+      await orderDetailsPage.getCancelConfirmationButton.click();
+      await expect(orderDetailsPage.getCancelOrderModal).not.toBeVisible({ timeout: 10000 });
+
+      await page.waitForTimeout(4000);
+
+      const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+        const textContent = element.textContent || '';
+        return textContent.includes('Anulowane');
+      });
+
+      expect(statusAfterCancelIsVisible).toBe(true);
+
+      await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
+
     })
   })
 })

@@ -14,7 +14,7 @@ export default class CartPage {
 
 
     async clickCartPaymentConfirmationButtonButton() {
-        await this.page.click(selectors.CartPage.common.cartSummaryPaymentConfirmationButton);
+        await this.getCartPaymentConfirmationButtonButton.click({ force: true });
     }
     
     async clickCartSummaryButton() {
@@ -55,6 +55,10 @@ export default class CartPage {
     
     async clickCloseDrawerIconButton() {
         await this.page.click(selectors.CartPage.common.cartCloseIconButton);
+    }
+
+    get getCartPaymentConfirmationButtonButton() {
+        return this.page.locator('#cart_summary_payment_confirmation')
     }
 
     get getProductCartConfirmButton() {

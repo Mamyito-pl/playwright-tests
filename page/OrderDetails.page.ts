@@ -16,6 +16,10 @@ export default class OrderDetailsPage {
         await this.page.click(selectors.OrderDetailsPage.common.PayButton);
     }
 
+    async clickCancelOrderButton() {
+        await this.getCancelOrderButton.click();
+    }
+
     get getBackToOrdersButton() {
         return this.page.locator(selectors.OrderDetailsPage.common.backToOrdersButton);
     }
@@ -30,5 +34,13 @@ export default class OrderDetailsPage {
 
     get getPayButton() {
         return this.page.locator(selectors.OrderDetailsPage.common.PayButton);
+    }
+
+    get getCancelOrderModal() {
+        return this.page.locator('div[data-sentry-element="Modal"]')
+    }
+
+    get getCancelConfirmationButton() {
+        return this.page.locator('#modal-portal div div').getByRole('button', { name: 'Potwierdź'});
     }
 }

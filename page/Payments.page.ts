@@ -70,7 +70,7 @@ export default class PaymentsPage {
     }
 
     get getStatueCheckbox() {
-        return this.page.locator(selectors.PaymentsPage.common.statueCheckbox);
+        return this.page.getByText('Akceptuję').locator('..').locator('..').locator('span');
     }
 
     get getCloseIconButtonRepeatOrderWindow() {

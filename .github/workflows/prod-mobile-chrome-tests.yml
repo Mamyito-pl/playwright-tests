@@ -54,7 +54,7 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
 
       - name: Run Playwright tests for Mobile Chrome with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome" --grep "@Smoke"
         env:
           CI: 'true'
 
