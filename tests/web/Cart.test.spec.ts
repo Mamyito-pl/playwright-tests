@@ -33,7 +33,7 @@ test.describe('Testy koszyka', async () => {
       await utility.addGlobalStyles(page);
     });
     
-    //await utility.addGlobalStyles(page);
+    await utility.addGlobalStyles(page);
 
     loginPage = new LoginPage(page);
     mainLogoutPage = new MainLogoutPage(page);
