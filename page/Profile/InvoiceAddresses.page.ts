@@ -71,7 +71,7 @@ export default class InvoiceAddressesPage {
     }
 
     getInvoiceAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[data-cy="add-delivery-address-modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[data-sentry-element="Modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
     get getInvoiceAddressModalMainAddressCheckbox() {

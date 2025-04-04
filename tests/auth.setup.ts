@@ -8,7 +8,7 @@ const authFile = 'playwright/.auth/user.json'
 let loginPage: LoginPage;
 let mainLogoutPage: MainLogoutPage;
 
-setup('Autoryzacja', async ({ page, baseURL }) => {
+setup('Autoryzacja', async ({ page }) => {
 
   page.setDefaultTimeout(80000);
 
@@ -17,7 +17,34 @@ setup('Autoryzacja', async ({ page, baseURL }) => {
   page.on('framenavigated', async () => {
     await utility.addGlobalStyles(page);
   });
-  await page.goto(`${process.env.URL}` + '/logowanie', { waitUntil: 'domcontentloaded' });
+
+  const maxRetries = 5;
+  let attempt = 0;
+  let success = false;
+
+  while (attempt < maxRetries && !success) {
+    try {
+      const response = await page.goto(`${process.env.URL}` + '/logowanie', { waitUntil: 'domcontentloaded' });
+      if (response && response.status() === 200) {
+        success = true;
+      } else {
+        throw new Error(`Otrzymano status ${response?.status()}`);
+      }
+    } catch (error) {
+      if (error.message.includes('503')) {
+        console.log(`Otrzymano 503, próba ${attempt + 1} z ${maxRetries}`);
+        await page.waitForTimeout(1000);
+        attempt++;
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  if (!success) {
+    throw new Error('Zbyt wiele prób, serwer nadal zwraca 503 lub inny błąd');
+  }
+
   await page.waitForTimeout(2000);
   await loginPage.enterEmail(`${process.env.EMAIL}`);
   await loginPage.enterPassword(`${process.env.PASSWORD}`);

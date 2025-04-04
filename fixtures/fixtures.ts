@@ -192,7 +192,7 @@ export const test = baseTest.extend<MyFixtures>({
     const addAddressDelivery = async (addressName: string) => {
 
       await deliveryPage.clickAddNewAddressButton();
-      await page.waitForSelector('div[data-cy="add-delivery-address-modal"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await deliveryPage.getAddressModalAddressName.fill(addressName);
       await deliveryPage.getAddressModalUserName.fill('Jan');
@@ -270,7 +270,7 @@ export const test = baseTest.extend<MyFixtures>({
 
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
 
-      await page.waitForSelector('div[data-cy="add-delivery-address-modal"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
       await expect(deliveryPage.getAddressModalDeleteAddressName(`${addressName}`)).toContainText(`${addressName}`);
@@ -337,7 +337,7 @@ export const test = baseTest.extend<MyFixtures>({
     const addInvoiceAddressDelivery = async (addressName: string) => {
       
       await deliveryPage.clickAddNewInvoiceAddressButton();
-      await page.waitForSelector('div[data-cy="add-delivery-address-modal"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await deliveryPage.getInvoiceAddressModalAddressName.fill(addressName);
       await deliveryPage.getInvoiceAddressModalCompanyName.fill('Testowa firma');
@@ -409,7 +409,7 @@ export const test = baseTest.extend<MyFixtures>({
 
       await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg [class="tabler-icon tabler-icon-trash"]').last().click();
 
-      await page.waitForSelector('div[data-cy="add-delivery-address-modal"]', { state: 'visible', timeout: 10000 });
+      await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
       await expect(deliveryPage.getAddressModalDeleteAddressName(`${addressName}`)).toContainText(`${addressName}`);

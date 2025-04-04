@@ -54,7 +54,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('M | Możliwość wyboru terminu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+  test('M | Możliwość wyboru terminu dostawy', { tag: ['@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
