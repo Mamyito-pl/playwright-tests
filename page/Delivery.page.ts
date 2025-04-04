@@ -91,14 +91,14 @@ export default class DeliveryPage {
     }
 
     getAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[class*="sc-f8f81ad2-1"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[data-cy="add-delivery-address-modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
 
     // Address Modal
 
     get getAddressModal() {
-        return this.page.locator('div[class*="sc-f8f81ad2-1"]');
+        return this.page.locator('div[data-cy="add-delivery-address-modal"]');
     }
 
     get getAddressModalAddressName() {

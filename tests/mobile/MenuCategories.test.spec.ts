@@ -14,6 +14,8 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.goto('/', { waitUntil: 'load'})
 
+    await utility.addGlobalStyles(page);
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });

@@ -51,7 +51,7 @@ export default class InvoiceAddressesPage {
     }
 
     get getInvoiceAddressModal() {
-        return this.page.locator('div[class*="sc-f8f81ad2-1"]');
+        return this.page.locator('div[data-cy="add-delivery-address-modal"]');
     }
 
     get getInvoiceAddressModalCloseIcon() {
@@ -71,7 +71,7 @@ export default class InvoiceAddressesPage {
     }
 
     getInvoiceAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[class*="sc-f8f81ad2-1"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[data-cy="add-delivery-address-modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
     get getInvoiceAddressModalMainAddressCheckbox() {

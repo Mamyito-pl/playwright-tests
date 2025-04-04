@@ -31,6 +31,8 @@ test.describe('Testy płatności', async () => {
 
     await page.goto('/', { waitUntil: 'load'})
 
+    await utility.addGlobalStyles(page);
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });

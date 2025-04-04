@@ -14,6 +14,8 @@ test.describe('Testy kategorii produktów', async () => {
 
     await page.goto('/kategorie', { waitUntil: 'load' });
 
+    await utility.addGlobalStyles(page);
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
