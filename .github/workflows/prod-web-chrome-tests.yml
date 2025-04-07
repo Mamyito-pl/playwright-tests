@@ -8,6 +8,11 @@ on:
       ALLURE_USERNAME:
         description:
         required: false
+  workflow_run:
+    workflows:
+      - "Playwright Mobile Safari Tests PROD"
+    types:
+      - completed
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}

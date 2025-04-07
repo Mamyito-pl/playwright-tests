@@ -14,7 +14,7 @@ import * as utility from '../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
-test.describe.skip('Testy płatności', async () => {
+test.describe('Testy płatności', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
