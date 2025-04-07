@@ -54,7 +54,7 @@ export default class CartPage {
     }
     
     async clickCloseDrawerIconButton() {
-        await this.page.click(selectors.CartPage.common.cartCloseIconButton);
+        await this.getCartDrawerCloseIconButton.click();
     }
 
     get getCartPaymentConfirmationButtonButton() {
@@ -134,7 +134,7 @@ export default class CartPage {
     }
 
     get getCartDrawerCloseIconButton() {
-        return this.page.locator(selectors.CartPage.common.cartCloseIconButton);
+        return this.page.locator('div[data-cy="cart-drawer-close-icon"]');
     }
 
     get getCartPaymentConfirmationButton() {

@@ -140,7 +140,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.subSuite('');
     await allure.allureId('1212');
     
-    const firstItemInSlider = page.locator('#promocje div[class*="jkNhBn"]').first()
+    const firstItemInSlider = page.locator('div[data-cy="promocje-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(0).isDisabled();
     await mainPage.getSectionGetRightButton.nth(0).click();
@@ -177,7 +177,7 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 600);
     await page.waitForTimeout(700);
 
-    const firstItemInSlider = page.locator('#bestsellery div[class*="jkNhBn"]').first()
+    const firstItemInSlider = page.locator('div[data-cy="bestsellery-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(1).isDisabled();
     await mainPage.getSectionGetRightButton.nth(1).click();
@@ -281,7 +281,7 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 2000);
     await page.waitForTimeout(700);
 
-    const firstItemInSlider = page.locator('#nowosci div[class*="jkNhBn"]').first()
+    const firstItemInSlider = page.locator('div[data-cy="nowosci-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
     await mainPage.getSectionGetRightButton.nth(3).click();
@@ -326,7 +326,7 @@ test.describe('Testy strony głównej', async () => {
     await page.waitForTimeout(1000);
 
     const recentlyBoughtProductsCount = await page.locator('#most_frequently_bought div[data-sentry-component="ProductCard"]').count();
-    const firstItemInSlider = page.locator('#most_frequently_bought div[class*="jkNhBn"]').first();
+    const firstItemInSlider = page.locator('div[data-cy="most_frequently_bought-product-card-slider"]').first();
 
     if (recentlyBoughtProductsCount > 7) {
         await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();

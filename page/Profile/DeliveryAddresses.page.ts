@@ -37,7 +37,7 @@ export default class DeliveryAdressesPage {
     }
 
     getMainAddressInfo(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('div[class*="sc-ad97832e-2"]');
+        return this.page.getByText(addressName).locator('..').locator('..').locator('div[data-cy="default-info-tag"]');
     }
 
     // Address Modal
@@ -67,11 +67,11 @@ export default class DeliveryAdressesPage {
     }
 
     getAddressModalDeleteAddressName(addressName: string) {
-        return this.page.locator(`div[data-cy="add-delivery-address-modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
+        return this.page.locator(`div[data-sentry-element="Modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
     get getAddressModal() {
-        return this.page.locator('div[data-cy="add-delivery-address-modal"]');
+        return this.page.locator('div[data-sentry-element="Modal"]');
     }
 
     get getAddressModalMainAddressCheckbox() {

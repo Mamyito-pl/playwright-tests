@@ -35,11 +35,11 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.waitForSelector('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]', { state: 'visible', timeout: 10000 });
+    await page.waitForSelector('div[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
 
     await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
 
-    const categoriesCount = await page.locator('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]').count();
+    const categoriesCount = await page.locator('div[data-cy="category-menu-item-level-1"]').count();
 
     expect(categoriesCount).toBeGreaterThan(18);
   })
@@ -55,11 +55,11 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
-    await page.waitForSelector('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]', { state: 'visible', timeout: 10000 });
+    await page.waitForSelector('div[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
     
     await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
 
-    const categoriesCount = await page.locator('div[data-sentry-element="WebContent"] div[class*="sc-254018ae-9"]').count();
+    const categoriesCount = await page.locator('div[data-cy="category-menu-item-level-1"]').count();
 
     expect(categoriesCount).toBeGreaterThan(18);
 

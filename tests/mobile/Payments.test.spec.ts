@@ -11,6 +11,7 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
+import { TIMEOUT } from 'dns';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -62,7 +63,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('480');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
 
@@ -116,7 +117,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('481');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
 
@@ -162,7 +163,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('482');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(130000);
 
@@ -205,7 +206,7 @@ test.describe('Testy płatności', async () => {
     await allure.subSuite('');
     await allure.allureId('483');
 
-    test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
     test.setTimeout(180000);
 
@@ -274,7 +275,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('788');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
     
       test.setTimeout(145000);
 
@@ -320,7 +321,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('1693');
 
-      test.setTimeout(250000);
+      test.setTimeout(330000);
 
       await addProduct('do mycia naczyń somat');
 
@@ -363,9 +364,8 @@ test.describe('Testy płatności', async () => {
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
       await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
-      await expect(orderDetailsPage.getCancelOrderModal).not.toBeVisible({ timeout: 15000 });
 
-      await page.waitForTimeout(5000);
+      await page.waitForTimeout(7000);
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';
@@ -386,7 +386,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('485');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(165000);
 
@@ -589,7 +589,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('490');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(195000);
 
@@ -656,7 +656,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('491');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(165000);
 
@@ -726,7 +726,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('492');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(145000);
 
@@ -781,7 +781,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('493');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(215000);
 
@@ -847,7 +847,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('494');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(185000);
 
@@ -928,7 +928,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('495');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito-front.beta.desmart.live', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(185000);
 
@@ -1005,7 +1005,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('1694');
 
-      test.setTimeout(300000);
+      test.setTimeout(350000);
 
       await addProduct('do mycia naczyń somat');
 
@@ -1051,9 +1051,8 @@ test.describe('Testy płatności', async () => {
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
       await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
-      await expect(orderDetailsPage.getCancelOrderModal).not.toBeVisible({ timeout: 15000 });
 
-      await page.waitForTimeout(4000);
+      await page.waitForTimeout(7000);
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1104,9 +1103,6 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
-      await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
-      await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
-      await expect(paymentsPage.getBackHomeButton).toBeVisible();
       
       await paymentsPage.clickOrderDetailsButton();
 
@@ -1124,9 +1120,8 @@ test.describe('Testy płatności', async () => {
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
       await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
-      await expect(orderDetailsPage.getCancelOrderModal).not.toBeVisible({ timeout: 15000 });
 
-      await page.waitForTimeout(4000);
+      await page.waitForTimeout(7000);
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';

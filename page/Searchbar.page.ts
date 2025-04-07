@@ -54,7 +54,7 @@ export default class SearchbarPage {
     }
 
     get getOurDiscountsSection() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="HubContent"] div[class*="AmJZC"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="HubContent"] div[class*="AmJZC"]');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #wyszukiwarka-nasze-promocje' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="HubContent"] #wyszukiwarka-nasze-promocje');
     }
 
     get getBigBanner() {

@@ -25,7 +25,7 @@ export default class InvoiceAddressesPage {
     }
 
     getMainInvoiceAddressInfo(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('div[class*="sc-ad97832e-2"]');
+        return this.page.getByText(addressName).locator('..').locator('..').locator('div[data-cy="default-info-tag"]');
     }
 
     get getCurrentMainInvoiceAddressModalInfo() {
@@ -51,7 +51,7 @@ export default class InvoiceAddressesPage {
     }
 
     get getInvoiceAddressModal() {
-        return this.page.locator('div[data-cy="add-delivery-address-modal"]');
+        return this.page.locator('div[data-sentry-element="Modal"]');
     }
 
     get getInvoiceAddressModalCloseIcon() {

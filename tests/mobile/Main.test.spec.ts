@@ -112,7 +112,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.subSuite('');
     await allure.allureId('1262');
     
-    const firstItemInSlider = page.locator('#promocje div[class*="cnQUUO"]').first()
+    const firstItemInSlider = page.locator('div[data-cy="promocje-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(0).isDisabled();
     await mainPage.getSectionGetRightButton.nth(0).click();
@@ -158,7 +158,7 @@ test.describe('Testy strony głównej', async () => {
       await page.waitForTimeout(700);
     }
 
-    const firstItemInSlider = page.locator('#bestsellery div[class*="cnQUUO"]').first()
+    const firstItemInSlider = page.locator('div[data-cy="bestsellery-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(1).isDisabled();
     await mainPage.getSectionGetRightButton.nth(1).click();
@@ -309,7 +309,7 @@ test.describe('Testy strony głównej', async () => {
       await page.waitForTimeout(700);
     }
 
-    const firstItemInSlider = page.locator('#nowosci div[class*="cnQUUO"]').first()
+    const firstItemInSlider = page.locator('div[data-cy="nowosci-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
     await mainPage.getSectionGetRightButton.nth(3).click();
@@ -363,19 +363,19 @@ test.describe('Testy strony głównej', async () => {
 
     if (project === 'webkit') {
       await page.evaluate(async () => {
-        window.scrollBy(0, 1550)
+        window.scrollBy(0, 1850)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 500)
+        window.scrollBy(0, 900)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
-      await page.mouse.wheel(0, 1500);
+      await page.mouse.wheel(0, 1550);
       await page.waitForTimeout(700);
-      await page.mouse.wheel(0, 500);
+      await page.mouse.wheel(0, 600);
       await page.waitForTimeout(700);
     }
 
-    const firstItemInSlider = page.locator('#most_frequently_bought div[class*="cnQUUO"]').first()
+    const firstItemInSlider = page.locator('#most_frequently_bought div[data-sentry-component="ProductCard"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(4).isDisabled();
     await mainPage.getSectionGetRightButton.nth(4).click();
@@ -398,16 +398,16 @@ test.describe('Testy strony głównej', async () => {
     const project = browser.browserType().name();
 
     if (project === 'webkit') {
-      await page.evaluate(async() => {
-        window.scrollBy(0, 1550)
+      await page.evaluate(async () => {
+        window.scrollBy(0, 1850)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 500)
+        window.scrollBy(0, 900)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
-      await page.mouse.wheel(0, 1500);
+      await page.mouse.wheel(0, 1550);
       await page.waitForTimeout(700);
-      await page.mouse.wheel(0, 500);
+      await page.mouse.wheel(0, 600);
       await page.waitForTimeout(700);
     }
 

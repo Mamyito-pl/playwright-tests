@@ -40,7 +40,7 @@ export default class ProductsListPage {
             ? this.getSettingsDrawer.getByText(filterName, { exact: true })
             : await this.getFilter(filterName);
         
-        await filter.click({ force: true });
+        await filter.click();
         await this.getFilterPriceFromInput.fill(priceFrom)
     }
 
@@ -50,7 +50,7 @@ export default class ProductsListPage {
             ? this.getSettingsDrawer.getByText(filterName, { exact: true })
             : await this.getFilter(filterName);
         
-        await filter.click({ force: true });
+        await filter.click();
         await this.getFilterPriceToInput.fill(priceTo)
     }
 
@@ -63,11 +63,11 @@ export default class ProductsListPage {
     }
 
     async clickIncreaseProductButton() {
-        return this.page.locator(selectors.ProductsPage.common.productCardIncreaseButton).click();
+        return this.page.locator(selectors.ProductsListPage.common.productCardIncreaseButton).click();
     }
 
     async clickDecreaseProductButton() {
-        return this.page.locator(selectors.ProductsPage.common.productCardDecreaseButton).click();
+        return this.page.locator(selectors.ProductsListPage.common.productCardDecreaseButton).click();
     }
 
     async clickApplyButton() {
