@@ -16,7 +16,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     await utility.addGlobalStyles(page);
 
@@ -43,7 +43,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
   })
 
-  test('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@Smoke'] }, async ({ page }) => {
+  test('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');

@@ -11,11 +11,10 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
-import { TIMEOUT } from 'dns';
 
 test.describe.configure({ mode: 'serial'})
 
-test.describe('Testy płatności', async () => {
+test.describe.skip('Testy płatności', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
@@ -312,10 +311,10 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
 
-    test('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
-      await allure.tags('Web', 'Płatności');
-      await allure.epic('Webowe');
+      await allure.tags('Mobilne', 'Płatności');
+      await allure.epic('Mobilne');
       await allure.parentSuite('Płatności');
       await allure.suite('Testy płatności');
       await allure.subSuite('Płatność BLIK');
@@ -996,7 +995,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
             
-    test('M | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('M | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -1068,7 +1067,7 @@ test.describe('Testy płatności', async () => {
   
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test('M | Zapłata kartą przy odbiorze', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');

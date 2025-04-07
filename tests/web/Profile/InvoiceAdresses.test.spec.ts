@@ -46,7 +46,7 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getAddNewInvoiceAddressButton).toBeVisible();
   })
 
-  test('W | Możliwość dodania danych do faktury', async ({ page }) => {
+  test('W | Możliwość dodania danych do faktury', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -97,7 +97,7 @@ test.describe('Testy dane do faktury', async () => {
     await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
   })
   
-  test('W | Możliwość edycji danych do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+  test('W | Możliwość edycji danych do faktury', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addInvoiceAddressViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');

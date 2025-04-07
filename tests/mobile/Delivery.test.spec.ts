@@ -54,7 +54,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('M | Możliwość wyboru terminu dostawy', { tag: ['@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
+  test('M | Możliwość wyboru terminu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
@@ -81,9 +81,9 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
   })
 
-  test.describe('Adres dostawy', { tag: ['@Smoke'] }, async () => {
+  test.describe('Adres dostawy', async () => {
     
-    test('M | Możliwość dodania adresu dostawy', async ({ page }) => {
+    test('M | Możliwość dodania adresu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
@@ -184,7 +184,7 @@ test.describe('Testy dostawy', async () => {
       await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
     })
 
-    test('M | Możliwość edycji adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+    test('M | Możliwość edycji adresu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Mobilne', 'Dostawa');
       await allure.epic('Mobilne');
@@ -298,7 +298,7 @@ test.describe('Testy dostawy', async () => {
     })
   })
 
-  test.describe('Faktura', { tag: ['@Smoke'] }, async () => {
+  test.describe('Faktura', async () => {
     
     test('M | Możliwość dodania podmiotu do faktury', async ({ page }) => {
       

@@ -25,7 +25,7 @@ test.describe('Testy logowania', async () => {
   })
 
   test.use({ storageState: { cookies: [], origins: [] }})
-  test('W | Logowanie z poprawnymi danymi', { tag: ['@Smoke'] }, async ({ page, baseURL }) => {
+  test('W | Logowanie z poprawnymi danymi', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');
     await allure.epic('Webowe');

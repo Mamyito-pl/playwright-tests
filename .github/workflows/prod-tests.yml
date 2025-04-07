@@ -8,7 +8,9 @@ on:
       ALLURE_USERNAME:
         description:
         required: false
-
+  schedule:
+    - cron: "0 4 * * *"
+    
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
@@ -53,31 +55,31 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
 
       - name: Run Playwright tests for Web Chrome with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="chromium" --grep "@Smoke"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="chromium" --grep "@ProdSmoke"
         env:
           CI: 'true'
         continue-on-error: true
 
       - name: Run Playwright tests for Web Firefox with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox" --grep "@Smoke"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox" --grep "@ProdSmoke"
         env:
           CI: 'true'
         continue-on-error: true
 
       - name: Run Playwright tests for Web Safari with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="webkit" --grep "@Smoke"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="webkit" --grep "@ProdSmoke"
         env:
           CI: 'true'
         continue-on-error: true
 
       - name: Run Playwright tests for Mobile Chrome with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome" --grep "@Smoke"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome" --grep "@ProdSmoke"
         env:
           CI: 'true'
         continue-on-error: true
 
       - name: Run Playwright tests for Mobile Safari with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Safari" --grep "@Smoke"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Safari" --grep "@ProdSmoke"
         env:
           CI: 'true'
         continue-on-error: true

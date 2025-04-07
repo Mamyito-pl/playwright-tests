@@ -62,7 +62,7 @@ jobs:
           github-token:  ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
       - name: Run Playwright tests for Web Firefox with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox" --grep "@Smoke"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox" --grep "@ProdSmoke"
         env:
           CI: 'true'
 

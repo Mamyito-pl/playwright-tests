@@ -54,7 +54,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('W | Możliwość wyboru terminu dostawy', { tag: ['@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
+  test('W | Możliwość wyboru terminu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Web', 'Dostawa');
     await allure.epic('Webowe');
@@ -81,9 +81,9 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
   })
 
-  test.describe('Adres dostawy', { tag: ['@Smoke'] }, async () => {
+  test.describe('Adres dostawy', async () => {
     
-    test('W | Możliwość dodania adresu dostawy', async ({ page }) => {
+    test('W | Możliwość dodania adresu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -146,45 +146,7 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     })
 
-    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
-
-      await allure.tags('Web', 'Dostawa');
-      await allure.epic('Webowe');
-      await allure.parentSuite('Dostawa');
-      await allure.suite('Testy dostawy');
-      await allure.subSuite('Adres dostawy');
-      await allure.allureId('536');
-
-      test.setTimeout(100000);
-
-      await addAddressDeliveryViaAPI('Adres Testowy');
-      await addAddressDeliveryViaAPI('Adres Fixturowy');
-
-      const targetAddress = page.getByText('Adres Testowy').locator('..').locator('..').locator('..');
-      
-      await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
-
-      await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
-      await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
-
-      await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
-
-      await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
-
-      const borderColor = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      console.log('Kolor obramowania:', borderColor);
-      expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
-
-      await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
-
-      await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
-    })
-
-    test('W | Możliwość edycji adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+    test('W | Możliwość edycji adresu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -296,9 +258,47 @@ test.describe('Testy dostawy', async () => {
 
       await page.waitForSelector('text=Adres Edytowany', { state: 'hidden' });
     })
+    
+    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+
+      await allure.tags('Web', 'Dostawa');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
+      await allure.subSuite('Adres dostawy');
+      await allure.allureId('536');
+
+      test.setTimeout(100000);
+
+      await addAddressDeliveryViaAPI('Adres Testowy');
+      await addAddressDeliveryViaAPI('Adres Fixturowy');
+
+      const targetAddress = page.getByText('Adres Testowy').locator('..').locator('..').locator('..');
+      
+      await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+
+      await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
+      await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
+
+      await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
+
+      await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
+
+      const borderColor = await targetAddress.evaluate((el) => {
+        const styles = window.getComputedStyle(el);
+        return styles.getPropertyValue('border'); 
+      });
+
+      console.log('Kolor obramowania:', borderColor);
+      expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
+
+      await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
+
+      await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
+    })
   })
 
-  test.describe('Faktura', { tag: ['@Smoke'] }, async () => {
+  test.describe('Faktura', async () => {
     
     test('W | Możliwość dodania podmiotu do faktury', async ({ page }) => {
 

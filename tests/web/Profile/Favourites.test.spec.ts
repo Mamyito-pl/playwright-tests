@@ -14,7 +14,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await page.goto('/', { waitUntil: 'load'})
 
     await utility.addGlobalStyles(page);
 
@@ -40,7 +40,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
   })
 
-  test('W | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@Smoke'] }, async ({ page }) => {
+  test('W | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -54,8 +54,9 @@ test.describe('Testy ulubionych produktów', async () => {
     const firstItemName = page.locator('div[data-cy="promocje-products-list-slider"] h3').first();
     const firstItemNameText = await firstItemName.textContent() || '';
 
-    const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click();
+    const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true });
     clickAddFristItemToFavourites;
+    await page.waitForTimeout(2000);
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 

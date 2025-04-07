@@ -49,7 +49,7 @@ test.describe('Testy koszyka', async () => {
     await clearCartViaAPI();
   }) 
   
-  test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
+  test('W | Możliwość zwiększenia ilości produktu w koszyku', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -70,7 +70,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
-  test('W | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {
+  test('W | Możliwość zmniejszenia ilości produktu w koszyku', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct }) => {
     
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -98,7 +98,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveValue('1');
   }) 
 
-  test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@Smoke'] }, async ({ page, addProduct }) => {  
+  test('W | Możliwość usunięcia produktu z koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct }) => {  
     
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -120,7 +120,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
   }) 
 
-  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@Smoke'] }, async ({ page }) => {
+  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
