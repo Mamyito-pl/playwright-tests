@@ -18,6 +18,7 @@ setup('Autoryzacja', async ({ page }) => {
     await utility.addGlobalStyles(page);
   });
 
+  const response = await page.request.get(`${process.env.URL}`);
   const maxRetries = 5;
   let attempt = 0;
   let success = false;
@@ -52,7 +53,8 @@ setup('Autoryzacja', async ({ page }) => {
   await loginPage.clickLoginButton();
   await page.waitForURL(`${process.env.URL}` + '/logowanie', { waitUntil: 'networkidle', timeout: 20000 });
   await utility.addGlobalStyles(page);
-  await expect(mainLogoutPage.getLoginLink).toBeHidden();
   await page.waitForURL(`${process.env.URL}`, { waitUntil: 'commit' });
+  await expect(mainLogoutPage.getLoginLink).toBeHidden({ timeout: 10000 });
+  await expect(response).toBeOK();
   await page.context().storageState({ path: authFile })
 });
