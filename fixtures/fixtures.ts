@@ -23,6 +23,7 @@ type MyFixtures = {
     clearCart: () => Promise<void>;
     clearCartViaAPI: () => Promise<void>;
     newsletterSignOutViaAPI: () => Promise<void>;
+    searchProduct: (productName: any) => Promise<void>;
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
     addAddressDeliveryViaAPI: (addressName: any) => Promise<void>;
@@ -161,6 +162,27 @@ export const test = baseTest.extend<MyFixtures>({
     };
     
     await use(clearCartViaAPI);
+  },
+
+  searchProduct: async ({ page }, use) => {
+
+    cartPage = new CartPage(page);
+    searchbarPage = new SearchbarPage(page);
+    commonPage = new CommonPage(page);
+
+    const viewport = page.viewportSize();
+
+    if (!viewport) throw new Error('Viewport is null');
+
+    const searchProduct = async (productName: string) => {
+
+      await searchbarPage.getSearchbarInput.click();
+      await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+      await searchbarPage.enterProduct(productName);
+      await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
+      await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
+    };
+    await use(searchProduct);
   },
 
   addProduct: async ({ page }, use) => {
