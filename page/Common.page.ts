@@ -17,6 +17,14 @@ export default class CommonPage {
     }
 
     get getLoader() {
-        return this.page.locator('svg[class*="MuiCircularProgress-svg"]')
+        return this.page.locator('svg[class*="MuiCircularProgress-svg"]');
+    }
+
+    get getCartProductsCount() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Content"] div[data-sentry-element="TabletContent"] #productsNumber' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Content"] div[data-sentry-element="WebContent"] #productsNumber');
+    }
+
+    get getCartProductsPrice() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Content"] div[data-sentry-element="TabletContent"] div[data-sentry-element="IconLabel"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Content"] div[data-sentry-element="WebContent"] div[data-sentry-element="Amount"]');
     }
 }
