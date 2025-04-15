@@ -33,6 +33,26 @@ export default class SearchbarPage {
         return this.page.locator(selectors.Searchbar.common.searchbarProductItemCount);
     }
 
+    get getSearchbarProductBrandNames() {
+        return this.page.locator('div[data-testid="search-results"] h4[data-sentry-element="MadeBy"]');
+    }
+
+    get getSearchbarProductNames() {
+        return this.page.locator('div[data-testid="search-results"] h3[data-sentry-element="Name"]');
+    }
+
+    get getSearchbarProductGrammars() {
+        return this.page.locator('div[data-testid="search-results"] p[data-sentry-element="Grammar"]');
+    }
+
+    get getSearchbarProductPricePerGrammar() {
+        return this.page.locator('div[data-testid="search-results"] p[data-sentry-element="PricePerGrammar"]');
+    }
+
+    get getProductPrices() {
+        return this.page.locator('div[data-testid="search-results"] p[data-sentry-element="CurrentPrice"]');
+    }
+
     get getSearchbarInput() {
         return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_search_input" : "div[data-sentry-element='WebContent'] #search_hub_search_input");
     }
