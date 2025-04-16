@@ -38,4 +38,8 @@ export default class FavouritesPage {
     get getProductName() {
         return this.page.locator('div[data-sentry-source-file="ProfileFavourites.tsx"] h3[data-sentry-element="Name"]');
     }
+
+    get getProductNameWithBrand() {
+        return this.page.locator('div[data-sentry-source-file="ProfileFavourites.tsx"] div[data-sentry-element="BasicDetails"]');
+    }
 }
