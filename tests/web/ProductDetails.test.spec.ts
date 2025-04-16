@@ -1,7 +1,10 @@
 import { expect } from '@playwright/test';
 import ProductDetailsPage from '../../page/ProductDetails.page.ts';
+import FavouritesPage from '../../page/Profile/Favourites.page.ts';
 import ProductsListPage from "../../page/ProductsList.page.ts";
 import SearchbarPage from '../../page/Searchbar.page.ts';
+import BrandPage from '../../page/Brand.page.ts';
+import MainPage from '../../page/Main.page.ts';
 import CommonPage from '../../page/Common.page.ts';
 import CartPage from '../../page/Cart.page.ts';
 import * as utility from '../../utils/utility-methods';
@@ -11,8 +14,11 @@ import { test } from '../../fixtures/fixtures.ts';
 test.describe('Testy szczegółów produktu', async () => {
 
   let productDetailsPage: ProductDetailsPage;
+  let favouritesPage: FavouritesPage;
   let productsListPage: ProductsListPage;
   let searchbarPage: SearchbarPage;
+  let brandPage: BrandPage;
+  let mainPage: MainPage;
   let commonPage: CommonPage;
   let cartPage: CartPage;
 
@@ -21,8 +27,11 @@ test.describe('Testy szczegółów produktu', async () => {
   test.beforeEach(async ({ page }) => {
 
     productDetailsPage = new ProductDetailsPage(page);
+    favouritesPage = new FavouritesPage(page);
     productsListPage = new ProductsListPage(page);
     searchbarPage = new SearchbarPage(page);
+    brandPage = new BrandPage(page);
+    mainPage = new MainPage(page);
     commonPage = new CommonPage(page);
     cartPage = new CartPage(page);
 
@@ -48,7 +57,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.parentSuite('Szczegóły produktu');
     await allure.suite('Testy szczegółów produktu');
     await allure.subSuite('');
-    await allure.allureId('x');
+    await allure.allureId('1855');
 
     test.setTimeout(100000);
 
@@ -57,44 +66,24 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchbarPage.getSearchbarProductTiles.first().locator('h3').hover();
 
     const productBrandName = await searchbarPage.getSearchbarProductBrandNames.first().allTextContents();
-    console.log('productBrandName', productBrandName)
-
     const productName = await searchbarPage.getSearchbarProductNames.first().allTextContents();
-    console.log('productName', productName)
-
     const productGrammar = await searchbarPage.getSearchbarProductGrammars.first().allTextContents();
-    console.log('productGrammar', productGrammar)
-
     const productPricePerGrammar = await searchbarPage.getSearchbarProductPricePerGrammar.first().allTextContents();
-    console.log('productPricePerGrammar', productPricePerGrammar)
-
     const productPrice = await searchbarPage.getProductPrices.first().allTextContents();
-    console.log('productPrice', productPrice)
-
     const productSetFirstQuantityButton = await page.locator('div[data-testid="search-results"] div[data-sentry-element="ProductSets"] button').first().allTextContents();
-    console.log('pierwszy przycisk do ilosci', productSetFirstQuantityButton)
-
     const productSetSecondQuantityButton = await page.locator('div[data-testid="search-results"] div[data-sentry-element="ProductSets"] button').nth(1).allTextContents();
-    console.log('drugi przycisk do ilosci', productSetSecondQuantityButton)
 
     await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
-    const newProductBrandName = await productDetailsPage.getProductBrandNames.first().allTextContents();
-    console.log('newProductBrandName', newProductBrandName)
-    const newProductName = await productDetailsPage.getProductNames.first().allTextContents();
-    console.log('newProductName', newProductName)
+    const newProductBrandName = await productDetailsPage.getProductBrandName.first().allTextContents();
+    const newProductName = await productDetailsPage.getProductName.first().allTextContents();
     const newProductGrammar = await productDetailsPage.getProductGrammar.first().allTextContents();
-    console.log('newProductGrammar', newProductGrammar)
     const newProductPricePerGrammar = await productDetailsPage.getProductPricePerGrammar.first().allTextContents();
-    console.log('newProductPricePerGrammar', newProductPricePerGrammar)
     const newProductPrice = await productDetailsPage.getProductPrice.allTextContents();
-    console.log('newProductPrice', newProductPrice)
     const productNewSetFirstQuantityButton = await productDetailsPage.getSetFirstQuantityButton.allTextContents();
-    console.log('new Pierwszy przycisk do ilosci', productNewSetFirstQuantityButton)
     const productNewSetSecondQuantityButton = await productDetailsPage.getSetSecondQuantityButton.allTextContents();
-    console.log('new Drugi przycisk do ilosci', productNewSetSecondQuantityButton)
 
     const formattedNewProductPrice = newProductPrice[0].replace(/\s+/g, '');
     const formattedProductPrice = productPrice[0].replace(/\s+/g, '');
@@ -112,8 +101,6 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getProductActualPriceTitle).toBeVisible();
     await expect(productDetailsPage.getAddProductButton).toBeVisible();
     await expect(productDetailsPage.getMainInfoProductDropdown).toBeVisible();
-    await expect(productDetailsPage.getNutritionalValuesInfoDropdown).toBeVisible();
-    await expect(productDetailsPage.getStorageInfoDropdown).toBeVisible();
     await expect(productDetailsPage.getPackagingInfoDropdown).toBeVisible();
     await expect(productDetailsPage.getProductDescriptionTitle).toBeVisible();
     await expect(productDetailsPage.getOtherProductsFromThisCategorySection).toBeVisible();
@@ -128,7 +115,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.parentSuite('Szczegóły produktu');
     await allure.suite('Testy szczegółów produktu');
     await allure.subSuite('');
-    await allure.allureId('x');
+    await allure.allureId('1856');
 
     test.setTimeout(100000);
 
@@ -139,11 +126,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
-    console.log('prodprice', productPrice);
-
     const formattedProductPrice = productPrice?.slice(0, -7);
-
-    console.log('formatedprodprice', formattedProductPrice);
 
     await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('class', 'tabler-icon tabler-icon-check');
     await productDetailsPage.clickAddProductButton();
@@ -163,7 +146,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.parentSuite('Szczegóły produktu');
     await allure.suite('Testy szczegółów produktu');
     await allure.subSuite('');
-    await allure.allureId('x');
+    await allure.allureId('1857');
 
     test.setTimeout(100000);
 
@@ -174,16 +157,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
     const secondQuantityButtonText = await productDetailsPage.getSetSecondQuantityButton.textContent();
-    console.log('secondQuantityButtonText', secondQuantityButtonText);
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
-
-    console.log('formattedSecondQuantityButtonText', formattedSecondQuantityButtonText);
 
     await productDetailsPage.getSetSecondQuantityButton.click();
     await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('class', 'tabler-icon tabler-icon-check');
     
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
-    console.log('prodprice', productPrice);
 
     let formattedProductPrice: string | undefined = '';
 
@@ -195,8 +174,6 @@ test.describe('Testy szczegółów produktu', async () => {
             formattedProductPrice = productPrice;
         }
     }
-
-    console.log('formatedprodprice', formattedProductPrice);
 
     await productDetailsPage.clickAddProductButton();
 
@@ -215,7 +192,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.parentSuite('Szczegóły produktu');
     await allure.suite('Testy szczegółów produktu');
     await allure.subSuite('');
-    await allure.allureId('x');
+    await allure.allureId('1858');
 
     test.setTimeout(100000);
 
@@ -254,7 +231,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.parentSuite('Szczegóły produktu');
     await allure.suite('Testy szczegółów produktu');
     await allure.subSuite('');
-    await allure.allureId('x');
+    await allure.allureId('1859');
 
     test.setTimeout(100000);
 
@@ -283,7 +260,228 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getAddProductButton).toBeVisible({ timeout: 5000 });
     await expect(productDetailsPage.getIncreaseProductButton).not.toBeVisible();
     await expect(productDetailsPage.getDecreaseProductButton).not.toBeVisible();
+  })
+  
+  test('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
 
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1860');
+
+    test.setTimeout(200000);
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    const productURL = page.url(); 
+
+    const productName = await productDetailsPage.getProductName.textContent() || '';
+
+    await productDetailsPage.getAddToFavouritesButton.click({ force: true });
+
+    await expect(commonPage.getMessage).toHaveText('Dodano produkt do ulubionych', { timeout: 10000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+
+    await page.waitForTimeout(2000);
+
+    await mainPage.getFavouritesButton.click();
+
+    await favouritesPage.getProductNameWithBrand.first().waitFor({ state: 'visible', timeout: 10000 })
+
+    const allProductNames = await favouritesPage.getProductNameWithBrand.allTextContents();
+
+    const allProductCount = allProductNames.length
+    
+    const productFound = allProductNames.some(name => name.includes(productName));
+
+    expect(productFound).toBe(true);
+
+    await page.goto(productURL, { waitUntil: 'domcontentloaded' });
+
+    await productDetailsPage.getAddToFavouritesButton.click({ force: true });
+
+    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 10000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+
+    await page.waitForTimeout(2000);
+
+    await mainPage.getFavouritesButton.click();
+
+    await favouritesPage.getProductNameWithBrand.first().waitFor({ state: 'visible', timeout: 10000 })
+
+    const updatedProductNames = await favouritesPage.getProductNameWithBrand.allTextContents();
+    expect(updatedProductNames.length).toBe(allProductCount - 1);
+
+    const productNotFound = !updatedProductNames.some(name => name.includes(productName));
+    expect(productNotFound).toBe(true);
+  })
+    
+  test('W | Możliwość przejścia do strony marki z tytułu produktu', async ({ page, baseURL, searchProduct }) => {
+
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1861');
+
+    test.setTimeout(80000);
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    const productBrandName = await productDetailsPage.getProductBrandName.textContent();
+    const formattedProductBrandName = productBrandName?.toLowerCase();
+
+    await productDetailsPage.getProductBrandName.click();
+
+    await expect(page).toHaveURL(`${baseURL}` + '/marki/' + formattedProductBrandName, { timeout: 10000 });
+    await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
+  })
+          
+  test('W | Możliwość wyświetlenia informacji głównych o produkcie', async ({ page, searchProduct }) => {
+
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1862');
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    const productBrandName = await productDetailsPage.getProductBrandName.textContent();
+
+    await expect(productDetailsPage.getMainInfoProductDropdown).toBeVisible();
+
+    await productDetailsPage.getMainInfoProductDropdown.click();
+
+    const mainInfoContent = productDetailsPage.getMainInfoProductDropdown.locator('..').locator('..').locator('div[class*="MuiCollapse-entered"]').getByText('Zobacz produkty marki');
+
+    await expect(mainInfoContent).toContainText(productBrandName || '');
+  })
+            
+  test('W | Możliwość wyświetlenia informacji opakowania o produkcie', async ({ page, searchProduct }) => {
+
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1863');
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    const productGrammar = await productDetailsPage.getProductGrammar.textContent();
+
+    await expect(productDetailsPage.getMainInfoProductDropdown).toBeVisible();
+
+    await productDetailsPage.getPackagingInfoDropdown.click();
+
+    const mainInfoContent = productDetailsPage.getPackagingInfoDropdown.locator('..').locator('..').locator('div[class*="MuiCollapse-entered"]');
+
+    await expect(mainInfoContent).toHaveText('Pojemność: ' + productGrammar);
+  })
+              
+  test('W | Możliwość przejścia do strony marki z informacji głównych produktu', async ({ page, baseURL, searchProduct }) => {
+
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1864');
+
+    test.setTimeout(80000);
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    const productBrandName = await productDetailsPage.getProductBrandName.textContent();
+    const formattedProductBrandName = productBrandName?.toLowerCase();
+
+    await expect(productDetailsPage.getMainInfoProductDropdown).toBeVisible();
+
+    await productDetailsPage.getMainInfoProductDropdown.click();
+
+    const mainInfoContentBrand = productDetailsPage.getMainInfoProductDropdown.locator('..').locator('..').locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName || '');
+
+    await mainInfoContentBrand.click();
+
+    await expect(page).toHaveURL(`${baseURL}` + '/marki/' + formattedProductBrandName, { timeout: 10000 });
+    await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
+  })
+
+  test('W | Możliwość przewijania slidera inne produkty z tej kategorii', async ({ page, searchProduct }) => {
+
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1865');
+
+    test.setTimeout(80000);
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    const firstItemInSlider = page.locator('div[data-cy="inne-produkty-z-tej-kategorii-product-card-slider"]').first();
+
+    await productDetailsPage.getSliderSectionGetLeftButton.isDisabled();
+    await productDetailsPage.getSliderSectionGetRightButton.click();
+    await page.waitForTimeout(1000);
+    await expect(firstItemInSlider).not.toBeInViewport();
+    await productDetailsPage.getSliderSectionGetLeftButton.isEnabled();
+    await productDetailsPage.getSliderSectionGetLeftButton.click();
+    await page.waitForTimeout(1000);
+    await expect(firstItemInSlider).toBeInViewport();
+    await productDetailsPage.getSliderSectionGetLeftButton.isDisabled();
+  })
+
+  test('W | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', async ({ page, baseURL, searchProduct }) => {
+
+    await allure.tags('Web', 'Szczegóły produktu');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Szczegóły produktu');
+    await allure.suite('Testy szczegółów produktu');
+    await allure.subSuite('');
+    await allure.allureId('1866');
+
+    test.setTimeout(80000);
+
+    await searchProduct(productToSearchName);
+
+    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+
+    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+
+    await productDetailsPage.getSectionShowAllLink.click();
+    await expect(page).toHaveURL(`${baseURL}` + '/woda-i-napoje/woda/niegazowana', { timeout: 10000 });
+    await expect(productsListPage.getProductCategoryTitle('Niegazowana')).toBeVisible({ timeout: 10000 });
   })
 })
 

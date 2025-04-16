@@ -33,11 +33,11 @@ export default class ProductDetailsPage {
         return this.page.locator('div[class*="product-page-buttons"] button').getByText('Dodaj');
     }
 
-    get getProductBrandNames() {
+    get getProductBrandName() {
         return this.page.locator('h1[data-sentry-element="ProductName"] a');
     }
 
-    get getProductNames() {
+    get getProductName() {
         return this.page.locator('h1[data-sentry-element="ProductName"]');
     }
 
@@ -67,14 +67,6 @@ export default class ProductDetailsPage {
 
     get getMainInfoProductDropdown() {
         return this.page.locator('div[data-sentry-component="ProductDetailsAccordion"]').getByText('Informacje główne');
-    }
-
-    get getNutritionalValuesInfoDropdown() {
-        return this.page.locator('div[data-sentry-component="ProductDetailsAccordion"]').getByText('Wartości odżywcze');
-    }
-
-    get getStorageInfoDropdown() {
-        return this.page.locator('div[data-sentry-component="ProductDetailsAccordion"]').getByText('Przechowywanie');
     }
 
     get getPackagingInfoDropdown() {
@@ -111,5 +103,25 @@ export default class ProductDetailsPage {
 
     get getConfirmDeleteModalButton() {
         return this.page.getByRole('button', { name: 'Potwierdź' });
+    }
+
+    get getAddToFavouritesButton() {
+        return this.page.locator('div[data-sentry-element="ProductDetailsContent"] button[data-sentry-component="AddToFavouritesButton"]');
+    }
+
+    get getOtherProductsSectionTitle() {
+        return this.page.locator('#inne-produkty-z-tej-kategorii h2').getByText('Inne produkty z tej kategorii');
+    }
+
+    get getOtherProductsSectionShowAllLink() {
+        return this.page.locator('div[data-sentry-element="Header"] a[href="/woda-i-napoje/woda/niegazowana"]:has-text("Zobacz wszystkie")');
+    }
+
+    get getSliderSectionGetLeftButton() {
+        return this.page.locator('div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
+    }
+
+    get getSliderSectionGetRightButton() {
+        return this.page.locator('div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
     }
 }
