@@ -8,8 +8,6 @@ on:
       ALLURE_USERNAME:
         description:
         required: false
-  schedule:
-    - cron: "0 3 * * *"
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
