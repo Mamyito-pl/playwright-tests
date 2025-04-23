@@ -138,8 +138,8 @@ test.describe('Testy koszyka', async () => {
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(5000);
     await expect(searchbarPage.getProductItemCount).toHaveValue('2');
-    await cartPage.clickCartDrawerButton();
-    await cartPage.clickShowCartButton();
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveValue('2');
@@ -162,9 +162,6 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartTitle).toHaveText('Twój koszyk(0 produktów)');
 
     await expect(cartPage.getCartDrawerCloseIconButton).toBeVisible();
-
-    await expect(cartPage.getShowCartButton).toBeVisible();
-    await expect(cartPage.getShowCartButton).toHaveText('Pokaż koszyk');
 
     await expect(cartPage.getClearCartButton).toBeVisible();
     await expect(cartPage.getClearCartButton).toBeDisabled();

@@ -334,7 +334,7 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
@@ -1018,7 +1018,7 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButtonButton();
@@ -1092,7 +1092,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.getCartSummaryButton.scrollIntoViewIfNeeded();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Płatność kartą przy odbiorze').check();
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButtonButton();

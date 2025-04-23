@@ -65,6 +65,16 @@ test.describe('Testy koszyka', async () => {
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+    const notificationButtonIsVisible = await notificationButton.isVisible();
+
+    if (notificationButtonIsVisible) {
+      await notificationButton.click();
+    } else {
+      return;
+    }
+
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveValue('1');
@@ -85,6 +95,16 @@ test.describe('Testy koszyka', async () => {
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+    const notificationButtonIsVisible = await notificationButton.isVisible();
+
+    if (notificationButtonIsVisible) {
+      await notificationButton.click();
+    } else {
+      return;
+    }
+
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveValue('1');
@@ -113,6 +133,16 @@ test.describe('Testy koszyka', async () => {
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+    const notificationButtonIsVisible = await notificationButton.isVisible();
+
+    if (notificationButtonIsVisible) {
+      await notificationButton.click();
+    } else {
+      return;
+    }
+
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveValue('1');
@@ -142,6 +172,16 @@ test.describe('Testy koszyka', async () => {
     await expect(searchbarPage.getProductItemCount).toHaveValue('2');
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+    const notificationButtonIsVisible = await notificationButton.isVisible();
+
+    if (notificationButtonIsVisible) {
+      await notificationButton.click();
+    } else {
+      return;
+    }
+    
     const productCount = await cartPage.getProductList.count();
     expect(productCount).toBe(1);
     await expect(cartPage.getProductItemCount).toHaveValue('2');

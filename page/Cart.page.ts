@@ -18,7 +18,11 @@ export default class CartPage {
     }
     
     async clickCartSummaryButton() {
-        await this.page.click(selectors.CartPage.common.cartSummaryButton);
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_proceed_button' : '#cart-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
+    }
+
+    async clickCartSummaryPaymentButton() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_proceed_button' : '#delivery-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
     }
 
     async clickShowCartButton() {
@@ -46,19 +50,23 @@ export default class CartPage {
     }
 
     async clickIncreaseProductButton() {
-        return this.page.locator('div[data-sentry-component="CartPage"] button[class*="add_to_cart_increment_button"]').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? 'div[data-sentry-component="CartPage"] div[data-sentry-element="TabletContent"] button[class*="add_to_cart_increment_button"]' : 'div[data-sentry-component="CartPage"] div[data-sentry-element="InsideWrapper"] button[class*="add_to_cart_increment_button"]').click({ force: true, delay: 300 });
     }
 
     async clickDecreaseProductButton() {
-        return this.page.locator('div[data-sentry-component="CartPage"] button[class*="add_to_cart_decrement_button"]').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? 'div[data-sentry-component="CartPage"] div[data-sentry-element="TabletContent"] button[class*="add_to_cart_decrement_button"]' : 'div[data-sentry-component="CartPage"] div[data-sentry-element="InsideWrapper"] button[class*="add_to_cart_decrement_button"]').click({ force: true, delay: 300 });
     }
     
     async clickCloseDrawerIconButton() {
         await this.getCartDrawerCloseIconButton.click();
     }
 
+    async clickCartDrawerToCartButton() {
+        await this.getCartDrawerToCartButton.click();
+    }
+
     get getCartPaymentConfirmationButtonButton() {
-        return this.page.locator('#cart_summary_payment_confirmation')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_payment_confirmation' : '#payment-floating-div #cart_summary_payment_confirmation')
     }
 
     get getProductCartConfirmButton() {

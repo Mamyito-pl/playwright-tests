@@ -76,6 +76,12 @@ test.describe('Testy dostawy', async () => {
 
     await deliveryPage.getDeliverySlotButton.first().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Wybrany', { timeout: 3000 });
+    
+    await page.evaluate(async () => {
+      window.scrollBy(0, 1000)
+      await new Promise(r => setTimeout(r, 700));
+    })
+
     await deliveryPage.getDeliverySlotButton.last().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny', { timeout: 3000 });
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
