@@ -37,14 +37,14 @@ test.describe('Testy moje dane', async () => {
     commonPage = new CommonPage(page);
   })
   
-  test('W | Strona moje dane pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Strona moje dane wyświetla się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
     await allure.parentSuite('Profil');
     await allure.suite('Testy moje dane');
     await allure.subSuite('');
-    await allure.allureId('2255');
+    await allure.allureId('2005');
     
     await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
 

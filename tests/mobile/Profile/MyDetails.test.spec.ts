@@ -37,7 +37,7 @@ test.describe('Testy moje dane', async () => {
     commonPage = new CommonPage(page);
   })
   
-  test('M | Strona moje dane pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('M | Strona moje dane wyświetla się ze wszystkimi potrzebnymi polami', async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
