@@ -25,6 +25,6 @@ export default class CommonPage {
     }
 
     get getCartProductsPrice() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Content"] div[data-sentry-element="TabletContent"] div[data-sentry-element="IconLabel"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Content"] div[data-sentry-element="WebContent"] div[data-sentry-element="Amount"]');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Content"] div[data-sentry-element="TabletContent"] div[data-sentry-element="IconLabel"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Amount"]');
     }
 }

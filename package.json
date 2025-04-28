@@ -8,12 +8,14 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.5.5",
     "allure-commandline": "^2.30.0",
     "allure-playwright": "^3.0.4"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2"
   }

@@ -9,3 +9,4 @@ allure-results/
 allurectl.exe
 
 playwright/.auth
+allure-report

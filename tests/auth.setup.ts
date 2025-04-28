@@ -1,12 +1,14 @@
 import { expect, test as setup } from '@playwright/test';
 import LoginPage from "../page/Login.page.ts";
 import MainLogoutPage from "../page/MainLogout.page.ts";
+import CommonPage from '../page/Common.page.ts';
 import * as utility from '../utils/utility-methods.ts';
 
 const authFile = 'playwright/.auth/user.json'
 
 let loginPage: LoginPage;
 let mainLogoutPage: MainLogoutPage;
+let commonPage: CommonPage;
 
 setup('Autoryzacja', async ({ page }) => {
 
@@ -14,6 +16,8 @@ setup('Autoryzacja', async ({ page }) => {
 
   loginPage = new LoginPage(page);
   mainLogoutPage = new MainLogoutPage(page);
+  commonPage = new CommonPage(page);
+
   page.on('framenavigated', async () => {
     await utility.addGlobalStyles(page);
   });
@@ -54,6 +58,7 @@ setup('Autoryzacja', async ({ page }) => {
   await page.waitForURL(`${process.env.URL}` + '/logowanie', { waitUntil: 'networkidle', timeout: 20000 });
   await utility.addGlobalStyles(page);
   await page.waitForURL(`${process.env.URL}`, { waitUntil: 'commit' });
+  await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 15000 });
   await expect(mainLogoutPage.getLoginLink).toBeHidden({ timeout: 10000 });
   await expect(response).toBeOK();
   await page.context().storageState({ path: authFile })
