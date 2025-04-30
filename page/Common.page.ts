@@ -20,8 +20,12 @@ export default class CommonPage {
         return this.page.locator('svg[class*="MuiCircularProgress-svg"]');
     }
 
+    get getCartButton() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_button_mobile' : 'div[data-sentry-element="WebContent"] #cart_button');
+    }
+
     get getCartProductsCount() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Content"] div[data-sentry-element="TabletContent"] #productsNumber' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Content"] div[data-sentry-element="WebContent"] #productsNumber');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_button_mobile #productsNumber' : 'div[data-sentry-element="WebContent"] #cart_button #productsNumber');
     }
 
     get getCartProductsPrice() {

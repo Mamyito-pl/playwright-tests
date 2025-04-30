@@ -39,7 +39,7 @@
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
             "productsNumberButton": "div[data-sentry-element='WebContent'][data-sentry-source-file='Navigation.tsx'] #cart_button #productsNumber",
             "showCartButton": "button:has-text('Pokaż koszyk')",
-            "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='WebContent'] button",
+            "cartAvailableCodesButton": "div[data-sentry-element='SummaryWrapper'] button[data-cy='cart-promo-codes-form-button']",
             "cartCodesTitle": "div[data-sentry-source-file='CartPromoCodesForm.tsx'] [data-sentry-element='WebContent'] div",
             "cartDrawerSummaryTitle": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-element='SectionTitle']",
             "cartDrawerProductsValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(1)",
@@ -49,7 +49,7 @@
         "mobile": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
             "productsNumberButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile #productsNumber",
-            "cartAvailableCodesButton": "div[data-sentry-source-file='CartPromoCodesForm.tsx'][data-sentry-element='TabletContent'] button"
+            "cartAvailableCodesButton": "div[data-sentry-element='TabletContent'] button[data-cy='cart-promo-codes-form-button']"
         }
     },
     "DeliveryPage": {

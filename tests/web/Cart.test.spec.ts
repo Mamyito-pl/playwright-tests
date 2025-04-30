@@ -10,6 +10,7 @@ import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods';
+import CommonPage from '../../page/Common.page.ts';
 
 test.describe.configure({ mode: 'serial'})
 
@@ -24,6 +25,7 @@ test.describe('Testy koszyka', async () => {
   let mainPage: MainPage;
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
+  let commonPage: CommonPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -42,6 +44,7 @@ test.describe('Testy koszyka', async () => {
     productsListPage = new ProductsListPage(page);
     navigationPage = new NavigationPage(page);
     searchbarPage = new SearchbarPage(page);
+    commonPage = new CommonPage(page);
   })
 
   test.afterEach(async ({ clearCartViaAPI }) => {
@@ -449,6 +452,113 @@ test.describe('Testy koszyka', async () => {
       const sortedExpectedPrices = expectedPriceMatches;
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
+    })
+  })
+  
+  test.describe('Kody rabatowe', async () => {
+
+    test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', async ({ page, addProduct, baseURL }) => {
+
+      await allure.tags('Mobilne', 'Koszyk');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Koszyk');
+      await allure.suite('Testy koszyka');
+      await allure.subSuite('Kody rabatowe');
+      await allure.allureId('2330');
+
+      await addProduct('do mycia naczyń somat');
+      await searchbarPage.getProductItemCount.click();
+      await searchbarPage.getProductItemCount.type('1');
+      await commonPage.getCartButton.click();
+
+      await page.goto('/koszyk', { waitUntil: 'load'});
+      await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+      await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
+
+      const totalSummaryValue = await cartPage.getTotalSummaryValue.last().textContent();
+
+      const totalSummaryValueFormatted = totalSummaryValue?.slice(10, -3) || ''
+      console.log('Total summary value przed kodem:', totalSummaryValueFormatted);
+
+      await cartPage.getCartAvailableCodesButton.click();
+
+      await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
+      await page.waitForTimeout(1000);
+
+      const codeCardColor = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"]').first().evaluate((el) => window.getComputedStyle(el).backgroundColor);
+      const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] div').first().textContent() || '';
+      const codeCardButton = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] button').first();
+      const codeCardInformation = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] span').first();
+      const codeCardName = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeDescriptionWrapper"] p').first().textContent();
+
+      const codeCardDiscountValueFormatted = codeCardDiscountValue.slice(0, -2) + ',00 zł';
+      const codeCardNameFormatted = codeCardName?.slice(14);
+
+      expect(codeCardColor).toBe('rgb(97, 189, 78)')
+      expect(codeCardButton).toBeVisible();
+      expect(codeCardInformation).toHaveText('Możliwy do zrealizowania');
+
+      console.log(codeCardDiscountValueFormatted);
+      console.log(codeCardName);
+
+      await codeCardButton.click();
+      await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
+      await page.waitForTimeout(2000);
+
+      const codeTitle = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().first().locator('b').textContent());
+      expect(codeTitle).toContain(codeCardNameFormatted);
+
+      const codeDiscountValue = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().last().locator('span').textContent());
+      if (codeDiscountValue !== null) {
+        const cleanCodeDiscountValue = codeDiscountValue.replace(/\s+/g, '');
+        const cleanCodeCardDiscountValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, '');
+        expect(cleanCodeDiscountValue).toContain(cleanCodeCardDiscountValueFormatted);
+      } else {
+        throw new Error('codeDiscountValue is null');
+      }
+
+      const discountCodeSummaryValue = await cartPage.getDiscountCodesTitle.locator('..').last().textContent();
+      if (discountCodeSummaryValue !== null) {
+        const cleanDiscountCodeSummaryValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, ' ');
+        expect(cleanDiscountCodeSummaryValueFormatted).toContain(codeCardDiscountValueFormatted);
+      } else {
+        throw new Error('codeDiscountValue is null');
+      }
+
+      const codeCardDiscountValueFormattedParsed = parseFloat(codeCardDiscountValueFormatted.slice(1, -2).replace(',', '.'));
+      console.log('codeCardDiscountValueFormattedParsed:', codeCardDiscountValueFormattedParsed);
+
+      const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(',', '.'));
+      console.log('totalSummaryValueFormattedParsed:', totalSummaryValueFormattedParsed);
+
+      const totalSummaryValueAfterDiscount = await cartPage.getTotalSummaryValue.last().textContent();
+      console.log('totalSummaryValueAfterDiscount:', totalSummaryValueAfterDiscount);
+
+      const totalSummaryValueAfterDiscountFormatted = totalSummaryValueAfterDiscount?.slice(10, -3) || ''
+      console.log('totalSummaryValueAfterDiscountFormatted:', totalSummaryValueAfterDiscountFormatted);
+
+      const totalSummaryValueAfterDiscountFormattedParsed = parseFloat(totalSummaryValueAfterDiscountFormatted.replace(',', '.'));
+      console.log('totalSummaryValueAfterDiscountFormattedParsed:', totalSummaryValueAfterDiscountFormattedParsed);
+
+      const discountValue = totalSummaryValueFormattedParsed - totalSummaryValueAfterDiscountFormattedParsed;
+      console.log('Różnica wartości:', discountValue);
+      expect(discountValue).toBe(codeCardDiscountValueFormattedParsed);
+
+      await expect(cartPage.getSummaryDeleteDiscountCodeButton).toBeVisible();
+      await cartPage.getSummaryDeleteDiscountCodeButton.click();
+      await expect(cartPage.getSummaryDeleteDiscountCodeButton).not.toBeVisible({ timeout: 5000 });
+      await expect(cartPage.getActiveDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
+      await expect(cartPage.getDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
+
+      const totalSummaryValueAfterDeleteCode = await cartPage.getTotalSummaryValue.last().textContent();
+      console.log('totalSummaryValueAfterDeleteCode:', totalSummaryValueAfterDeleteCode);
+      const totalSummaryValueAfterDeleteCodeFormatted = totalSummaryValueAfterDeleteCode?.slice(10, -3) || ''
+      console.log('totalSummaryValueAfterDeleteCodeFormatted:', totalSummaryValueAfterDeleteCodeFormatted);
+      const totalSummaryValueAfterDeleteCodeFormattedParsed = parseFloat(totalSummaryValueAfterDeleteCodeFormatted.replace(',', '.'));
+      console.log('totalSummaryValueAfterDeleteCodeFormattedParsed:', totalSummaryValueAfterDeleteCodeFormattedParsed);
+      expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
     })
   })
 })

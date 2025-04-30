@@ -122,7 +122,7 @@ export default class CartPage {
     }
 
     get getCartDrawerButton() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile" : "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button")
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] [data-sentry-source-file='Navigation.tsx'] #cart_button_mobile" : "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button")
     }
 
     get getCartDrawerSummaryTitle() {
@@ -151,5 +151,29 @@ export default class CartPage {
 
     get getCartPaymentButton() {
         return this.page.locator(selectors.CartPage.common.cartSummaryPaymentButton);
+    }
+
+    get getCartCodesDrawer() {
+        return this.page.getByText('Kody rabatowe nie obejmują napojów alkoholowych.').locator('..');
+    }
+
+    get getActiveDiscountCodesTitle() {
+        return this.page.locator('div[data-cy="active-codes-description"]')
+    }
+
+    get getSummaryDeleteDiscountCodeButton() {
+        return this.page.getByRole('button', { name: 'Usuń' });
+    }
+
+    get getDiscountCodesTitle() {
+        return this.page.locator('div[data-cy="cart-summary-rebate-codes"]')
+    }
+
+    get getTotalSummaryValue() {
+        return this.page.locator('div[data-cy="cart-summary-total-price"]');
+    }
+
+    get getSummaryExpandButton() {
+        return this.page.locator('button[data-cy="cart-expand-button"]');
     }
 }
