@@ -129,7 +129,7 @@ export default class CartPage {
         return this.page.locator(selectors.CartPage.web.cartDrawerSummaryTitle);
     }
 
-    get getcartDrawerProductsValue() {
+    get getCartDrawerProductsValue() {
         return this.page.locator(selectors.CartPage.web.cartDrawerProductsValue);
     }
 
