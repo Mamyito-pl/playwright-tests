@@ -26,6 +26,7 @@ test.describe('Testy koszyka', async () => {
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
   let commonPage: CommonPage;
+  let product: string = 'mycia naczyń somat';
 
   test.beforeEach(async ({ page }) => {
 
@@ -61,7 +62,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('437');
     
-    await addProduct('cebula czerwona');
+    await addProduct(product);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -82,7 +83,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('438');
     
-    await addProduct('cebula czerwona');
+    await addProduct(product);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -110,7 +111,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('435');
 
-    await addProduct('cebula czerwona');
+    await addProduct(product);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
@@ -134,7 +135,7 @@ test.describe('Testy koszyka', async () => {
 
     await searchbarPage.clickSearchbar()
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
-    await searchbarPage.enterProduct('cebula czerwona');
+    await searchbarPage.enterProduct(product);
     await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
     await page.waitForTimeout(5000);
@@ -466,7 +467,7 @@ test.describe('Testy koszyka', async () => {
       await allure.subSuite('Kody rabatowe');
       await allure.allureId('2330');
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
       await searchbarPage.getProductItemCount.click();
       await searchbarPage.getProductItemCount.type('1');
       await commonPage.getCartButton.click();

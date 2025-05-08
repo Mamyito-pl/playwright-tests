@@ -50,11 +50,11 @@ export default class CartPage {
     }
 
     async clickIncreaseProductButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-component="CartPage"] div[data-sentry-element="TabletContent"] button[class*="add_to_cart_increment_button"]' : 'div[data-sentry-component="CartPage"] div[data-sentry-element="InsideWrapper"] button[class*="add_to_cart_increment_button"]').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? 'div[data-sentry-component="CartPage"] div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]' : 'div[data-sentry-component="CartPage"] div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').click({ force: true, delay: 300 });
     }
 
     async clickDecreaseProductButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-component="CartPage"] div[data-sentry-element="TabletContent"] button[class*="add_to_cart_decrement_button"]' : 'div[data-sentry-component="CartPage"] div[data-sentry-element="InsideWrapper"] button[class*="add_to_cart_decrement_button"]').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? 'div[data-sentry-component="CartPage"] div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]' : 'div[data-sentry-component="CartPage"] div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').click({ force: true, delay: 300 });
     }
     
     async clickCloseDrawerIconButton() {

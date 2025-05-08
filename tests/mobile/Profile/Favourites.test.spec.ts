@@ -62,9 +62,12 @@ test.describe('Testy ulubionych produktów', async () => {
     await page.waitForTimeout(2000);
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 });
+
+    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+
+    await page.waitForTimeout(1000);
 
     const allProductNames = await favouritesPage.getProductName.allTextContents();
     const allProductCount = allProductNames.length

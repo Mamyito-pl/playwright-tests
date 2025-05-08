@@ -62,6 +62,10 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 })
 
+    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+
+    await page.waitForTimeout(1000);
+
     const allProductNames = await favouritesPage.getProductName.allTextContents();
 
     const allProductCount = allProductNames.length
