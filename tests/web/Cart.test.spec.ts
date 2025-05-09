@@ -183,8 +183,8 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawerSummaryTitle).toBeVisible();
     await expect(cartPage.getCartDrawerSummaryTitle).toContainText('Podsumowanie');  
 
-    await expect(cartPage.getcartDrawerProductsValue).toBeVisible();
-    await expect(cartPage.getcartDrawerProductsValue).toContainText('Wartość produktów0,00 zł');  
+    await expect(cartPage.getCartDrawerProductsValue).toBeVisible();
+    await expect(cartPage.getCartDrawerProductsValue).toContainText('Wartość produktów0,00 zł');  
 
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
     await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');

@@ -35,6 +35,7 @@ type MyFixtures = {
     deleteInvoiceAddressDelivery: (addressName: any) => Promise<void>;
     deleteAddressDeliveryProfile: (addressName: any) => Promise<void>;
     addAddressDeliveryProfile: (addressName: any) => Promise<void>;
+    cancelOrderViaAPI: (page: Page) => Promise<void>;
 };
 
 export const test = baseTest.extend<MyFixtures>({
@@ -489,6 +490,33 @@ export const test = baseTest.extend<MyFixtures>({
     };
     
     await use(deleteInvoiceAddressViaAPI);
+  },
+
+  cancelOrderViaAPI: async ({ request }, use) => {
+    const cancelOrderViaAPI = async (page: Page) => {
+
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: { 'Accept': 'application/json' },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+      const responseBodyToken = await tokenResponse.json();
+      const token = responseBodyToken.data.token;
+
+      const url = new URL(page.url());
+      const saleOrderId = url.searchParams.get('order');
+      if (!saleOrderId) throw new Error('Brak saleOrderId w URL');
+
+      const response = await request.patch(`${process.env.APIURL}/api/sale-orders/${saleOrderId}/cancel`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      expect(response.status() === 504 || response.ok()).toBeTruthy();
+    };
+    await use(cancelOrderViaAPI);
   }
 });
 

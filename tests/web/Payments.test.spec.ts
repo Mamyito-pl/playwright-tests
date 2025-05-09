@@ -3,7 +3,7 @@ import MainPage from "../../page/Main.page.ts";
 import CartPage from '../../page/Cart.page.ts';
 import DeliveryPage from '../../page/Delivery.page.ts';
 import PaymentsPage from '../../page/Payments.page.ts';
-import OrderDetailsPage from '../../page/OrderDetails.page.ts';
+import OrderDetailsPage from '../../page/Profile/OrderDetails.page.ts';
 import CommonPage from '../../page/Common.page.ts';
 import Przelewy24Page from '../../page/Przelewy24.page.ts';
 import SearchbarPage from '../../page/Searchbar.page.ts';

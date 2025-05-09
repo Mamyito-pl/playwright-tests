@@ -41,6 +41,10 @@ export default class PaymentsPage {
         await this.page.locator(selectors.PaymentsPage.common.blikPaymentInput).fill(blikCode);
     }
 
+    get getOrderNumber() {
+        return this.page.locator('div[data-sentry-element="OrderNumber"] span');
+    }
+
     get getOrderDetailsButton() {
         return this.page.locator(selectors.PaymentsPage.common.orderDetailsButton)
     }
