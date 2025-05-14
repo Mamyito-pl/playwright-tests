@@ -27,6 +27,10 @@ export default class OrderDetailsPage {
     async clickBackToOrdersButton() {
         await this.getBackToOrdersButton.click();
     }
+
+    async clickEditOrderButton() {
+        return this.getEditOrderButton.click();
+    }
     
     get getPrintOrderButton() {
         return this.page.getByRole('button', { name: 'Wydrukuj'});
@@ -64,6 +68,10 @@ export default class OrderDetailsPage {
         return this.page.locator('div[data-sentry-element="ProductName"]');
     }
 
+    get getProductQuantity() {
+        return this.page.locator('div[data-sentry-element="Counter"]');
+    }
+
     get getRepeatOrderModal() {
         return this.page.locator('div[data-sentry-element="Modal"] div[data-sentry-element="ProductName"]');
     }
@@ -78,6 +86,14 @@ export default class OrderDetailsPage {
 
     get getRepeatOrderModalCancelButton() {
         return this.page.locator('#repeat_order_cancel_button')
+    }
+
+    get getEditOrderButton() {
+        return this.page.getByRole('button', { name: 'Edytuj zamówienie'});
+    }
+
+    get getProductPrices() {
+        return this.page.locator('div[data-sentry-element="CurrentPrice"]');
     }
 
     async getDetailsSectionName(sectionName: string) {

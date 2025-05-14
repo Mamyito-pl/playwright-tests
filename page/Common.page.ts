@@ -12,6 +12,10 @@ export default class CommonPage {
         this.mobile = isMobile(viewport.width);
     }
 
+    async clickCartButton() {
+        await this.getCartButton.click();
+    }
+
     get getMessage() {
         return this.page.locator('div[role="status"]');
     }

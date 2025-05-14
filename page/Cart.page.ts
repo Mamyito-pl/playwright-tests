@@ -46,7 +46,7 @@ export default class CartPage {
     }
 
     async clickDeleteProductCartConfirmButton() {
-        await this.getProductCartConfirmButton.click();
+        await this.getProductCartConfirmButton.click({ force: true });
     }
 
     async clickIncreaseProductButton() {
@@ -175,5 +175,17 @@ export default class CartPage {
 
     get getSummaryExpandButton() {
         return this.page.locator('button[data-cy="cart-expand-button"]');
+    }
+
+    get getProductNames() {
+        return this.page.locator('div[data-sentry-element="InsideWrapper"] a div[class*="sc-a15683e8-2"]');
+    }
+
+    get getProductQuantities() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledProductQuantityInput"] div input' : 'div[data-sentry-element="InsideWrapper"] div[data-sentry-element="StyledProductQuantityInput"] div input');
+    }
+
+    get getProductPrices() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_unit_price b' : 'div[data-sentry-element="InsideWrapper"] #cart_unit_price b').last();;
     }
 }
