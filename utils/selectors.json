@@ -91,8 +91,8 @@
     "ProductsListPage": {
         "common": {
             "productCardAddButton": "div[data-sentry-component='ProductCard'] button:has-text('Dodaj')",
-            "productCardIncreaseButton": "div[data-sentry-component='ProductCard'] button[class*='add_to_cart_increment_button']",
-            "productCardDecreaseButton": "div[data-sentry-component='ProductCard'] button[class*='add_to_cart_decrement_button']",
+            "productCardIncreaseButton": "div[data-sentry-component='ProductCard'] svg[class*='tabler-icon tabler-icon-plus']",
+            "productCardDecreaseButton": "div[data-sentry-component='ProductCard'] svg[class*='tabler-icon tabler-icon-minus']",
             "productCardName": "div[data-sentry-component='ProductCard'] h3"
         },
         "web": {
