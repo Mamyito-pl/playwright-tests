@@ -66,7 +66,7 @@ test.describe('Testy edycji zamówienia', async () => {
 
   test.describe('Edycja zamówienia z dopłatą', async () => {
 
-    test('W | Dopłata do zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
+    test('M | Dopłata do zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
         
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
@@ -149,6 +149,15 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
+    const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+    const notificationButtonIsVisible = await notificationButton.isVisible();
+
+    if (notificationButtonIsVisible) {
+      await notificationButton.click();
+    } else {
+      return;
+    }
+
     const productNamesCart = await cartPage.getProductNames.all();
     const productQuantitiesCart = await cartPage.getProductQuantities.all();
 
@@ -168,13 +177,15 @@ test.describe('Testy edycji zamówienia', async () => {
 
     expect(initialProducts).toEqual(initialProductsCart);
 
-    await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+    await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().scrollIntoViewIfNeeded();
+    await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
     await page.waitForTimeout(5000);
 
-    const inputToIncrease = await page.locator('div[data-sentry-element="InsideWrapper"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
+    const inputToIncrease = await page.locator('div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
     for (let i = 0; i < inputToIncrease.length; i++) {
         const value = await inputToIncrease[i].inputValue();
         if (value === '1') {
+            await inputToIncrease[i].scrollIntoViewIfNeeded();
             await inputToIncrease[i].click();
             await inputToIncrease[i].fill('10');
             await page.waitForTimeout(5000);
@@ -182,10 +193,11 @@ test.describe('Testy edycji zamówienia', async () => {
         }
     }
 
-    const inputToDelete = await page.locator('div[data-sentry-element="InsideWrapper"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
+    const inputToDelete = await page.locator('div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
     for (let i = 0; i < inputToDelete.length; i++) {
         const value = await inputToDelete[i].inputValue();
         if (value === '1') {
+            await page.locator(selectors.CartPage.common.deleteProductCartIcon).nth(i).scrollIntoViewIfNeeded();
             await page.locator(selectors.CartPage.common.deleteProductCartIcon).nth(i).click();
             await expect(cartPage.getProductCartConfirmButton).toBeVisible({ timeout: 15000 });
             await cartPage.clickDeleteProductCartConfirmButton();
@@ -196,13 +208,27 @@ test.describe('Testy edycji zamówienia', async () => {
 
     await page.goto('/wyprzedaz', { waitUntil: 'load'});
     await expect(productsListPage.getProductCategoryTitle('Wyprzedaż')).toBeVisible({ timeout: 15000 });
+      
+    const maxTriesForClick = 5;
 
-    await productsListPage.getProductTiles.first().getByText('Dodaj').scrollIntoViewIfNeeded();
-    await productsListPage.getProductTiles.first().getByText('Dodaj').click({ force: true });
-    await page.waitForTimeout(3000);
+    for (let i = 0; i < maxTriesForClick; i++) {
+      await productsListPage.getProductTiles.first().getByText('Dodaj').scrollIntoViewIfNeeded();
+      await productsListPage.getProductTiles.first().getByText('Dodaj').click({ force: true });
+      await page.waitForTimeout(5000);
+      const isVisible = await page.locator(selectors.ProductsListPage.common.productCardIncreaseButton).isVisible();
+      if (isVisible === true) {
+        break;
+      }
+    }
     
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    if (notificationButtonIsVisible) {
+      await notificationButton.click();
+    } else {
+      return;
+    }
 
     const productNamesCartAfterChanges = await cartPage.getProductNames.all();
     const productQuantitiesCartAfterChanges = await cartPage.getProductQuantities.all();
@@ -230,6 +256,9 @@ test.describe('Testy edycji zamówienia', async () => {
     const priceDifference = Math.abs((summaryPriceAfterChanges - summaryPrice)).toFixed(2).replace(/\.?0+$/, '');
     console.log('Różnica w cenie:', priceDifference);
 
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await cartPage.clickCartSummaryPaymentButton();
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
@@ -294,7 +323,7 @@ test.describe('Testy edycji zamówienia', async () => {
     expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Dopłata do zamówienia z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -365,6 +394,15 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+  
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
   
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
@@ -385,7 +423,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -502,7 +540,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Dopłata do zamówienia z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -573,6 +611,15 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
   
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
@@ -593,7 +640,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -684,7 +731,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Dopłata do zamówienia z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -780,6 +827,15 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
   
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
@@ -800,7 +856,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -901,7 +957,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Dopłata do zamówienia z przelewu na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z przelewu na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -997,6 +1053,15 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
   
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
@@ -1017,7 +1082,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -1108,7 +1173,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Dopłata do zamówienia z karty przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z karty przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -1178,7 +1243,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -1198,7 +1272,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -1299,7 +1373,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Dopłata do zamówienia z karty przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z karty przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -1369,7 +1443,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -1389,7 +1472,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-plus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -1509,7 +1592,7 @@ test.describe('Testy edycji zamówienia', async () => {
 
   test.describe('Edycja zamówienia ze zwrotem środków', async () => {
 
-    test('W | Zwrot środków zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
+    test('M | Zwrot środków zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
         
         test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
@@ -1590,7 +1673,16 @@ test.describe('Testy edycji zamówienia', async () => {
     
         await page.goto('/koszyk', { waitUntil: 'load'});
         await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-    
+
+        const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+        const notificationButtonIsVisible = await notificationButton.isVisible();
+
+        if (notificationButtonIsVisible) {
+          await notificationButton.click();
+        } else {
+          return;
+        }
+
         const productNamesCart = await cartPage.getProductNames.all();
         const productQuantitiesCart = await cartPage.getProductQuantities.all();
     
@@ -1610,10 +1702,10 @@ test.describe('Testy edycji zamówienia', async () => {
     
         expect(initialProducts).toEqual(initialProductsCart);
     
-        await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+        await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
         await page.waitForTimeout(5000);
     
-        const inputToIncrease = await page.locator('div[data-sentry-element="InsideWrapper"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
+        const inputToIncrease = await page.locator('div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
         for (let i = 0; i < inputToIncrease.length; i++) {
             const value = await inputToIncrease[i].inputValue();
             if (value === '1') {
@@ -1624,7 +1716,7 @@ test.describe('Testy edycji zamówienia', async () => {
             }
         }
     
-        const inputToDelete = await page.locator('div[data-sentry-element="InsideWrapper"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
+        const inputToDelete = await page.locator('div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledProductQuantityInput"] div input').all();
         for (let i = 0; i < inputToDelete.length; i++) {
             const value = await inputToDelete[i].inputValue();
             if (value === '1') {
@@ -1639,9 +1731,17 @@ test.describe('Testy edycji zamówienia', async () => {
         await page.goto('/wyprzedaz', { waitUntil: 'load'});
         await expect(productsListPage.getProductCategoryTitle('Wyprzedaż')).toBeVisible({ timeout: 15000 });
     
-        await productsListPage.getProductTiles.first().getByText('Dodaj').scrollIntoViewIfNeeded();
-        await productsListPage.getProductTiles.first().getByText('Dodaj').click({ force: true });
-        await page.waitForTimeout(3000);
+        const maxTriesForClick = 5;
+
+        for (let i = 0; i < maxTriesForClick; i++) {
+          await productsListPage.getProductTiles.first().getByText('Dodaj').scrollIntoViewIfNeeded();
+          await productsListPage.getProductTiles.first().getByText('Dodaj').click({ force: true });
+          await page.waitForTimeout(5000);
+          const isVisible = await page.locator(selectors.ProductsListPage.common.productCardIncreaseButton).isVisible();
+          if (isVisible === true) {
+            break;
+          }
+        }
         
         await page.goto('/koszyk', { waitUntil: 'load'});
         await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
@@ -1727,7 +1827,7 @@ test.describe('Testy edycji zamówienia', async () => {
         expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Zwrot środków z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
           
         test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
@@ -1798,7 +1898,15 @@ test.describe('Testy edycji zamówienia', async () => {
     
         await page.goto('/koszyk', { waitUntil: 'load'});
         await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-    
+        const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+        const notificationButtonIsVisible = await notificationButton.isVisible();
+
+        if (notificationButtonIsVisible) {
+          await notificationButton.click();
+        } else {
+          return;
+        }
+
         const productNamesCart = await cartPage.getProductNames.all();
         const productQuantitiesCart = await cartPage.getProductQuantities.all();
     
@@ -1818,7 +1926,7 @@ test.describe('Testy edycji zamówienia', async () => {
     
         expect(initialProducts).toEqual(initialProductsCart);
     
-        await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+        await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
         await page.waitForTimeout(5000);
     
         const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -1909,7 +2017,7 @@ test.describe('Testy edycji zamówienia', async () => {
         expect(finalPrice).toBe(summaryPriceAfterChanges);
       })
 
-    test('W | Zwrot środków z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -1980,7 +2088,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -2000,7 +2117,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -2091,7 +2208,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Zwrot środków z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2187,7 +2304,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -2207,7 +2333,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -2298,7 +2424,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
     
-    test('W | Zwrot środków z przelewu na zapłatę kartą przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z przelewu na zapłatę kartą przy odbiorze', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2394,7 +2520,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -2414,7 +2549,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -2505,7 +2640,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Zwrot środków z zapłaty kartą przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z zapłaty kartą przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2575,7 +2710,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -2595,7 +2739,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
@@ -2696,7 +2840,7 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('W | Zwrot środków z zapłaty kartą przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z zapłaty kartą przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2766,7 +2910,16 @@ test.describe('Testy edycji zamówienia', async () => {
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
-  
+
+      const notificationButton = page.getByText('Produkty dodane do koszyka nie są zarezerwowane').locator('..').locator('..').locator('button');
+      const notificationButtonIsVisible = await notificationButton.isVisible();
+
+      if (notificationButtonIsVisible) {
+        await notificationButton.click();
+      } else {
+        return;
+      }
+
       const productNamesCart = await cartPage.getProductNames.all();
       const productQuantitiesCart = await cartPage.getProductQuantities.all();
   
@@ -2786,7 +2939,7 @@ test.describe('Testy edycji zamówienia', async () => {
   
       expect(initialProducts).toEqual(initialProductsCart);
   
-      await page.locator('div[data-sentry-element="InsideWrapper"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
+      await page.locator('div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-minus"]').first().click();
       await page.waitForTimeout(5000);
   
       const productNamesCartAfterChanges = await cartPage.getProductNames.all();
