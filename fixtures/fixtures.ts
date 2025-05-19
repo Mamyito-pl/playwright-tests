@@ -27,6 +27,7 @@ type MyFixtures = {
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
     addAddressDeliveryViaAPI: (addressName: any) => Promise<void>;
+    addSecondAddressDeliveryViaAPI: (addressName: any) => Promise<void>;
     deleteAddressDelivery: (addressName: any) => Promise<void>;
     deleteDeliveryAddressViaAPI: (addressName: any) => Promise<void>;
     addInvoiceAddressDelivery: (addressName: any) => Promise<void>;
@@ -36,6 +37,7 @@ type MyFixtures = {
     deleteAddressDeliveryProfile: (addressName: any) => Promise<void>;
     addAddressDeliveryProfile: (addressName: any) => Promise<void>;
     cancelOrderViaAPI: (page: Page) => Promise<void>;
+    cancelEditOrderViaAPI: (page: Page) => Promise<void>;
 };
 
 export const test = baseTest.extend<MyFixtures>({
@@ -285,6 +287,54 @@ export const test = baseTest.extend<MyFixtures>({
     await use(addAddressDeliveryViaAPI);
   },
 
+  addSecondAddressDeliveryViaAPI: async ({ request }, use) => {
+    
+    const addSecondAddressDeliveryViaAPI = async (addressName: string): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const addDeliveryAddress = await request.post(`${process.env.APIURL}/api/addresses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          city: "Lesznowola",
+          first_name: "Janina",
+          last_name: "Kowalska",
+          house_number: "4",
+          icon_color: "#ffa31a",
+          icon_type: "home",
+          is_default: false,
+          latitude: 11,
+          longitude: 11,
+          name: `${addressName}`,
+          phone_number: "666555444",
+          postal_code: "05-506",
+          street: "Oficerska",
+          staircase_number: null,
+          flat_number: null,
+          type: "delivery"
+        },
+      });
+
+      expect(addDeliveryAddress.status()).toBe(201);
+    };
+    
+    await use(addSecondAddressDeliveryViaAPI);
+  },
+
   deleteAddressDelivery: async ({ page }, use) => {
 
     deliveryPage = new DeliveryPage(page);
@@ -517,6 +567,33 @@ export const test = baseTest.extend<MyFixtures>({
       expect(response.status() === 504 || response.ok()).toBeTruthy();
     };
     await use(cancelOrderViaAPI);
+  },
+
+  cancelEditOrderViaAPI: async ({ request }, use) => {
+    const cancelEditOrderViaAPI = async (page: Page) => {
+
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: { 'Accept': 'application/json' },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+      const responseBodyToken = await tokenResponse.json();
+      const token = responseBodyToken.data.token;
+
+      const url = new URL(page.url());
+      const saleOrderId = url.searchParams.get('order');
+      if (!saleOrderId) throw new Error('Brak saleOrderId w URL');
+
+      const response = await request.delete(`${process.env.APIURL}/api/sale-orders/${saleOrderId}/edit-cancel`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      expect(response.status() === 504 || response.ok()).toBeTruthy();
+    };
+    await use(cancelEditOrderViaAPI);
   }
 });
 

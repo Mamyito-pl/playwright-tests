@@ -20,6 +20,26 @@ export default class OrderEditPage {
         return this.getApplyEditOrderCartButton.click();
     }
 
+    async clickCancelEditOrderModalButton() {
+        return this.getCancelEditOrderModalButton.click();
+    }
+
+    async clickCancelEditOrderCartButton() {
+        return this.getCancelEditOrderCartButton.click();
+    }
+
+    async clickConfirmationEditOrderCancelCartModalCancelButton() {
+        return this.getConfirmationEditOrderCancelCartModalCancelButton.click();
+    }
+
+    async clickConfirmationEditOrderCancelCartModalLeaveButton() {
+        return this.getConfirmationEditOrderCancelCartModalLeaveButton.click();
+    }
+
+    async clickConfirmationEditOrderCartModalCancelButton() {
+        return this.getConfirmationEditOrderCartModalCancelButton.click();
+    }
+
     get getEditOrderModalTitle() {
         return this.page.locator('div[data-sentry-element="Modal"] div').first().getByText('Edycja zamówienia');
     }
@@ -36,12 +56,40 @@ export default class OrderEditPage {
         return this.page.locator('#repeat_order_add_products_button');
     }
 
+    get getCancelEditOrderModalButton() {
+        return this.page.locator('#repeat_order_cancel_button');
+    }
+
     get getApplyEditOrderCartButton() {
         return this.page.getByRole('button', { name: 'Zatwierdź edycję'});
     }
 
+    get getCancelEditOrderCartButton() {
+        return this.page.getByRole('button', { name: 'Anuluj edycję'});
+    }
+
     get getConfirmationEditOrderCartModalTitle() {
-        return this.page.locator('#modal-portal').getByText('Zapisz zmiany');
+        return this.mobile ? this.page.locator('#modal-portal').getByText('Zapisz zmiany').nth(0) : this.page.locator('#modal-portal').getByText('Zapisz zmiany').nth(1);
+    }
+
+    get getConfirmationEditOrderCartModalCancelButton() {
+        return this.mobile ? this.page.locator('#modal-portal').getByText('Anuluj').nth(0) : this.page.locator('#modal-portal').getByText('Anuluj').nth(1);
+    }
+
+    get getConfirmationEditOrderCancelCartModalTitle() {
+        return this.mobile ? this.page.locator('#modal-portal').getByText('Anuluj edycję').nth(0) : this.page.locator('#modal-portal').getByText('Anuluj edycję').nth(1);
+    }
+
+    get getConfirmationEditOrderCancelCartModalCancelButton() {
+        return this.mobile ? this.page.locator('#modal-portal').getByRole('button', { name: 'Anuluj'}).nth(0) : this.page.locator('#modal-portal').getByRole('button', { name: 'Anuluj'}).nth(1);
+    }
+
+    get getConfirmationEditOrderCancelCartModalLeaveButton() {
+        return this.mobile ? this.page.locator('#modal-portal').getByRole('button', { name: 'Wyjdź'}).nth(0) : this.page.locator('#modal-portal').getByRole('button', { name: 'Wyjdź'}).nth(1);
+    }
+
+    get getConfirmationEditOrderModal() {
+        return this.page.locator('#modal-portal')
     }
 
     get getEnterBlikCodeModalTitle() {

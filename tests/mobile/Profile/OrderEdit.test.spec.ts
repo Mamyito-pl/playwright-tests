@@ -13,6 +13,7 @@ import * as selectors from '../../../utils/selectors.json';
 import { test } from '../../../fixtures/fixtures.ts';
 import * as utility from '../../../utils/utility-methods.ts';
 import Przelewy24Page from '../../../page/Przelewy24.page.ts';
+import * as allure from 'allure-js-commons'
 
 test.describe.configure({ mode: 'serial' })
 
@@ -39,7 +40,7 @@ test.describe('Testy edycji zamówienia', async () => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
 
-    await page.goto('/', { waitUntil: 'load'})
+    await page.goto('/', { waitUntil: 'load', timeout: 100000})
 
     await utility.addGlobalStyles(page);
 
@@ -60,13 +61,1116 @@ test.describe('Testy edycji zamówienia', async () => {
     przelewy24Page = new Przelewy24Page(page);
   })
   
-  test.afterEach(async ({ deleteDeliveryAddressViaAPI }) => {
+  test.afterEach(async ({ deleteDeliveryAddressViaAPI, clearCartViaAPI }) => {
     await deleteDeliveryAddressViaAPI('Adres Testowy');
+    await deleteDeliveryAddressViaAPI('Adres Drugi');
+    await clearCartViaAPI();
   }) 
+  
+  test('M | Wyjście z edycji z poziomu koszyka', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2439');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(orderEditPage.getCancelEditOrderCartButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickCancelEditOrderCartButton();
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalCancelButton).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalLeaveButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickConfirmationEditOrderCancelCartModalLeaveButton();
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalTitle).not.toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getCancelEditOrderCartButton).not.toBeVisible({ timeout: 10000 });
+  })
+    
+  test('M | Zamknięcie modala rozpoczęcia edycji "X" z poziomu zamówienia', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2440');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await commonPage.clickModalCloseIcon();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsCount).not.toBeVisible({ timeout: 10000 });
+  })
+
+  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu "X"', async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2441');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    const url = new URL(page.url());
+    const saleOrderId = url.searchParams.get('order');
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalCancelButton).toBeVisible({ timeout: 10000 });
+    await page.locator('svg[data-cy="modal-close-icon"]').nth(0).click({ force: true }); // Change after modal is fixed
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalCancelButton).not.toBeVisible({ timeout: 10000 });
+
+    await page.goto(`/profil/zamowienia/?order=${saleOrderId}`, { waitUntil: 'load'});
+    await cancelEditOrderViaAPI(page);
+  })
+  
+  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2442');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    const url = new URL(page.url());
+    const saleOrderId = url.searchParams.get('order');
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalCancelButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickConfirmationEditOrderCartModalCancelButton();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 10000 });
+
+    await page.goto(`/profil/zamowienia/?order=${saleOrderId}`, { waitUntil: 'load'});
+    await cancelEditOrderViaAPI(page);
+  })
+
+  test('M | Modal "Anuluj edycję" z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2443');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryButton();
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    const url = new URL(page.url());
+    const saleOrderId = url.searchParams.get('order');
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(orderEditPage.getCancelEditOrderCartButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickCancelEditOrderCartButton();
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalCancelButton).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalLeaveButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickConfirmationEditOrderCancelCartModalCancelButton();
+    await expect(orderEditPage.getConfirmationEditOrderCancelCartModalTitle).not.toBeVisible({ timeout: 10000 });
+
+    await page.goto(`/profil/zamowienia/?order=${saleOrderId}`, { waitUntil: 'load'});
+    await cancelEditOrderViaAPI(page);
+  })
+
+  test('M | Modal rozpoczęcia edycji z poziomu zamówienia zamyka się po kliknięciu w przycisk anuluj', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2444');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getCancelEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickCancelEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  })
+
+  test('M | Zmiana adresu dostawy', async ({ page, baseURL, addProduct, addSecondAddressDeliveryViaAPI }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2445');
+
+    await addSecondAddressDeliveryViaAPI('Adres Drugi');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+    .replace(/[^0-9,.]/g, '')
+    .replace(',', '.'));
+    console.log(summaryPrice);
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+    
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    
+    await page.getByText('Adres Drugi').click();
+
+    await page.waitForTimeout(3000);
+
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
+    const adresTitleBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('Adres Testowy').nth(0).isVisible();
+    const adressStreetBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('aleja Jana Pawła II').nth(0).isVisible();
+    const adressHouseNumberBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('1').nth(0).isVisible();
+    const adressPostalCodeBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('00-828').nth(0).isVisible();
+    expect(adresTitleBeforeEditIsVisible).toBe(true);
+    expect(adressStreetBeforeEditIsVisible).toBe(true);
+    expect(adressHouseNumberBeforeEditIsVisible).toBe(true);
+    expect(adressPostalCodeBeforeEditIsVisible).toBe(true);
+
+    const adresTitleAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Adres Drugi').nth(0).isVisible();
+    const adressStreetAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Oficerska').nth(0).isVisible();
+    const adressHouseNumberAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('4').nth(0).isVisible();
+    const adressPostalCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('05-506').nth(0).isVisible();
+    expect(adresTitleAfterEditIsVisible).toBe(true);
+    expect(adressStreetAfterEditIsVisible).toBe(true);
+    expect(adressHouseNumberAfterEditIsVisible).toBe(true);
+    expect(adressPostalCodeAfterEditIsVisible).toBe(true);
+    const button = page.getByRole('button', { name: `Do zapłaty ${summaryPrice} zł`}).nth(0);
+    await button.scrollIntoViewIfNeeded();
+    await expect(button).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(700);
+    await button.click({ force: true });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
+    await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible({ timeout: 15000 });
+    await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible({ timeout: 15000 });
+    
+    await expect(orderDetailsPage.getEditOrderButton).not.toBeVisible({ timeout: 10000 });
+
+    await expect(page.getByText('Nazwisko i imię').locator('..').locator('div').last()).toContainText('Kowalska Janina');
+
+    await expect(page.getByText('Numer telefonu').locator('..').locator('div').last()).toContainText('666555444');
+
+    await expect(page.getByText('Adres', { exact: true }).locator('..').locator('div').last()).toContainText('Oficerska 405-506 Lesznowola');
+  })
+
+  test('M | Zmiana terminu dostawy', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2446');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+
+    let deliverySlotHours = '';
+    const deliverySlotHoursLocator = page.locator('div[class*="sc-b70c308c-8 dtyaIF"]');
+    if (await deliverySlotHoursLocator.evaluate((el) => window.getComputedStyle(el).color === 'rgb(38, 38, 38)')) {
+      deliverySlotHours = (await deliverySlotHoursLocator.textContent() || '').replace(/-/g, ' - ');
+        console.log(deliverySlotHours);
+    } else {
+        console.log('Nie znaleziono elementu');
+    }
+
+    let deliverySlotDate = '';
+    const deliverySlotDateLocator = page.locator('div[class*="sc-b70c308c-4 hzmgpl"]');
+    if (await deliverySlotDateLocator.evaluate((el) => window.getComputedStyle(el).color === 'rgb(38, 38, 38)')) {
+      deliverySlotDate = await deliverySlotDateLocator.textContent() || '';
+        console.log(deliverySlotDate);
+    } else {
+        console.log('Nie znaleziono elementu');
+    }
+
+    await cartPage.clickCartSummaryPaymentButton();
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+    .replace(/[^0-9,.]/g, '')
+    .replace(',', '.'));
+    console.log(summaryPrice);
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await page.waitForTimeout(5000);
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+    
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.last().click();
+    await page.waitForTimeout(1000);
+
+    let deliverySlotHoursAfterEdit = '';
+    const deliverySlotHoursLocatorAfterEdit = page.locator('div[class*="sc-b70c308c-8 dtyaIF"]');
+    if (await deliverySlotHoursLocatorAfterEdit.evaluate((el) => window.getComputedStyle(el).color === 'rgb(38, 38, 38)')) {
+        deliverySlotHoursAfterEdit = (await deliverySlotHoursLocatorAfterEdit.textContent() || '').replace(/-/g, ' - ');
+      console.log(deliverySlotHoursAfterEdit);
+    } else {
+      console.log('Nie znaleziono elementu');
+    }
+
+    let deliverySlotDateAfterEdit = '';
+    const deliverySlotDateLocatorAfterEdit = page.locator('div[class*="sc-b70c308c-4 hzmgpl"]');
+    if (await deliverySlotDateLocatorAfterEdit.evaluate((el) => window.getComputedStyle(el).color === 'rgb(38, 38, 38)')) {
+      deliverySlotDateAfterEdit = await deliverySlotDateLocatorAfterEdit.textContent() || '';
+        console.log(deliverySlotDateAfterEdit);
+    } else {
+        console.log('Nie znaleziono elementu');
+    }
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
+    console.log(deliverySlotHours);
+    console.log(deliverySlotHoursAfterEdit);
+    const deliverySlotHoursBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny termin').locator('..').getByText(deliverySlotHours).nth(0).isVisible();
+    expect(deliverySlotHoursBeforeEditIsVisible).toBe(true);
+    const deliverySlotHoursAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText(deliverySlotHoursAfterEdit).nth(0).isVisible();
+    expect(deliverySlotHoursAfterEditIsVisible).toBe(true);
+
+    const button = page.getByRole('button', { name: `Do zapłaty ${summaryPrice} zł`}).nth(0);
+    await button.scrollIntoViewIfNeeded();
+    await expect(button).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(700);
+    await button.click({ force: true });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
+    await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible({ timeout: 15000 });
+    await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible({ timeout: 15000 });
+    
+    await expect(orderDetailsPage.getEditOrderButton).not.toBeVisible({ timeout: 10000 });
+
+    const deliverySlotDateAfterEditFormatted = deliverySlotDateAfterEdit.replace(/^[^\d]+/, '');
+    console.log(deliverySlotDateAfterEditFormatted);
+
+    const deliverySlotHoursAfterEditWithoutSpaces = deliverySlotHoursAfterEdit.replace(/---/g, ' - ');
+    console.log(deliverySlotHoursAfterEditWithoutSpaces);
+
+    await expect(page.getByText('Godzina dostawy').locator('..').locator('div').last()).toContainText(deliverySlotHoursAfterEditWithoutSpaces);
+    await expect(page.getByText('Termin dostawy').locator('..').locator('div').last()).toContainText(deliverySlotDateAfterEditFormatted);
+  })
+
+  test('M | Dodanie kodu rabatowego kwotowego', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2447');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+    .replace(/[^0-9,.]/g, '')
+    .replace(',', '.'));
+    console.log(summaryPrice);
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
+    await cartPage.clickCartExpandCollapseButton();
+    await cartPage.getCartAvailableCodesButton.click();
+
+    await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(1000);
+
+    await page.getByText('-10zł').locator('..').locator('button').click();
+
+    await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
+
+    const summaryPriceAfterChanges = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+        .replace(/[^0-9,.]/g, '')
+        .replace(',', '.'));
+
+    console.log(summaryPriceAfterChanges);
+
+    const expectedPrice = summaryPrice -10;
+    expect(Number(summaryPriceAfterChanges.toFixed(2))).toBe(Number(expectedPrice.toFixed(2)));
+
+    const priceDifference = Math.abs((summaryPriceAfterChanges - summaryPrice)).toFixed(2).replace(/\.?0+$/, '');
+    console.log('Różnica w cenie:', priceDifference);
+    const priceDifferenceAfterEdit = Math.abs((summaryPrice - parseFloat(priceDifference))).toFixed(2).replace(/\.?0+$/, '');
+
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
+    const discountCodeBeforeEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('Brak').nth(0).isVisible();
+    expect(discountCodeBeforeEditIsNotVisible).toBe(true);
+    const discountCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Zmieniasz na:KK10').nth(0).isVisible();
+    expect(discountCodeAfterEditIsVisible).toBe(true);
+    const button = page.getByRole('button', { name: `Do zapłaty ${priceDifferenceAfterEdit} zł`}).nth(0);
+    await button.scrollIntoViewIfNeeded();
+    await expect(button).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(700);
+    await button.click({ force: true });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
+    await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible({ timeout: 15000 });
+    await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible({ timeout: 15000 });
+    
+    await expect(orderDetailsPage.getEditOrderButton).not.toBeVisible({ timeout: 10000 });
+
+    const finalPrice = parseFloat((await page.getByText('Kwota').locator('..').locator('div').last().textContent() || '0')
+      .replace(/[^0-9,.]/g, '')
+      .replace(',', '.'));
+    expect(finalPrice).toBe(summaryPriceAfterChanges);
+  })
+
+  test('M | Dodanie kodu rabatowego procentowego', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2448');
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+    await cartPage.clickCartSummaryPaymentButton();
+
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+    .replace(/[^0-9,.]/g, '')
+    .replace(',', '.'));
+    console.log(summaryPrice);
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
+    await cartPage.clickCartExpandCollapseButton();
+    await cartPage.getCartAvailableCodesButton.click();
+
+    await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(1000);
+
+    await page.getByText('-10%').locator('..').locator('button').click();
+
+    await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
+
+    const summaryPriceAfterChanges = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+        .replace(/[^0-9,.]/g, '')
+        .replace(',', '.'));
+
+    console.log(summaryPriceAfterChanges);
+
+    const expectedPrice = summaryPrice * 0.9;
+    expect(Number(summaryPriceAfterChanges.toFixed(2))).toBe(Number(expectedPrice.toFixed(2)));
+
+    const priceDifference = Math.abs((summaryPriceAfterChanges - summaryPrice)).toFixed(2).replace(/\.?0+$/, '');
+    console.log('Różnica w cenie:', priceDifference);
+    const priceDifferenceAfterEdit = Math.abs((summaryPrice - parseFloat(priceDifference))).toFixed(2).replace(/\.?0+$/, '');
+
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
+    const discountCodeBeforeEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('Brak').nth(0).isVisible();
+    expect(discountCodeBeforeEditIsNotVisible).toBe(true);
+    const discountCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Zmieniasz na:KP10').nth(0).isVisible();
+    expect(discountCodeAfterEditIsVisible).toBe(true);
+    const button = page.getByRole('button', { name: `Do zapłaty ${priceDifferenceAfterEdit} zł`}).nth(0);
+    await button.scrollIntoViewIfNeeded();
+    await expect(button).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(700);
+    await button.click({ force: true });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
+    await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible({ timeout: 15000 });
+    await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible({ timeout: 15000 });
+    
+    await expect(orderDetailsPage.getEditOrderButton).not.toBeVisible({ timeout: 10000 });
+
+    const finalPrice = parseFloat((await page.getByText('Kwota').locator('..').locator('div').last().textContent() || '0')
+      .replace(/[^0-9,.]/g, '')
+      .replace(',', '.'));
+    expect(finalPrice).toBe(summaryPriceAfterChanges);
+  })
+
+  test('M | Usunięcie kodu rabatowego', async ({ page, baseURL, addProduct }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('');
+    await allure.allureId('2449'); 
+
+    test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      
+    test.setTimeout(150000);
+
+    await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+
+    await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
+    await cartPage.clickCartExpandCollapseButton();
+    await cartPage.getCartAvailableCodesButton.click();
+
+    await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(1000);
+
+    await page.getByText('-10zł').locator('..').locator('button').click();
+
+    await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
+
+    await cartPage.clickCartSummaryButton();
+    await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
+    await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
+    await cartPage.clickCartSummaryPaymentButton();
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
+    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
+    await page.getByLabel(paymentMethodCard).check();
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+    await paymentsPage.checkStatue();
+    const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+    .replace(/[^0-9,.]/g, '')
+    .replace(',', '.'));
+    console.log(summaryPrice);
+    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getEditOrderButton).toBeVisible({ timeout: 10000 });
+    
+    await orderDetailsPage.clickEditOrderButton();
+    await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
+    await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
+    await orderEditPage.clickApplyEditOrderModalButton();
+    await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
+  
+    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
+
+    await page.goto('/koszyk', { waitUntil: 'load'});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+
+    await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
+    await cartPage.clickCartExpandCollapseButton();
+    await expect(cartPage.getSummaryDeleteDiscountCodeButton).toBeVisible();
+    await cartPage.getSummaryDeleteDiscountCodeButton.click();
+    await expect(cartPage.getSummaryDeleteDiscountCodeButton).not.toBeVisible({ timeout: 5000 });
+    await expect(cartPage.getActiveDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
+    await expect(cartPage.getDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
+
+    const summaryPriceAfterChanges = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
+        .replace(/[^0-9,.]/g, '')
+        .replace(',', '.'));
+
+    console.log(summaryPriceAfterChanges);
+
+    const expectedPrice = summaryPrice +10;
+    expect(Number(summaryPriceAfterChanges.toFixed(2))).toBe(Number(expectedPrice.toFixed(2)));
+
+    const priceDifference = Math.abs((summaryPriceAfterChanges - summaryPrice)).toFixed(2).replace(/\.?0+$/, '');
+    console.log('Różnica w cenie:', priceDifference);
+
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
+    await orderEditPage.clickApplyEditOrderCartButton();
+
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
+    const discountCodeBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('KK10').nth(0).isVisible();
+    expect(discountCodeBeforeEditIsVisible).toBe(true);
+    const discountCodeAfterEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Brak').nth(0).isVisible();
+    expect(discountCodeAfterEditIsNotVisible).toBe(true);
+
+    const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`}).nth(0);
+    await button.scrollIntoViewIfNeeded();
+    await expect(button).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(700);
+    await button.click({ force: true });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
+    await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
+    await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
+    await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
+    await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
+
+    await paymentsPage.clickOrderDetailsButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
+    await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible({ timeout: 15000 });
+    await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible({ timeout: 15000 });
+    
+    await expect(orderDetailsPage.getEditOrderButton).not.toBeVisible({ timeout: 10000 });
+
+    const finalPrice = parseFloat((await page.getByText('Kwota').locator('..').locator('div').last().textContent() || '0')
+      .replace(/[^0-9,.]/g, '')
+      .replace(',', '.'));
+    expect(finalPrice).toBe(summaryPriceAfterChanges);
+    expect(Number(finalPrice.toFixed(2))).toBe(Number(expectedPrice.toFixed(2)));
+  })
 
   test.describe('Edycja zamówienia z dopłatą', async () => {
 
-    test('M | Dopłata do zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
+    test('M | Dopłata do zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL, browser }) => {
+
+    await allure.tags('Mobilne', 'Edycja zamówienia');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Profil');
+    await allure.suite('Testy edycji zamówienia');
+    await allure.subSuite('Edycja zamówienia z dopłatą');
+    await allure.allureId('2450');
         
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
@@ -95,9 +1199,13 @@ test.describe('Testy edycji zamówienia', async () => {
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
+    await page.waitForTimeout(1000);
     await cartPage.clickCartSummaryPaymentButton();
+    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
     await page.getByLabel(paymentMethodBlik).check();
     await paymentsPage.enterBlikCode(paymentMethodBlikCode);
+    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
     const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
     .replace(/[^0-9,.]/g, '')
@@ -259,14 +1367,27 @@ test.describe('Testy edycji zamówienia', async () => {
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await cartPage.clickCartSummaryPaymentButton();
-    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
+    await expect(page.getByText('Metoda płatności')).toBeVisible({ timeout: 15000 });
+    await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 15000 });
     await orderEditPage.clickApplyEditOrderCartButton();
+    const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(0);
+    const project = browser.browserType().name();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-    const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+    if (project === 'webkit') {
+      await page.evaluate(async () => {
+        window.scrollBy(0, 1550)
+        await new Promise(r => setTimeout(r, 700));
+        window.scrollBy(0, 500)
+        await new Promise(r => setTimeout(r, 700));
+      });
+    } else {
+      await page.mouse.wheel(0, 1500);
+      await page.waitForTimeout(700);
+      await page.mouse.wheel(0, 500);
+      await page.waitForTimeout(700);
+    }
+
     await expect(button).toBeVisible({ timeout: 5000 });
-    await page.mouse.move(960, 540);
-    await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);
     await button.click({ force: true });
 
@@ -323,7 +1444,15 @@ test.describe('Testy edycji zamówienia', async () => {
     expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z BLIK na przelew', async ({ page, baseURL, browser, addProduct }) => {
+      
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z dopłatą');
+      await allure.allureId('2451');
+
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -342,9 +1471,12 @@ test.describe('Testy edycji zamówienia', async () => {
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
+      await page.waitForTimeout(1000);
       await cartPage.clickCartSummaryPaymentButton();
+      await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
       await page.getByLabel(paymentMethodBlik).check();
       await paymentsPage.enterBlikCode(paymentMethodBlikCode);
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -453,19 +1585,37 @@ test.describe('Testy edycji zamówienia', async () => {
       console.log('Różnica w cenie:', priceDifference);
 
       await cartPage.clickCartSummaryButton();
-
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await cartPage.clickCartSummaryPaymentButton();
+      await expect(page.getByText('Metoda płatności')).toBeVisible({ timeout: 15000 });
+      
+      for (let i = 0; i < 2; i++) {
+        await cartPage.clickCartExpandCollapseButton();
+        await page.waitForTimeout(1000);
+      }
 
       await page.getByLabel('Przelew online').check();
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
-  
       await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(0);
+      const project = browser.browserType().name();
+
+      if (project === 'webkit') {
+        await page.evaluate(async () => {
+          window.scrollBy(0, 1550)
+          await new Promise(r => setTimeout(r, 700));
+          window.scrollBy(0, 500)
+          await new Promise(r => setTimeout(r, 700));
+        });
+      } else {
+        await page.mouse.wheel(0, 1500);
+        await page.waitForTimeout(700);
+        await page.mouse.wheel(0, 500);
+        await page.waitForTimeout(700);
+      }
+
       await expect(button).toBeVisible({ timeout: 5000 });
-      await page.mouse.move(960, 540);
-      await page.mouse.wheel(0, 1500);
       await page.waitForTimeout(700);
       await button.click({ force: true });
   
@@ -541,7 +1691,13 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Dopłata do zamówienia z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z dopłatą');
+      await allure.allureId('2452');
       
       test.setTimeout(150000);
   
@@ -562,6 +1718,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodBlik).check();
       await paymentsPage.enterBlikCode(paymentMethodBlikCode);
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -732,7 +1889,13 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Dopłata do zamówienia z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z dopłatą');
+      await allure.allureId('2453');
       
       test.setTimeout(150000);
   
@@ -752,6 +1915,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodPrzelewy24).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -958,7 +2122,13 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Dopłata do zamówienia z przelewu na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z dopłatą');
+      await allure.allureId('2454');
       
       test.setTimeout(150000);
   
@@ -978,6 +2148,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodPrzelewy24).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -1174,7 +2345,13 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Dopłata do zamówienia z karty przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z dopłatą');
+      await allure.allureId('2455');
       
       test.setTimeout(150000);
   
@@ -1194,6 +2371,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodCard).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -1374,7 +2552,13 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Dopłata do zamówienia z karty przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z dopłatą');
+      await allure.allureId('2456');
       
       test.setTimeout(150000);
   
@@ -1394,6 +2578,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodCard).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -1593,7 +2778,14 @@ test.describe('Testy edycji zamówienia', async () => {
   test.describe('Edycja zamówienia ze zwrotem środków', async () => {
 
     test('M | Zwrot środków zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
-        
+      
+        await allure.tags('Mobilne', 'Edycja zamówienia');
+        await allure.epic('Mobilne');
+        await allure.parentSuite('Profil');
+        await allure.suite('Testy edycji zamówienia');
+        await allure.subSuite('Edycja zamówienia ze zwrotem środków');
+        await allure.allureId('2457');
+
         test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
         test.setTimeout(150000);
@@ -1624,6 +2816,7 @@ test.describe('Testy edycji zamówienia', async () => {
         await cartPage.clickCartSummaryPaymentButton();
         await page.getByLabel(paymentMethodBlik).check();
         await paymentsPage.enterBlikCode(paymentMethodBlikCode);
+        await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
         await paymentsPage.checkStatue();
         const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
         .replace(/[^0-9,.]/g, '')
@@ -1828,6 +3021,13 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Zwrot środków z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
+
+        await allure.tags('Mobilne', 'Edycja zamówienia');
+        await allure.epic('Mobilne');
+        await allure.parentSuite('Profil');
+        await allure.suite('Testy edycji zamówienia');
+        await allure.subSuite('Edycja zamówienia z zwrotem środków');
+        await allure.allureId('2458');
           
         test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
@@ -1849,6 +3049,7 @@ test.describe('Testy edycji zamówienia', async () => {
         await cartPage.clickCartSummaryPaymentButton();
         await page.getByLabel(paymentMethodBlik).check();
         await paymentsPage.enterBlikCode(paymentMethodBlikCode);
+        await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
         await paymentsPage.checkStatue();
         const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
         .replace(/[^0-9,.]/g, '')
@@ -2018,6 +3219,14 @@ test.describe('Testy edycji zamówienia', async () => {
       })
 
     test('M | Zwrot środków z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z zwrotem środków');
+      await allure.allureId('2459');
+
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2039,6 +3248,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodBlik).check();
       await paymentsPage.enterBlikCode(paymentMethodBlikCode);
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -2209,6 +3419,14 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Zwrot środków z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z zwrotem środków');
+      await allure.allureId('2460');
+
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2229,6 +3447,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodPrzelewy24).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -2425,6 +3644,14 @@ test.describe('Testy edycji zamówienia', async () => {
     })
     
     test('M | Zwrot środków z przelewu na zapłatę kartą przy odbiorze', async ({ page, baseURL, addProduct }) => {
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z zwrotem środków');
+      await allure.allureId('2461');
+
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2445,6 +3672,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodPrzelewy24).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -2641,6 +3869,14 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Zwrot środków z zapłaty kartą przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z zwrotem środków');
+      await allure.allureId('2462');
+
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2661,6 +3897,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodCard).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')
@@ -2841,6 +4078,14 @@ test.describe('Testy edycji zamówienia', async () => {
     })
 
     test('M | Zwrot środków z zapłaty kartą przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
+
+      await allure.tags('Mobilne', 'Edycja zamówienia');
+      await allure.epic('Mobilne');
+      await allure.parentSuite('Profil');
+      await allure.suite('Testy edycji zamówienia');
+      await allure.subSuite('Edycja zamówienia z zwrotem środków');
+      await allure.allureId('2463');
+
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
       
       test.setTimeout(150000);
@@ -2861,6 +4106,7 @@ test.describe('Testy edycji zamówienia', async () => {
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel(paymentMethodCard).check();
+      await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
       await paymentsPage.checkStatue();
       const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
       .replace(/[^0-9,.]/g, '')

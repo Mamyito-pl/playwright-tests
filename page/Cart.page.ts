@@ -65,8 +65,16 @@ export default class CartPage {
         await this.getCartDrawerToCartButton.click();
     }
 
+    async clickCartExpandCollapseButton() {
+        await this.getCartExpandCollapseButton.click();
+    }
+
     get getCartPaymentConfirmationButtonButton() {
         return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_payment_confirmation' : '#payment-floating-div #cart_summary_payment_confirmation')
+    }
+
+    get getCartPaymentConfirmationDisabledButton() {
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_proceed_payment_button' : '#payment-floating-div #cart_summary_proceed_payment_button')
     }
 
     get getProductCartConfirmButton() {
@@ -187,5 +195,9 @@ export default class CartPage {
 
     get getProductPrices() {
         return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_unit_price b' : 'div[data-sentry-element="InsideWrapper"] #cart_unit_price b').last();;
+    }
+
+    get getCartExpandCollapseButton() {
+        return this.page.locator('button[data-cy="cart-expand-button"]');
     }
 }

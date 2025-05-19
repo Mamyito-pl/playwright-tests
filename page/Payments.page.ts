@@ -34,7 +34,7 @@ export default class PaymentsPage {
     }
 
     async checkStatue() {
-        await this.page.check(selectors.PaymentsPage.common.statueCheckbox);
+        await this.getStatueCheckbox.check();
     }
 
     async enterBlikCode(blikCode: string) {

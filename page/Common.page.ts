@@ -16,6 +16,10 @@ export default class CommonPage {
         await this.getCartButton.click();
     }
 
+    async clickModalCloseIcon() {
+        await this.getModalCloseIcon.click({ force: true });
+    }
+
     get getMessage() {
         return this.page.locator('div[role="status"]');
     }
@@ -34,5 +38,9 @@ export default class CommonPage {
 
     get getCartProductsPrice() {
         return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="IconLabel"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Amount"]');
+    }
+
+    get getModalCloseIcon() {
+        return this.page.locator('svg[data-cy="modal-close-icon"]');
     }
 }

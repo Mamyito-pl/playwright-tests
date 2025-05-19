@@ -12,7 +12,7 @@ let commonPage: CommonPage;
 
 setup('Autoryzacja', async ({ page }) => {
 
-  page.setDefaultTimeout(80000);
+  setup.setTimeout(100000);
 
   loginPage = new LoginPage(page);
   mainLogoutPage = new MainLogoutPage(page);
