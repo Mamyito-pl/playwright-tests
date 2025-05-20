@@ -82,7 +82,7 @@ export default class CartPage {
     }
 
     get getEmptyCartNotification() {
-        return this.page.locator(selectors.CartPage.common.emptyCartNotification)
+        return this.page.locator('div[data-sentry-component="CartProductsList"]')
     }
 
     get getProductList() {

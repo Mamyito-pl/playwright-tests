@@ -19,7 +19,6 @@
         "common": {
             "clearCartButton": "#clear_cart_button",
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
-            "emptyCartNotification": "div[data-sentry-source-file='CartProductsList.tsx'] div",
             "productCartList": "div[data-sentry-element='InsideWrapper']",
             "productCartListItemCount": "div[class*='cart-product-buttons'] div[data-sentry-element='StyledProductQuantityInput'] div input",
             "productCartListPrice": "div[class*='cart-product-buttons'] + div",
