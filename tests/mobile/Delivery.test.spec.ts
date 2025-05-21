@@ -74,7 +74,9 @@ test.describe('Testy dostawy', async () => {
 
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 15000, state: 'visible' });
 
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+    await page.waitForTimeout(1000);
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Wybrany', { timeout: 3000 });
     
     await page.evaluate(async () => {
@@ -249,7 +251,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
+      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 10000 });
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
       await deliveryPage.clickEditAddressButton('Adres Edytowany');

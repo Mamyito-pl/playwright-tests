@@ -21,7 +21,8 @@ export default class DeliveryPage {
     }
 
     async clickEditAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
+        const button = await this.getEditAddressButton(addressName);
+        await button.click();
     }
 
     async clickEditInvoiceAddressButton(addressName: string) {
@@ -34,6 +35,10 @@ export default class DeliveryPage {
 
     async clickDeleteInvoiceAddressButton(addressName: string) {
         return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+    }
+
+    async getEditAddressButton(addressName: string) {
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-pencil"]');
     }
 
     get getDeliverySlotButton() {
