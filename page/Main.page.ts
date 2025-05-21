@@ -30,7 +30,7 @@ export default class MainPage {
     }
 
     get getStrefaMamityButton() {
-        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] a[href="/strefa-mamity"] button:has-text("Strefa Mamity")' : 'div[data-sentry-element="WebContent"] a[href="/strefa-mamity"] button:has-text("Strefa Mamity")')
+        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] a[href="/strefa-mamity"] button:has-text("Strefa Niskich Cen")' : 'div[data-sentry-element="WebContent"] a[href="/strefa-mamity"] button:has-text("Strefa Niskich Cen")')
     }
 
     get getDiscountsButton() {
