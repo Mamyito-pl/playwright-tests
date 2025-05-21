@@ -333,7 +333,9 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.getDeliverySlotButton.first().click();
+      await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+      await page.waitForTimeout(1000);
+      await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
@@ -1017,7 +1019,9 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.getDeliverySlotButton.first().click();
+      await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+      await page.waitForTimeout(1000);
+      await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
@@ -1089,7 +1093,9 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-      await deliveryPage.getDeliverySlotButton.first().click();
+      await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+      await page.waitForTimeout(1000);
+      await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Płatność kartą przy odbiorze').check();
       await paymentsPage.checkStatue();
