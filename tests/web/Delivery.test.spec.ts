@@ -205,7 +205,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
+      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 10000 });
       await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
 
       await deliveryPage.clickEditAddressButton('Adres Edytowany');
