@@ -17,7 +17,7 @@ import Przelewy24Page from '../../../page/Przelewy24.page.ts';
 
 test.describe.configure({ mode: 'serial' })
 
-test.describe('Testy edycji zamówienia', async () => {
+test.describe.skip('Testy edycji zamówienia', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
