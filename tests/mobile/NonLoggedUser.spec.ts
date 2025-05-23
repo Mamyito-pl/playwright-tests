@@ -53,8 +53,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
 
   test('M | Strona główna otwiera się ze wszystkimi wymaganymi polami', async ({ page }) => {
 
-    await allure.tags('Mobile', 'Niezalogowany użytkownik');
-    await allure.epic('Mobile');
+    await allure.tags('Mobilne', 'Niezalogowany użytkownik');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Niezalogowany użytkownik');
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
@@ -109,8 +109,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
 
   test('M | Po dodaniu do koszyka produktu wyświetla się modal z dodaniem kodu pocztowego', async ({ page }) => {
 
-    await allure.tags('Mobile', 'Niezalogowany użytkownik');
-    await allure.epic('Mobile');
+    await allure.tags('Mobilne', 'Niezalogowany użytkownik');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Niezalogowany użytkownik');
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
@@ -125,8 +125,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
 
   test('M | Po dodaniu do koszyka produktów na wartość >150 i przejściu dalej z koszyka pojawia się modal z logowaniem', async ({ page, baseURL }) => {
 
-    await allure.tags('Web', 'Niezalogowany użytkownik');
-    await allure.epic('Webowe');
+    await allure.tags('Mobilne', 'Niezalogowany użytkownik');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Niezalogowany użytkownik');
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
@@ -157,8 +157,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     
   test('M | Alkoholowy produkt jest jako zablurowany', async ({ page }) => {
 
-    await allure.tags('Web', 'Niezalogowany użytkownik');
-    await allure.epic('Webowe');
+    await allure.tags('Mobilne', 'Niezalogowany użytkownik');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Niezalogowany użytkownik');
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
@@ -180,8 +180,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
 
   test('M | Wyświetlony produkt alkoholowy ma napis "Potwierdź datę urodzenia"', async ({ page }) => {
 
-    await allure.tags('Web', 'Niezalogowany użytkownik');
-    await allure.epic('Webowe');
+    await allure.tags('Mobilne', 'Niezalogowany użytkownik');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Niezalogowany użytkownik');
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
@@ -197,8 +197,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
   
   test('M | Po kliknięciu na produkt alkoholowy wyświetla się modal z logowaniem', async ({ page }) => {
 
-    await allure.tags('Web', 'Niezalogowany użytkownik');
-    await allure.epic('Webowe');
+    await allure.tags('Mobilne', 'Niezalogowany użytkownik');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Niezalogowany użytkownik');
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
