@@ -460,8 +460,8 @@ test.describe('Testy koszyka', async () => {
 
     test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', async ({ page, addProduct, baseURL }) => {
 
-      await allure.tags('Mobilne', 'Koszyk');
-      await allure.epic('Mobilne');
+      await allure.tags('Web', 'Koszyk');
+      await allure.epic('Webowe');
       await allure.parentSuite('Koszyk');
       await allure.suite('Testy koszyka');
       await allure.subSuite('Kody rabatowe');

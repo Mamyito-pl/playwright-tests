@@ -28,7 +28,7 @@ export default class DeliveryAdressesPage {
         return this.page.getByText('Dodaj nowy adres');
     }
 
-    get getDeliveryAdressesTitle() {
+    get getDeliveryAddressesTitle() {
         return this.page.locator('#profile_details_delivery_addresses:has-text("Adresy dostaw")');
     }
 
