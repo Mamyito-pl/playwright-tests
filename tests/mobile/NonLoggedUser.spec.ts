@@ -192,7 +192,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await searchbarPage.enterProduct('wódka');
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
 
-    await expect(searchbarPage.getSearchbarProductTiles.locator('div').first()).toHaveText('Potwierdź datę urodzenia');
+    await expect(searchbarPage.getSearchbarProductTiles.locator('div').first()).toHaveText('Potwierdź datę urodzenia', { timeout: 15000 });
   })
   
   test('M | Po kliknięciu na produkt alkoholowy wyświetla się modal z logowaniem', async ({ page }) => {

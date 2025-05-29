@@ -401,7 +401,7 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async () => {
         window.scrollBy(0, 1850)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 900)
+        window.scrollBy(0, 500)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
@@ -417,7 +417,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
   })
 
-  test('M | Możliwość przejścia do "Strefa Mamity" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do "Strefa Niskich Cen" poprzez przycisk menu', async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -428,7 +428,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getStrefaMamityButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/strefa-mamity', { timeout: 10000 });
-    await expect(page.locator('div[data-sentry-element="TitleMobile"]:has-text("Strefa Mamity")')).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('div[data-sentry-element="TitleMobile"]:has-text("Strefa Niskich Cen")')).toBeVisible({ timeout: 15000 });
   })
     
   test('M | Możliwość przejścia do "Promocje" poprzez przycisk menu', async ({ page, baseURL }) => {
@@ -484,7 +484,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getFavouritesButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 10000 });
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 15000 });
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
   })
 
   test('M | Możliwość zapisania się do newslettera', async ({ page, browser }) => {

@@ -200,10 +200,11 @@ export const test = baseTest.extend<MyFixtures>({
 
     const addProduct = async (product: string) => {
 
-      await searchbarPage.getSearchbarInput.click();
+      await searchbarPage.clickSearchbar();
       await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
       await searchbarPage.enterProduct(product);
       await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
+      await page.waitForTimeout(1000);
       await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
       await page.waitForTimeout(4000);
     };
@@ -545,13 +546,15 @@ export const test = baseTest.extend<MyFixtures>({
   cancelOrderViaAPI: async ({ request }, use) => {
     const cancelOrderViaAPI = async (page: Page) => {
 
-      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
-        headers: { 'Accept': 'application/json' },
-        data: {
-          email: `${process.env.EMAIL}`,
-          password: `${process.env.PASSWORD}`,
-        },
-      });
+      const tokenResponse = await utility.retryUntil200(
+        async () => request.post(`${process.env.APIURL}/api/login`, {
+          headers: { 'Accept': 'application/json' },
+          data: {
+            email: `${process.env.EMAIL}`,
+            password: `${process.env.PASSWORD}`,
+          },
+        })
+      );
       const responseBodyToken = await tokenResponse.json();
       const token = responseBodyToken.data.token;
 

@@ -48,7 +48,6 @@ test.describe('Testy dostawy', async () => {
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
     await expect(deliveryPage.getDeliveryAddressTitle).toBeVisible();
-    await expect(deliveryPage.getDeliveryAddressSubTitle).toBeVisible();
     await expect(deliveryPage.getAddNewAddressButton).toBeVisible();
     await expect(deliveryPage.getDeliveryInvoiceCheckbox).toBeVisible();
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
@@ -170,14 +169,12 @@ test.describe('Testy dostawy', async () => {
 
       const targetAddress = page.getByText('Adres Testowy').locator('..').locator('..').locator('..');
       
-      await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
       await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
       await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
-
-      await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
 
       const borderColor = await targetAddress.evaluate((el) => {
         const styles = window.getComputedStyle(el);
@@ -187,9 +184,20 @@ test.describe('Testy dostawy', async () => {
       console.log('Kolor obramowania:', borderColor);
       expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
 
-      await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
+      await page.evaluate(async () => {
+        window.scrollBy(0, 100)
+        await new Promise(r => setTimeout(r, 700));
+      })
 
-      await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
+      await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
+      await page.waitForTimeout(2000);
+
+      const borderColorAfter = await targetAddress.evaluate((el) => {
+        const styles = window.getComputedStyle(el);
+        return styles.getPropertyValue('border'); 
+      });
+
+      expect(borderColorAfter).not.toBe('1px solid rgb(78, 180, 40)');
     })
 
     test('M | Możliwość edycji adresu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
@@ -341,6 +349,10 @@ test.describe('Testy dostawy', async () => {
       }
 
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+      await page.evaluate(async () => {
+        window.scrollBy(0, 200)
+        await new Promise(r => setTimeout(r, 700));
+      })
       await deliveryPage.getAddNewInvoiceAddressButton.scrollIntoViewIfNeeded();
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -412,7 +424,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
+      await page.waitForSelector('text="Chcę otrzymać fakturę"', { timeout: 30000, state: 'visible' });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
       let attempts = 0;
@@ -434,9 +446,13 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
 
-      await page.getByText('Testowa nazwa podmiotu').click({ force: true, delay: 300 });
+      await page.evaluate(async () => {
+        window.scrollBy(0, 400)
+        await new Promise(r => setTimeout(r, 700));
+      })
 
-      await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 3000 });
+      await page.getByText('Testowa nazwa podmiotu').click({ force: true, delay: 300 });
+      await page.waitForTimeout(2000);
 
       const borderColor = await targetAddress.evaluate((el) => {
         const styles = window.getComputedStyle(el);

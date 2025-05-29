@@ -104,7 +104,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -178,7 +178,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -239,7 +239,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -318,7 +318,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -397,7 +397,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -476,7 +476,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -542,7 +542,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
     console.log(summaryPrice);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -683,7 +683,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
     console.log(summaryPrice);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -813,7 +813,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
     console.log(summaryPrice);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -940,7 +940,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
     console.log(summaryPrice);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -1076,7 +1076,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
     console.log(summaryPrice);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -1211,7 +1211,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
     console.log(summaryPrice);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -1482,7 +1482,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -1724,7 +1724,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -1921,7 +1921,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -2154,7 +2154,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -2377,7 +2377,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -2584,7 +2584,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -2822,7 +2822,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         .replace(/[^0-9,.]/g, '')
         .replace(',', '.'));
         console.log(summaryPrice);
-        await cartPage.clickCartPaymentConfirmationButtonButton();
+        await cartPage.clickCartPaymentConfirmationButton();
         await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
         await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -3055,7 +3055,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         .replace(/[^0-9,.]/g, '')
         .replace(',', '.'));
         console.log(summaryPrice);
-        await cartPage.clickCartPaymentConfirmationButtonButton();
+        await cartPage.clickCartPaymentConfirmationButton();
         await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
     
         await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -3254,7 +3254,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -3453,7 +3453,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -3678,7 +3678,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -3903,7 +3903,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -4112,7 +4112,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       .replace(/[^0-9,.]/g, '')
       .replace(',', '.'));
       console.log(summaryPrice);
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });

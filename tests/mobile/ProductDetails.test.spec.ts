@@ -11,6 +11,8 @@ import * as utility from '../../utils/utility-methods';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 
+test.describe.configure({ mode: 'serial' })
+
 test.describe('Testy szczegółów produktu', async () => {
 
   let productDetailsPage: ProductDetailsPage;
@@ -86,16 +88,16 @@ test.describe('Testy szczegółów produktu', async () => {
 
     const formattedNewProductPrice = newProductPrice[0].replace(/\s+/g, '');
     const formattedProductPrice = productPrice[0].replace(/\s+/g, '');
-    const formattedNewProductSetFirstQuantityButton = productNewSetFirstQuantityButton[0].replace(/\s+/g, '');
-    const formattedNewProductSetSecondQuantityButton = productNewSetSecondQuantityButton[0].replace(/\s+/g, '');
+    const formattedNewProductSetFirstQuantityButton = productNewSetFirstQuantityButton[0];
+    const formattedNewProductSetSecondQuantityButton = productNewSetSecondQuantityButton[0];
     
     expect(newProductBrandName).toEqual(productBrandName);
     expect(newProductName[0]).toContain(productName[0]);
     expect(newProductGrammar).toEqual(productGrammar);
     expect(newProductPricePerGrammar).toEqual(productPricePerGrammar);
     expect(formattedNewProductPrice).toContain(formattedProductPrice);
-    expect(productSetFirstQuantityButton[0]).toEqual(formattedNewProductSetFirstQuantityButton); // Change wen KAN-1114 is done
-    expect(productSetSecondQuantityButton[0]).toEqual(formattedNewProductSetSecondQuantityButton); // Change wen KAN-1114 is done
+    expect(productSetFirstQuantityButton[0]).toEqual(formattedNewProductSetFirstQuantityButton);
+    expect(productSetSecondQuantityButton[0]).toEqual(formattedNewProductSetSecondQuantityButton);
 
     await expect(productDetailsPage.getProductActualPriceTitle).toBeVisible();
     await expect(productDetailsPage.getAddProductButton).toBeVisible();
@@ -126,9 +128,9 @@ test.describe('Testy szczegółów produktu', async () => {
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
-    const formattedProductPrice = productPrice?.slice(0, -7);
+    const formattedProductPrice = productPrice?.slice(0, -9);
 
-    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('class', 'tabler-icon tabler-icon-check');
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     await productDetailsPage.clickAddProductButton();
 
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
@@ -160,7 +162,7 @@ test.describe('Testy szczegółów produktu', async () => {
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
 
     await productDetailsPage.getSetSecondQuantityButton.click();
-    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('class', 'tabler-icon tabler-icon-check');
+    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
 
@@ -279,8 +281,6 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
-    const productURL = page.url(); 
-
     const productName = await productDetailsPage.getProductName.textContent() || '';
 
     await productDetailsPage.getAddToFavouritesButton.click({ force: true });
@@ -290,9 +290,10 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForTimeout(2000);
 
-    await mainPage.getFavouritesButton.click();
+    await mainPage.getFavouritesButton.click({ force: true, delay: 300 });
+    await page.waitForLoadState('domcontentloaded');
 
-    await favouritesPage.getProductNameWithBrand.first().waitFor({ state: 'visible', timeout: 10000 })
+    await expect(favouritesPage.getProductNameWithBrand.first()).toBeVisible({ timeout: 15000 });
 
     const allProductNames = await favouritesPage.getProductNameWithBrand.allTextContents();
 
@@ -302,7 +303,8 @@ test.describe('Testy szczegółów produktu', async () => {
 
     expect(productFound).toBe(true);
 
-    await page.goto(productURL, { waitUntil: 'domcontentloaded' });
+    await page.getByText(productName).click();
+    await page.waitForLoadState('domcontentloaded');
 
     await productDetailsPage.getAddToFavouritesButton.click({ force: true });
 
@@ -311,9 +313,12 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForTimeout(2000);
 
-    await mainPage.getFavouritesButton.click();
+    await mainPage.getFavouritesButton.click({ force: true, delay: 300 });
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
+    await page.reload();
+    await page.waitForLoadState('domcontentloaded');
 
-    await favouritesPage.getProductNameWithBrand.first().waitFor({ state: 'visible', timeout: 10000 })
+    await expect(favouritesPage.getProductNameWithBrand.first()).toBeVisible({ timeout: 15000 });
 
     const updatedProductNames = await favouritesPage.getProductNameWithBrand.allTextContents();
     expect(updatedProductNames.length).toBe(allProductCount - 1);
@@ -424,8 +429,8 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getMainInfoProductDropdown.click();
 
-    const mainInfoContentBrand = productDetailsPage.getMainInfoProductDropdown.locator('..').locator('..').locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName || '');
-
+    const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').locator('a[data-cy="product-page-brand-link"]').getByText(productBrandName || '');
+    
     await mainInfoContentBrand.click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/marki/' + formattedProductBrandName, { timeout: 10000 });

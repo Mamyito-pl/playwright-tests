@@ -42,7 +42,7 @@ test.describe('Testy adresy dostaw', async () => {
     
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
 
-    await expect(deliveryAddressesPage.getDeliveryAdressesTitle).toBeVisible();
+    await expect(deliveryAddressesPage.getDeliveryAddressesTitle).toBeVisible();
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
   })
 
@@ -59,7 +59,7 @@ test.describe('Testy adresy dostaw', async () => {
     
     await page.goto('profil/adresy-dostaw');
 
-    await deliveryAddressesPage.getDeliveryAdressesTitle.waitFor({ state: 'visible', timeout: 10000 });
+    await deliveryAddressesPage.getDeliveryAddressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
     await deliveryAddressesPage.clickAddNewAddressButton();
     await expect(deliveryAddressesPage.getAddressModal).toBeVisible();
@@ -246,7 +246,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     await page.goto('profil/adresy-dostaw');
 
-    await deliveryAddressesPage.getDeliveryAdressesTitle.waitFor({ state: 'visible', timeout: 10000 });
+    await deliveryAddressesPage.getDeliveryAddressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
     await deliveryAddressesPage.clickDeleteAddressButton('Adres Edytowany');
 

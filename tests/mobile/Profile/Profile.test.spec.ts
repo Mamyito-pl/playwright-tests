@@ -192,7 +192,7 @@ test.describe('Testy profilu', async () => {
       await profilePage.getProfileMenuFavouritesButton.click();
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty');
-      await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 10000 });
+      await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
   

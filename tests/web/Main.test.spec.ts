@@ -115,7 +115,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1210');
 
     await mainPage.getBannerUpperUp.click();
-    await expect(page).toHaveURL('/pakiet-powitalny', { timeout: 10000 });
+    await expect(page).toHaveURL(/\/pakiet-powitalny$/, { timeout: 10000 });
   })
 
   test('W | Po kliknięciu baneru dostawy użytkownik jest do niego przekierowany', async ({ page }) => {
@@ -128,7 +128,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1211');
 
     await mainPage.getBannerUpperDown.click();
-    await expect(page).toHaveURL('/o-dostawie/koszty-dostawy', { timeout: 10000 });
+    await expect(page).toHaveURL(/\/o-dostawie\/koszty-dostawy$/, { timeout: 10000 });
   })
 
   test('W | Możliwość przewijania slidera promocji', async ({ page }) => {
@@ -360,7 +360,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
   })
 
-  test('W | Możliwość przejścia do "Strefa Mamity" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('W | Możliwość przejścia do "Strefa Niskich Cen" poprzez przycisk menu', async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Strona główna');
     await allure.epic('Webowe');
@@ -371,7 +371,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getStrefaMamityButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/strefa-mamity', { timeout: 10000 });
-    await expect(productsListPage.getProductCategoryTitle('Strefa Mamity')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getProductCategoryTitle('Strefa Niskich Cen')).toBeVisible({ timeout: 15000 });
   })
     
   test('W | Możliwość przejścia do "Promocje" poprzez przycisk menu', async ({ page, baseURL }) => {
@@ -427,7 +427,7 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getFavouritesButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 10000 });
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 15000 });
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
   })
       
   test('W | Możliwość przejścia do "Najczęściej kupowane" poprzez przycisk menu', async ({ page, baseURL }) => {

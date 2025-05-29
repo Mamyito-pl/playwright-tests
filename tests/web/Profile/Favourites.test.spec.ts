@@ -37,7 +37,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
   })
 
   test('W | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
@@ -62,7 +62,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 })
 
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
 
     await page.waitForTimeout(1000);
 

@@ -27,7 +27,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
   let przelewy24Page: Przelewy24Page;
-  let product = 'do naczyń somat';
+  let product: string = 'janex polędwica wołowa';
   let paymentMethod = 'Płatność kartą przy odbiorze';
   
   test.beforeEach(async ({ page, addAddressDeliveryViaAPI }) => {
@@ -96,8 +96,10 @@ test.describe('Testy szczegółów zamówienia', async () => {
     }
 
     await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -111,7 +113,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await paymentsPage.checkStatue();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -207,8 +209,10 @@ test.describe('Testy szczegółów zamówienia', async () => {
     }
 
     await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -222,7 +226,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await paymentsPage.checkStatue();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -330,10 +334,12 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     test.setTimeout(350000);
 
-    await addProduct('mycia naczyń somat');
-    await searchbarPage.getProductItemCount.click();
-    await searchbarPage.getProductItemCount.type('1');
+    await addProduct(product);
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
@@ -343,7 +349,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -406,9 +412,11 @@ test.describe('Testy szczegółów zamówienia', async () => {
     test.setTimeout(350000);
 
     await addProduct(product);
-    await searchbarPage.getProductItemCount.click();
-    await searchbarPage.getProductItemCount.type('1');
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
@@ -418,7 +426,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });

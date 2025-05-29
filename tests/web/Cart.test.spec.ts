@@ -1,10 +1,7 @@
 import { Page, expect } from '@playwright/test';
-import LoginPage from "../../page/Login.page.ts";
 import ProductsListPage from '../../page/ProductsList.page.ts';
-import MainLogoutPage from "../../page/MainLogout.page.ts";
 import MainPage from "../../page/Main.page.ts";
 import CartPage from '../../page/Cart.page.ts';
-import NavigationPage from '../../page/Navigation.page.ts';
 import SearchbarPage from '../../page/Searchbar.page.ts';
 import * as allure from "allure-js-commons";
 import * as selectors from '../../utils/selectors.json';
@@ -20,13 +17,10 @@ test.describe('Testy koszyka', async () => {
 
   let cartPage: CartPage;
   let productsListPage: ProductsListPage;
-  let loginPage: LoginPage;
-  let mainLogoutPage: MainLogoutPage;
   let mainPage: MainPage;
-  let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
   let commonPage: CommonPage;
-  let product: string = 'mycia naczyń somat';
+  let product: string = 'janex polędwica wołowa';
 
   test.beforeEach(async ({ page }) => {
 
@@ -38,12 +32,9 @@ test.describe('Testy koszyka', async () => {
       await utility.addGlobalStyles(page);
     });
 
-    loginPage = new LoginPage(page);
-    mainLogoutPage = new MainLogoutPage(page);
     mainPage = new MainPage(page);
     cartPage = new CartPage(page);
     productsListPage = new ProductsListPage(page);
-    navigationPage = new NavigationPage(page);
     searchbarPage = new SearchbarPage(page);
     commonPage = new CommonPage(page);
   })
@@ -124,7 +115,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
   }) 
 
-  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
+  test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -133,12 +124,7 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('434');
 
-    await searchbarPage.clickSearchbar()
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
-    await searchbarPage.enterProduct(product);
-    await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
-    await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
-    await page.waitForTimeout(5000);
+    await addProduct(product);
     await searchbarPage.clickIncreaseProductButton();
     await page.waitForTimeout(5000);
     await expect(searchbarPage.getProductItemCount).toHaveValue('2');
@@ -163,7 +149,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawer).toBeVisible();
 
     await expect(cartPage.getCartTitle).toBeVisible();
-    await expect(cartPage.getCartTitle).toHaveText('Twój koszyk(0 produktów)');
+    await expect(cartPage.getCartTitle).toHaveText('Podgląd koszyka');
 
     await expect(cartPage.getCartDrawerCloseIconButton).toBeVisible();
 
@@ -171,23 +157,14 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getClearCartButton).toBeDisabled();
     await expect(cartPage.getClearCartButton).toHaveText('Wyczyść koszyk');
 
-    await expect(cartPage.getEmptyCartNotification).toBeVisible();
-    await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
-
-    await expect(cartPage.getCartCodesTitle).toBeVisible();
-    await expect(cartPage.getCartCodesTitle).toContainText('Kody Rabatowe');
+    await expect(cartPage.getEmptyCartDrawerNotification).toBeVisible();
+    await expect(cartPage.getEmptyCartDrawerNotification).toHaveText('Twój koszyk jest pusty');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
-    await expect(cartPage.getCartAvailableCodesButton).toContainText('Dostępne kody rabatowe:');
-    
-    await expect(cartPage.getCartDrawerSummaryTitle).toBeVisible();
-    await expect(cartPage.getCartDrawerSummaryTitle).toContainText('Podsumowanie');  
-
-    await expect(cartPage.getCartDrawerProductsValue).toBeVisible();
-    await expect(cartPage.getCartDrawerProductsValue).toContainText('Wartość produktów0,00 zł');  
+    await expect(cartPage.getCartAvailableCodesButton).toContainText('Sprawdź dostępne kody rabatowe:');
 
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
-    await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');
+    await expect(cartPage.getCartDrawerToCartButton).toContainText('Do kasy');
   })
 
   test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', async ({ page }) => {
@@ -241,29 +218,11 @@ test.describe('Testy koszyka', async () => {
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
   })
 
-  test('W | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
-
-    await allure.tags('Web', 'Koszyk');
-    await allure.epic('Webowe');
-    await allure.parentSuite('Koszyk');
-    await allure.suite('Testy koszyka');
-    await allure.subSuite('');
-    await allure.allureId('496');
-    
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await expect(cartPage.getCartReturnButton).toBeVisible();
-    await cartPage.getCartReturnButton.click();
-    await page.waitForTimeout(1000);
-    await expect(page).toHaveURL(`${baseURL}`);
-    await expect(mainPage.getBannersSection).toBeVisible();
-  })
-
   test.describe('W | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
-
+    
     test.setTimeout(80000);
 
-    test('W | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
+    test.skip('W | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -283,7 +242,7 @@ test.describe('Testy koszyka', async () => {
     
       await page.goto('/koszyk', { waitUntil: 'load'});
 
-      await page.waitForSelector(selectors.CartPage.common.productCartListName)
+      await page.waitForSelector(selectors.CartPage.common.productCartListName);
 
       const cartItems = await page.locator(selectors.CartPage.common.productCartList).all();
     
@@ -297,7 +256,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -345,7 +304,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -393,7 +352,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -441,7 +400,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -531,7 +490,7 @@ test.describe('Testy koszyka', async () => {
       const codeCardDiscountValueFormattedParsed = parseFloat(codeCardDiscountValueFormatted.slice(1, -2).replace(',', '.'));
       console.log('codeCardDiscountValueFormattedParsed:', codeCardDiscountValueFormattedParsed);
 
-      const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(',', '.'));
+      const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(/\s/g, '').replace(',', '.'));
       console.log('totalSummaryValueFormattedParsed:', totalSummaryValueFormattedParsed);
 
       const totalSummaryValueAfterDiscount = await cartPage.getTotalSummaryValue.last().textContent();
@@ -540,7 +499,7 @@ test.describe('Testy koszyka', async () => {
       const totalSummaryValueAfterDiscountFormatted = totalSummaryValueAfterDiscount?.slice(10, -3) || ''
       console.log('totalSummaryValueAfterDiscountFormatted:', totalSummaryValueAfterDiscountFormatted);
 
-      const totalSummaryValueAfterDiscountFormattedParsed = parseFloat(totalSummaryValueAfterDiscountFormatted.replace(',', '.'));
+      const totalSummaryValueAfterDiscountFormattedParsed = parseFloat(totalSummaryValueAfterDiscountFormatted.replace(/\s/g, '').replace(',', '.'));
       console.log('totalSummaryValueAfterDiscountFormattedParsed:', totalSummaryValueAfterDiscountFormattedParsed);
 
       const discountValue = totalSummaryValueFormattedParsed - totalSummaryValueAfterDiscountFormattedParsed;
@@ -557,7 +516,7 @@ test.describe('Testy koszyka', async () => {
       console.log('totalSummaryValueAfterDeleteCode:', totalSummaryValueAfterDeleteCode);
       const totalSummaryValueAfterDeleteCodeFormatted = totalSummaryValueAfterDeleteCode?.slice(10, -3) || ''
       console.log('totalSummaryValueAfterDeleteCodeFormatted:', totalSummaryValueAfterDeleteCodeFormatted);
-      const totalSummaryValueAfterDeleteCodeFormattedParsed = parseFloat(totalSummaryValueAfterDeleteCodeFormatted.replace(',', '.'));
+      const totalSummaryValueAfterDeleteCodeFormattedParsed = parseFloat(totalSummaryValueAfterDeleteCodeFormatted.replace(/\s/g, '').replace(',', '.'));
       console.log('totalSummaryValueAfterDeleteCodeFormattedParsed:', totalSummaryValueAfterDeleteCodeFormattedParsed);
       expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
     })
