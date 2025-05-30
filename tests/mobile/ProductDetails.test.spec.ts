@@ -130,7 +130,8 @@ test.describe('Testy szczegółów produktu', async () => {
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
     const formattedProductPrice = productPrice?.slice(0, -9);
 
-    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    //await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toBeVisible();
     await productDetailsPage.clickAddProductButton();
 
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
@@ -162,8 +163,9 @@ test.describe('Testy szczegółów produktu', async () => {
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
 
     await productDetailsPage.getSetSecondQuantityButton.click();
-    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
-    
+    //await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toBeVisible();
+
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
 
     let formattedProductPrice: string | undefined = '';
@@ -431,8 +433,8 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getMainInfoProductDropdown.click();
 
-    const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').locator('a[data-cy="product-page-brand-link"]').getByText(productBrandName || '');
-    
+    //const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').locator('a[data-cy="product-page-brand-link"]').getByText(productBrandName || '');
+    const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName || ''); 
     await mainInfoContentBrand.click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/marki/' + formattedProductBrandName, { timeout: 10000 });

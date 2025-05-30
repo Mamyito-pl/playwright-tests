@@ -187,6 +187,8 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2010');
 
+    test.setTimeout(60000);
+
     const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
     await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });

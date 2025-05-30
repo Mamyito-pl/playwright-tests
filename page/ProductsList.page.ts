@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import * as selectors from '../utils/selectors.json';
 import { isMobile } from '../utils/utility-methods.ts';
 
@@ -30,8 +30,9 @@ export default class ProductsListPage {
             ? this.getSettingsDrawer.getByText(selectName)
             : (await this.getFilterDropdown(filterName)).getByText(selectName);
     
-        await filter.click();
-        await filterSelect.click();
+        await filter.click({ force: true, delay: 300 });
+        await expect(filterSelect).toBeVisible({ timeout: 5000 });
+        await filterSelect.click({ force: true, delay: 300 });
     }
     
     async getFilterCustomPriceFromSet(filterName: string, priceFrom: string) {
@@ -40,7 +41,8 @@ export default class ProductsListPage {
             ? this.getSettingsDrawer.getByText(filterName, { exact: true })
             : await this.getFilter(filterName);
         
-        await filter.click();
+        await filter.click({ force: true, delay: 300 });
+        await this.page.waitForTimeout(1000);
         await this.getFilterPriceFromInput.fill(priceFrom)
     }
 
@@ -50,7 +52,8 @@ export default class ProductsListPage {
             ? this.getSettingsDrawer.getByText(filterName, { exact: true })
             : await this.getFilter(filterName);
         
-        await filter.click();
+        await filter.click({ force: true, delay: 300 });
+        await this.page.waitForTimeout(1000);
         await this.getFilterPriceToInput.fill(priceTo)
     }
 

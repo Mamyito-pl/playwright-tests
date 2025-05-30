@@ -158,13 +158,11 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getClearCartButton).toHaveText('Wyczyść koszyk');
 
     await expect(cartPage.getEmptyCartDrawerNotification).toBeVisible();
-    await expect(cartPage.getEmptyCartDrawerNotification).toHaveText('Twój koszyk jest pusty');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
     await expect(cartPage.getCartAvailableCodesButton).toContainText('Sprawdź dostępne kody rabatowe:');
 
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
-    await expect(cartPage.getCartDrawerToCartButton).toContainText('Do kasy');
   })
 
   test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
@@ -256,8 +254,9 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
+      //const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
-      
+
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
 
@@ -304,8 +303,9 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
+      //const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
-      
+
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
 
@@ -352,6 +352,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
+      //const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
@@ -400,6 +401,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
+      //const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.web.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;

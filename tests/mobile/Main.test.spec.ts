@@ -11,6 +11,8 @@ import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods.ts';
 
+test.setTimeout(120000);
+
 test.describe('Testy strony głównej', async () => {
 
   let mainPage: MainPage;

@@ -9,6 +9,7 @@ import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 import * as selectors from '../../utils/selectors.json';
 
+test.describe.configure({ mode: 'serial' });
 
 test.describe('Testy kodów rabatowych', async () => {
 

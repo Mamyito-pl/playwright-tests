@@ -9,7 +9,7 @@ export default defineConfig({
 
   retries: process.env.CI ? 2 : 0,
 
-  workers: 1,
+  workers: 2,
 
   reporter: [['html'], ['allure-playwright', {
     detail: true,

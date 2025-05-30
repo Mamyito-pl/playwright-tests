@@ -53,7 +53,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('M | Możliwość wyboru terminu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
+  test('M | Możliwość wyboru terminu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI, detachDeliverySlotViaAPI }) => {
 
     await allure.tags('Mobilne', 'Dostawa');
     await allure.epic('Mobilne');
@@ -86,6 +86,8 @@ test.describe('Testy dostawy', async () => {
     await deliveryPage.getDeliverySlotButton.last().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny', { timeout: 3000 });
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
+
+    await detachDeliverySlotViaAPI();
   })
 
   test.describe('Adres dostawy', async () => {
@@ -176,13 +178,7 @@ test.describe('Testy dostawy', async () => {
 
       await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
 
-      const borderColor = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      console.log('Kolor obramowania:', borderColor);
-      expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
+      await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
 
       await page.evaluate(async () => {
         window.scrollBy(0, 100)
@@ -190,14 +186,8 @@ test.describe('Testy dostawy', async () => {
       })
 
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
-      await page.waitForTimeout(2000);
 
-      const borderColorAfter = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      expect(borderColorAfter).not.toBe('1px solid rgb(78, 180, 40)');
+      await expect(targetAddress).not.toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
 
     test('M | Możliwość edycji adresu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
@@ -452,15 +442,8 @@ test.describe('Testy dostawy', async () => {
       })
 
       await page.getByText('Testowa nazwa podmiotu').click({ force: true, delay: 300 });
-      await page.waitForTimeout(2000);
-
-      const borderColor = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      console.log('Kolor obramowania:', borderColor);
-      expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
+      
+      await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
 
     test('M | Możliwość edycji podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {

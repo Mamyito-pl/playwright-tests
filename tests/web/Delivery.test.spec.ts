@@ -53,7 +53,7 @@ test.describe('Testy dostawy', async () => {
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
-  test('W | Możliwość wyboru terminu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI }) => {
+  test('W | Możliwość wyboru terminu dostawy', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addAddressDeliveryViaAPI, detachDeliverySlotViaAPI }) => {
 
     await allure.tags('Web', 'Dostawa');
     await allure.epic('Webowe');
@@ -78,6 +78,8 @@ test.describe('Testy dostawy', async () => {
     await deliveryPage.getDeliverySlotButton.last().click();
     await expect(deliveryPage.getDeliverySlotButton.first()).toContainText('Dostępny', { timeout: 3000 });
     await expect(deliveryPage.getDeliverySlotButton.last()).toContainText('Wybrany', { timeout: 3000 });
+
+    await detachDeliverySlotViaAPI();
   })
 
   test.describe('Adres dostawy', async () => {
@@ -281,26 +283,15 @@ test.describe('Testy dostawy', async () => {
 
       await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
 
+      await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
+
       //await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
-
-      const borderColor = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      console.log('Kolor obramowania:', borderColor);
-      expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
 
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
       //await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
 
-      const borderColorAfter = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      expect(borderColorAfter).not.toBe('1px solid rgb(78, 180, 40)');
+      await expect(targetAddress).not.toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
   })
 
@@ -437,13 +428,7 @@ test.describe('Testy dostawy', async () => {
 
       //await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
 
-      const borderColor = await targetAddress.evaluate((el) => {
-        const styles = window.getComputedStyle(el);
-        return styles.getPropertyValue('border'); 
-      });
-
-      console.log('Kolor obramowania:', borderColor);
-      expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
+      await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
 
     test('W | Możliwość edycji podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {

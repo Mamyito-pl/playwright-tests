@@ -22,7 +22,7 @@
             "productCartList": "div[data-sentry-element='InsideWrapper']",
             "productCartListItemCount": "div[class*='cart-product-buttons'] div[data-sentry-element='StyledProductQuantityInput'] div input",
             "productCartListName1": "div[data-cy='cart-product-name']",
-            "productCartListName": "div[data-sentry-element='ProductName']",
+            "productCartListName": "div[class*='hDCmXT']",
             "deleteProductConfirmButton": "div[data-sentry-element='ButtonsWrapper'] button[variant='secondary']",
             "clearCartCancelButton": "div[data-sentry-source-file='ClearCartModal.tsx'] button[variant='borderGray']",
             "cartTitle": "div[data-sentry-element='CartDrawerTitle']",
@@ -33,8 +33,7 @@
             "cartReturnButton1": "#authentication_return_button",
             "cartReturnButton": "#cart_return_button",
             "deleteProductCartIcon": "#cart_remove_product",
-            "cartDrawerToCartButton": "#to_cart_button",
-            "productCartListPrice": "div[class*='cart-product-buttons'] + div"
+            "cartDrawerToCartButton": "#to_cart_button"
         },
         "web": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
@@ -46,12 +45,14 @@
             "cartDrawerProductsValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(1)",
             "cartDrawerDeliveryCosts": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(2)",
             "cartDrawerDeliveryMinimalValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(3)",
+            "productCartListPrice": "div[class*='kYJzsY'] #cart_unit_price b",
             "productCartListPrice1": "div[data-sentry-element='InsideWrapper'] span[data-cy='cart-product-price']"
         },
         "mobile": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
             "productsNumberButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile #productsNumber",
             "cartAvailableCodesButton": "div[data-sentry-element='TabletContent'] button[data-cy='cart-promo-codes-form-button']",
+            "productCartListPrice": "div[class*='feuLvI'] #cart_unit_price b",
             "productCartListPrice1": "div[data-sentry-element='TabletContent'] span[data-cy='cart-product-price']"
         }
     },

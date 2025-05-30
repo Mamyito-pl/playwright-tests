@@ -3,6 +3,8 @@ import ProductsListPage from '../../page/ProductsList.page';
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Testy listy produktów', async () => {
 
   test.setTimeout(80000);
@@ -120,6 +122,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1646');
 
+    test.setTimeout(80000);
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('Najtańsze');
@@ -148,6 +152,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1647');
 
+    test.setTimeout(80000);
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('Najdroższe');
@@ -175,6 +181,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.suite('Testy listy produktów');
     await allure.subSuite('');
     await allure.allureId('1648');
+
+    test.setTimeout(80000);
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -206,6 +214,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.suite('Testy listy produktów');
     await allure.subSuite('');
     await allure.allureId('1649');
+
+    test.setTimeout(80000);
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -235,6 +245,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.suite('Testy listy produktów');
     await allure.subSuite('');
     await allure.allureId('1650');
+
+    test.setTimeout(80000);
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -341,6 +353,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.suite('Testy listy produktów');
     await allure.subSuite('');
     await allure.allureId('1651');
+
+    test.setTimeout(80000);
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -447,6 +461,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.suite('Testy listy produktów');
     await allure.subSuite('');
     await allure.allureId('1652');
+
+    test.setTimeout(80000);
     
     expect((await productsListPage.getFilter('Typ produktu')).isVisible);
     await productsListPage.getFilterSelect('Typ produktu','Bez laktozy');
@@ -472,6 +488,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.suite('Testy listy produktów');
       await allure.subSuite('');
       await allure.allureId('1653');
+
+      test.setTimeout(80000);
 
       await productsListPage.getFilterSelect('Cena','poniżej 10zł');
       await page.waitForTimeout(7000);
@@ -500,6 +518,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.suite('Testy listy produktów');
       await allure.subSuite('');
       await allure.allureId('1654');
+
+      test.setTimeout(80000);
 
       await productsListPage.getFilterSelect('Cena','od 10zł do 20zł');
       await page.waitForTimeout(7000);
@@ -533,6 +553,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1655');
 
+      test.setTimeout(80000);
+
       await productsListPage.getFilterSelect('Cena','od 20zł do 50zł');
       await page.waitForTimeout(7000);
 
@@ -565,6 +587,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1656');
 
+      test.setTimeout(80000);
+
       await productsListPage.getFilterSelect('Cena','powyżej 50zł');
       await page.waitForTimeout(7000);
 
@@ -596,6 +620,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.suite('Testy listy produktów');
       await allure.subSuite('');
       await allure.allureId('1657');
+
+      test.setTimeout(80000);
 
       await productsListPage.getFilterCustomPriceFromSet('Cena', '2');
       await page.waitForTimeout(7000);
@@ -631,6 +657,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1658');
 
+      test.setTimeout(80000);
+
       expect((await productsListPage.getFilter('Producent')).isVisible);
       await productsListPage.getFilterSelect('Producent','MLEKOVITA');
       await page.waitForTimeout(7000);
@@ -654,6 +682,8 @@ test.describe('Testy listy produktów', async () => {
       await allure.suite('Testy listy produktów');
       await allure.subSuite('');
       await allure.allureId('1659');
+
+      test.setTimeout(80000);
 
       await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
 

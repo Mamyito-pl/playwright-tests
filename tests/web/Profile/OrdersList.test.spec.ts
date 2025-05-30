@@ -16,7 +16,7 @@ test.describe('Testy listy zamówień', async () => {
     ordersPage = new OrdersPage(page);
   })
   
-  test('W | Strona zamówień wyświetla się ze wszystkimi potrzebnymi polami', { tag: ['@ProdSmoke', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
+  test('W | Strona zamówień wyświetla się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
     
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');

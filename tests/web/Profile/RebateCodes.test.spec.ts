@@ -4,6 +4,8 @@ import { test } from '../../../fixtures/fixtures.ts';
 import * as utility from '../../../utils/utility-methods.ts';
 import RebateCodesPage from '../../../page/Profile/RebateCodes.page.ts';
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Testy kodów rabatowych', async () => {
 
   let rebateCodesPage: RebateCodesPage;

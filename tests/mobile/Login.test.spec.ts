@@ -5,6 +5,8 @@ import MainLogoutPage from "../../page/MainLogout.page";
 import * as allure from "allure-js-commons";
 import * as utility from '../../utils/utility-methods';
 
+test.describe.configure({ mode: 'serial' })
+
 test.describe('Testy logowania', async () => {
 
   let loginPage: LoginPage;

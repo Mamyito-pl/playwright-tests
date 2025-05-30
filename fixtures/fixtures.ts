@@ -38,6 +38,7 @@ type MyFixtures = {
     addAddressDeliveryProfile: (addressName: any) => Promise<void>;
     cancelOrderViaAPI: (page: Page) => Promise<void>;
     cancelEditOrderViaAPI: (page: Page) => Promise<void>;
+    detachDeliverySlotViaAPI: () => Promise<void>;
 };
 
 export const test = baseTest.extend<MyFixtures>({
@@ -598,6 +599,46 @@ export const test = baseTest.extend<MyFixtures>({
       expect(response.status() === 504 || response.ok()).toBeTruthy();
     };
     await use(cancelEditOrderViaAPI);
+  },
+
+  detachDeliverySlotViaAPI: async ({ request }, use) => {
+    const detachDeliverySlotViaAPI = async () => {
+
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: { 'Accept': 'application/json' },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const cartIDResponse = await request.post(`${process.env.APIURL}/api/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      const responseBodyCartID = await cartIDResponse.json();
+      const items = responseBodyCartID.data.items;
+      const cart_id = responseBodyCartID.data.id;
+
+      if (!items || items.length === 0) {
+        return;
+      }
+
+      const detachDeliverySlot = await request.patch(`${process.env.APIURL}/api/cart/${cart_id}/detach`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      expect(detachDeliverySlot.status()).toBe(200);
+    };
+    await use(detachDeliverySlotViaAPI);
   }
 });
 

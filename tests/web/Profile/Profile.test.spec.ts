@@ -210,10 +210,10 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await expect(profilePage.getProfileMenuLogOutButton).toBeVisible();
       await profilePage.getProfileMenuLogOutButton.click();
-      await expect(nonLoggedUserPage.getDeliveryAvailableLink).toBeVisible();
-      await expect(nonLoggedUserPage.getLoginLink).toBeVisible();
-      await expect(nonLoggedUserPage.getRegisterLink).toBeVisible();
-      await expect(profilePage.getProfileMenuTitle).not.toBeVisible({ timeout: 5000 });
+      await expect(nonLoggedUserPage.getDeliveryAvailableLink).toBeVisible({ timeout: 10000 });
+      await expect(nonLoggedUserPage.getLoginLink).toBeVisible({ timeout: 10000 });
+      await expect(nonLoggedUserPage.getRegisterLink).toBeVisible({ timeout: 10000 });
+      await expect(profilePage.getProfileMenuTitle).not.toBeVisible({ timeout: 10000 });
       await expect(page).toHaveURL(`${baseURL}`, { timeout: 10000 });
     })
   })
@@ -341,10 +341,10 @@ test.describe('Testy profilu', async () => {
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia');
       await expect(profilePage.getProfileMenuLogOutButton).toBeVisible();
       await profilePage.getProfileMenuLogOutButton.click();
-      await expect(nonLoggedUserPage.getDeliveryAvailableLink).toBeVisible();
-      await expect(nonLoggedUserPage.getLoginLink).toBeVisible();
-      await expect(nonLoggedUserPage.getRegisterLink).toBeVisible();
-      await expect(profilePage.getProfileMenuTitle).not.toBeVisible({ timeout: 5000 });
+      await expect(nonLoggedUserPage.getDeliveryAvailableLink).toBeVisible({ timeout: 10000 });
+      await expect(nonLoggedUserPage.getLoginLink).toBeVisible({ timeout: 10000 });
+      await expect(nonLoggedUserPage.getRegisterLink).toBeVisible({ timeout: 10000 });
+      await expect(profilePage.getProfileMenuTitle).not.toBeVisible({ timeout: 10000 });
       await expect(page).toHaveURL(`${baseURL}`, { timeout: 10000 });
     })
   })

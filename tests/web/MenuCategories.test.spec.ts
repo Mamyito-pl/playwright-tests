@@ -81,6 +81,8 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
+    await page.waitForTimeout(1000);
+
     await menuCategoriesPage.getMenuCategoriesWrapper.getByText('Warzywa i owoce').hover();
 
     await expect(menuCategoriesPage.getMenuCategoriesSubCategoryTitleWeb).toBeVisible();

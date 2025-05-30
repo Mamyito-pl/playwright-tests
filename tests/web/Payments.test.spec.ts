@@ -335,7 +335,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
     
-    test.skip('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -793,6 +793,7 @@ test.describe('Testy płatności', async () => {
           break;
         }
       }
+      
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
@@ -1068,7 +1069,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
         
-    test.skip('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1145,7 +1146,7 @@ test.describe('Testy płatności', async () => {
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test.skip('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');

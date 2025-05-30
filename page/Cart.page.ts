@@ -86,7 +86,8 @@ export default class CartPage {
     }
 
     get getEmptyCartDrawerNotification() {
-        return this.mobile ? this.page.locator('#cart-drawer-content-tablet div[data-sentry-component="CartProductsList"]').locator('div').last() : this.page.locator('#cart-drawer-content-desktop div[data-sentry-component="CartProductsList"]');
+        //return this.mobile ? this.page.locator('#cart-drawer-content-tablet div[data-sentry-component="CartProductsList"]').locator('div').last() : this.page.locator('#cart-drawer-content-desktop div[data-sentry-component="CartProductsList"]');
+        return this.mobile ? this.page.locator('div[class*="feuLvI"] #cart-drawer-content').getByText('Twój koszyk jest pusty') : this.page.locator('div[class*="kYJzsY"] #cart-drawer-content').getByText('Twój koszyk jest pusty');
     }
 
     get getProductList() {
@@ -109,16 +110,13 @@ export default class CartPage {
         return this.page.locator(selectors.CartPage.web.cartCodesTitle)
     }
 
-    /*get getCartAvailableCodesButton() {
-        return this.mobile ? this.page.locator('button[data-cy="cart-summary-rebate-codes-button-mobile"]').getByText('Sprawdź dostępne kody rabatowe:') : this.page.locator('button[data-cy="cart-summary-rebate-codes-button-desktop"]').getByText('Sprawdź dostępne kody rabatowe:');
-    }*/
-
     get getCartAvailableCodesButton() {
-        return this.page.locator(this.mobile ? selectors.CartPage.mobile.cartAvailableCodesButton : selectors.CartPage.web.cartAvailableCodesButton)
+        return this.page.getByRole('button', { name: 'Sprawdź dostępne kody' });
     }
 
     get getCartDrawerToCartButton() {
-        return this.mobile ? this.page.locator('#cart-drawer-content-tablet #to_cart_button').getByText('Do kasy') : this.page.locator('#cart-drawer-content-desktop #to_cart_button').getByText('Do kasy');
+        //return this.mobile ? this.page.locator('#cart-drawer-content-tablet #to_cart_button').getByText('Do kasy') : this.page.locator('#cart-drawer-content-desktop #to_cart_button').getByText('Do kasy');
+        return this.page.getByRole('button', { name: 'Do kasy' });
     }
 
     get getCartSummaryButton() {
