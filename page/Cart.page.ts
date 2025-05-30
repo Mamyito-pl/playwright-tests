@@ -109,8 +109,12 @@ export default class CartPage {
         return this.page.locator(selectors.CartPage.web.cartCodesTitle)
     }
 
-    get getCartAvailableCodesButton() {
+    /*get getCartAvailableCodesButton() {
         return this.mobile ? this.page.locator('button[data-cy="cart-summary-rebate-codes-button-mobile"]').getByText('Sprawdź dostępne kody rabatowe:') : this.page.locator('button[data-cy="cart-summary-rebate-codes-button-desktop"]').getByText('Sprawdź dostępne kody rabatowe:');
+    }*/
+
+    get getCartAvailableCodesButton() {
+        return this.page.locator(this.mobile ? selectors.CartPage.mobile.cartAvailableCodesButton : selectors.CartPage.web.cartAvailableCodesButton)
     }
 
     get getCartDrawerToCartButton() {
@@ -133,8 +137,12 @@ export default class CartPage {
         return this.page.locator(selectors.CartPage.common.clearCartButton)
     }
 
-    get getCartDrawerButton() {
+    /*get getCartDrawerButton() {
         return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #cart_button_mobile" : "div[data-sentry-element='WebContent'] #cart_button");
+    }*/
+
+    get getCartDrawerButton() {
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] [data-sentry-source-file='Navigation.tsx'] #cart_button_mobile" : "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button")
     }
 
     get getCartDrawerSummaryTitle() {

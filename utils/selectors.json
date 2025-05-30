@@ -21,7 +21,8 @@
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
             "productCartList": "div[data-sentry-element='InsideWrapper']",
             "productCartListItemCount": "div[class*='cart-product-buttons'] div[data-sentry-element='StyledProductQuantityInput'] div input",
-            "productCartListName": "div[data-cy='cart-product-name']",
+            "productCartListName1": "div[data-cy='cart-product-name']",
+            "productCartListName": "div[data-sentry-element='ProductName']",
             "deleteProductConfirmButton": "div[data-sentry-element='ButtonsWrapper'] button[variant='secondary']",
             "clearCartCancelButton": "div[data-sentry-source-file='ClearCartModal.tsx'] button[variant='borderGray']",
             "cartTitle": "div[data-sentry-element='CartDrawerTitle']",
@@ -29,8 +30,11 @@
             "cartSummaryButton": "#cart_summary_proceed_button",
             "cartSummaryPaymentButton": "#cart_summary_proceed_payment_button",
             "cartSummaryPaymentConfirmationButton": "#cart_summary_payment_confirmation",
-            "cartReturnButton": "#authentication_return_button",
-            "deleteProductCartIcon": "#cart_remove_product"
+            "cartReturnButton1": "#authentication_return_button",
+            "cartReturnButton": "#cart_return_button",
+            "deleteProductCartIcon": "#cart_remove_product",
+            "cartDrawerToCartButton": "#to_cart_button",
+            "productCartListPrice": "div[class*='cart-product-buttons'] + div"
         },
         "web": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
@@ -42,13 +46,13 @@
             "cartDrawerProductsValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(1)",
             "cartDrawerDeliveryCosts": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(2)",
             "cartDrawerDeliveryMinimalValue": "div[class*='MuiDrawer-paperAnchorRight'] div[data-sentry-component='CartPricing'] div[data-sentry-element='WebContent'] > div:nth-child(3)",
-            "productCartListPrice": "div[data-sentry-element='InsideWrapper'] span[data-cy='cart-product-price']"
+            "productCartListPrice1": "div[data-sentry-element='InsideWrapper'] span[data-cy='cart-product-price']"
         },
         "mobile": {
             "clearCartConfirmButton": "#clear_cart_modal_submit_button",
             "productsNumberButton": "div[data-sentry-element='TabletContent'][data-sentry-source-file='Navigation.tsx'] #cart_button_mobile #productsNumber",
             "cartAvailableCodesButton": "div[data-sentry-element='TabletContent'] button[data-cy='cart-promo-codes-form-button']",
-            "productCartListPrice": "div[data-sentry-element='TabletContent'] span[data-cy='cart-product-price']"
+            "productCartListPrice1": "div[data-sentry-element='TabletContent'] span[data-cy='cart-product-price']"
         }
     },
     "DeliveryPage": {
@@ -104,7 +108,8 @@
     "Searchbar": {
         "common": {
             "productSearchAddButton": "div[data-testid='search-results'] div[data-sentry-component='ProductCard'] button:has-text('Dodaj')",
-            "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent'] p[data-cy='product-card-current-price']",
+            "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent']",
+            "searchbarProductPrice1": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent'] p[data-cy='product-card-current-price']",
             "searchbarProductCardIncreaseButton": "div[data-testid='search-results'] svg[class*='tabler-icon tabler-icon-plus']",
             "searchbarProductCardDecreaseButton": "div[data-testid='search-results'] svg[class*='tabler-icon tabler-icon-minus']",
             "searchbarProductItemCount": "div[data-testid='search-results'] div[data-sentry-element='StyledProductQuantityInput'] div input"
