@@ -230,8 +230,8 @@ export const test = baseTest.extend<MyFixtures>({
       await deliveryPage.getAddressModalUserHouseNumber.fill('1');
       await deliveryPage.getAddressModalUserStaircase.fill('1');
       await deliveryPage.getAddressModalUserFlatNumber.fill('30');
-      /*await deliveryPage.getAddressModalUserFloor.fill('2');
-      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/   // Uncomment after done task KAN-801
+      await deliveryPage.getAddressModalUserFloor.fill('2');
+      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');
       await deliveryPage.clickSaveAdressModalButton();
       await page.waitForTimeout(3000)
       
@@ -278,7 +278,9 @@ export const test = baseTest.extend<MyFixtures>({
           street: "aleja Jana Pawła II",
           staircase_number: "1",
           flat_number: "30",
-          type: "delivery"
+          type: "delivery",
+          client_delivery_notes: "Testowa notatka",
+          floor: "2"
         },
       });
 
@@ -326,7 +328,8 @@ export const test = baseTest.extend<MyFixtures>({
           street: "Oficerska",
           staircase_number: null,
           flat_number: null,
-          type: "delivery"
+          type: "delivery",
+          client_delivery_notes: "Testowa notatka"
         },
       });
 
@@ -421,8 +424,6 @@ export const test = baseTest.extend<MyFixtures>({
       await deliveryPage.getInvoiceAddressModalUserStreet.fill('aleja Jana Pawła II');
       await deliveryPage.getInvoiceAddressModalUserHouseNumber.fill('1');
       await deliveryPage.getInvoiceAddressModalUserFlatNumber.fill('30');
-      /*await deliveryPage.getAddressModalUserFloor.fill('2');
-      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/   // Uncomment after done task KAN-801
       await deliveryPage.clickSaveAdressModalButton();
       await page.waitForTimeout(3000)
 

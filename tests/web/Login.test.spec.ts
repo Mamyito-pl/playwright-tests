@@ -44,7 +44,7 @@ test.describe('Testy logowania', async () => {
   })
 
   test.use({ storageState: { cookies: [], origins: [] }})
-  test('W | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
+  test('W | Logowanie z niepoprawnym emailem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');
     await allure.epic('Webowe');
@@ -63,7 +63,7 @@ test.describe('Testy logowania', async () => {
   })
 
   test.use({ storageState: { cookies: [], origins: [] }})
-  test('W | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
+  test('W | Logowanie z niepoprawnym hasłem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Logowanie');
     await allure.epic('Webowe');

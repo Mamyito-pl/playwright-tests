@@ -21,7 +21,7 @@ test.describe('Testy kodów rabatowych', async () => {
     rebateCodesPage = new RebateCodesPage(page);
   })
   
-  test('M | Strona kodów rabatowych wyświetla się ze wszystkimi potrzebnymi polami', async ({ page, baseURL }) => {
+  test('M | Strona kodów rabatowych wyświetla się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');

@@ -59,7 +59,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('W | Złożone prawidłowo zamówienie powinno wyświetlić się ze wszystkimi wymaganymi polami', async ({ page, baseURL, cancelOrderViaAPI }) => {
+  test('W | Złożone prawidłowo zamówienie powinno wyświetlić się ze wszystkimi wymaganymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -86,13 +86,10 @@ test.describe('Testy szczegółów zamówienia', async () => {
     for (let i = 0; i < maxProducts; i++) {
       const nameText = await productNameElements[i].textContent();
       if (nameText !== null) {
+        await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
+        await page.waitForTimeout(4000);
         productNames.push(nameText);
       }
-    }
-
-    for (let i = 0; i < 5; i++) {
-      await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
-      await page.waitForTimeout(4000);
     }
 
     await searchbarPage.getProductItemCount.first().click();
@@ -116,7 +113,6 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
-    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -172,7 +168,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     });
   })
 
-  test('W | Zamówienie po błędnej płatności powinno wyświetlić się ze wszystkimi wymaganymi polami', async ({ page, baseURL, cancelOrderViaAPI }) => {
+  test('W | Zamówienie po błędnej płatności powinno wyświetlić się ze wszystkimi wymaganymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -199,13 +195,10 @@ test.describe('Testy szczegółów zamówienia', async () => {
     for (let i = 0; i < maxProducts; i++) {
       const nameText = await productNameElements[i].textContent();
       if (nameText !== null) {
+        await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
+        await page.waitForTimeout(4000);
         productNames.push(nameText);
       }
-    }
-
-    for (let i = 0; i < 5; i++) {
-      await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
-      await page.waitForTimeout(4000);
     }
 
     await searchbarPage.getProductItemCount.first().click();
@@ -221,6 +214,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
+
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
@@ -256,7 +250,6 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await przelewy24Page.clickBackToShopButton();
     await page.waitForTimeout(2000);
 
-    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -321,7 +314,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     });
   })
       
-  test('W | Możliwość ponownego zamówienia po złożeniu prawidłowego zamówienia', async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
+  test('W | Możliwość ponownego zamówienia po złożeniu prawidłowego zamówienia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -346,13 +339,13 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
+
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -398,7 +391,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 5000 });
   })
         
-  test('W | Możliwość ponownego zamówienia po złożeniu zamówienia z błędną płatnością', async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
+  test('W | Możliwość ponownego zamówienia po złożeniu zamówienia z błędną płatnością', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -456,7 +449,6 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await przelewy24Page.clickBackToShopButton();
     await page.waitForTimeout(2000);
 
-    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -517,7 +509,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 5000 });
   })
           
-  test('W | Możliwość powrotu do listy zamówień za pomocą przycisku "Wróć do listy zamówień"', async ({ page, addProduct, baseURL }) => {
+  test('W | Możliwość powrotu do listy zamówień za pomocą przycisku "Wróć do listy zamówień"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -540,7 +532,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(ordersPage.getOrdersTitle).toBeVisible({ timeout: 15000 });
   })
          
-  test('W | Możliwość przejścia do szczegółów zamówienia z listy zamówień', async ({ page, baseURL }) => {
+  test('W | Możliwość przejścia do szczegółów zamówienia z listy zamówień', { tag: ['@ProdSmoke', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');

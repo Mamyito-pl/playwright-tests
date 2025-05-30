@@ -22,7 +22,7 @@ test.describe('Testy listy produktów', async () => {
     });
   })
 
-  test('W | Lista produktów otwiera się ze wszystkimi wymaganymi polami', async () => {
+  test('W | Lista produktów otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -46,7 +46,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getSortButton).toBeVisible();
   })
 
-  test('W | Możliwość przejścia do innej kategorii poprzez breadcrumb', async ({ page }) => {
+  test('W | Możliwość przejścia do innej kategorii poprzez breadcrumb', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -63,7 +63,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getBreadcrumbs).toContainText('Nabiał');
   })
 
-  test('W | Zmiana widoku menu na pionowy i poziomy', async () => {
+  test('W | Zmiana widoku menu na pionowy i poziomy', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -87,7 +87,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getVerticalMenu).not.toBeVisible();
   })
 
-  test('W | Po zescrollowaniu w dół następne produkty są załadowywane', async ({ page }) => {
+  test('W | Po zescrollowaniu w dół następne produkty są załadowywane', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -101,13 +101,17 @@ test.describe('Testy listy produktów', async () => {
 
     await page.mouse.wheel(0, 3000);
     await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 5000);
+    await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 5000);
+    await page.waitForTimeout(1000);
 
     const productsAfterScroll = await productsListPage.getProductTiles.count();
 
     expect(productsAfterScroll).toBeGreaterThan(60);
   })
   
-  test('W | Możliwość sortowania po najtańszych produktach', async ({ page }) => {
+  test('W | Możliwość sortowania po najtańszych produktach', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -135,7 +139,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
   
-  test('W | Możliwość sortowania po najdroższych produktach', async ({ page }) => {
+  test('W | Możliwość sortowania po najdroższych produktach', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -163,7 +167,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })  
 
-  test('W | Możliwość sortowania po najtańszych produktach za kg/l', async ({ page }) => {
+  test('W | Możliwość sortowania po najtańszych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -194,7 +198,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
 
-  test('W | Możliwość sortowania po najdroższych produktach za kg/l', async ({ page }) => {
+  test('W | Możliwość sortowania po najdroższych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -223,7 +227,7 @@ test.describe('Testy listy produktów', async () => {
   })
 
   
-  test('W | Możliwość sortowania od A do Z', async ({ page }) => {
+  test('W | Możliwość sortowania od A do Z', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -329,7 +333,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThan(1);
   })
 
-  test('W | Możliwość sortowania od Z do A', async ({ page }) => {
+  test('W | Możliwość sortowania od Z do A', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -435,7 +439,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThan(1);
   })
 
-  test('W | Możliwość filtrowania po typie produktu', async ({ page }) => {
+  test('W | Możliwość filtrowania po typie produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -460,7 +464,7 @@ test.describe('Testy listy produktów', async () => {
   })
     
   test.describe('Filtrowanie po cenie', async () => {
-    test('W | Możliwość filtrowania po cenie poniżej 10 zł', async ({ page }) => {
+    test('W | Możliwość filtrowania po cenie poniżej 10 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');
@@ -488,7 +492,7 @@ test.describe('Testy listy produktów', async () => {
       expect(pricesCount).toBeGreaterThan(1);
     })       
 
-    test('W | Możliwość filtrowania po cenie od 10 zł do 20 zł', async ({ page }) => {
+    test('W | Możliwość filtrowania po cenie od 10 zł do 20 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');
@@ -520,7 +524,7 @@ test.describe('Testy listy produktów', async () => {
       }
     })     
 
-    test('W | Możliwość filtrowania po cenie od 20 zł 50 zł', async ({ page }) => {
+    test('W | Możliwość filtrowania po cenie od 20 zł 50 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');
@@ -552,7 +556,7 @@ test.describe('Testy listy produktów', async () => {
       }
     })  
     
-    test('W | Możliwość filtrowania po cenie powyżej 50 zł', async ({ page }) => {
+    test('W | Możliwość filtrowania po cenie powyżej 50 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');
@@ -584,7 +588,7 @@ test.describe('Testy listy produktów', async () => {
       }
     })
 
-    test('W | Możliwość filtrowania po cenie niestandardowej', async ({ page }) => {
+    test('W | Możliwość filtrowania po cenie niestandardowej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');
@@ -618,7 +622,7 @@ test.describe('Testy listy produktów', async () => {
       }
     })
     
-    test('W | Możliwość filtrowania po nazwie producenta', async ({ page }) => {
+    test('W | Możliwość filtrowania po nazwie producenta', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');
@@ -642,7 +646,7 @@ test.describe('Testy listy produktów', async () => {
       expect(productsCount).toBeGreaterThanOrEqual(1);
     })
         
-    test('W | Możliwość wyczyszczenia filtrowania', async ({ page }) => {
+    test('W | Możliwość wyczyszczenia filtrowania', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Lista produktów');
       await allure.epic('Webowe');

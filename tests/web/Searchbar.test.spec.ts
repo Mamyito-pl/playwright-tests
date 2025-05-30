@@ -24,7 +24,7 @@ test.describe('Testy wyszukiwarki', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test('W | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', async () => {
+  test('W | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -42,7 +42,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(searchbarPage.getBigBanner).toBeVisible();
   })
 
-  test('W | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', async () => {
+  test('W | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -86,7 +86,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(page.getByText(`Brak wyników wyszukiwania dla '${notExistingProduct}'`)).toBeVisible();
   })
 
-  test('W | Produkt wpisany dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+  test('W | Produkt wpisany dużymi literami powinien się prawidłowo wyszukać', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -112,7 +112,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
   
-  test('W | Produkt wpisany małymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+  test('W | Produkt wpisany małymi literami powinien się prawidłowo wyszukać', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -138,7 +138,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
       
-  test('W | Produkt wpisany małymi i dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+  test('W | Produkt wpisany małymi i dużymi literami powinien się prawidłowo wyszukać', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -164,7 +164,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
 
-  test('W | Możliwość wyczyszczenia wyszukiwarki', async ({ page }) => {
+  test('W | Możliwość wyczyszczenia wyszukiwarki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -191,7 +191,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(searchbarPage.getSearchbarProductTiles.first()).not.toBeVisible({ timeout: 5000 })
   })
     
-  test('W | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', async ({ page }) => {
+  test('W | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -217,7 +217,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
 
-  test('W | Możliwość wyszukania produktów po nazwie marki', async ({ page }) => {
+  test('W | Możliwość wyszukania produktów po nazwie marki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -243,7 +243,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
       
-  test('W | Możliwość przwijania slidera nasze promocje', async () => {
+  test('W | Możliwość przwijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -268,7 +268,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSliderLeftButton.isDisabled();
   })
 
-  test('W | Możliwość przejścia do naszych promocji poprzez link slidera', async ({ page, baseURL}) => {
+  test('W | Możliwość przejścia do naszych promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL}) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');

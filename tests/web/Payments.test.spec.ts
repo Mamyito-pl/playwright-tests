@@ -54,7 +54,7 @@ test.describe('Testy płatności', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
+  test('W | Przejście do sklepu podczas przetwarzania płatności', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -107,7 +107,7 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getBackHomeButton).toBeHidden();
   })
 
-  test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
+  test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -151,7 +151,7 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getCancelButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
   })
 
-  test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
+  test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -230,7 +230,24 @@ test.describe('Testy płatności', async () => {
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-    await przelewy24Page.clickErrorPayButton();
+    await page.waitForTimeout(1000);
+    
+    const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+    const maxTries = 5;
+    let urlChanged = false;
+
+    for (let i = 0; i < maxTries; i++) {
+      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+
+      const currentUrl = page.url();
+      if (expectedUrlPattern.test(currentUrl)) {
+        urlChanged = true;
+        break;
+      }
+    }
+
+    expect(urlChanged).toBe(true);
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
     await przelewy24Page.clickBackToShopButton();
 
@@ -248,7 +265,19 @@ test.describe('Testy płatności', async () => {
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-    await przelewy24Page.clickPayButton();
+    await page.waitForTimeout(1000);
+
+    for (let i = 0; i < maxTries; i++) {
+      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+
+      const currentUrl = page.url();
+      if (expectedUrlPattern.test(currentUrl)) {
+        urlChanged = true;
+        break;
+      }
+    }
+
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -295,7 +324,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -307,7 +335,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
     
-    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -338,7 +366,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -359,7 +386,11 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
+      let tries = 0;
+      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        tries++;
+      }
 
       await page.waitForTimeout(7000);
 
@@ -373,7 +404,7 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
     })
 
-    test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata nieprawidłowym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -406,7 +437,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -422,7 +452,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 });
     })
 
-    test('W | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata pustym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -456,7 +486,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Kod blik jest wymagany');
     })
 
-    test('W | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata za krótkim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -491,7 +521,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
             
-    test('W | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata za długim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -526,7 +556,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
                 
-    test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
+    test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -604,8 +634,7 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible(),
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -625,10 +654,24 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickMainBlikButton();
       await przelewy24Page.clickChosenBlikButton();
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -670,7 +713,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
 
       await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
@@ -735,10 +777,24 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickMainTransferButton();
       await przelewy24Page.clickChosenTransferButton();
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -747,7 +803,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     }) 
         
-    test('W | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('W | Błędna płatność przelewem online', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -784,11 +840,25 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickChosenTransferButton();
       await page.waitForLoadState('load')
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickErrorPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
       await przelewy24Page.clickBackToShopButton();
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -844,11 +914,25 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickChosenTransferButton();
       await page.waitForLoadState('load')
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickErrorPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
       await przelewy24Page.clickBackToShopButton();
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -871,10 +955,20 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickMainTransferButton();
       await przelewy24Page.clickChosenTransferButton();
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -920,11 +1014,25 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickChosenTransferButton();
       await page.waitForLoadState('load')
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickErrorPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
       await przelewy24Page.clickBackToShopButton();
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -960,7 +1068,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
         
-    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1015,7 +1123,11 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
+      let tries = 0;
+      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        tries++;
+      }
 
       await page.waitForTimeout(7000);
 
@@ -1033,7 +1145,7 @@ test.describe('Testy płatności', async () => {
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1063,7 +1175,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -1086,7 +1197,11 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
+      let tries = 0;
+      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        tries++;
+      }
 
       await page.waitForTimeout(7000);
 

@@ -51,7 +51,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('M | Strona produktu otwiera się ze wszystkimi wymaganymi polami', async ({ page, searchProduct }) => {
+  test('M | Strona produktu otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -110,7 +110,7 @@ test.describe('Testy szczegółów produktu', async () => {
   })
 
     
-  test('M | Możliwość dodania jednej sztuki produktu do koszyka', async ({ page, searchProduct }) => {
+  test('M | Możliwość dodania jednej sztuki produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -141,7 +141,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText(formattedProductPrice || '');
   })
       
-  test('M | Możliwość dodania wielosztuk produktu do koszyka', async ({ page, searchProduct }) => {
+  test('M | Możliwość dodania wielosztuk produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -187,7 +187,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText(formattedProductPrice || '');
   })
         
-  test('M | Możliwość zmniejszenia ilości produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('M | Możliwość zmniejszenia ilości produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -226,7 +226,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
   })
           
-  test('M | Możliwość usunięcia produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('M | Możliwość usunięcia produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -255,8 +255,10 @@ test.describe('Testy szczegółów produktu', async () => {
     await productDetailsPage.getDecreaseProductButton.click();
 
     await expect(productDetailsPage.getDeleteProductModal).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(1000);
     await expect(productDetailsPage.getConfirmDeleteModalButton).toBeVisible();
     await productDetailsPage.getConfirmDeleteModalButton.click();
+    await page.waitForTimeout(2000);
 
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
     await expect(productDetailsPage.getAddProductButton).toBeVisible({ timeout: 5000 });
@@ -264,7 +266,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getDecreaseProductButton).not.toBeVisible();
   })
     
-  test('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -327,7 +329,7 @@ test.describe('Testy szczegółów produktu', async () => {
     expect(productNotFound).toBe(true);
   })
       
-  test('M | Możliwość przejścia do strony marki z tytułu produktu', async ({ page, baseURL, searchProduct }) => {
+  test('M | Możliwość przejścia do strony marki z tytułu produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -353,7 +355,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
   })
         
-  test('M | Możliwość wyświetlenia informacji głównych o produkcie', async ({ page, searchProduct }) => {
+  test('M | Możliwość wyświetlenia informacji głównych o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -379,7 +381,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toContainText(productBrandName || '');
   })
           
-  test('M | Możliwość wyświetlenia informacji opakowania o produkcie', async ({ page, searchProduct }) => {
+  test('M | Możliwość wyświetlenia informacji opakowania o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -405,7 +407,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toHaveText('Pojemność: ' + productGrammar);
   })
                 
-  test('M | Możliwość przejścia do strony marki z informacji głównych produktu', async ({ page, baseURL, searchProduct }) => {
+  test('M | Możliwość przejścia do strony marki z informacji głównych produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -437,7 +439,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
   })
 
-  test('M | Możliwość przewijania slidera inne produkty z tej kategorii', async ({ page, searchProduct }) => {
+  test('M | Możliwość przewijania slidera inne produkty z tej kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -467,7 +469,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await productDetailsPage.getSliderSectionGetLeftButton.isDisabled();
   })
   
-  test('M | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', async ({ page, baseURL, searchProduct }) => {
+  test('M | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');

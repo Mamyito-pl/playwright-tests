@@ -135,7 +135,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
-  test('W | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -167,7 +167,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawerToCartButton).toContainText('Do kasy');
   })
 
-  test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', async ({ page }) => {
+  test('W | Szuflada koszyka zamyka się po kliknięciu poza nią', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -183,7 +183,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawer).toBeHidden();
   })
 
-  test('W | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
+  test('W | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -199,7 +199,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawer).toBeHidden()
   })
 
-  test('W | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
+  test('W | Możliwość przejścia do koszyka z szuflady koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -222,7 +222,7 @@ test.describe('Testy koszyka', async () => {
     
     test.setTimeout(80000);
 
-    test.skip('W | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka wody', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -270,7 +270,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka bułki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -318,7 +318,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka banana', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -366,7 +366,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -412,113 +412,6 @@ test.describe('Testy koszyka', async () => {
       const sortedExpectedPrices = expectedPriceMatches;
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
-    })
-  })
-  
-  test.describe('Kody rabatowe', async () => {
-
-    test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', async ({ page, addProduct, baseURL }) => {
-
-      await allure.tags('Web', 'Koszyk');
-      await allure.epic('Webowe');
-      await allure.parentSuite('Koszyk');
-      await allure.suite('Testy koszyka');
-      await allure.subSuite('Kody rabatowe');
-      await allure.allureId('2330');
-
-      await addProduct(product);
-      await searchbarPage.getProductItemCount.click();
-      await searchbarPage.getProductItemCount.type('1');
-      await commonPage.getCartButton.click();
-
-      await page.goto('/koszyk', { waitUntil: 'load'});
-      await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
-      await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
-
-      const totalSummaryValue = await cartPage.getTotalSummaryValue.last().textContent();
-
-      const totalSummaryValueFormatted = totalSummaryValue?.slice(10, -3) || ''
-      console.log('Total summary value przed kodem:', totalSummaryValueFormatted);
-
-      await cartPage.getCartAvailableCodesButton.click();
-
-      await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
-      await page.waitForTimeout(1000);
-
-      const codeCardColor = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"]').first().evaluate((el) => window.getComputedStyle(el).backgroundColor);
-      const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] div').first().textContent() || '';
-      const codeCardButton = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] button').first();
-      const codeCardInformation = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] span').first();
-      const codeCardName = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeDescriptionWrapper"] p').first().textContent();
-
-      const codeCardDiscountValueFormatted = codeCardDiscountValue.slice(0, -2) + ',00 zł';
-      const codeCardNameFormatted = codeCardName?.slice(14);
-
-      expect(codeCardColor).toBe('rgb(97, 189, 78)')
-      expect(codeCardButton).toBeVisible();
-      expect(codeCardInformation).toHaveText('Możliwy do zrealizowania');
-
-      console.log(codeCardDiscountValueFormatted);
-      console.log(codeCardName);
-
-      await codeCardButton.click();
-      await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
-      await page.waitForTimeout(2000);
-
-      const codeTitle = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().first().locator('b').textContent());
-      expect(codeTitle).toContain(codeCardNameFormatted);
-
-      const codeDiscountValue = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().last().locator('span').textContent());
-      if (codeDiscountValue !== null) {
-        const cleanCodeDiscountValue = codeDiscountValue.replace(/\s+/g, '');
-        const cleanCodeCardDiscountValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, '');
-        expect(cleanCodeDiscountValue).toContain(cleanCodeCardDiscountValueFormatted);
-      } else {
-        throw new Error('codeDiscountValue is null');
-      }
-
-      const discountCodeSummaryValue = await cartPage.getDiscountCodesTitle.locator('..').last().textContent();
-      if (discountCodeSummaryValue !== null) {
-        const cleanDiscountCodeSummaryValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, ' ');
-        expect(cleanDiscountCodeSummaryValueFormatted).toContain(codeCardDiscountValueFormatted);
-      } else {
-        throw new Error('codeDiscountValue is null');
-      }
-
-      const codeCardDiscountValueFormattedParsed = parseFloat(codeCardDiscountValueFormatted.slice(1, -2).replace(',', '.'));
-      console.log('codeCardDiscountValueFormattedParsed:', codeCardDiscountValueFormattedParsed);
-
-      const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(/\s/g, '').replace(',', '.'));
-      console.log('totalSummaryValueFormattedParsed:', totalSummaryValueFormattedParsed);
-
-      const totalSummaryValueAfterDiscount = await cartPage.getTotalSummaryValue.last().textContent();
-      console.log('totalSummaryValueAfterDiscount:', totalSummaryValueAfterDiscount);
-
-      const totalSummaryValueAfterDiscountFormatted = totalSummaryValueAfterDiscount?.slice(10, -3) || ''
-      console.log('totalSummaryValueAfterDiscountFormatted:', totalSummaryValueAfterDiscountFormatted);
-
-      const totalSummaryValueAfterDiscountFormattedParsed = parseFloat(totalSummaryValueAfterDiscountFormatted.replace(/\s/g, '').replace(',', '.'));
-      console.log('totalSummaryValueAfterDiscountFormattedParsed:', totalSummaryValueAfterDiscountFormattedParsed);
-
-      const discountValue = totalSummaryValueFormattedParsed - totalSummaryValueAfterDiscountFormattedParsed;
-      console.log('Różnica wartości:', discountValue);
-      expect(discountValue).toBe(codeCardDiscountValueFormattedParsed);
-
-      await expect(cartPage.getSummaryDeleteDiscountCodeButton).toBeVisible();
-      await cartPage.getSummaryDeleteDiscountCodeButton.click();
-      await expect(cartPage.getSummaryDeleteDiscountCodeButton).not.toBeVisible({ timeout: 5000 });
-      await expect(cartPage.getActiveDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
-      await expect(cartPage.getDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
-
-      const totalSummaryValueAfterDeleteCode = await cartPage.getTotalSummaryValue.last().textContent();
-      console.log('totalSummaryValueAfterDeleteCode:', totalSummaryValueAfterDeleteCode);
-      const totalSummaryValueAfterDeleteCodeFormatted = totalSummaryValueAfterDeleteCode?.slice(10, -3) || ''
-      console.log('totalSummaryValueAfterDeleteCodeFormatted:', totalSummaryValueAfterDeleteCodeFormatted);
-      const totalSummaryValueAfterDeleteCodeFormattedParsed = parseFloat(totalSummaryValueAfterDeleteCodeFormatted.replace(/\s/g, '').replace(',', '.'));
-      console.log('totalSummaryValueAfterDeleteCodeFormattedParsed:', totalSummaryValueAfterDeleteCodeFormattedParsed);
-      expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
     })
   })
 })

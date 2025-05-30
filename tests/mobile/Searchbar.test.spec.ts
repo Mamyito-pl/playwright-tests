@@ -24,7 +24,7 @@ test.describe('Testy wyszukiwarki', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test('M | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', async () => {
+  test('M | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -41,7 +41,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
   })
 
-  test('M | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', async () => {
+  test('M | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -65,7 +65,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(searchbarPage.getOurDiscountsSection).not.toBeVisible();
   })
   
-  test('M | Wyszukanie nieistniejącego produktu', async ({ page }) => {
+  test('M | Wyszukanie nieistniejącego produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -83,7 +83,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(page.getByText(`Brak wyników wyszukiwania dla '${notExistingProduct}'`)).toBeVisible();
   })
 
-  test('M | Produkt wpisany dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+  test('M | Produkt wpisany dużymi literami powinien się prawidłowo wyszukać', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -109,7 +109,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
   
-  test('M | Produkt wpisany małymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+  test('M | Produkt wpisany małymi literami powinien się prawidłowo wyszukać', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -135,7 +135,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
     
-  test('M | Produkt wpisany małymi i dużymi literami powinien się prawidłowo wyszukać', async ({ page }) => {
+  test('M | Produkt wpisany małymi i dużymi literami powinien się prawidłowo wyszukać', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -161,7 +161,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
   
-  test('M | Możliwość wyczyszczenia wyszukiwarki', async ({ page }) => {
+  test('M | Możliwość wyczyszczenia wyszukiwarki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -188,7 +188,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(searchbarPage.getSearchbarProductTiles.first()).not.toBeVisible({ timeout: 5000 })
   })
   
-  test('M | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', async ({ page }) => {
+  test('M | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -214,7 +214,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
   
-  test('M | Możliwość wyszukania produktów po nazwie marki', async ({ page }) => {
+  test('M | Możliwość wyszukania produktów po nazwie marki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -240,7 +240,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
     
-  test('M | Możliwość przwijania slidera nasze promocje', async () => {
+  test('M | Możliwość przwijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -265,7 +265,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSliderLeftButton.isDisabled();
   })
 
-  test('M | Możliwość przejścia do naszych promocji poprzez link slidera', async ({ page, baseURL}) => {
+  test('M | Możliwość przejścia do naszych promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL}) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');

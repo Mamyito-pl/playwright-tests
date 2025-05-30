@@ -54,7 +54,7 @@ test.describe('Testy płatności', async () => {
     await clearCartViaAPI();
   })
 
-  test('M | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
+  test('M | Przejście do sklepu podczas przetwarzania płatności', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
     await allure.epic('Mobilne');
@@ -109,7 +109,7 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getBackHomeButton).toBeHidden();
   })
 
-  test('M | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
+  test('M | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
     await allure.epic('Mobilne');
@@ -155,7 +155,7 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getCancelButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
   })
   
-  test('M | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
+  test('M | Przejście do szczegółów zamówienia podczas przetwarzania płatności', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Płatności');
     await allure.epic('Mobilne');
@@ -384,7 +384,7 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
     })
 
-    test('M | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata nieprawidłowym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -435,7 +435,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 });
     })
   
-    test('M | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
+    test('M | Zapłata pustym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
     
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -471,7 +471,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Kod blik jest wymagany');
     })
     
-    test('M | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
+    test('M | Zapłata za krótkim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -508,7 +508,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
         
-    test('M | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
+    test('M | Zapłata za długim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -545,7 +545,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
                     
-    test('M | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
+    test('M | Zapłata kodem BLIK z nieprawidłowymi znakami', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -787,7 +787,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     }) 
     
-    test('M | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('M | Błędna płatność przelewem online', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');

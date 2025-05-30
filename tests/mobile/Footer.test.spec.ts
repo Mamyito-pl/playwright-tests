@@ -21,7 +21,7 @@ test.describe('Testy stopki', async () => {
     footerPage = new FooterPage(page);
   })
 
-  test('M | Stopka wyświetla się ze wszystkimi wymaganymi polami', async ({ page }) => {
+  test('M | Stopka wyświetla się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Stopka');
     await allure.epic('Mobilne');

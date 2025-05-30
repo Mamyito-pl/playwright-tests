@@ -71,7 +71,7 @@ export default class ProductsListPage {
     }
 
     async clickApplyButton() {
-        return this.getApplyButton.click();
+        return this.getApplyButton.click({ force: true, delay: 300 });
     }
 
     getProductCategoryTitle(titleName: string) {

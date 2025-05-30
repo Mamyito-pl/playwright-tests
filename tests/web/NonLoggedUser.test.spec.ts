@@ -52,7 +52,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('W | Strona główna otwiera się ze wszystkimi wymaganymi polami', async ({ page }) => {
+  test('W | Strona główna otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Niezalogowany użytkownik');
     await allure.epic('Webowe');
@@ -109,7 +109,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await expect(mainPage.getNewsletterCheckbox).toBeVisible();
   })
   
-  test('W | Po dodaniu do koszyka produktu wyświetla się modal z dodaniem kodu pocztowego', async ({ page }) => {
+  test('W | Po dodaniu do koszyka produktu wyświetla się modal z dodaniem kodu pocztowego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Niezalogowany użytkownik');
     await allure.epic('Webowe');
@@ -125,7 +125,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 5000 });
   }) 
 
-  test('W | Po dodaniu do koszyka produktów na wartość >150 i przejściu dalej z koszyka pojawia się modal z logowaniem', async ({ page, baseURL }) => {
+  test('W | Po dodaniu do koszyka produktów na wartość >150 i przejściu dalej z koszyka pojawia się modal z logowaniem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Niezalogowany użytkownik');
     await allure.epic('Webowe');
@@ -133,6 +133,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
     await allure.allureId('2529');
+
+    test.setTimeout(120000);
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -157,7 +159,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await expect(nonLoggedUserPage.getLoginModalTitle).toBeVisible({ timeout: 10000 });
   })
   
-  test('W | Alkoholowy produkt jest jako zablurowany', async ({ page }) => {
+  test('W | Alkoholowy produkt jest jako zablurowany', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Niezalogowany użytkownik');
     await allure.epic('Webowe');
@@ -165,6 +167,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
     await allure.allureId('2530');
+
+    test.setTimeout(120000);
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -180,7 +184,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     expect(filterValue).toContain('blur(7px)');
   })
 
-  test('W | Wyświetlony produkt alkoholowy ma napis "Potwierdź datę urodzenia"', async ({ page }) => {
+  test('W | Wyświetlony produkt alkoholowy ma napis "Potwierdź datę urodzenia"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Niezalogowany użytkownik');
     await allure.epic('Webowe');
@@ -189,15 +193,17 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.subSuite('');
     await allure.allureId('2531');
 
+    test.setTimeout(120000);
+
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
     await searchbarPage.enterProduct('wódka');
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
 
-    await expect(searchbarPage.getSearchbarProductTiles.locator('div').first()).toHaveText('Potwierdź datę urodzenia');
+    await expect(searchbarPage.getSearchbarProductTiles.locator('div').first()).toHaveText('Potwierdź datę urodzenia', { timeout: 15000 });
   })
 
-  test('W | Po kliknięciu na produkt alkoholowy wyświetla się modal z logowaniem', async ({ page }) => {
+  test('W | Po kliknięciu na produkt alkoholowy wyświetla się modal z logowaniem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Niezalogowany użytkownik');
     await allure.epic('Webowe');
@@ -205,6 +211,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.suite('Testy niezalogowanego użytkownika');
     await allure.subSuite('');
     await allure.allureId('2532');
+
+    test.setTimeout(120000);
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });

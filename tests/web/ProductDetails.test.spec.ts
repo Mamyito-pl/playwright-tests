@@ -52,7 +52,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('W | Strona produktu otwiera się ze wszystkimi wymaganymi polami', async ({ page, searchProduct }) => {
+  test('W | Strona produktu otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -75,7 +75,11 @@ test.describe('Testy szczegółów produktu', async () => {
     const productSetFirstQuantityButton = await page.locator('div[data-testid="search-results"] div[data-sentry-element="ProductSets"] button').first().allTextContents();
     const productSetSecondQuantityButton = await page.locator('div[data-testid="search-results"] div[data-sentry-element="ProductSets"] button').nth(1).allTextContents();
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -110,7 +114,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getSectionShowAllLink).toBeVisible();
   })
   
-  test('W | Możliwość dodania jednej sztuki produktu do koszyka', async ({ page, searchProduct }) => {
+  test('W | Możliwość dodania jednej sztuki produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -123,9 +127,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
-
-    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
     const formattedProductPrice = productPrice?.slice(0, -9);
@@ -141,7 +147,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText(formattedProductPrice || '');
   })
       
-  test('W | Możliwość dodania wielosztuk produktu do koszyka', async ({ page, searchProduct }) => {
+  test('W | Możliwość dodania wielosztuk produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -156,7 +162,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
 
-    await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     const secondQuantityButtonText = await productDetailsPage.getSetSecondQuantityButton.textContent();
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
@@ -187,7 +197,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText(formattedProductPrice || '');
   })
         
-  test('W | Możliwość zmniejszenia ilości produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('W | Możliwość zmniejszenia ilości produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -200,7 +210,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -226,7 +240,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
   })
      
-  test('W | Możliwość usunięcia produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('W | Możliwość usunięcia produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -239,7 +253,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -264,7 +282,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getDecreaseProductButton).not.toBeVisible();
   })
   
-  test('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -277,7 +295,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -327,7 +349,7 @@ test.describe('Testy szczegółów produktu', async () => {
     expect(productNotFound).toBe(true);
   })
     
-  test('W | Możliwość przejścia do strony marki z tytułu produktu', async ({ page, baseURL, searchProduct }) => {
+  test('W | Możliwość przejścia do strony marki z tytułu produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -340,7 +362,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -353,7 +379,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
   })
           
-  test('W | Możliwość wyświetlenia informacji głównych o produkcie', async ({ page, searchProduct }) => {
+  test('W | Możliwość wyświetlenia informacji głównych o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -364,7 +390,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -379,7 +409,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toContainText(productBrandName || '');
   })
             
-  test('W | Możliwość wyświetlenia informacji opakowania o produkcie', async ({ page, searchProduct }) => {
+  test('W | Możliwość wyświetlenia informacji opakowania o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -390,7 +420,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -405,7 +439,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toHaveText('Pojemność: ' + productGrammar);
   })
               
-  test('W | Możliwość przejścia do strony marki z informacji głównych produktu', async ({ page, baseURL, searchProduct }) => {
+  test('W | Możliwość przejścia do strony marki z informacji głównych produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -418,7 +452,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -437,7 +475,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
   })
 
-  test('W | Możliwość przewijania slidera inne produkty z tej kategorii', async ({ page, searchProduct }) => {
+  test('W | Możliwość przewijania slidera inne produkty z tej kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -450,7 +488,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
@@ -467,7 +509,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await productDetailsPage.getSliderSectionGetLeftButton.isDisabled();
   })
 
-  test('W | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', async ({ page, baseURL, searchProduct }) => {
+  test('W | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');
@@ -480,7 +522,11 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await searchProduct(productToSearchName);
 
-    await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
+    let tries = 0;
+    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+      await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      tries++;
+    }
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 

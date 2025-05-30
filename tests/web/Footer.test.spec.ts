@@ -21,7 +21,7 @@ test.describe('Testy stopki', async () => {
     footerPage = new FooterPage(page);
   })
 
-  test('W | Stopka wyświetla się ze wszystkimi wymaganymi polami', async ({ page }) => {
+  test('W | Stopka wyświetla się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Stopka');
     await allure.epic('Webowe');
@@ -35,6 +35,8 @@ test.describe('Testy stopki', async () => {
     await page.mouse.wheel(0, 3000);
     await page.waitForTimeout(700);
     await page.mouse.wheel(0, 5000);
+    await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 2000);
     await page.waitForTimeout(700);
 
     expect(await footerPage.getSectionTitle('Dostawa')).toBeVisible();

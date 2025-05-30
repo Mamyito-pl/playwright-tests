@@ -31,7 +31,7 @@ test.describe('Testy adresy dostaw', async () => {
     await deleteDeliveryAddressViaAPI('Adres Edytowany');
   })
   
-  test('W | Strona adresy dostaw pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Strona adresy dostaw pojawia się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -46,7 +46,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
   })
 
-  test('W | Możliwość dodania adresu dostawy', async ({ page }) => {
+  test('W | Możliwość dodania adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -95,11 +95,11 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalUserFlatNumber).toBeVisible();
     await deliveryAddressesPage.getAddressModalUserFlatNumber.fill('30');
 
-    /*await expect(deliveryAddressesPage.getAddressModalUserFloor).toBeVisible();
+    await expect(deliveryAddressesPage.getAddressModalUserFloor).toBeVisible();
     await deliveryAddressesPage.getAddressModalUserFloor.fill('2');
-                                                                                      // Uncomment after done task KAN-801
+                                                                                      
     await expect(deliveryAddressesPage.getAddressModalUserDeliveryNotes).toBeVisible();
-    await deliveryAddressesPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/
+    await deliveryAddressesPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka')
 
     await expect(deliveryAddressesPage.getAddressModalSaveButton).toBeVisible();
     await deliveryAddressesPage.clickSaveAdressModalButton();
@@ -109,7 +109,7 @@ test.describe('Testy adresy dostaw', async () => {
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
   })
 
-  test('W | Możliwość ustawienia głównego adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+  test('W | Możliwość ustawienia głównego adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -149,7 +149,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).not.toBeAttached();
   })
 
-  test('W | Możliwość edycji adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+  test('W | Możliwość edycji adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -163,6 +163,8 @@ test.describe('Testy adresy dostaw', async () => {
     await addAddressDeliveryViaAPI('Adres Fixturowy');
 
     await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
+
+    await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
     await deliveryAddressesPage.clickEditAddressButton('Adres Fixturowy');
 
@@ -199,11 +201,11 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalUserFlatNumber).toHaveValue('30');
     await deliveryAddressesPage.getAddressModalUserFlatNumber.fill('3');
 
-    /*await expect(deliveryAddressesPage.getAddressModalUserFloor).toHaveValue('x');
+    await expect(deliveryAddressesPage.getAddressModalUserFloor).toHaveValue('2');
     await deliveryAddressesPage.getAddressModalUserFloor.fill('4');
-                                                                                      // Uncomment after done task KAN-801
-    await expect(deliveryAddressesPage.getAddressModalUserDeliveryNotes).toHaveValue('x');
-    await deliveryAddressesPage.getAddressModalUserDeliveryNotes.fill('Edytowana testowa notatka');*/
+                                                                                      
+    await expect(deliveryAddressesPage.getAddressModalUserDeliveryNotes).toHaveValue('Testowa notatka');
+    await deliveryAddressesPage.getAddressModalUserDeliveryNotes.fill('Edytowana testowa notatka')
 
     await expect(deliveryAddressesPage.getAddressModalSaveButton).toBeVisible();
     await deliveryAddressesPage.clickSaveAdressModalButton();
@@ -225,13 +227,11 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalUserHouseNumber).toHaveValue('4');
     await expect(deliveryAddressesPage.getAddressModalUserStaircase).toHaveValue('2');
     await expect(deliveryAddressesPage.getAddressModalUserFlatNumber).toHaveValue('3');
-    /*await expect(deliveryAddressesPage.getAddressModalUserFloor).toHaveValue('77');
-                                                                                      // Uncomment after done task KAN-801
-    await expect(deliveryAddressesPage.getAddressModalUserDeliveryNotes).toHaveValue('88');
-    */
+    await expect(deliveryAddressesPage.getAddressModalUserFloor).toHaveValue('4');
+    await expect(deliveryAddressesPage.getAddressModalUserDeliveryNotes).toHaveValue('Edytowana testowa notatka');
   })
   
-  test('W | Możliwość usunięcia adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+  test('W | Możliwość usunięcia adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');

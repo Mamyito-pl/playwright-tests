@@ -42,7 +42,7 @@ test.describe('Testy logowania', async () => {
   })
 
   test.use({ storageState: { cookies: [], origins: [] }})
-  test('M | Logowanie z niepoprawnym emailem', async ({ page, baseURL }) => {
+  test('M | Logowanie z niepoprawnym emailem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Logowanie');
     await allure.epic('Mobilne');
@@ -61,7 +61,7 @@ test.describe('Testy logowania', async () => {
   })
 
   test.use({ storageState: { cookies: [], origins: [] }})
-  test('M | Logowanie z niepoprawnym hasłem', async ({ page, baseURL }) => {
+  test('M | Logowanie z niepoprawnym hasłem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Logowanie');
     await allure.epic('Mobilne');
