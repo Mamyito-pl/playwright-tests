@@ -37,7 +37,7 @@ test.describe('Testy moje dane', async () => {
     commonPage = new CommonPage(page);
   })
   
-  test('W | Strona moje dane wyświetla się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Strona moje dane wyświetla się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -66,7 +66,7 @@ test.describe('Testy moje dane', async () => {
     await expect(myDetailsPage.getSMSApprovalLabel).toBeVisible();
   })
     
-  test('W | Możliwość zmiany imienia i nazwiska', async ({ page }) => {
+  test('W | Możliwość zmiany imienia i nazwiska', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -93,6 +93,7 @@ test.describe('Testy moje dane', async () => {
     await myDetailsPage.clickModalSaveButton();
 
     expect (await myDetailsPage.getModal('Edytuj dane')).not.toBeVisible({ timeout: 5000 });
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 10000 })
 
     const newNameSurnameIsVisible = await myDetailsPage.getNameSurnameContent.evaluate((element, { exampleName, exampleSurname}) => {
         const textContent = element.textContent || '';
@@ -139,7 +140,7 @@ test.describe('Testy moje dane', async () => {
     expect(newNameSurnameIsVisible).toBe(true);
   }) UNSKIP AFTER DONE TASK KAN-1202*/
 
-  test('W | Możliwość zmiany numeru telefonu', async ({ page }) => {
+  test('W | Możliwość zmiany numeru telefonu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -165,6 +166,7 @@ test.describe('Testy moje dane', async () => {
     await myDetailsPage.clickModalSaveButton();
 
     expect (await myDetailsPage.getModal('Edytuj numer telefonu')).not.toBeVisible({ timeout: 5000 });
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 10000 })
 
     const newNameSurnameIsVisible = await myDetailsPage.getPhoneNumberContent.evaluate((element, { examplePhoneNumber }) => {
         const textContent = element.textContent || '';
@@ -176,7 +178,7 @@ test.describe('Testy moje dane', async () => {
     expect(newNameSurnameIsVisible).toBe(true);
   })
 
-  test('W | Możliwość zmiany hasła', async ({ page }) => {
+  test('W | Możliwość zmiany hasła', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -203,6 +205,7 @@ test.describe('Testy moje dane', async () => {
     await myDetailsPage.clickModalSaveButton();
 
     expect (await myDetailsPage.getModal('Edytuj hasło')).not.toBeVisible({ timeout: 5000 });
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 10000 })
 
     const postAccountData = await page.request.patch(`${process.env.APIURL}/api/me/update-account`, {
       headers: {
@@ -223,7 +226,7 @@ test.describe('Testy moje dane', async () => {
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
   })
 
-  test('W | Zgoda na komunikację marketingową poprzez newsletter', async ({ page }) => {
+  test('W | Zgoda na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -243,7 +246,7 @@ test.describe('Testy moje dane', async () => {
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).toHaveAttribute('class', /.*Mui-checked.*/);
   })
 
-  test('W | Zgoda na komunikację marketingową poprzez SMS', async ({ page }) => {
+  test('W | Zgoda na komunikację marketingową poprzez SMS', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -263,7 +266,7 @@ test.describe('Testy moje dane', async () => {
     await expect(page.locator('div[data-sentry-component="UserSMSConsent"] span[data-sentry-element="Switch"]')).toHaveAttribute('class', /.*Mui-checked.*/);
   })
       
-  test('W | Wyłączenie zgody na komunikację marketingową poprzez newsletter', async ({ page }) => {
+  test('W | Wyłączenie zgody na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -292,7 +295,7 @@ test.describe('Testy moje dane', async () => {
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
   })
 
-  test('W | Wyłączenie zgody na komunikację marketingową poprzez SMS', async ({ page }) => {
+  test('W | Wyłączenie zgody na komunikację marketingową poprzez SMS', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');

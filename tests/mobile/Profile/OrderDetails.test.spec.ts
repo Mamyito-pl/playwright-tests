@@ -27,7 +27,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
   let przelewy24Page: Przelewy24Page;
-  let product = 'do naczyń somat';
+  let product: string = 'janex polędwica wołowa';
   let paymentMethod = 'Płatność kartą przy odbiorze';
   
   test.beforeEach(async ({ page, addAddressDeliveryViaAPI }) => {
@@ -59,7 +59,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('M | Złożone prawidłowo zamówienie powinno wyświetlić się ze wszystkimi wymaganymi polami', async ({ page, baseURL, cancelOrderViaAPI }) => {
+  test('M | Złożone prawidłowo zamówienie powinno wyświetlić się ze wszystkimi wymaganymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -86,18 +86,17 @@ test.describe('Testy szczegółów zamówienia', async () => {
     for (let i = 0; i < maxProducts; i++) {
       const nameText = await productNameElements[i].textContent();
       if (nameText !== null) {
+        await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
+        await page.waitForTimeout(4000);
         productNames.push(nameText);
       }
     }
 
-    for (let i = 0; i < 5; i++) {
-      await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
-      await page.waitForTimeout(4000);
-    }
-
     await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -105,13 +104,15 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+    await page.waitForTimeout(1000);
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel(paymentMethod).check();
     await paymentsPage.checkStatue();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -172,7 +173,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     });
   })
   
-  test('M | Zamówienie po błędnej płatności powinno wyświetlić się ze wszystkimi wymaganymi polami', async ({ page, baseURL, cancelOrderViaAPI }) => {
+  test('M | Zamówienie po błędnej płatności powinno wyświetlić się ze wszystkimi wymaganymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -199,18 +200,17 @@ test.describe('Testy szczegółów zamówienia', async () => {
     for (let i = 0; i < maxProducts; i++) {
       const nameText = await productNameElements[i].textContent();
       if (nameText !== null) {
+        await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
+        await page.waitForTimeout(4000);
         productNames.push(nameText);
       }
     }
 
-    for (let i = 0; i < 5; i++) {
-      await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
-      await page.waitForTimeout(4000);
-    }
-
     await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -218,13 +218,15 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+    await page.waitForTimeout(1000);
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -304,7 +306,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     });
   })
 
-  test('M | Możliwość ponownego zamówienia po złożeniu prawidłowego zamówienia', async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
+  test('M | Możliwość ponownego zamówienia po złożeniu prawidłowego zamówienia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -318,19 +320,23 @@ test.describe('Testy szczegółów zamówienia', async () => {
     test.setTimeout(350000);
 
     await addProduct(product);
-    await searchbarPage.getProductItemCount.click();
-    await searchbarPage.getProductItemCount.type('1');
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+    await page.waitForTimeout(1000);
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -380,7 +386,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 5000 });
   })
           
-  test('M | Możliwość ponownego zamówienia po złożeniu zamówienia z błędną płatnością', async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
+  test('M | Możliwość ponownego zamówienia po złożeniu zamówienia z błędną płatnością', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -394,19 +400,23 @@ test.describe('Testy szczegółów zamówienia', async () => {
     test.setTimeout(350000);
 
     await addProduct(product);
-    await searchbarPage.getProductItemCount.click();
-    await searchbarPage.getProductItemCount.type('1');
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
+    await page.waitForTimeout(1000);
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
@@ -482,7 +492,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 5000 });
   })
         
-  test('M | Możliwość powrotu do listy zamówień za pomocą przycisku "Wróć do listy zamówień"', async ({ page, baseURL }) => {
+  test('M | Możliwość powrotu do listy zamówień za pomocą przycisku "Wróć do listy zamówień"', { tag: [ '@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -505,7 +515,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(ordersPage.getOrdersTitle).toBeVisible({ timeout: 15000 });
   })
            
-  test('M | Możliwość przejścia do szczegółów zamówienia z listy zamówień', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do szczegółów zamówienia z listy zamówień', { tag: ['@ProdSmoke', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');

@@ -42,7 +42,7 @@ test.describe('Testy profilu', async () => {
     nonLoggedUserPage = new NonLoggedUserPage(page);
   })
   
-  test('W | Po kliknięciu w profil wyświetla się menu ze wszystkimi wymaganymi polami', async () => {
+  test('W | Po kliknięciu w profil wyświetla się menu ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
     
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -64,7 +64,7 @@ test.describe('Testy profilu', async () => {
     await expect(profilePage.getProfileMenuLogOutButton).toBeVisible();
   })
     
-  test('W | Po kliknięciu poza modal profilu, modal się zamyka', async () => {
+  test('W | Po kliknięciu poza modal profilu, modal się zamyka', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
     
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -82,7 +82,7 @@ test.describe('Testy profilu', async () => {
 
   test.describe('Przekierowania z modala profilu', () => {
     
-    test('W | Po kliknięciu "Zamówienia" w modalu profilu użytkownik jest przekierowywany do listy zamówień', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Zamówienia" w modalu profilu użytkownik jest przekierowywany do listy zamówień', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -101,7 +101,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('W | Po kliknięciu "Kody rabatowe" w modalu profilu użytkownik jest przekierowywany do listy kodów rabatowych', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Kody rabatowe" w modalu profilu użytkownik jest przekierowywany do listy kodów rabatowych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -120,7 +120,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('W | Po kliknięciu "Moje dane" w modalu profilu użytkownik jest przekierowywany do sekcji moich danych', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Moje dane" w modalu profilu użytkownik jest przekierowywany do sekcji moich danych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -139,7 +139,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('W | Po kliknięciu "Adresy dostaw" w modalu profilu użytkownik jest przekierowywany do sekcji adresów dostaw', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Adresy dostaw" w modalu profilu użytkownik jest przekierowywany do sekcji adresów dostaw', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -158,7 +158,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('W | Po kliknięciu "Dane do faktury" w modalu profilu użytkownik jest przekierowywany do sekcji danych do faktury', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Dane do faktury" w modalu profilu użytkownik jest przekierowywany do sekcji danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -177,7 +177,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('W | Po kliknięciu "Ulubione" w modalu profilu użytkownik jest przekierowywany do sekcji ulubionych produktów', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Ulubione" w modalu profilu użytkownik jest przekierowywany do sekcji ulubionych produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -192,7 +192,7 @@ test.describe('Testy profilu', async () => {
       await profilePage.getProfileMenuFavouritesButton.click();
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty');
-      await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 10000 });
+      await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     }) 
   
@@ -220,7 +220,7 @@ test.describe('Testy profilu', async () => {
 
   test.describe('Przekierowania z profilu', () => {
     
-    test('W | Po kliknięciu "Zamówienia" z profilu użytkownik jest przekierowywany do listy zamówień', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Zamówienia" z profilu użytkownik jest przekierowywany do listy zamówień', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -238,7 +238,7 @@ test.describe('Testy profilu', async () => {
       await expect(ordersPage.getOrdersTitle).toBeVisible({ timeout: 10000 });
     })
 
-    test('W | Po kliknięciu "Kody rabatowe" z profilu użytkownik jest przekierowywany do listy kodów rabatowych', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Kody rabatowe" z profilu użytkownik jest przekierowywany do listy kodów rabatowych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -256,7 +256,7 @@ test.describe('Testy profilu', async () => {
       await expect(rebateCodesPage.getRebateCodesTitle).toBeVisible({ timeout: 10000 });
     })
 
-    test('W | Po kliknięciu "Moje dane" z profilu użytkownik jest przekierowywany do sekcji moich danych', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Moje dane" z profilu użytkownik jest przekierowywany do sekcji moich danych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -274,7 +274,7 @@ test.describe('Testy profilu', async () => {
       await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
     })
 
-    test('W | Po kliknięciu "Adresy dostaw" z profilu użytkownik jest przekierowywany do sekcji adresów dostaw', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Adresy dostaw" z profilu użytkownik jest przekierowywany do sekcji adresów dostaw', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -292,7 +292,7 @@ test.describe('Testy profilu', async () => {
       await expect(deliveryAddressesPage.getDeliveryAddressesTitle).toBeVisible({ timeout: 10000 });
     })
 
-    test('W | Po kliknięciu "Dane do faktury" z profilu użytkownik jest przekierowywany do sekcji danych do faktury', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Dane do faktury" z profilu użytkownik jest przekierowywany do sekcji danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -310,7 +310,7 @@ test.describe('Testy profilu', async () => {
       await expect(invoiceAddressesPage.getInvoiceAddressTitle).toBeVisible({ timeout: 10000 });
     })
 
-    test('W | Po kliknięciu "Ulubione" z profilu użytkownik jest przekierowywany do sekcji ulubionych', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Ulubione" z profilu użytkownik jest przekierowywany do sekcji ulubionych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');
@@ -325,10 +325,10 @@ test.describe('Testy profilu', async () => {
       await profilePage.getProfileMenuFavouritesButton.click();  
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty');
-      await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 10000 });
+      await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });
     })
       
-    test('W | Po kliknięciu "Wyloguj się" z profilu użytkownik jest zostaje wylogowany', async ({ page, baseURL }) => {
+    test('W | Po kliknięciu "Wyloguj się" z profilu użytkownik jest zostaje wylogowany', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
     
       await allure.tags('Web', 'Profil');
       await allure.epic('Webowe');

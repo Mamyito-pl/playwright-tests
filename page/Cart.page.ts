@@ -13,8 +13,8 @@ export default class CartPage {
     }
 
 
-    async clickCartPaymentConfirmationButtonButton() {
-        await this.getCartPaymentConfirmationButtonButton.click({ force: true });
+    async clickCartPaymentConfirmationButton() {
+        await this.getCartPaymentConfirmationButton.click({ force: true });
     }
     
     async clickCartSummaryButton() {
@@ -69,7 +69,7 @@ export default class CartPage {
         await this.getCartExpandCollapseButton.click();
     }
 
-    get getCartPaymentConfirmationButtonButton() {
+    get getCartPaymentConfirmationButton() {
         return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_payment_confirmation' : '#payment-floating-div #cart_summary_payment_confirmation')
     }
 
@@ -83,6 +83,10 @@ export default class CartPage {
 
     get getEmptyCartNotification() {
         return this.page.locator('div[data-sentry-component="CartProductsList"]')
+    }
+
+    get getEmptyCartDrawerNotification() {
+        return this.mobile ? this.page.locator('#cart-drawer-content-tablet div[data-sentry-component="CartProductsList"]').locator('div').last() : this.page.locator('#cart-drawer-content-desktop div[data-sentry-component="CartProductsList"]');
     }
 
     get getProductList() {
@@ -106,11 +110,11 @@ export default class CartPage {
     }
 
     get getCartAvailableCodesButton() {
-        return this.page.locator(this.mobile ? selectors.CartPage.mobile.cartAvailableCodesButton : selectors.CartPage.web.cartAvailableCodesButton)
+        return this.mobile ? this.page.locator('button[data-cy="cart-summary-rebate-codes-button-mobile"]').getByText('Sprawdź dostępne kody rabatowe:') : this.page.locator('button[data-cy="cart-summary-rebate-codes-button-desktop"]').getByText('Sprawdź dostępne kody rabatowe:');
     }
 
     get getCartDrawerToCartButton() {
-        return this.page.locator(selectors.CartPage.common.cartDrawerToCartButton)
+        return this.mobile ? this.page.locator('#cart-drawer-content-tablet #to_cart_button').getByText('Do kasy') : this.page.locator('#cart-drawer-content-desktop #to_cart_button').getByText('Do kasy');
     }
 
     get getCartSummaryButton() {
@@ -130,7 +134,7 @@ export default class CartPage {
     }
 
     get getCartDrawerButton() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] [data-sentry-source-file='Navigation.tsx'] #cart_button_mobile" : "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button")
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #cart_button_mobile" : "div[data-sentry-element='WebContent'] #cart_button");
     }
 
     get getCartDrawerSummaryTitle() {
@@ -151,10 +155,6 @@ export default class CartPage {
 
     get getCartDrawerCloseIconButton() {
         return this.page.locator('div[data-cy="cart-drawer-close-icon"]');
-    }
-
-    get getCartPaymentConfirmationButton() {
-        return this.page.locator(selectors.CartPage.common.cartSummaryPaymentConfirmationButton);
     }
 
     get getCartPaymentButton() {

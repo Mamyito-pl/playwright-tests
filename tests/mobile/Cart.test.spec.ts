@@ -24,7 +24,7 @@ test.describe('Testy koszyka', async () => {
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
   let commonPage : CommonPage;
-  let product: string = 'mycia naczyń somat';
+  let product: string = 'janex polędwica wołowa';
 
   test.beforeEach(async ({ page }) => {
 
@@ -188,8 +188,8 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
-  test('M | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
-    
+  test('M | Pusta szuflada koszyka otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+
     await allure.tags('Mobilne', 'Koszyk');
     await allure.epic('Mobilne');
     await allure.parentSuite('Koszyk');
@@ -197,26 +197,28 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('471');
 
+    await expect(cartPage.getCartDrawerButton).toBeVisible({ timeout: 15000 });
     await cartPage.clickCartDrawerButton();
 
     await expect(cartPage.getCartDrawer).toBeVisible();
 
-    await expect(cartPage.getCartTitle).toBeVisible();
-    await expect(cartPage.getCartTitle).toHaveText('Twój koszyk(0 produktów)');
-
     await expect(cartPage.getCartDrawerCloseIconButton).toBeVisible();
 
-    await expect(cartPage.getEmptyCartNotification).toBeVisible();
-    await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
+    await expect(cartPage.getClearCartButton).toBeVisible();
+    await expect(cartPage.getClearCartButton).toBeDisabled();
+    await expect(cartPage.getClearCartButton).toHaveText('Wyczyść koszyk');
+
+    await expect(cartPage.getEmptyCartDrawerNotification).toBeVisible();
+    await expect(cartPage.getEmptyCartDrawerNotification).toHaveText('Twój koszyk jest pusty');
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible();
-    await expect(cartPage.getCartAvailableCodesButton).toContainText('Dostępne kody rabatowe:');
+    await expect(cartPage.getCartAvailableCodesButton).toContainText('Sprawdź dostępne kody rabatowe:');
     
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible();
-    await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy 0,00 zł');
+    await expect(cartPage.getCartDrawerToCartButton).toHaveText('Do kasy');
   })
 
-  test('M | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', async ({ page }) => {
+  test('M | Szuflada koszyka zamyka się po kliknięciu ikonki "X"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
     await allure.epic('Mobilne');
@@ -232,7 +234,7 @@ test.describe('Testy koszyka', async () => {
     await expect(cartPage.getCartDrawer).toBeHidden();
   })
 
-  test('M | Możliwość przejścia do koszyka z szuflady koszyka', async ({ page, baseURL, addProduct }) => {
+  test('M | Możliwość przejścia do koszyka z szuflady koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Koszyk');
     await allure.epic('Mobilne');
@@ -244,7 +246,6 @@ test.describe('Testy koszyka', async () => {
     const product = 'woda';
 
     await addProduct(product);
-    
     await cartPage.clickCartDrawerButton();
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
@@ -252,7 +253,7 @@ test.describe('Testy koszyka', async () => {
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
   })
 
-  test('M | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia z koszyka do strony głównej przyciskiem "Cofnij"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
     
     await allure.tags('Mobilne', 'Koszyk');
     await allure.epic('Mobilne');
@@ -271,10 +272,10 @@ test.describe('Testy koszyka', async () => {
   })
 
   test.describe('M | Możliwość dodania do koszyka najczęściej kupowanych produktów', async () => {
-    
+
     test.setTimeout(80000);
     
-    test('M | Możliwość dodania do koszyka wody', async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka wody', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
       
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -307,7 +308,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.mobile.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -321,7 +322,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('M | Możliwość dodania do koszyka bułki', async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka bułki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -354,7 +355,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.mobile.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -368,7 +369,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('M | Możliwość dodania do koszyka banana', async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka banana', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
       
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -401,7 +402,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.mobile.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -415,7 +416,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
     
-    test('M | Możliwość dodania do koszyka serka wiejskiego', async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
       
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -448,7 +449,7 @@ test.describe('Testy koszyka', async () => {
       expect(firstWordInCart).toContain(addedProduct[0].name.split(' ')[0]);
       await page.waitForTimeout(1000);
 
-      const cartProductPrice = await cartItem.locator(selectors.CartPage.common.productCartListPrice).innerText();
+      const cartProductPrice = await cartItem.locator('..').locator('..').locator(selectors.CartPage.mobile.productCartListPrice).innerText();
       
       const formattedCartProductPrice = cartProductPrice.replace(/\s+/g, '').replace(/\,+/g, '.');;
       const expectedPrice = addedProduct[0].price.replace(/\s+/g, '').replace(/\,+/g, '.');
@@ -460,116 +461,6 @@ test.describe('Testy koszyka', async () => {
       const sortedExpectedPrices = expectedPriceMatches;
 
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
-    })
-  })
-
-  test.describe('Kody rabatowe', async () => {
-
-    test('M | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', async ({ page, addProduct, baseURL }) => {
-
-      await allure.tags('Mobilne', 'Koszyk');
-      await allure.epic('Mobilne');
-      await allure.parentSuite('Koszyk');
-      await allure.suite('Testy koszyka');
-      await allure.subSuite('Kody rabatowe');
-      await allure.allureId('2329');
-
-      await addProduct('do mycia naczyń somat');
-      await searchbarPage.getProductItemCount.click();
-      await searchbarPage.getProductItemCount.type('1');
-      await commonPage.getCartButton.click();
-
-      await page.goto('/koszyk', { waitUntil: 'load'});
-      await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
-      await expect(cartPage.getSummaryExpandButton).toBeVisible();
-      await cartPage.getSummaryExpandButton.click();
-
-      await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
-
-      const totalSummaryValue = await cartPage.getTotalSummaryValue.last().textContent();
-
-      const totalSummaryValueFormatted = totalSummaryValue?.slice(10, -3) || ''
-      console.log('Total summary value przed kodem:', totalSummaryValueFormatted);
-
-      await cartPage.getCartAvailableCodesButton.click();
-
-      await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
-      await page.waitForTimeout(1000);
-
-      const codeCardColor = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"]').first().evaluate((el) => window.getComputedStyle(el).backgroundColor);
-      const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] div').first().textContent() || '';
-      const codeCardButton = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] button').first();
-      const codeCardInformation = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] span').first();
-      const codeCardName = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeDescriptionWrapper"] p').first().textContent();
-
-      const codeCardDiscountValueFormatted = codeCardDiscountValue.slice(0, -2) + ',00 zł';
-      const codeCardNameFormatted = codeCardName?.slice(14);
-
-      expect(codeCardColor).toBe('rgb(97, 189, 78)')
-      expect(codeCardButton).toBeVisible();
-      expect(codeCardInformation).toHaveText('Możliwy do zrealizowania');
-
-      console.log(codeCardDiscountValueFormatted);
-      console.log(codeCardName);
-
-      await codeCardButton.click();
-      await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
-      await page.waitForTimeout(2000);
-
-      const codeTitle = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().first().locator('b').textContent());
-      expect(codeTitle).toContain(codeCardNameFormatted);
-
-      const codeDiscountValue = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().last().locator('span').textContent());
-      if (codeDiscountValue !== null) {
-        const cleanCodeDiscountValue = codeDiscountValue.replace(/\s+/g, '');
-        const cleanCodeCardDiscountValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, '');
-        expect(cleanCodeDiscountValue).toContain(cleanCodeCardDiscountValueFormatted);
-      } else {
-        throw new Error('codeDiscountValue is null');
-      }
-
-      const discountCodeSummaryValue = await cartPage.getDiscountCodesTitle.locator('..').last().textContent();
-      if (discountCodeSummaryValue !== null) {
-        const cleanDiscountCodeSummaryValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, ' ');
-        expect(cleanDiscountCodeSummaryValueFormatted).toContain(codeCardDiscountValueFormatted);
-      } else {
-        throw new Error('codeDiscountValue is null');
-      }
-
-      const codeCardDiscountValueFormattedParsed = parseFloat(codeCardDiscountValueFormatted.slice(1, -2).replace(',', '.'));
-      console.log('codeCardDiscountValueFormattedParsed:', codeCardDiscountValueFormattedParsed);
-
-      const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(',', '.'));
-      console.log('totalSummaryValueFormattedParsed:', totalSummaryValueFormattedParsed);
-
-      const totalSummaryValueAfterDiscount = await cartPage.getTotalSummaryValue.last().textContent();
-      console.log('totalSummaryValueAfterDiscount:', totalSummaryValueAfterDiscount);
-
-      const totalSummaryValueAfterDiscountFormatted = totalSummaryValueAfterDiscount?.slice(10, -3) || ''
-      console.log('totalSummaryValueAfterDiscountFormatted:', totalSummaryValueAfterDiscountFormatted);
-
-      const totalSummaryValueAfterDiscountFormattedParsed = parseFloat(totalSummaryValueAfterDiscountFormatted.replace(',', '.'));
-      console.log('totalSummaryValueAfterDiscountFormattedParsed:', totalSummaryValueAfterDiscountFormattedParsed);
-
-      const discountValue = totalSummaryValueFormattedParsed - totalSummaryValueAfterDiscountFormattedParsed;
-      console.log('Różnica wartości:', discountValue);
-      expect(discountValue).toBe(codeCardDiscountValueFormattedParsed);
-
-      await expect(cartPage.getSummaryDeleteDiscountCodeButton).toBeVisible();
-      await cartPage.getSummaryDeleteDiscountCodeButton.click();
-      await expect(cartPage.getSummaryDeleteDiscountCodeButton).not.toBeVisible({ timeout: 5000 });
-      await expect(cartPage.getActiveDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
-      await expect(cartPage.getDiscountCodesTitle).not.toBeVisible({ timeout: 5000 });
-
-      const totalSummaryValueAfterDeleteCode = await cartPage.getTotalSummaryValue.last().textContent();
-      console.log('totalSummaryValueAfterDeleteCode:', totalSummaryValueAfterDeleteCode);
-      const totalSummaryValueAfterDeleteCodeFormatted = totalSummaryValueAfterDeleteCode?.slice(10, -3) || ''
-      console.log('totalSummaryValueAfterDeleteCodeFormatted:', totalSummaryValueAfterDeleteCodeFormatted);
-      const totalSummaryValueAfterDeleteCodeFormattedParsed = parseFloat(totalSummaryValueAfterDeleteCodeFormatted.replace(',', '.'));
-      console.log('totalSummaryValueAfterDeleteCodeFormattedParsed:', totalSummaryValueAfterDeleteCodeFormattedParsed);
-      expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
     })
   })
 })

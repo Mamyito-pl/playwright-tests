@@ -24,7 +24,7 @@ test.describe('Testy menu kategorii', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test('W | Menu kategorii otwiera się z obecnymi kategoriami', async ({ page }) => {
+  test('W | Menu kategorii otwiera się z obecnymi kategoriami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Menu kategorii');
     await allure.epic('Webowe');
@@ -44,7 +44,7 @@ test.describe('Testy menu kategorii', async () => {
     expect(categoriesCount).toBeGreaterThan(18);
   })
 
-  test('W | Możliwość zamknięcia menu', async ({ page }) => {
+  test('W | Możliwość zamknięcia menu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Menu kategorii');
     await allure.epic('Webowe');
@@ -70,7 +70,7 @@ test.describe('Testy menu kategorii', async () => {
     await expect(menuCategoriesPage.getMenuCategories).not.toBeVisible();
   })
 
-  test('W | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Menu kategorii');
     await allure.epic('Webowe');
@@ -87,7 +87,7 @@ test.describe('Testy menu kategorii', async () => {
     await expect(menuCategoriesPage.getMenuCategoriesSubCategoryTitleWeb).toHaveText('Warzywa i owoce');
   })
 
-  test('W | Możliwość przejścia do kategorii produktów', async ({ page, baseURL }) => {
+  test('W | Możliwość przejścia do kategorii produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Menu kategorii');
     await allure.epic('Webowe');
@@ -104,7 +104,7 @@ test.describe('Testy menu kategorii', async () => {
     await productsListPage.getProductCategoryTitle('Warzywa i owoce').isVisible();
   })
 
-  test('W | Możliwość przejścia do podkategorii produktów', async ({ page, baseURL }) => {
+  test('W | Możliwość przejścia do podkategorii produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Web', 'Menu kategorii');
     await allure.epic('Webowe');

@@ -42,7 +42,7 @@ test.describe('Testy profilu', async () => {
     nonLoggedUserPage = new NonLoggedUserPage(page);
   })
   
-  test('M | Po kliknięciu w profil wyświetla się menu ze wszystkimi wymaganymi polami', async () => {
+  test('M | Po kliknięciu w profil wyświetla się menu ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
     
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -64,7 +64,7 @@ test.describe('Testy profilu', async () => {
     await expect(profilePage.getProfileMenuLogOutButton).toBeVisible();
   })
 
-  test('M | Po kliknięciu poza modal profilu modal się zamyka', async () => {
+  test('M | Po kliknięciu poza modal profilu modal się zamyka', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
     
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -82,7 +82,7 @@ test.describe('Testy profilu', async () => {
 
   test.describe('Przekierowania z modala profilu', () => {
     
-    test('M | Po kliknięciu "Zamówienia" w modalu profilu użytkownik jest przekierowywany do listy zamówień', async ({ page, baseURL }) => {
+    test('M | Po kliknięciu "Zamówienia" w modalu profilu użytkownik jest przekierowywany do listy zamówień', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Mobilne', 'Profil');
       await allure.epic('Mobilne');
@@ -101,7 +101,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('M | Po kliknięciu "Kody rabatowe" w modalu profilu użytkownik jest przekierowywany do listy kodów rabatowych', async ({ page, baseURL }) => {
+    test('M | Po kliknięciu "Kody rabatowe" w modalu profilu użytkownik jest przekierowywany do listy kodów rabatowych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Mobilne', 'Profil');
       await allure.epic('Mobilne');
@@ -120,7 +120,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('M | Po kliknięciu "Moje dane" w modalu profilu użytkownik jest przekierowywany do sekcji moich danych', async ({ page, baseURL }) => {
+    test('M | Po kliknięciu "Moje dane" w modalu profilu użytkownik jest przekierowywany do sekcji moich danych', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Mobilne', 'Profil');
       await allure.epic('Mobilne');
@@ -139,7 +139,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('M | Po kliknięciu "Adresy dostaw" w modalu profilu użytkownik jest przekierowywany do sekcji adresów dostaw', async ({ page, baseURL }) => {
+    test('M | Po kliknięciu "Adresy dostaw" w modalu profilu użytkownik jest przekierowywany do sekcji adresów dostaw', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Mobilne', 'Profil');
       await allure.epic('Mobilne');
@@ -158,7 +158,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('M | Po kliknięciu "Dane do faktury" w modalu profilu użytkownik jest przekierowywany do sekcji danych do faktury', async ({ page, baseURL }) => {
+    test('M | Po kliknięciu "Dane do faktury" w modalu profilu użytkownik jest przekierowywany do sekcji danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Mobilne', 'Profil');
       await allure.epic('Mobilne');
@@ -177,7 +177,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
 
-    test('M | Po kliknięciu "Ulubione" w modalu profilu użytkownik jest przekierowywany do sekcji ulubionych produktów', async ({ page, baseURL }) => {
+    test('M | Po kliknięciu "Ulubione" w modalu profilu użytkownik jest przekierowywany do sekcji ulubionych produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
       await allure.tags('Mobilne', 'Profil');
       await allure.epic('Mobilne');
@@ -192,7 +192,7 @@ test.describe('Testy profilu', async () => {
       await profilePage.getProfileMenuFavouritesButton.click();
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty');
-      await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 10000 });
+      await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
   

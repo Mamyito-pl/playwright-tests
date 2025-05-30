@@ -42,7 +42,7 @@ test.describe('Testy strony głównej', async () => {
     commonPage = new CommonPage(page)
   })
 
-  test('M | Strona główna otwiera się ze wszystkimi wymaganymi polami', async ({ page }) => {
+  test('M | Strona główna otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -103,7 +103,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(mainPage.getNewsletterCheckbox).toBeVisible();
   })
 
-  test('M | Możliwość przewijania slidera promocji', async ({ page }) => {
+  test('M | Możliwość przewijania slidera promocji', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -123,7 +123,7 @@ test.describe('Testy strony głównej', async () => {
     await mainPage.getSectionGetLeftButton.nth(0).isDisabled();
   })
   
-  test('M | Możliwość przejścia do promocji poprzez link slidera', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -137,7 +137,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(page.locator('div[data-sentry-element="TitleMobile"]:has-text("Promocje")')).toBeVisible({ timeout: 10000 });
   })
   
-  test('M | Możliwość przewijania slidera bestsellery', async ({ page, browser }) => {
+  test('M | Możliwość przewijania slidera bestsellery', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -169,7 +169,7 @@ test.describe('Testy strony głównej', async () => {
     await mainPage.getSectionGetLeftButton.nth(1).isDisabled();
   })
   
-  test('M | Możliwość przejścia do bestsellerów poprzez link slidera', async ({ page, baseURL, browser }) => {
+  test('M | Możliwość przejścia do bestsellerów poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -195,7 +195,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 10000 });
   })
     
-  test('M | Możliwość przewijania slidera kategorii', async ({ page, browser }) => {
+  test('M | Możliwość przewijania slidera kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -227,7 +227,7 @@ test.describe('Testy strony głównej', async () => {
     await mainPage.getSectionGetLeftButton.nth(2).isDisabled();
   })
   
-  test('M | Możliwość przejścia do wszystkich kategorii poprzez link slidera', async ({ page, baseURL, browser }) => {
+  test('M | Możliwość przejścia do wszystkich kategorii poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -253,7 +253,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsCategoriesPage.getProductsCategoriesTitle).toBeVisible();
   })
 
-  test('M | Możliwość przejścia do wybranej kategorii ze slidera', async ({ page, baseURL, browser }) => {
+  test('M | Możliwość przejścia do wybranej kategorii ze slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -284,7 +284,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(page.locator(`div[data-sentry-element="TitleMobile"]:has-text("${modifiedItemName}")`)).toBeVisible({ timeout: 10000 });
   })
 
-  test('M | Możliwość przewijania slidera nowości', async ({ page, browser }) => {
+  test('M | Możliwość przewijania slidera nowości', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -320,7 +320,7 @@ test.describe('Testy strony głównej', async () => {
     await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
   })
   
-  test('M | Możliwość przejścia do nowości poprzez link slidera', async ({ page, baseURL, browser }) => {
+  test('M | Możliwość przejścia do nowości poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -350,7 +350,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 10000 });
   })
 
-  test('M | Możliwość przewijania slidera najczęściej kupowanych produktów', async ({ page, browser }) => {
+  test('M | Możliwość przewijania slidera najczęściej kupowanych produktów', { tag: ['@Prod', '@Test'] }, async ({ page, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -386,7 +386,7 @@ test.describe('Testy strony głównej', async () => {
     await mainPage.getSectionGetLeftButton.nth(4).isDisabled();
   })
   
-  test('M | Możliwość przejścia do najczęściej kupowanych produktów poprzez link slidera', async ({ page, baseURL, browser }) => {
+  test('M | Możliwość przejścia do najczęściej kupowanych produktów poprzez link slidera', { tag: ['@Prod', '@Test'] }, async ({ page, baseURL, browser }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -401,7 +401,7 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async () => {
         window.scrollBy(0, 1850)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 900)
+        window.scrollBy(0, 500)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
@@ -417,7 +417,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Najcześciej kupowane przez Ciebie')).toBeVisible({ timeout: 15000 });
   })
 
-  test('M | Możliwość przejścia do "Strefa Mamity" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do "Strefa Niskich Cen" poprzez przycisk menu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -428,10 +428,10 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getStrefaMamityButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/strefa-mamity', { timeout: 10000 });
-    await expect(page.locator('div[data-sentry-element="TitleMobile"]:has-text("Strefa Mamity")')).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('div[data-sentry-element="TitleMobile"]:has-text("Strefa Niskich Cen")')).toBeVisible({ timeout: 15000 });
   })
     
-  test('M | Możliwość przejścia do "Promocje" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do "Promocje" poprzez przycisk menu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -445,7 +445,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(page.locator('div[data-sentry-element="TitleMobile"]:has-text("Promocje")')).toBeVisible({ timeout: 15000 });
   })
     
-  test('M | Możliwość przejścia do "Nowości" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do "Nowości" poprzez przycisk menu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -459,7 +459,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 15000 });
   })
       
-  test('M | Możliwość przejścia do "Bestsellery" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do "Bestsellery" poprzez przycisk menu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -473,7 +473,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(productsListPage.getSpecialProductCategoryTitle('Nasze bestsellery')).toBeVisible({ timeout: 15000 });
   })
   
-  test('M | Możliwość przejścia do "Ulubione" poprzez przycisk menu', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do "Ulubione" poprzez przycisk menu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Strona główna');
     await allure.epic('Mobilne');
@@ -484,10 +484,10 @@ test.describe('Testy strony głównej', async () => {
 
     await mainPage.getFavouritesButton.click()
     await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 10000 });
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible({ timeout: 15000 });
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
   })
 
-  test('M | Możliwość zapisania się do newslettera', async ({ page, browser }) => {
+  test('M | Możliwość zapisania się do newslettera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, browser }) => {
 
     const userEmail = `${process.env.EMAIL}`
 

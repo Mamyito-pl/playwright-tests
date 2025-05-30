@@ -29,7 +29,7 @@ test.describe('Testy ulubionych produktów', async () => {
     favouritesPage = new FavouritesPage(page);
   })
   
-  test('M | Strona ulubionych produktów pojawia się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('M | Strona ulubionych produktów pojawia się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -40,7 +40,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
 
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
   })
 
   test('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
@@ -65,7 +65,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 });
 
-    await expect(favouritesPage.getFavouritesProdutsTitle).toBeVisible();
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
 
     await page.waitForTimeout(1000);
 
@@ -92,7 +92,7 @@ test.describe('Testy ulubionych produktów', async () => {
     expect(productNotFound).toBe(true);
   })
 
-  test('M | Możliwość sortowania po najtańszych produktach', async ({ page }) => {
+  test('M | Możliwość sortowania po najtańszych produktach', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -122,7 +122,7 @@ test.describe('Testy ulubionych produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
   
-  test('M | Możliwość sortowania po najdroższych produktach', async ({ page }) => {
+  test('M | Możliwość sortowania po najdroższych produktach', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -152,7 +152,7 @@ test.describe('Testy ulubionych produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })  
 
-  test('M | Możliwość sortowania po najtańszych produktach za kg/l', async ({ page }) => {
+  test('M | Możliwość sortowania po najtańszych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -185,7 +185,7 @@ test.describe('Testy ulubionych produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
 
-  test('M | Możliwość sortowania po najdroższych produktach za kg/l', async ({ page }) => {
+  test('M | Możliwość sortowania po najdroższych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -216,7 +216,7 @@ test.describe('Testy ulubionych produktów', async () => {
   })
 
   
-  test('M | Możliwość sortowania od A do Z', async ({ page }) => {
+  test('M | Możliwość sortowania od A do Z', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -324,7 +324,7 @@ test.describe('Testy ulubionych produktów', async () => {
     expect(productsCount).toBeGreaterThan(1);
   })
 
-  test('M | Możliwość sortowania od Z do A', async ({ page }) => {
+  test('M | Możliwość sortowania od Z do A', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');

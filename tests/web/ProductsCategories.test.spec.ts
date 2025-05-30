@@ -22,7 +22,7 @@ test.describe('Testy kategorii produktów', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test('W | Strona kategorii produktów wyświetla się ze wszystkimi wymaganymi polami', async () => {
+  test('W | Strona kategorii produktów wyświetla się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Kategorie produktów');
     await allure.epic('Webowe');
@@ -34,12 +34,10 @@ test.describe('Testy kategorii produktów', async () => {
     await expect(productsCategoriesPage.getProductsCategoriesTitle).toBeVisible();
     const tilesCount = await productsCategoriesPage.getProductsCategoriesTiles.count();
 
-    // Add assert for breadrcrumbs after done task KAN-879
-
     expect(tilesCount).toBeGreaterThan(16);
   })
 
-  test('W | Możliwość przejścia do wybranej kategorii produktów', async ({ page }) => {
+  test('W | Możliwość przejścia do wybranej kategorii produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Kategorie produktów');
     await allure.epic('Webowe');
@@ -59,7 +57,7 @@ test.describe('Testy kategorii produktów', async () => {
     await expect(productsListPage.getProductCategoryTitle('Warzywa i owoce')).toBeVisible();
   })
 
-  test('W | Możliwość przejścia do wybranej podkategorii danej kategorii', async ({ page }) => {
+  test('W | Możliwość przejścia do wybranej podkategorii danej kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Kategorie produktów');
     await allure.epic('Webowe');

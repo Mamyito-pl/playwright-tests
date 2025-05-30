@@ -200,10 +200,11 @@ export const test = baseTest.extend<MyFixtures>({
 
     const addProduct = async (product: string) => {
 
-      await searchbarPage.getSearchbarInput.click();
+      await searchbarPage.clickSearchbar();
       await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
       await searchbarPage.enterProduct(product);
       await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
+      await page.waitForTimeout(1000);
       await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
       await page.waitForTimeout(4000);
     };
@@ -229,8 +230,8 @@ export const test = baseTest.extend<MyFixtures>({
       await deliveryPage.getAddressModalUserHouseNumber.fill('1');
       await deliveryPage.getAddressModalUserStaircase.fill('1');
       await deliveryPage.getAddressModalUserFlatNumber.fill('30');
-      /*await deliveryPage.getAddressModalUserFloor.fill('2');
-      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/   // Uncomment after done task KAN-801
+      await deliveryPage.getAddressModalUserFloor.fill('2');
+      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');
       await deliveryPage.clickSaveAdressModalButton();
       await page.waitForTimeout(3000)
       
@@ -277,7 +278,9 @@ export const test = baseTest.extend<MyFixtures>({
           street: "aleja Jana Pawła II",
           staircase_number: "1",
           flat_number: "30",
-          type: "delivery"
+          type: "delivery",
+          client_delivery_notes: "Testowa notatka",
+          floor: "2"
         },
       });
 
@@ -325,7 +328,8 @@ export const test = baseTest.extend<MyFixtures>({
           street: "Oficerska",
           staircase_number: null,
           flat_number: null,
-          type: "delivery"
+          type: "delivery",
+          client_delivery_notes: "Testowa notatka"
         },
       });
 
@@ -420,8 +424,6 @@ export const test = baseTest.extend<MyFixtures>({
       await deliveryPage.getInvoiceAddressModalUserStreet.fill('aleja Jana Pawła II');
       await deliveryPage.getInvoiceAddressModalUserHouseNumber.fill('1');
       await deliveryPage.getInvoiceAddressModalUserFlatNumber.fill('30');
-      /*await deliveryPage.getAddressModalUserFloor.fill('2');
-      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/   // Uncomment after done task KAN-801
       await deliveryPage.clickSaveAdressModalButton();
       await page.waitForTimeout(3000)
 
@@ -545,13 +547,15 @@ export const test = baseTest.extend<MyFixtures>({
   cancelOrderViaAPI: async ({ request }, use) => {
     const cancelOrderViaAPI = async (page: Page) => {
 
-      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
-        headers: { 'Accept': 'application/json' },
-        data: {
-          email: `${process.env.EMAIL}`,
-          password: `${process.env.PASSWORD}`,
-        },
-      });
+      const tokenResponse = await utility.retryUntil200(
+        async () => request.post(`${process.env.APIURL}/api/login`, {
+          headers: { 'Accept': 'application/json' },
+          data: {
+            email: `${process.env.EMAIL}`,
+            password: `${process.env.PASSWORD}`,
+          },
+        })
+      );
       const responseBodyToken = await tokenResponse.json();
       const token = responseBodyToken.data.token;
 

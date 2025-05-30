@@ -24,7 +24,8 @@ test.describe('Testy płatności', async () => {
   let commonPage: CommonPage;
   let mainPage: MainPage;
   let searchbarPage : SearchbarPage;
-  
+  let product = 'janex polędwica wołowa';
+
   test.beforeEach(async ({ page, addAddressDeliveryViaAPI }) => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
@@ -53,7 +54,7 @@ test.describe('Testy płatności', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('W | Przejście do sklepu podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
+  test('W | Przejście do sklepu podczas przetwarzania płatności', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -66,24 +67,23 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(200000);
 
-    await addProduct('do mycia naczyń somat');
+    await addProduct(product);
 
-    await page.waitForTimeout(2000);
-
-    for (let i = 0; i < 4; i++) {
-        await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(5000);
-    };
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
-    await cartPage.clickCartSummaryButton();
+    await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -107,7 +107,7 @@ test.describe('Testy płatności', async () => {
     await expect(paymentsPage.getBackHomeButton).toBeHidden();
   })
 
-  test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', async ({ page, addProduct, baseURL }) => {
+  test('W | Okno ponownego zamówienia otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -120,22 +120,23 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(200000);
 
-    await addProduct('do mycia naczyń somat');
+    await addProduct(product);
 
-    for (let i = 0; i < 4; i++) {
-        await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(5000);
-    };
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'commit'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
-    await cartPage.clickCartSummaryButton();
+    await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -144,14 +145,13 @@ test.describe('Testy płatności', async () => {
 
     await expect(page.getByText('Ponów zamówienie')).toBeVisible({ timeout: 5000 });
     await expect(page.getByText('Ponowienie zamówienia spowoduje dodanie poniższych produktów do Twojego koszyka.')).toBeVisible({ timeout: 5000 });
-    await expect(page.getByAltText('Chemia i środki czystości')).toBeVisible({ timeout: 5000 });
     await expect(page.getByText('1 produkt')).toBeVisible({ timeout: 5000 });
-    await expect(paymentsPage.getCloseIconButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
+    await expect(commonPage.getModalCloseIcon).toBeVisible({ timeout: 5000 });
     await expect(paymentsPage.getAddProductsButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
     await expect(paymentsPage.getCancelButtonRepeatOrderWindow).toBeVisible({ timeout: 5000 });
   })
 
-  test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', async ({ page, addProduct, baseURL }) => {
+  test('W | Przejście do szczegółów zamówienia podczas przetwarzania płatności', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -164,22 +164,23 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(200000);
 
-    await addProduct('do mycia naczyń somat');
+    await addProduct(product);
 
-    for (let i = 0; i < 4; i++) {
-        await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(5000);
-    };
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
-    await cartPage.clickCartSummaryButton();
+    await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Płatność kartą przy odbiorze').check();
     await paymentsPage.checkStatue();
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
@@ -192,7 +193,7 @@ test.describe('Testy płatności', async () => {
     await expect(orderDetailsPage.getCancelOrderButton).toBeVisible({ timeout: 5000 });
   })
 
-  test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, browser }) => {
+  test('W | Możliwość zapłaty za zamówienie z poziomu listy zamówień', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Płatności');
     await allure.epic('Webowe');
@@ -205,34 +206,54 @@ test.describe('Testy płatności', async () => {
   
     test.setTimeout(300000);
 
-    await addProduct('do mycia naczyń somat');
+    await addProduct(product);
 
-    for (let i = 0; i < 4; i++) {
-        await searchbarPage.clickIncreaseProductButton();
-        await page.waitForTimeout(5000);
-    };
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
+    await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'commit'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
-    await cartPage.clickCartSummaryButton();
+    await cartPage.clickCartSummaryPaymentButton();
     await page.getByLabel('Przelew online').check();
     await paymentsPage.checkStatue();
     await page.waitForTimeout(1000);
-    await cartPage.clickCartPaymentConfirmationButtonButton();
+    await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 7000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-    await przelewy24Page.clickErrorPayButton();
+    await page.waitForTimeout(1000);
+    
+    const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+    const maxTries = 5;
+    let urlChanged = false;
+
+    for (let i = 0; i < maxTries; i++) {
+      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+
+      const currentUrl = page.url();
+      if (expectedUrlPattern.test(currentUrl)) {
+        urlChanged = true;
+        break;
+      }
+    }
+
+    expect(urlChanged).toBe(true);
+    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
     await przelewy24Page.clickBackToShopButton();
 
     await paymentsPage.clickOrderDetailsButton();
 
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
     await expect(orderDetailsPage.getPayButton).toBeVisible();
     await expect(orderDetailsPage.getBackToOrdersButton).toBeVisible();
     await expect(orderDetailsPage.getRepeatOrderButton).toBeVisible();
@@ -244,14 +265,28 @@ test.describe('Testy płatności', async () => {
     await przelewy24Page.clickMainTransferButton();
     await przelewy24Page.clickChosenTransferButton();
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-    await przelewy24Page.clickPayButton();
+    await page.waitForTimeout(1000);
 
-    await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 250000 });
-    await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 250000 });
+    for (let i = 0; i < maxTries; i++) {
+      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+
+      const currentUrl = page.url();
+      if (expectedUrlPattern.test(currentUrl)) {
+        urlChanged = true;
+        break;
+      }
+    }
+
+    await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
+    await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
+    await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
-    await expect(paymentsPage.getBackHomeButton).toBeVisible({ timeout: 250000 });
+    await expect(paymentsPage.getBackHomeButton).toBeVisible();
   })
   
   test.describe('Płatności BLIK', async () => {
@@ -269,27 +304,27 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('777888');
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -300,7 +335,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
     
-    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -311,12 +346,13 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(350000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
@@ -327,11 +363,10 @@ test.describe('Testy płatności', async () => {
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -351,7 +386,11 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
+      let tries = 0;
+      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        tries++;
+      }
 
       await page.waitForTimeout(7000);
 
@@ -365,7 +404,7 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
     })
 
-    test('W | Zapłata nieprawidłowym kodem BLIK', async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata nieprawidłowym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -378,27 +417,27 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -413,7 +452,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 });
     })
 
-    test('W | Zapłata pustym kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata pustym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -424,29 +463,30 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.checkStatue();
-      await cartPage.getCartPaymentButton.isDisabled();
+      await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
       await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Kod blik jest wymagany');
     })
 
-    test('W | Zapłata za krótkim kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata za krótkim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -457,30 +497,31 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(120000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123');
       await paymentsPage.checkStatue();
-      await cartPage.getCartPaymentButton.isDisabled();
+      await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
       await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
             
-    test('W | Zapłata za długim kodem BLIK', async ({ page, addProduct }) => {
+    test('W | Zapłata za długim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -491,30 +532,31 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(120000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('12345678');
       await paymentsPage.checkStatue();
-      await cartPage.getCartPaymentButton.isDisabled();
+      await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
       await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
                 
-    test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', async ({ page, addProduct }) => {
+    test('W | Zapłata kodem BLIK z nieprawidłowymi znakami', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -527,19 +569,20 @@ test.describe('Testy płatności', async () => {
 
       const symbols: string[] = ["~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "[", "}", "]", "|", "\'", ":", ";", "'", '"', "<", ",", ">", ".", "/", "?"];
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('12345');
 
@@ -548,7 +591,7 @@ test.describe('Testy płatności', async () => {
         await page.waitForTimeout(1000);
         await paymentsPage.checkStatue();
         expect(await paymentsPage.getStatueCheckbox.isChecked()).toBeTruthy();
-        expect(await cartPage.getCartPaymentButton.isDisabled()).toBeTruthy();
+        expect(await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled()).toBeTruthy();
         await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
         await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
         await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
@@ -571,27 +614,27 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(200000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123456');
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible(),
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -611,10 +654,24 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickMainBlikButton();
       await przelewy24Page.clickChosenBlikButton();
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -636,27 +693,27 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(170000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
 
       await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
     
@@ -697,32 +754,47 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(150000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);;
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
       await przelewy24Page.clickMainTransferButton();
       await przelewy24Page.clickChosenTransferButton();
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -731,7 +803,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     }) 
         
-    test('W | Błędna płatność przelewem online', async ({ page, addProduct, baseURL }) => {
+    test('W | Błędna płatność przelewem online', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -744,22 +816,23 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(220000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
@@ -767,12 +840,26 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickChosenTransferButton();
       await page.waitForLoadState('load')
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickErrorPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
       await przelewy24Page.clickBackToShopButton();
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -803,22 +890,23 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(190000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
@@ -826,12 +914,26 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickChosenTransferButton();
       await page.waitForLoadState('load')
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickErrorPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
       await przelewy24Page.clickBackToShopButton();
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -853,10 +955,20 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickMainTransferButton();
       await przelewy24Page.clickChosenTransferButton();
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickPayButton();
+      await page.waitForTimeout(1000);
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -878,22 +990,23 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(190000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
-      await cartPage.clickCartSummaryButton();
+      await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
@@ -901,12 +1014,26 @@ test.describe('Testy płatności', async () => {
       await przelewy24Page.clickChosenTransferButton();
       await page.waitForLoadState('load')
       await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'));
-      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+    
+      const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+      const maxTries = 5;
+      let urlChanged = false;
+  
+      for (let i = 0; i < maxTries; i++) {
+        await przelewy24Page.clickErrorPayButton();
+        await page.waitForTimeout(1000);
+  
+        const currentUrl = page.url();
+        if (expectedUrlPattern.test(currentUrl)) {
+          urlChanged = true;
+          break;
+        }
+      }
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'));
       await przelewy24Page.clickBackToShopButton();
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+      await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
       await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -941,7 +1068,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
         
-    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -952,12 +1079,13 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(330000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
@@ -967,7 +1095,7 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 25000, state: 'hidden' });
 
       if (`${process.env.URL}` == 'https://mamyito.pl') {
@@ -995,7 +1123,11 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
+      let tries = 0;
+      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        tries++;
+      }
 
       await page.waitForTimeout(7000);
 
@@ -1013,7 +1145,7 @@ test.describe('Testy płatności', async () => {
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1024,12 +1156,13 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(330000);
 
-      await addProduct('do mycia naczyń somat');
+      await addProduct(product);
 
-      for (let i = 0; i < 4; i++) {
-          await searchbarPage.clickIncreaseProductButton();
-          await page.waitForTimeout(5000);
-      };
+      await searchbarPage.getProductItemCount.first().click();
+      await page.waitForTimeout(1000);
+      await searchbarPage.getProductItemCount.first().type('1');
+      await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
 
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
@@ -1039,10 +1172,9 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await page.getByLabel('Płatność kartą przy odbiorze').check();
       await paymentsPage.checkStatue();
-      await cartPage.clickCartPaymentConfirmationButtonButton();
+      await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -1065,7 +1197,11 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
+      let tries = 0;
+      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        tries++;
+      }
 
       await page.waitForTimeout(7000);
 

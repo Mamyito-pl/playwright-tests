@@ -11,6 +11,8 @@ import * as utility from '../../utils/utility-methods';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 
+test.describe.configure({ mode: 'serial' })
+
 test.describe('Testy szczegółów produktu', async () => {
 
   let productDetailsPage: ProductDetailsPage;
@@ -49,7 +51,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('M | Strona produktu otwiera się ze wszystkimi wymaganymi polami', async ({ page, searchProduct }) => {
+  test('M | Strona produktu otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -86,16 +88,16 @@ test.describe('Testy szczegółów produktu', async () => {
 
     const formattedNewProductPrice = newProductPrice[0].replace(/\s+/g, '');
     const formattedProductPrice = productPrice[0].replace(/\s+/g, '');
-    const formattedNewProductSetFirstQuantityButton = productNewSetFirstQuantityButton[0].replace(/\s+/g, '');
-    const formattedNewProductSetSecondQuantityButton = productNewSetSecondQuantityButton[0].replace(/\s+/g, '');
+    const formattedNewProductSetFirstQuantityButton = productNewSetFirstQuantityButton[0];
+    const formattedNewProductSetSecondQuantityButton = productNewSetSecondQuantityButton[0];
     
     expect(newProductBrandName).toEqual(productBrandName);
     expect(newProductName[0]).toContain(productName[0]);
     expect(newProductGrammar).toEqual(productGrammar);
     expect(newProductPricePerGrammar).toEqual(productPricePerGrammar);
     expect(formattedNewProductPrice).toContain(formattedProductPrice);
-    expect(productSetFirstQuantityButton[0]).toEqual(formattedNewProductSetFirstQuantityButton); // Change wen KAN-1114 is done
-    expect(productSetSecondQuantityButton[0]).toEqual(formattedNewProductSetSecondQuantityButton); // Change wen KAN-1114 is done
+    expect(productSetFirstQuantityButton[0]).toEqual(formattedNewProductSetFirstQuantityButton);
+    expect(productSetSecondQuantityButton[0]).toEqual(formattedNewProductSetSecondQuantityButton);
 
     await expect(productDetailsPage.getProductActualPriceTitle).toBeVisible();
     await expect(productDetailsPage.getAddProductButton).toBeVisible();
@@ -108,7 +110,7 @@ test.describe('Testy szczegółów produktu', async () => {
   })
 
     
-  test('M | Możliwość dodania jednej sztuki produktu do koszyka', async ({ page, searchProduct }) => {
+  test('M | Możliwość dodania jednej sztuki produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -126,9 +128,9 @@ test.describe('Testy szczegółów produktu', async () => {
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
-    const formattedProductPrice = productPrice?.slice(0, -7);
+    const formattedProductPrice = productPrice?.slice(0, -9);
 
-    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('class', 'tabler-icon tabler-icon-check');
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     await productDetailsPage.clickAddProductButton();
 
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
@@ -139,7 +141,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText(formattedProductPrice || '');
   })
       
-  test('M | Możliwość dodania wielosztuk produktu do koszyka', async ({ page, searchProduct }) => {
+  test('M | Możliwość dodania wielosztuk produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -160,7 +162,7 @@ test.describe('Testy szczegółów produktu', async () => {
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
 
     await productDetailsPage.getSetSecondQuantityButton.click();
-    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('class', 'tabler-icon tabler-icon-check');
+    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
 
@@ -185,7 +187,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText(formattedProductPrice || '');
   })
         
-  test('M | Możliwość zmniejszenia ilości produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('M | Możliwość zmniejszenia ilości produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -224,7 +226,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
   })
           
-  test('M | Możliwość usunięcia produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('M | Możliwość usunięcia produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -253,8 +255,10 @@ test.describe('Testy szczegółów produktu', async () => {
     await productDetailsPage.getDecreaseProductButton.click();
 
     await expect(productDetailsPage.getDeleteProductModal).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(1000);
     await expect(productDetailsPage.getConfirmDeleteModalButton).toBeVisible();
     await productDetailsPage.getConfirmDeleteModalButton.click();
+    await page.waitForTimeout(2000);
 
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
     await expect(productDetailsPage.getAddProductButton).toBeVisible({ timeout: 5000 });
@@ -262,7 +266,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getDecreaseProductButton).not.toBeVisible();
   })
     
-  test('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', async ({ page, searchProduct }) => {
+  test('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -279,8 +283,6 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
-    const productURL = page.url(); 
-
     const productName = await productDetailsPage.getProductName.textContent() || '';
 
     await productDetailsPage.getAddToFavouritesButton.click({ force: true });
@@ -290,9 +292,10 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForTimeout(2000);
 
-    await mainPage.getFavouritesButton.click();
+    await mainPage.getFavouritesButton.click({ force: true, delay: 300 });
+    await page.waitForLoadState('domcontentloaded');
 
-    await favouritesPage.getProductNameWithBrand.first().waitFor({ state: 'visible', timeout: 10000 })
+    await expect(favouritesPage.getProductNameWithBrand.first()).toBeVisible({ timeout: 15000 });
 
     const allProductNames = await favouritesPage.getProductNameWithBrand.allTextContents();
 
@@ -302,7 +305,8 @@ test.describe('Testy szczegółów produktu', async () => {
 
     expect(productFound).toBe(true);
 
-    await page.goto(productURL, { waitUntil: 'domcontentloaded' });
+    await page.getByText(productName).click();
+    await page.waitForLoadState('domcontentloaded');
 
     await productDetailsPage.getAddToFavouritesButton.click({ force: true });
 
@@ -311,9 +315,12 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForTimeout(2000);
 
-    await mainPage.getFavouritesButton.click();
+    await mainPage.getFavouritesButton.click({ force: true, delay: 300 });
+    await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
+    await page.reload();
+    await page.waitForLoadState('domcontentloaded');
 
-    await favouritesPage.getProductNameWithBrand.first().waitFor({ state: 'visible', timeout: 10000 })
+    await expect(favouritesPage.getProductNameWithBrand.first()).toBeVisible({ timeout: 15000 });
 
     const updatedProductNames = await favouritesPage.getProductNameWithBrand.allTextContents();
     expect(updatedProductNames.length).toBe(allProductCount - 1);
@@ -322,7 +329,7 @@ test.describe('Testy szczegółów produktu', async () => {
     expect(productNotFound).toBe(true);
   })
       
-  test('M | Możliwość przejścia do strony marki z tytułu produktu', async ({ page, baseURL, searchProduct }) => {
+  test('M | Możliwość przejścia do strony marki z tytułu produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -348,7 +355,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
   })
         
-  test('M | Możliwość wyświetlenia informacji głównych o produkcie', async ({ page, searchProduct }) => {
+  test('M | Możliwość wyświetlenia informacji głównych o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -374,7 +381,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toContainText(productBrandName || '');
   })
           
-  test('M | Możliwość wyświetlenia informacji opakowania o produkcie', async ({ page, searchProduct }) => {
+  test('M | Możliwość wyświetlenia informacji opakowania o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -400,7 +407,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toHaveText('Pojemność: ' + productGrammar);
   })
                 
-  test('M | Możliwość przejścia do strony marki z informacji głównych produktu', async ({ page, baseURL, searchProduct }) => {
+  test('M | Możliwość przejścia do strony marki z informacji głównych produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -424,15 +431,15 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getMainInfoProductDropdown.click();
 
-    const mainInfoContentBrand = productDetailsPage.getMainInfoProductDropdown.locator('..').locator('..').locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName || '');
-
+    const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').locator('a[data-cy="product-page-brand-link"]').getByText(productBrandName || '');
+    
     await mainInfoContentBrand.click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/marki/' + formattedProductBrandName, { timeout: 10000 });
     await expect(brandPage.getBrandTitle).toContainText(productBrandName || '')
   })
 
-  test('M | Możliwość przewijania slidera inne produkty z tej kategorii', async ({ page, searchProduct }) => {
+  test('M | Możliwość przewijania slidera inne produkty z tej kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
@@ -462,7 +469,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await productDetailsPage.getSliderSectionGetLeftButton.isDisabled();
   })
   
-  test('M | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', async ({ page, baseURL, searchProduct }) => {
+  test('M | Możliwość przejścia do inne produkty z tej kategorii poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');

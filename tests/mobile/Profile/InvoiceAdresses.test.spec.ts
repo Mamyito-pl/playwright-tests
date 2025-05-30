@@ -31,7 +31,7 @@ test.describe('Testy dane do faktury', async () => {
     await deleteInvoiceAddressViaAPI('Edytowana nazwa podmiotu')
   })
   
-  test('M | Strona dane do faktury otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('M | Strona dane do faktury otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -167,7 +167,7 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('200');
   })
     
-  test('M | Możliwość ustawienia głównych danych do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+  test('M | Możliwość ustawienia głównych danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -207,7 +207,7 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu')).not.toBeAttached({ timeout: 5000 });
   })
         
-  test('M | Możliwość usunięcia danych do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+  test('M | Możliwość usunięcia danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');

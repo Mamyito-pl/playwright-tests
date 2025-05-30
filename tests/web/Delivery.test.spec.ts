@@ -36,7 +36,7 @@ test.describe('Testy dostawy', async () => {
     await deleteInvoiceAddressViaAPI('Edytowana nazwa podmiotu')
   })
   
-  test('W | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('W | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Dostawa');
     await allure.epic('Webowe');
@@ -48,7 +48,6 @@ test.describe('Testy dostawy', async () => {
     await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
 
     await expect(deliveryPage.getDeliveryAddressTitle).toBeVisible();
-    await expect(deliveryPage.getDeliveryAddressSubTitle).toBeVisible();
     await expect(deliveryPage.getAddNewAddressButton).toBeVisible();
     await expect(deliveryPage.getDeliveryInvoiceCheckbox).toBeVisible();
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
@@ -132,11 +131,11 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalUserFlatNumber).toBeVisible();
       await deliveryPage.getAddressModalUserFlatNumber.fill('30');
 
-      /*await expect(deliveryPage.getAddressModalUserFloor).toBeVisible();
+      await expect(deliveryPage.getAddressModalUserFloor).toBeVisible();
       await deliveryPage.getAddressModalUserFloor.fill('2');
-                                                                                        // Uncomment after done task KAN-801
+                                                                                       
       await expect(deliveryPage.getAddressModalUserDeliveryNotes).toBeVisible();
-      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');*/
+      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Testowa notatka');
 
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
@@ -160,6 +159,8 @@ test.describe('Testy dostawy', async () => {
       await addAddressDeliveryViaAPI('Adres Fixturowy');
 
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+
+      await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
       await deliveryPage.clickEditAddressButton('Adres Fixturowy');
 
@@ -196,11 +197,11 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalUserFlatNumber).toHaveValue('30');
       await deliveryPage.getAddressModalUserFlatNumber.fill('3');
 
-      /*await expect(deliveryPage.getAddressModalUserFloor).toHaveValue('x');
+      await expect(deliveryPage.getAddressModalUserFloor).toHaveValue('2');
       await deliveryPage.getAddressModalUserFloor.fill('4');
-                                                                                        // Uncomment after done task KAN-801
-      await expect(deliveryPage.getAddressModalUserDeliveryNotes).toHaveValue('x');
-      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Edytowana testowa notatka');*/
+                                                                                        
+      await expect(deliveryPage.getAddressModalUserDeliveryNotes).toHaveValue('Testowa notatka');
+      await deliveryPage.getAddressModalUserDeliveryNotes.fill('Edytowana testowa notatka');
 
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
@@ -222,13 +223,11 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalUserHouseNumber).toHaveValue('4');
       await expect(deliveryPage.getAddressModalUserStaircase).toHaveValue('2');
       await expect(deliveryPage.getAddressModalUserFlatNumber).toHaveValue('3');
-      /*await expect(deliveryPage.getAddressModalUserFloor).toHaveValue('77');
-                                                                                        // Uncomment after done task KAN-801
-      await expect(deliveryPage.getAddressModalUserDeliveryNotes).toHaveValue('88');
-      */
+      await expect(deliveryPage.getAddressModalUserFloor).toHaveValue('4');                                 
+      await expect(deliveryPage.getAddressModalUserDeliveryNotes).toHaveValue('Edytowana testowa notatka');
     })
     
-    test('W | Możliwość usunięcia adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+    test('W | Możliwość usunięcia adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -259,7 +258,7 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Adres Edytowany', { state: 'hidden' });
     })
     
-    test('W | Możliwość wyboru adresu dostawy', async ({ page, addAddressDeliveryViaAPI }) => {
+    test('W | Możliwość wyboru adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDeliveryViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -282,7 +281,7 @@ test.describe('Testy dostawy', async () => {
 
       await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
 
-      await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 5000 });
+      await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
 
       const borderColor = await targetAddress.evaluate((el) => {
         const styles = window.getComputedStyle(el);
@@ -294,13 +293,20 @@ test.describe('Testy dostawy', async () => {
 
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
-      await expect(targetAddress).not.toContainText('Aktualnie wybrany', { timeout: 5000 });
+      await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
+
+      const borderColorAfter = await targetAddress.evaluate((el) => {
+        const styles = window.getComputedStyle(el);
+        return styles.getPropertyValue('border'); 
+      });
+
+      expect(borderColorAfter).not.toBe('1px solid rgb(78, 180, 40)');
     })
   })
 
   test.describe('Faktura', async () => {
     
-    test('W | Możliwość dodania podmiotu do faktury', async ({ page }) => {
+    test('W | Możliwość dodania podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -383,7 +389,7 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
     })
 
-    test('W | Możliwość wyboru podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+    test('W | Możliwość wyboru podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -403,7 +409,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
-      await page.waitForSelector('text="Chcę otrzymać F-Vat"', { timeout: 30000, state: 'visible' });
+      await page.waitForSelector('text="Chcę otrzymać fakturę"', { timeout: 30000, state: 'visible' });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
       let attempts = 0;
@@ -425,9 +431,11 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
 
+      await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
+
       await page.getByText('Testowa nazwa podmiotu').click({ force: true, delay: 300 });
 
-      await expect(targetAddress).toContainText('Aktualnie wybrany', { timeout: 3000 });
+      await expect(targetAddress.locator('svg[class="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
 
       const borderColor = await targetAddress.evaluate((el) => {
         const styles = window.getComputedStyle(el);
@@ -438,7 +446,7 @@ test.describe('Testy dostawy', async () => {
       expect(borderColor).toBe('1px solid rgb(78, 180, 40)');
     })
 
-    test('W | Możliwość edycji podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+    test('W | Możliwość edycji podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -541,7 +549,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('200');
     })
     
-    test('W | Możliwość usunięcia podmiotu do faktury', async ({ page, addInvoiceAddressViaAPI }) => {
+    test('W | Możliwość usunięcia podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');

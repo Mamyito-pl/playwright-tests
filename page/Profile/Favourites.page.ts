@@ -15,7 +15,7 @@ export default class FavouritesPage {
         return this.getSortDropdown.getByRole('option', { name: sortName, exact: true }).click();
     }
 
-    get getFavouritesProdutsTitle() {
+    get getFavouritesProductsTitle() {
         return this.page.locator('div[id="profile_details_favourites"]:has-text("Ulubione produkty")');
     }
 

@@ -24,7 +24,7 @@ test.describe('Testy menu kategorii', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test('M | Menu kategorii otwiera się z obecnymi kategoriami', async () => {
+  test('M | Menu kategorii otwiera się z obecnymi kategoriami', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Mobilne', 'Menu kategorii');
     await allure.epic('Mobilne');
@@ -42,7 +42,7 @@ test.describe('Testy menu kategorii', async () => {
     expect(categoriesCount).toBeGreaterThan(18);
   })
 
-  test('M | Możliwość zamknięcia menu', async () => {
+  test('M | Możliwość zamknięcia menu', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Mobilne', 'Menu kategorii');
     await allure.epic('Mobilne');
@@ -69,7 +69,7 @@ test.describe('Testy menu kategorii', async () => {
     expect(categoriesCountAfterClose).toEqual(0);
   })
 
-  test('M | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', async ({ page }) => {
+  test('M | Menu przykładowej kategorii otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Menu kategorii');
     await allure.epic('Mobilne');
@@ -88,7 +88,7 @@ test.describe('Testy menu kategorii', async () => {
     await expect(menuCategoriesPage.getMenuCategoriesSubCategoryAllCategoryButton).toBeVisible();
   })
 
-  test('M | Możliwość powrotu do głównego menu kategorii', async ({ page }) => {
+  test('M | Możliwość powrotu do głównego menu kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Menu kategorii');
     await allure.epic('Mobilne');
@@ -109,7 +109,7 @@ test.describe('Testy menu kategorii', async () => {
     await expect(menuCategoriesPage.getMenuCategoriesTitle).toBeVisible();
   })
 
-  test('M | Możliwość przejścia do kategorii produktów', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do kategorii produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Menu kategorii');
     await allure.epic('Mobilne');
@@ -130,7 +130,7 @@ test.describe('Testy menu kategorii', async () => {
     await productsListPage.getProductCategoryTitle('Warzywa i owoce').isVisible();
   })
 
-  test('M | Możliwość przejścia do podkategorii produktów', async ({ page, baseURL }) => {
+  test('M | Możliwość przejścia do podkategorii produktów', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
 
     await allure.tags('Mobilne', 'Menu kategorii');
     await allure.epic('Mobilne');

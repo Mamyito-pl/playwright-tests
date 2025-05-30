@@ -155,7 +155,7 @@ export default class DeliveryPage {
     }
 
     get getAddressModalUserDeliveryNotes() {
-        return this.page.locator('#delivery_address_floor');
+        return this.page.locator('#delivery_address_client_delivery_notes');
     }
 
     // Invoice Address Modal
