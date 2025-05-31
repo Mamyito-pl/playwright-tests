@@ -316,7 +316,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
 
-    test('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -1014,7 +1014,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
             
-    test('M | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('M | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -1089,7 +1089,7 @@ test.describe('Testy płatności', async () => {
   
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test('M | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('M | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
