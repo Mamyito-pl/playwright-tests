@@ -491,6 +491,13 @@ test.describe('Testy strony głównej', async () => {
 
   test('M | Możliwość zapisania się do newslettera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, browser }) => {
 
+    await allure.tags('Mobilne', 'Strona główna');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Strona główna');
+    await allure.suite('Testy strony głównej');
+    await allure.subSuite('');
+    await allure.allureId('1505');
+
     const userEmail = `${process.env.EMAIL}`
 
     const project = browser.browserType().name();
