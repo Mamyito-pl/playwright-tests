@@ -20,7 +20,7 @@ export default class LoginPage {
     }
 
     async clickLoginButton() {
-        await this.getLoginButton.click();
+        await this.getLoginButton.click({ force: true, delay: 300 });
     }
 
     get getLoginButton() {

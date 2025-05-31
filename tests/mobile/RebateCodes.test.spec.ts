@@ -45,8 +45,8 @@ test.describe('Testy kodów rabatowych', async () => {
   
   test('M | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke', '@Prod'] }, async ({ page, addProduct, baseURL }) => {
 
-    await allure.tags('Mobile', 'Kody rabatowe');
-    await allure.epic('Mobile');
+    await allure.tags('Mobilne', 'Kody rabatowe');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Kody rabatowe');
     await allure.suite('Testy kodów rabatowych');
     await allure.subSuite('Kody rabatowe');
@@ -151,8 +151,8 @@ test.describe('Testy kodów rabatowych', async () => {
 
   test('M | Możliwość dodania kodu rabatowego kwotowego do koszyka i jego usunięcia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
-    await allure.tags('Mobile', 'Kody rabatowe');
-    await allure.epic('Mobile');
+    await allure.tags('Mobilne', 'Kody rabatowe');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Kody rabatowe');
     await allure.suite('Testy kodów rabatowych');
     await allure.subSuite('Kody rabatowe');
@@ -258,8 +258,8 @@ test.describe('Testy kodów rabatowych', async () => {
 
   test('M | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
 
-    await allure.tags('Mobile', 'Kody rabatowe');
-    await allure.epic('Mobile');
+    await allure.tags('Mobilne', 'Kody rabatowe');
+    await allure.epic('Mobilne');
     await allure.parentSuite('Kody rabatowe');
     await allure.suite('Testy kodów rabatowych');
     await allure.subSuite('Kody rabatowe');

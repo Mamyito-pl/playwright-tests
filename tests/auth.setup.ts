@@ -54,7 +54,9 @@ setup('Autoryzacja', async ({ page }) => {
   await loginPage.enterEmail(`${process.env.EMAIL}`);
   await loginPage.enterPassword(`${process.env.PASSWORD}`);
   await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
+  await page.waitForTimeout(1000);
   await loginPage.clickLoginButton();
+  await page.waitForTimeout(1000);
   await expect(page).toHaveURL(`${process.env.URL}`, { timeout: 20000 });
   await page.waitForLoadState('networkidle');
   await utility.addGlobalStyles(page);
