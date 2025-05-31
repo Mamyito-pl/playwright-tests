@@ -58,7 +58,7 @@ setup('Autoryzacja', async ({ page }) => {
   await loginPage.clickLoginButton();
   await page.waitForTimeout(1000);
   await expect(page).toHaveURL(`${process.env.URL}`, { timeout: 20000 });
-  await page.waitForLoadState('networkidle');
+  await page.waitForLoadState('domcontentloaded');
   await utility.addGlobalStyles(page);
   await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 15000 });
   await expect(mainLogoutPage.getLoginLink).toBeHidden({ timeout: 10000 });
