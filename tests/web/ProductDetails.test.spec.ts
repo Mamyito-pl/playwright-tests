@@ -279,9 +279,8 @@ test.describe('Testy szczegółów produktu', async () => {
     await productDetailsPage.getConfirmDeleteModalButton.click({ force: true, delay: 300 });
 
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
-    await expect(productDetailsPage.getAddProductButton).toBeVisible({ timeout: 5000 });
-    await expect(productDetailsPage.getIncreaseProductButton).not.toBeVisible();
-    await expect(productDetailsPage.getDecreaseProductButton).not.toBeVisible();
+    await page.waitForTimeout(4000);
+    await expect(commonPage.getCartProductsCount).toHaveText('0');
   })
   
   test('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {

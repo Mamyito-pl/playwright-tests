@@ -335,7 +335,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
     
-    test.skip('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1069,7 +1069,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
         
-    test.skip('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');

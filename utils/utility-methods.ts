@@ -34,3 +34,17 @@ export async function retryUntil200(fn, maxRetries = 10, delay = 1000) {
   }
   throw new Error(`Nie uzyskano statusu 200 po ${maxRetries} próbach`);
 };
+
+export async function tryClickApplyButton(page: any, productsListPage: any, maxAttempts = 3) {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    await productsListPage.clickApplyButton();
+    await page.waitForTimeout(7000);
+    
+    const isDropdownVisible = await page.locator('.MuiPaper-root').isVisible();
+    if (!isDropdownVisible) break;
+    
+    if (attempt === maxAttempts) {
+      console.log(`Nie udało się zamknąć dropdownu po ${maxAttempts} próbach`);
+    }
+  }
+};

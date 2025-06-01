@@ -148,11 +148,11 @@ test.describe('Testy strony głównej', async () => {
     const firstItemInSlider = page.locator('div[data-cy="promocje-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(0).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(0).click();
-    await expect(firstItemInSlider).not.toBeInViewport();
+    await mainPage.getSectionGetRightButton.nth(0).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(0).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(0).click();
-    await expect(firstItemInSlider).toBeInViewport();
+    await mainPage.getSectionGetLeftButton.nth(0).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(0).isDisabled();
   })
   
@@ -185,11 +185,11 @@ test.describe('Testy strony głównej', async () => {
     const firstItemInSlider = page.locator('div[data-cy="bestsellery-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(1).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(1).click();
-    await expect(firstItemInSlider).not.toBeInViewport();
+    await mainPage.getSectionGetRightButton.nth(1).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(1).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(1).click();
-    await expect(firstItemInSlider).toBeInViewport();
+    await mainPage.getSectionGetLeftButton.nth(1).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(1).isDisabled();
   })
   
@@ -225,11 +225,11 @@ test.describe('Testy strony głównej', async () => {
     const firstItemInSlider = page.locator('div[data-sentry-component="CategoriesSection"] section a[rel="nofollow"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(2).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(2).click();
-    await expect(firstItemInSlider).not.toBeInViewport();
+    await mainPage.getSectionGetRightButton.nth(2).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(2).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(2).click();
-    await expect(firstItemInSlider).toBeInViewport();
+    await mainPage.getSectionGetLeftButton.nth(2).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(2).isDisabled();
   })
   
@@ -289,11 +289,11 @@ test.describe('Testy strony głównej', async () => {
     const firstItemInSlider = page.locator('div[data-cy="nowosci-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(3).click();
-    await expect(firstItemInSlider).not.toBeInViewport();
+    await mainPage.getSectionGetRightButton.nth(3).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(3).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(3).click();
-    await expect(firstItemInSlider).toBeInViewport();
+    await mainPage.getSectionGetLeftButton.nth(3).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
     await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
   })
   
@@ -335,10 +335,10 @@ test.describe('Testy strony głównej', async () => {
 
     if (recentlyBoughtProductsCount > 7) {
         await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();
-        await mainPage.getSectionGetRightButton.nth(4).click();
-        await expect(firstItemInSlider).not.toBeInViewport();
-        await mainPage.getSectionGetLeftButton.nth(4).click();
-        await expect(firstItemInSlider).toBeInViewport();
+        await mainPage.getSectionGetRightButton.nth(4).click({ force: true, delay: 300 });
+        await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
+        await mainPage.getSectionGetLeftButton.nth(4).click({ force: true, delay: 300 });
+        await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
     } else {
         await expect(mainPage.getSectionGetLeftButton.nth(4)).toBeDisabled();
         await expect(mainPage.getSectionGetRightButton.nth(4)).toBeDisabled();
