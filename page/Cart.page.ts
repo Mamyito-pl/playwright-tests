@@ -135,12 +135,8 @@ export default class CartPage {
         return this.page.locator(selectors.CartPage.common.clearCartButton)
     }
 
-    /*get getCartDrawerButton() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #cart_button_mobile" : "div[data-sentry-element='WebContent'] #cart_button");
-    }*/
-
     get getCartDrawerButton() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] [data-sentry-source-file='Navigation.tsx'] #cart_button_mobile" : "nav[data-sentry-source-file='NavigationWeb.tsx'] #cart_button")
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #cart_button_mobile" : "div[data-sentry-element='WebContent'] #cart_button");
     }
 
     get getCartDrawerSummaryTitle() {

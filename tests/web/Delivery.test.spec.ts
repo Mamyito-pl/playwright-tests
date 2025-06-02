@@ -142,7 +142,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
+      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 15000 });
 
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     })

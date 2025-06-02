@@ -43,7 +43,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await clearCartViaAPI();
   }) 
   
-  test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke', '@Prod'] }, async ({ page, addProduct, baseURL }) => {
+  test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');

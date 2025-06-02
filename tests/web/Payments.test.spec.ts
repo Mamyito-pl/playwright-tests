@@ -386,13 +386,16 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
+      
       let tries = 0;
-      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+      while (tries < 3) {
+        if (!(await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 }))) {
+          break;
+        }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        await page.waitForTimeout(1000);
         tries++;
       }
-
-      await page.waitForTimeout(7000);
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1124,13 +1127,16 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
+      
       let tries = 0;
-      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+      while (tries < 3) {
+        if (!(await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 }))) {
+          break;
+        }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        await page.waitForTimeout(1000);
         tries++;
       }
-
-      await page.waitForTimeout(7000);
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1146,7 +1152,7 @@ test.describe('Testy płatności', async () => {
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test.skip('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1198,13 +1204,16 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
+      
       let tries = 0;
-      while (tries < 3 && await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 })) {
+      while (tries < 3) {
+        if (!(await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 }))) {
+          break;
+        }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        await page.waitForTimeout(1000);
         tries++;
       }
-
-      await page.waitForTimeout(7000);
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';

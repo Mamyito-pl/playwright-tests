@@ -1089,7 +1089,7 @@ test.describe('Testy płatności', async () => {
   
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test.skip('M | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('M | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
