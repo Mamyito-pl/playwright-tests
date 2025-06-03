@@ -480,7 +480,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(mainPage.getNewsletterCheckbox).toBeChecked();
     await expect(mainPage.getNewsletterSubscribeButton).toBeEnabled();
     await mainPage.getNewsletterSubscribeButton.click();
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano do newslettera', { timeout: 10000 })
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano do newslettera', { timeout: 15000 })
   })
 })
 

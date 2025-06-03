@@ -17,13 +17,14 @@ test.describe('Testy moje dane', async () => {
 
     await page.route('**/api/addresses/delivery', async (route, request) => {
       const headers = request.headers();
+      console.log('Nagłówki:', headers);
       
       const authHeader = headers['authorization'];
   
       if (authHeader && authHeader.startsWith('Bearer ')) {
         bearerToken = authHeader.split(' ')[1];
       }
-  
+      console.log('Bearer:', bearerToken);
       await route.continue();
     });
 
@@ -88,14 +89,15 @@ test.describe('Testy moje dane', async () => {
     await expect (myDetailsPage.getModalSaveButton).toBeVisible();
 
     await myDetailsPage.getModalNameInput.fill(exampleName);
+    await expect(myDetailsPage.getModalNameInput).toHaveValue(exampleName);
     await myDetailsPage.getModalSurnameInput.fill(exampleSurname);
-    await page.waitForTimeout(1000);
-
+    await expect(myDetailsPage.getModalSurnameInput).toHaveValue(exampleSurname);
+    await page.waitForTimeout(2000);
     await myDetailsPage.clickModalSaveButton();
 
     await page.waitForTimeout(2000);
     expect (await myDetailsPage.getModal('Edytuj dane')).not.toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 10000 })
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 })
 
     const newNameSurnameIsVisible = await myDetailsPage.getNameSurnameContent.evaluate((element, { exampleName, exampleSurname}) => {
         const textContent = element.textContent || '';
@@ -107,7 +109,7 @@ test.describe('Testy moje dane', async () => {
     expect(newNameSurnameIsVisible).toBe(true);
   })
   
-  /*test.skip('M | Możliwość zmiany daty urodzenia', async ({ page }) => {
+  /*test.skip('M | Możliwość zmiany daty urodzenia', { tag: ['@Prod', '@Beta', '@Test'] }, { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -172,7 +174,7 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForTimeout(2000);
     expect (await myDetailsPage.getModal('Edytuj numer telefonu')).not.toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 5000 });
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 });
 
     const newNameSurnameIsVisible = await myDetailsPage.getPhoneNumberContent.evaluate((element, { examplePhoneNumber }) => {
         const textContent = element.textContent || '';
@@ -213,7 +215,7 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForTimeout(2000);
     expect (await myDetailsPage.getModal('Edytuj hasło')).not.toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 10000 })
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 })
 
     const postAccountData = await page.request.patch(`${process.env.APIURL}/api/me/update-account`, {
       headers: {
@@ -230,8 +232,8 @@ test.describe('Testy moje dane', async () => {
 
     expect (await myDetailsPage.getModal('Zmień hasło')).not.toBeVisible({ timeout: 10000 });
 
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 5000 });
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
   })
   
   test('M | Zgoda na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {

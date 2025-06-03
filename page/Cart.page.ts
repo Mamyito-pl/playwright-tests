@@ -86,8 +86,7 @@ export default class CartPage {
     }
 
     get getEmptyCartDrawerNotification() {
-        //return this.mobile ? this.page.locator('#cart-drawer-content-tablet div[data-sentry-component="CartProductsList"]').locator('div').last() : this.page.locator('#cart-drawer-content-desktop div[data-sentry-component="CartProductsList"]');
-        return this.mobile ? this.page.locator('div[class*="feuLvI"] #cart-drawer-content').getByText('Twój koszyk jest pusty') : this.page.locator('div[class*="kYJzsY"] #cart-drawer-content').getByText('Twój koszyk jest pusty');
+        return this.mobile ? this.page.locator('#cart-drawer-content-tablet div[data-sentry-component="CartProductsList"]').locator('div').last() : this.page.locator('#cart-drawer-content-desktop div[data-sentry-component="CartProductsList"]');
     }
 
     get getProductList() {

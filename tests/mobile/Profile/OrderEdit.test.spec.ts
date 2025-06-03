@@ -67,7 +67,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await clearCartViaAPI();
   }) 
   
-  test('M | Wyjście z edycji z poziomu koszyka', async ({ page, baseURL, addProduct }) => {
+  test('M | Wyjście z edycji z poziomu koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -141,7 +141,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getCancelEditOrderCartButton).not.toBeVisible({ timeout: 10000 });
   })
     
-  test('M | Zamknięcie modala rozpoczęcia edycji "X" z poziomu zamówienia', async ({ page, baseURL, addProduct }) => {
+  test('M | Zamknięcie modala rozpoczęcia edycji "X" z poziomu zamówienia', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -202,7 +202,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(commonPage.getCartProductsCount).not.toBeVisible({ timeout: 10000 });
   })
 
-  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu "X"', async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu "X"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -281,7 +281,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await cancelEditOrderViaAPI(page);
   })
   
-  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -359,7 +359,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await cancelEditOrderViaAPI(page);
   })
 
-  test('M | Modal "Anuluj edycję" z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+  test('M | Modal "Anuluj edycję" z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -439,7 +439,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await cancelEditOrderViaAPI(page);
   })
 
-  test('M | Modal rozpoczęcia edycji z poziomu zamówienia zamyka się po kliknięciu w przycisk anuluj', async ({ page, baseURL, addProduct }) => {
+  test('M | Modal rozpoczęcia edycji z poziomu zamówienia zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -499,7 +499,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   })
 
-  test('M | Zmiana adresu dostawy', async ({ page, baseURL, addProduct, addSecondAddressDeliveryViaAPI }) => {
+  test('M | Zmiana adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, addSecondAddressDeliveryViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -625,7 +625,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(page.getByText('Adres', { exact: true }).locator('..').locator('div').last()).toContainText('Oficerska 405-506 Lesznowola');
   })
 
-  test('M | Zmiana terminu dostawy', async ({ page, baseURL, addProduct }) => {
+  test('M | Zmiana terminu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -776,7 +776,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(page.getByText('Termin dostawy').locator('..').locator('div').last()).toContainText(deliverySlotDateAfterEditFormatted);
   })
 
-  test('M | Dodanie kodu rabatowego kwotowego', async ({ page, baseURL, addProduct }) => {
+  test('M | Dodanie kodu rabatowego kwotowego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -900,7 +900,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     expect(finalPrice).toBe(summaryPriceAfterChanges);
   })
 
-  test('M | Dodanie kodu rabatowego procentowego', async ({ page, baseURL, addProduct }) => {
+  test('M | Dodanie kodu rabatowego procentowego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -1026,7 +1026,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     expect(finalPrice).toBe(summaryPriceAfterChanges);
   })
 
-  test('M | Usunięcie kodu rabatowego', async ({ page, baseURL, addProduct }) => {
+  test('M | Usunięcie kodu rabatowego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -1163,7 +1163,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
 
   test.describe('Edycja zamówienia z dopłatą', async () => {
 
-    test('M | Dopłata do zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL, browser }) => {
+    test('M | Dopłata do zamówienia z pełną manipulacją produktów w koszyku', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, browser }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -1444,7 +1444,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z BLIK na przelew', async ({ page, baseURL, browser, addProduct }) => {
+    test('M | Dopłata do zamówienia z BLIK na przelew', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, browser, addProduct }) => {
       
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -1690,7 +1690,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z BLIK na kartę przy odbiorze', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -1888,7 +1888,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z przelewu na BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -2121,7 +2121,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z przelewu na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z przelewu na kartę przy odbiorze', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -2344,7 +2344,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z karty przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z karty przy odbiorze na BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -2551,7 +2551,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Dopłata do zamówienia z karty przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Dopłata do zamówienia z karty przy odbiorze na przelew', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -2777,7 +2777,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
 
   test.describe('Edycja zamówienia ze zwrotem środków', async () => {
 
-    test('M | Zwrot środków zamówienia z pełną manipulacją produktów w koszyku', async ({ page, baseURL }) => {
+    test('M | Zwrot środków zamówienia z pełną manipulacją produktów w koszyku', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL }) => {
       
         await allure.tags('Mobilne', 'Edycja zamówienia');
         await allure.epic('Mobilne');
@@ -3020,7 +3020,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Zwrot środków z BLIK na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z BLIK na przelew', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
         await allure.tags('Mobilne', 'Edycja zamówienia');
         await allure.epic('Mobilne');
@@ -3218,7 +3218,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         expect(finalPrice).toBe(summaryPriceAfterChanges);
       })
 
-    test('M | Zwrot środków z BLIK na kartę przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z BLIK na kartę przy odbiorze', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -3418,7 +3418,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Zwrot środków z przelewu na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z przelewu na BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -3643,7 +3643,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
     
-    test('M | Zwrot środków z przelewu na zapłatę kartą przy odbiorze', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z przelewu na zapłatę kartą przy odbiorze', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -3868,7 +3868,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Zwrot środków z zapłaty kartą przy odbiorze na BLIK', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z zapłaty kartą przy odbiorze na BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');
@@ -4077,7 +4077,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
 
-    test('M | Zwrot środków z zapłaty kartą przy odbiorze na przelew', async ({ page, baseURL, addProduct }) => {
+    test('M | Zwrot środków z zapłaty kartą przy odbiorze na przelew', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
 
       await allure.tags('Mobilne', 'Edycja zamówienia');
       await allure.epic('Mobilne');

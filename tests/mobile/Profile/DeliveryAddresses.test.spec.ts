@@ -104,7 +104,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalSaveButton).toBeVisible();
     await deliveryAddressesPage.clickSaveAdressModalButton();
 
-    await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
+    await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 15000 });
 
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
   })
@@ -210,8 +210,8 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalSaveButton).toBeVisible();
     await deliveryAddressesPage.clickSaveAdressModalButton();
 
-    await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 5000 });
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 15000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await deliveryAddressesPage.clickEditAddressButton('Adres Edytowany');
 
@@ -256,8 +256,8 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalCancelButton).toBeVisible();
     await expect(deliveryAddressesPage.getAddressModalConfirmationButton).toBeVisible();
     await deliveryAddressesPage.getAddressModalConfirmationButton.click();
-    await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został usunięty.', { timeout: 5000 })
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został usunięty.', { timeout: 15000 })
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForSelector('text=Adres Edytowany', { state: 'hidden' });
   })

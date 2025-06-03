@@ -695,7 +695,7 @@ test.describe('Testy listy produktów', async () => {
       }
     })
         
-    test('M | Możliwość filtrowania po nazwie producenta', async ({ page }) => {
+    test('M | Możliwość filtrowania po nazwie producenta', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Mobilne', 'Lista produktów');
       await allure.epic('Mobilne');
@@ -724,7 +724,7 @@ test.describe('Testy listy produktów', async () => {
       expect(productsCount).toBeGreaterThanOrEqual(1);
     })
 
-    test('M | Możliwość wyczyszczenia filtrowania', async ({ page }) => {
+    test('M | Możliwość wyczyszczenia filtrowania', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Mobilne', 'Lista produktów');
       await allure.epic('Mobilne');

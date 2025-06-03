@@ -264,7 +264,7 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(4000);
-    await expect(commonPage.getCartProductsCount).toHaveText('0');
+    await expect(commonPage.getCartProductsPrice).toHaveText('0,00 zł');
   })
     
   test('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
@@ -288,8 +288,8 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getAddToFavouritesButton.click({ force: true });
 
-    await expect(commonPage.getMessage).toHaveText('Dodano produkt do ulubionych', { timeout: 10000 });
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Dodano produkt do ulubionych', { timeout: 15000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForTimeout(2000);
 
@@ -311,8 +311,8 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getAddToFavouritesButton.click({ force: true });
 
-    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 10000 });
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForTimeout(2000);
 

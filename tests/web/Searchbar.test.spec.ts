@@ -70,7 +70,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await expect(searchbarPage.getBigBanner).not.toBeVisible();
   })
   
-  test('W | Wyszukanie nieistniejącego produktu', async ({ page }) => {
+  test('W | Wyszukanie nieistniejącego produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');

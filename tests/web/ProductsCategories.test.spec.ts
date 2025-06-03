@@ -14,6 +14,9 @@ test.describe('Testy kategorii produktów', async () => {
 
     await page.goto('/kategorie', { waitUntil: 'load' });
 
+    const warzywaOwoceLink = page.locator('a[href="/warzywa-i-owoce"]').last();
+    await expect(warzywaOwoceLink).toBeVisible({ timeout: 20000 });
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });

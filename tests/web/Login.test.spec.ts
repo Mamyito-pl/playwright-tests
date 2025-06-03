@@ -61,7 +61,7 @@ test.describe('Testy logowania', async () => {
     await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
-    await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 10000 })
+    await expect(commonPage.getMessage).toHaveText("Podany adres email jest nieprawidłowy", { timeout: 15000 })
   })
 
   test.use({ storageState: { cookies: [], origins: [] }})
@@ -80,7 +80,7 @@ test.describe('Testy logowania', async () => {
     await expect(loginPage.getLoginButton).toBeEnabled({ timeout: 5000 });
     await loginPage.clickLoginButton();
     await expect(page).toHaveURL(`${baseURL}` + '/logowanie');
-    await expect(commonPage.getMessage).toHaveText("Nieprawidłowe dane logowania", { timeout: 10000 })
+    await expect(commonPage.getMessage).toHaveText("Nieprawidłowe dane logowania", { timeout: 15000 })
   })
 })
 

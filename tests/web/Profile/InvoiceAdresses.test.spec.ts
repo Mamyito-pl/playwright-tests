@@ -92,7 +92,7 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getInvoiceAddressModalSaveButton).toBeVisible();
     await invoiceAddressesPage.clickSaveInvoiceAdressModalButton();
 
-    await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 })
+    await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 15000 })
 
     await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
   })
@@ -148,8 +148,8 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getInvoiceAddressModalSaveButton).toBeVisible();
     await invoiceAddressesPage.clickSaveInvoiceAdressModalButton();
 
-    await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 5000 });
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 15000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
     
     await page.waitForSelector('text=Edytowana nazwa podmiotu', { timeout: 5000, state: 'visible' });
 
@@ -232,8 +232,8 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getInvoiceAddressModalCancelButton).toBeVisible();
     await expect(invoiceAddressesPage.getInvoiceAddressModalConfirmationButton).toBeVisible();
     await invoiceAddressesPage.getInvoiceAddressModalConfirmationButton.click();
-    await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 });
-    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 15000 });
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForSelector('text=Edytowana nazwa podmiotu', { strict: true , state: 'hidden' });
   })

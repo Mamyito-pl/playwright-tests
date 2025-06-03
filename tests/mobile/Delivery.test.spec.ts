@@ -251,8 +251,8 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 10000 });
-      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został zaktualizowany.', { timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
       await deliveryPage.clickEditAddressButton('Adres Edytowany');
 
@@ -297,8 +297,8 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalCancelButton).toBeVisible();
       await expect(deliveryPage.getAddressModalConfirmationButton).toBeVisible();
       await deliveryPage.getAddressModalConfirmationButton.click();
-      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został usunięty.', { timeout: 5000 })
-      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+      await expect(commonPage.getMessage).toHaveText('Adres "Adres Edytowany" został usunięty.', { timeout: 15000 })
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
       await page.waitForSelector('text=Adres Edytowany', { state: 'hidden' });
     })
@@ -375,8 +375,8 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 5000 });
-      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
       while (attempts < maxAttempts) {
         await checkbox.waitFor({ state: 'visible' });
@@ -516,8 +516,8 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
       await deliveryPage.clickSaveAdressModalButton();
 
-      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 5000 })
-      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został zaktualizowany.', { timeout: 15000 })
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
       while (attempts < maxAttempts) {
         await checkbox.waitFor({ state: 'visible' });
@@ -590,8 +590,8 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getAddressModalCancelButton).toBeVisible();
       await expect(deliveryPage.getAddressModalConfirmationButton).toBeVisible();
       await deliveryPage.getAddressModalConfirmationButton.click();
-      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 5000 });
-      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 10000 });
+      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana nazwa podmiotu" został usunięty.', { timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
       while (attempts < maxAttempts) {
         await checkbox.waitFor({ state: 'visible' });

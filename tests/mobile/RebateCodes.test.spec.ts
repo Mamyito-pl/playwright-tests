@@ -149,7 +149,7 @@ test.describe('Testy kodów rabatowych', async () => {
     expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
   })
 
-  test('M | Możliwość dodania kodu rabatowego kwotowego do koszyka i jego usunięcia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
+  test('M | Możliwość dodania kodu rabatowego kwotowego do koszyka i jego usunięcia', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Kody rabatowe');
     await allure.epic('Mobilne');
@@ -256,7 +256,7 @@ test.describe('Testy kodów rabatowych', async () => {
     expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
   })
 
-  test('M | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
+  test('M | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Mobilne', 'Kody rabatowe');
     await allure.epic('Mobilne');

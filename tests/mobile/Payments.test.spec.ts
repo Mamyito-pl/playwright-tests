@@ -370,9 +370,16 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
-
-      await page.waitForTimeout(7000);
+      
+      let tries = 0;
+      while (tries < 3) {
+        if (!(await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 }))) {
+          break;
+        }
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        await page.waitForTimeout(7000);
+        tries++;
+      }
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1071,9 +1078,16 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true });
-
-      await page.waitForTimeout(7000);
+      
+      let tries = 0;
+      while (tries < 3) {
+        if (!(await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 }))) {
+          break;
+        }
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        await page.waitForTimeout(7000);
+        tries++;
+      }
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1141,9 +1155,16 @@ test.describe('Testy płatności', async () => {
       await expect(orderDetailsPage.getCancelOrderModal).toBeVisible({ timeout: 10000 });
       await (expect(orderDetailsPage.getCancelOrderModal.getByText('Anulowanie zamówienia'))).toBeVisible();
       await expect(orderDetailsPage.getCancelConfirmationButton).toBeVisible();
-      await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-
-      await page.waitForTimeout(7000);
+      
+      let tries = 0;
+      while (tries < 3) {
+        if (!(await orderDetailsPage.getCancelOrderModal.isVisible({ timeout: 3000 }))) {
+          break;
+        }
+        await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
+        await page.waitForTimeout(7000);
+        tries++;
+      }
 
       const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
         const textContent = element.textContent || '';

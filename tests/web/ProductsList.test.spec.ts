@@ -64,6 +64,9 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await productsListPage.getBreadcrumbs.getByText('Nabiał').click();
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
@@ -82,6 +85,9 @@ test.describe('Testy listy produktów', async () => {
     await allure.allureId('1660');
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
     await expect(productsListPage.getHorizontalMenu).toBeVisible();
     await expect(productsListPage.getVerticalMenu).not.toBeVisible();
@@ -138,6 +144,9 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('Najtańsze');
@@ -171,6 +180,9 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('Najdroższe');
@@ -203,6 +215,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -239,6 +254,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -273,6 +291,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -384,6 +405,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -495,6 +519,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial', { waitUntil: 'load' });
+
+    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     expect((await productsListPage.getFilter('Typ produktu')).isVisible);
     await productsListPage.getFilterSelectCheckbox('Typ produktu','High protein');
@@ -541,6 +568,9 @@ test.describe('Testy listy produktów', async () => {
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
       await productsListPage.getFilterSelect('Cena','poniżej 10zł');
       await page.waitForTimeout(7000);
 
@@ -572,6 +602,9 @@ test.describe('Testy listy produktów', async () => {
       test.setTimeout(80000);
 
       await page.goto('/nabial', { waitUntil: 'load' });
+
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelect('Cena','od 10zł do 20zł');
       await page.waitForTimeout(7000);
@@ -609,6 +642,9 @@ test.describe('Testy listy produktów', async () => {
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
       await productsListPage.getFilterSelect('Cena','od 20zł do 50zł');
       await page.waitForTimeout(7000);
 
@@ -645,6 +681,9 @@ test.describe('Testy listy produktów', async () => {
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
       await productsListPage.getFilterSelect('Cena','powyżej 50zł');
       await page.waitForTimeout(7000);
 
@@ -679,6 +718,9 @@ test.describe('Testy listy produktów', async () => {
       test.setTimeout(80000);
 
       await page.goto('/nabial', { waitUntil: 'load' });
+
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterCustomPriceFromSet('Cena', '2');
       await page.waitForTimeout(7000);
@@ -718,6 +760,9 @@ test.describe('Testy listy produktów', async () => {
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
+
       expect((await productsListPage.getFilter('Producent')).isVisible);
       await productsListPage.getFilterSelect('Producent','MLEKOVITA');
       await page.waitForTimeout(7000);
@@ -745,6 +790,9 @@ test.describe('Testy listy produktów', async () => {
       test.setTimeout(150000);
 
       await page.goto('/bio-wege-i-bezglutenowe/bio', { waitUntil: 'load' });
+
+      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
 

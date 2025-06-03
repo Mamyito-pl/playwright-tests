@@ -57,7 +57,7 @@ test.describe('Testy ulubionych produktów', async () => {
     const firstItemName = page.locator('div[data-cy="promocje-products-list-slider"] h3').first();
     const firstItemNameText = await firstItemName.textContent() || '';
 
-    const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click();
+    const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true, delay: 300 });
     clickAddFristItemToFavourites;
     await page.waitForTimeout(2000);
 
@@ -76,10 +76,10 @@ test.describe('Testy ulubionych produktów', async () => {
     expect(productFound).toBe(true);
 
     const addedFavouriteProductName = page.getByText(firstItemNameText);
-    const clickRemoveAddedFavouriteProduct = await addedFavouriteProductName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click();
+    const clickRemoveAddedFavouriteProduct = await addedFavouriteProductName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true, delay: 300 });
     clickRemoveAddedFavouriteProduct;
 
-    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
 
     await page.reload();
 

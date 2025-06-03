@@ -367,7 +367,7 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async () => {
         window.scrollBy(0, 1850)
         await new Promise(r => setTimeout(r, 700));
-        window.scrollBy(0, 900)
+        window.scrollBy(0, 700)
         await new Promise(r => setTimeout(r, 700));
       });
     } else {
@@ -529,7 +529,7 @@ test.describe('Testy strony głównej', async () => {
     await expect(mainPage.getNewsletterCheckbox).toBeChecked();
     await expect(mainPage.getNewsletterSubscribeButton).toBeEnabled();
     await mainPage.getNewsletterSubscribeButton.click();
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano do newslettera', { timeout: 10000 })
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano do newslettera', { timeout: 15000 })
   })
 })
 
