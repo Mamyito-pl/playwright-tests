@@ -330,19 +330,13 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 2000);
     await page.waitForTimeout(1000);
 
-    const recentlyBoughtProductsCount = await page.locator('#most_frequently_bought div[data-sentry-component="ProductCard"]').count();
     const firstItemInSlider = page.locator('div[data-cy="most_frequently_bought-product-card-slider"]').first();
 
-    if (recentlyBoughtProductsCount > 7) {
-        await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();
-        await mainPage.getSectionGetRightButton.nth(4).click({ force: true, delay: 300 });
-        await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
-        await mainPage.getSectionGetLeftButton.nth(4).click({ force: true, delay: 300 });
-        await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
-    } else {
-        await expect(mainPage.getSectionGetLeftButton.nth(4)).toBeDisabled();
-        await expect(mainPage.getSectionGetRightButton.nth(4)).toBeDisabled();
-    }
+    await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();
+    await mainPage.getSectionGetRightButton.nth(4).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
+    await mainPage.getSectionGetLeftButton.nth(4).click({ force: true, delay: 300 });
+    await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
   })
   
   test('W | Możliwość przejścia do najczęściej kupowanych produktów poprzez link slidera', { tag: ['@Prod', '@Test'] }, async ({ page, baseURL }) => {
