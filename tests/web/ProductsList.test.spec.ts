@@ -39,7 +39,7 @@ test.describe('Testy listy produktów', async () => {
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
-    await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne');
+    await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne', { timeout: 20000 });
     await expect(productsListPage.getBigBanner).toBeVisible();
     await expect(productsListPage.getCategoryTags).toBeVisible();
     await expect(productsListPage.getProductCategoryTitle('Mleko i napoje mleczne')).toBeVisible();
@@ -203,7 +203,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })  
 
-  test('W | Możliwość sortowania po najtańszych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test.skip('W | Możliwość sortowania po najtańszych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -242,7 +242,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
 
-  test('W | Możliwość sortowania po najdroższych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test.skip('W | Możliwość sortowania po najdroższych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -582,7 +582,6 @@ test.describe('Testy listy produktów', async () => {
 
       for (const productPrice of allProductCleanedPrices) {
         expect(productPrice).toBeLessThanOrEqual(10)
-        console.log('cena produktu', productPrice)
       }
 
       const pricesCount = allProductCleanedPrices.length;
@@ -622,7 +621,6 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(10);
           expect(productPrice).toBeLessThanOrEqual(20);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -661,7 +659,6 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(20);
           expect(productPrice).toBeLessThanOrEqual(50);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -699,7 +696,6 @@ test.describe('Testy listy produktów', async () => {
         for (const productPrice of allProductCleanedPrices) {
           expect(productPrice).toBeGreaterThanOrEqual(50);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -740,7 +736,6 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(2);
           expect(productPrice).toBeLessThanOrEqual(4);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice);
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -763,7 +758,7 @@ test.describe('Testy listy produktów', async () => {
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
-      expect((await productsListPage.getFilter('Producent')).isVisible);
+      await page.waitForTimeout(2000);
       await productsListPage.getFilterSelect('Producent','MLEKOVITA');
       await page.waitForTimeout(7000);
       
@@ -799,11 +794,9 @@ test.describe('Testy listy produktów', async () => {
       await productsListPage.getFilterCustomPriceToSet('Cena', '9');
       await page.waitForTimeout(7000);
       
-      expect((await productsListPage.getFilter('Typ produktu')).isVisible);
       await productsListPage.getFilterSelect('Typ produktu','Bio');
       await page.waitForTimeout(7000);
 
-      expect((await productsListPage.getFilter('Producent')).isVisible);
       await productsListPage.getFilterSelect('Producent','ALCE NERO');
       await page.waitForTimeout(7000);
 

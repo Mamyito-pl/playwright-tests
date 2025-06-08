@@ -23,6 +23,8 @@ type MyFixtures = {
     clearCart: () => Promise<void>;
     clearCartViaAPI: () => Promise<void>;
     newsletterSignOutViaAPI: () => Promise<void>;
+    newsletterSignInViaAPI: () => Promise<void>;
+    smsConsentViaAPI: (consent: boolean) => Promise<void>;
     searchProduct: (productName: any) => Promise<void>;
     addProduct: (product: any) => Promise<void>;
     addAddressDelivery: (addressName: any) => Promise<void>;
@@ -137,7 +139,7 @@ export const test = baseTest.extend<MyFixtures>({
 
   newsletterSignOutViaAPI: async ({ request }, use) => {
     
-    const clearCartViaAPI = async (): Promise<void> => {
+    const newsletterSignOutViaAPI = async (): Promise<void> => {
       
       const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
         headers: {
@@ -162,10 +164,76 @@ export const test = baseTest.extend<MyFixtures>({
           },
       });
 
-      expect(newsletterSignOutResponse.status()).toBe(200);
+      expect(newsletterSignOutResponse.ok()).toBeTruthy();
     };
     
-    await use(clearCartViaAPI);
+    await use(newsletterSignOutViaAPI);
+  },
+
+  newsletterSignInViaAPI: async ({ request }, use) => {
+    
+    const newsletterSignInViaAPI = async (): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const newsletterSignInResponse = await request.post(`${process.env.APIURL}/api/newsletter/sign-up`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+          data: {
+            email: `${process.env.EMAIL}`,
+          },
+      });
+
+      expect(newsletterSignInResponse.status() === 404 || newsletterSignInResponse.ok()).toBeTruthy();
+    };
+    
+    await use(newsletterSignInViaAPI);
+  },
+
+  smsConsentViaAPI: async ({ request }, use) => {
+    
+    const smsConsentViaAPI = async (consent: boolean): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const smsConsentResponse = await request.patch(`${process.env.APIURL}/api/me/update-account`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          sms_consents_granted: consent,
+        },
+      });
+
+      expect([200, 204]).toContain(smsConsentResponse.status());
+    };
+    
+    await use(smsConsentViaAPI);
   },
 
   searchProduct: async ({ page }, use) => {

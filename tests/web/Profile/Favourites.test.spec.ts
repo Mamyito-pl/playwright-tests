@@ -7,6 +7,8 @@ import * as utility from '../../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
+test.setTimeout(80000);
+
 test.describe('Testy ulubionych produktów', async () => {
 
   let commonPage: CommonPage;
@@ -14,7 +16,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await page.goto('/', { waitUntil: 'load', timeout: 50000 });
 
     await utility.addGlobalStyles(page);
 

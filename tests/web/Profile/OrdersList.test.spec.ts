@@ -4,6 +4,8 @@ import * as allure from "allure-js-commons";
 import { test } from '../../../fixtures/fixtures.ts';
 import * as utility from '../../../utils/utility-methods.ts';
 
+test.setTimeout(60000);
+
 test.describe('Testy listy zamówień', async () => {
   let ordersPage: OrdersPage;
   

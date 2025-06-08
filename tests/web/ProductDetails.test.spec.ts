@@ -74,10 +74,14 @@ test.describe('Testy szczegółów produktu', async () => {
     const productPrice = await searchbarPage.getProductPrices.first().allTextContents();
     const productSetFirstQuantityButton = await page.locator('div[data-testid="search-results"] div[data-sentry-element="ProductSets"] button').first().allTextContents();
     const productSetSecondQuantityButton = await page.locator('div[data-testid="search-results"] div[data-sentry-element="ProductSets"] button').nth(1).allTextContents();
-
+    
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -128,15 +132,19 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
     const formattedProductPrice = productPrice?.slice(0, -9);
 
-    //await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toBeVisible();
     await productDetailsPage.clickAddProductButton();
 
@@ -164,8 +172,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchbarPage.getSearchbarProductTiles.first().locator('h3').click();
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -173,7 +185,7 @@ test.describe('Testy szczegółów produktu', async () => {
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
 
     await productDetailsPage.getSetSecondQuantityButton.click();
-    //await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toBeVisible();
     
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
@@ -213,8 +225,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -256,8 +272,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -280,7 +300,7 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(4000);
-    await expect(commonPage.getCartProductsCount).toHaveText('0,00 zł');
+    await expect(commonPage.getCartProductsPrice).toHaveText('0,00 zł');
   })
   
   test('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
@@ -297,8 +317,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -306,7 +330,7 @@ test.describe('Testy szczegółów produktu', async () => {
 
     const productName = await productDetailsPage.getProductName.textContent() || '';
 
-    await productDetailsPage.getAddToFavouritesButton.click({ force: true });
+    await productDetailsPage.getAddToFavouritesButton.click({ force: true, delay: 300 });
 
     await expect(commonPage.getMessage).toHaveText('Dodano produkt do ulubionych', { timeout: 15000 });
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -326,10 +350,12 @@ test.describe('Testy szczegółów produktu', async () => {
 
     expect(productFound).toBe(true);
 
+    await page.getByText(productName).hover();
+    await page.waitForTimeout(2000);
     await page.getByText(productName).click();
     await page.waitForLoadState('domcontentloaded');
 
-    await productDetailsPage.getAddToFavouritesButton.click({ force: true });
+    await productDetailsPage.getAddToFavouritesButton.click({ force: true, delay: 300 });
 
     await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -364,8 +390,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -392,8 +422,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -422,8 +456,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -454,8 +492,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -490,8 +532,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 
@@ -524,8 +570,12 @@ test.describe('Testy szczegółów produktu', async () => {
     await searchProduct(productToSearchName);
 
     let tries = 0;
-    while (tries < 3 && await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 })) {
+    while (tries < 3) {
+      if (!(await searchbarPage.getSearchbarProductTiles.first().locator('h3').isVisible({ timeout: 3000 }))) {
+        break;
+      }
       await searchbarPage.getSearchbarProductTiles.first().locator('h3').click({ force: true, delay: 300 });
+      await page.waitForTimeout(7000);
       tries++;
     }
 

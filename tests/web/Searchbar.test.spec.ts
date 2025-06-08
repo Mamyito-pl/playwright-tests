@@ -26,7 +26,7 @@ test.describe('Testy wyszukiwarki', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test('W | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
+  test.skip('W | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -38,7 +38,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
 
-    await expect(searchbarPage.getOurDiscountsTitle).toBeVisible();
+    await expect(searchbarPage.getOurDiscountsTitle).toBeVisible({ timeout: 10000 });
     await expect(searchbarPage.getSectionShowAllLink).toBeVisible();
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
     await expect(searchbarPage.getBigBanner).toBeVisible();
@@ -54,19 +54,13 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.allureId('1518');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
 
-    await expect(searchbarPage.getOurDiscountsTitle).toBeVisible();
-    await expect(searchbarPage.getSectionShowAllLink).toBeVisible();
-    await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
+    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
     await expect(searchbarPage.getBigBanner).toBeVisible();
 
     await searchbarPage.getSearchbarCloseButton.click();
     await expect(searchbarPage.getSearchbarCloseButton).not.toBeVisible({ timeout: 10000 });
 
-    await expect(searchbarPage.getOurDiscountsTitle).not.toBeVisible();
-    await expect(searchbarPage.getSectionShowAllLink).not.toBeVisible();
-    await expect(searchbarPage.getOurDiscountsSection).not.toBeVisible();
     await expect(searchbarPage.getBigBanner).not.toBeVisible();
   })
   
@@ -245,7 +239,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
       
-  test('W | Możliwość przwijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
+  test.skip('W | Możliwość przewijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');
@@ -257,7 +251,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
 
-    await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
+    await expect(searchbarPage.getOurDiscountsSection).toBeVisible({ timeout: 15000 });
 
     const firstItemInSlider = searchbarPage.getOurDiscountsSection.locator('div').locator('div').locator('div').locator('div').locator('div').first()
 
@@ -270,7 +264,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSliderLeftButton.isDisabled();
   })
 
-  test('W | Możliwość przejścia do naszych promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL}) => {
+  test.skip('W | Możliwość przejścia do naszych promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL}) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');

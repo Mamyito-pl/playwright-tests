@@ -12,6 +12,8 @@ import FavouritesPage from '../../../page/Profile/Favourites.page.ts';
 import RebateCodesPage from '../../../page/Profile/RebateCodes.page.ts';
 import NonLoggedUserPage from '../../../page/NonLoggedUser.page.ts';
 
+test.setTimeout(80000);
+
 test.describe('Testy profilu', async () => {
   let profilePage: ProfilePage;
   let mainPage: MainPage;

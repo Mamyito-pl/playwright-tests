@@ -36,7 +36,10 @@ export default class ProductsListPage {
 
 
         await expect(filter).toBeVisible({ timeout: 5000 });
+        await filter.scrollIntoViewIfNeeded();
+        await this.page.waitForTimeout(1000);
         await filter.click({ force: true, delay: 300 });
+        await this.page.waitForTimeout(2000);
         await filterSelect.click({ force: true, delay: 300 });
 
         /*let isChecked = false;

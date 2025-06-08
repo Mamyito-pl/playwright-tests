@@ -69,27 +69,27 @@ export default class OrderEditPage {
     }
 
     get getConfirmationEditOrderCartModalTitle() {
-        return this.mobile ? this.page.locator('#modal-portal').getByText('Zapisz zmiany').nth(0) : this.page.locator('#modal-portal').getByText('Zapisz zmiany').nth(1);
+        return this.page.locator('#modal-portal').getByText('Zapisz zmiany');
     }
 
     get getConfirmationEditOrderCartModalCancelButton() {
-        return this.mobile ? this.page.locator('#modal-portal').getByText('Anuluj').nth(0) : this.page.locator('#modal-portal').getByText('Anuluj').nth(1);
+        return this.page.locator('#modal-portal').getByText('Anuluj');
     }
 
     get getConfirmationEditOrderCancelCartModalTitle() {
-        return this.mobile ? this.page.locator('#modal-portal').getByText('Anuluj edycję').nth(0) : this.page.locator('#modal-portal').getByText('Anuluj edycję').nth(1);
+        return this.page.locator('#modal-portal').getByText('Anuluj edycję');
     }
 
     get getConfirmationEditOrderCancelCartModalCancelButton() {
-        return this.mobile ? this.page.locator('#modal-portal').getByRole('button', { name: 'Anuluj'}).nth(0) : this.page.locator('#modal-portal').getByRole('button', { name: 'Anuluj'}).nth(1);
+        return this.page.locator('#modal-portal').getByRole('button', { name: 'Anuluj'});
     }
 
     get getConfirmationEditOrderCancelCartModalLeaveButton() {
-        return this.mobile ? this.page.locator('#modal-portal').getByRole('button', { name: 'Wyjdź'}).nth(0) : this.page.locator('#modal-portal').getByRole('button', { name: 'Wyjdź'}).nth(1);
+        return this.page.locator('#modal-portal').getByRole('button', { name: 'Wyjdź'});
     }
 
     get getConfirmationEditOrderModal() {
-        return this.page.locator('#modal-portal')
+        return this.page.locator('#modal-portal div div').first();  
     }
 
     get getEnterBlikCodeModalTitle() {

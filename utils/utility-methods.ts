@@ -48,3 +48,15 @@ export async function tryClickApplyButton(page: any, productsListPage: any, maxA
     }
   }
 };
+
+export async function gotoWithRetry(page, url, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await page.goto(url, { waitUntil: 'load' });
+      return;
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      console.log(`Próba ${attempt} nieudana, próbuję ponownie...`);
+    }
+  }
+}

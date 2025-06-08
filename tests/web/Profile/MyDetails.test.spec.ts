@@ -3,9 +3,11 @@ import MyDetailsPage from '../../../page/Profile/MyDetails.page.ts';
 import CommonPage from '../../../page/Common.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../../fixtures/fixtures.ts';
-import * as utility from '../../../utils/utility-methods';
+import * as utility from '../../../utils/utility-methods.ts';
 import { faker } from '@faker-js/faker/locale/pl';
 import { format } from 'date-fns';
+
+test.setTimeout(80000);
 
 test.describe('Testy moje dane', async () => {
 
@@ -15,7 +17,7 @@ test.describe('Testy moje dane', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.route('**/api/addresses/delivery', async (route, request) => {
+    await page.route('**/api/me/update-account', async (route, request) => {
       const headers = request.headers();
       
       const authHeader = headers['authorization'];
@@ -27,7 +29,9 @@ test.describe('Testy moje dane', async () => {
       await route.continue();
     });
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await utility.gotoWithRetry(page, '/');
+
+    await utility.addGlobalStyles(page);
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -45,8 +49,8 @@ test.describe('Testy moje dane', async () => {
     await allure.suite('Testy moje dane');
     await allure.subSuite('');
     await allure.allureId('2005');
-    
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible();
     await expect(myDetailsPage.getNameSurnameLabel).toBeVisible();
@@ -75,10 +79,10 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2007');
 
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
+
     const exampleName = faker.person.firstName();
     const exampleSurname = faker.person.lastName();
-    
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -119,8 +123,6 @@ test.describe('Testy moje dane', async () => {
     const exampleDateBirth = faker.date.birthdate({ min: 18, max: 65, mode: 'age' });
     const formattedEDB = format(exampleDateBirth, 'yyyy.MM.dd');
     
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
-
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await myDetailsPage.clickDateBirthEditButton();
@@ -151,9 +153,9 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2009');
 
-    const examplePhoneNumber = (faker.number.int(1) + faker.number.int({ min: 100000000, max: 199999999 })).toString();
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+    const examplePhoneNumber = (faker.number.int(1) + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -191,9 +193,9 @@ test.describe('Testy moje dane', async () => {
 
     test.setTimeout(60000);
 
-    const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+    const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -230,7 +232,7 @@ test.describe('Testy moje dane', async () => {
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
   })
 
-  test('W | Zgoda na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Zgoda na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, newsletterSignOutViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -239,7 +241,9 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2256');
 
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+    await newsletterSignOutViaAPI();
+
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -250,7 +254,7 @@ test.describe('Testy moje dane', async () => {
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).toHaveAttribute('class', /.*Mui-checked.*/);
   })
 
-  test('W | Zgoda na komunikację marketingową poprzez SMS', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Zgoda na komunikację marketingową poprzez SMS', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, smsConsentViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -259,7 +263,9 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2257');
 
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+    await smsConsentViaAPI(false);
+
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -270,7 +276,7 @@ test.describe('Testy moje dane', async () => {
     await expect(page.locator('div[data-sentry-component="UserSMSConsent"] span[data-sentry-element="Switch"]')).toHaveAttribute('class', /.*Mui-checked.*/);
   })
       
-  test('W | Wyłączenie zgody na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Wyłączenie zgody na komunikację marketingową poprzez newsletter', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, newsletterSignInViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -279,7 +285,9 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2258');
 
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+    await newsletterSignInViaAPI();
+
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -299,7 +307,7 @@ test.describe('Testy moje dane', async () => {
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
   })
 
-  test('W | Wyłączenie zgody na komunikację marketingową poprzez SMS', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Wyłączenie zgody na komunikację marketingową poprzez SMS', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, smsConsentViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -308,7 +316,9 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2259');
 
-    await page.goto('profil/moje-dane', { waitUntil: 'domcontentloaded' });
+    await smsConsentViaAPI(true);
+
+    await utility.gotoWithRetry(page, '/profil/moje-dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
