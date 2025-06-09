@@ -18,7 +18,7 @@ test.describe('Testy listy produktów', async () => {
     productsListPage = new ProductsListPage(page);
     commonPage = new CommonPage(page);
 
-    await page.goto('/', { waitUntil: 'load' });
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 

@@ -24,7 +24,7 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 

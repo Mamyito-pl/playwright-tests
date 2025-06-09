@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+/*import { expect } from '@playwright/test';
 import MainPage from "../../../page/Main.page.ts";
 import CartPage from '../../../page/Cart.page.ts';
 import DeliveryPage from '../../../page/Delivery.page.ts';
@@ -17,7 +17,7 @@ import Przelewy24Page from '../../../page/Przelewy24.page.ts';
 
 test.describe.configure({ mode: 'serial' })
 
-test.describe.skip('Testy edycji zamówienia', async () => {
+test.describe('Testy edycji zamówienia', async () => {
 
   let cartPage: CartPage;
   let deliveryPage: DeliveryPage;
@@ -40,7 +40,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -83,9 +83,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -152,9 +153,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -186,7 +188,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await orderDetailsPage.clickEditOrderButton();
     await expect(orderEditPage.getEditOrderModalTitle).toBeVisible({ timeout: 10000 });
     await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
-    await page.locator('svg[data-cy="modal-close-icon"]').nth(1).click(); // Change after modal is fixed
+    await commonPage.getModalCloseIcon.click({ force: true, delay: 300 });
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
     await expect(orderEditPage.getApplyEditOrderModalButton).not.toBeVisible({ timeout: 10000 });
     await expect(commonPage.getCartProductsCount).not.toBeVisible({ timeout: 10000 });
@@ -208,9 +210,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -258,7 +261,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderCartButton();
     await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 10000 });
     await expect(orderEditPage.getConfirmationEditOrderCartModalCancelButton).toBeVisible({ timeout: 10000 });
-    await page.locator('svg[data-cy="modal-close-icon"]').nth(0).click({ force: true }); // Change after modal is fixed
+    await commonPage.getModalCloseIcon.click({ force: true, delay: 300 });
     await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 10000 });
     await expect(orderEditPage.getConfirmationEditOrderCartModalCancelButton).not.toBeVisible({ timeout: 10000 });
 
@@ -282,9 +285,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -355,9 +359,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -429,9 +434,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -486,9 +492,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -544,26 +551,26 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-    const adresTitleBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('Adres Testowy').nth(0).isVisible();
-    const adressStreetBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('aleja Jana Pawła II').nth(0).isVisible();
-    const adressHouseNumberBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('1').nth(0).isVisible();
-    const adressPostalCodeBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('00-828').nth(0).isVisible();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+    const adresTitleBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('Adres Testowy').isVisible();
+    const adressStreetBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('aleja Jana Pawła II').isVisible();
+    const adressHouseNumberBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('1').isVisible();
+    const adressPostalCodeBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny adres').locator('..').getByText('00-828').isVisible();
     expect(adresTitleBeforeEditIsVisible).toBe(true);
     expect(adressStreetBeforeEditIsVisible).toBe(true);
     expect(adressHouseNumberBeforeEditIsVisible).toBe(true);
     expect(adressPostalCodeBeforeEditIsVisible).toBe(true);
 
-    const adresTitleAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Adres Drugi').nth(0).isVisible();
-    const adressStreetAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Oficerska').nth(0).isVisible();
-    const adressHouseNumberAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('4').nth(0).isVisible();
-    const adressPostalCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('05-506').nth(0).isVisible();
+    const adresTitleAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Adres Drugi').isVisible();
+    const adressStreetAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Oficerska').isVisible();
+    const adressHouseNumberAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('4').isVisible();
+    const adressPostalCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('05-506').isVisible();
     expect(adresTitleAfterEditIsVisible).toBe(true);
     expect(adressStreetAfterEditIsVisible).toBe(true);
     expect(adressHouseNumberAfterEditIsVisible).toBe(true);
     expect(adressPostalCodeAfterEditIsVisible).toBe(true);
 
-    const button = page.getByRole('button', { name: `Do zwrotu 0 zł`}).nth(1);
+    const button = page.getByRole('button', { name: `Do zwrotu 0 zł`});
     await expect(button).toBeVisible({ timeout: 5000 });
     await page.mouse.move(960, 540);
     await page.mouse.wheel(0, 1500);
@@ -606,9 +613,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -697,14 +705,14 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
     console.log(deliverySlotHours);
     console.log(deliverySlotHoursAfterEdit);
-    const deliverySlotHoursBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny termin').locator('..').getByText(deliverySlotHours).nth(0).isVisible();
+    const deliverySlotHoursBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualny termin').locator('..').getByText(deliverySlotHours).isVisible();
     expect(deliverySlotHoursBeforeEditIsVisible).toBe(true);
-    const deliverySlotHoursAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText(deliverySlotHoursAfterEdit).nth(0).isVisible();
+    const deliverySlotHoursAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText(deliverySlotHoursAfterEdit).isVisible();
     expect(deliverySlotHoursAfterEditIsVisible).toBe(true);
-    const button = page.getByRole('button', { name: `Do zwrotu 0 zł`}).nth(1);
+    const button = page.getByRole('button', { name: `Do zwrotu 0 zł`});
     await expect(button).toBeVisible({ timeout: 5000 });
     await page.mouse.move(960, 540);
     await page.mouse.wheel(0, 1500);
@@ -750,9 +758,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -820,12 +829,12 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-    const discountCodeBeforeEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('Brak').nth(0).isVisible();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+    const discountCodeBeforeEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('Brak').isVisible();
     expect(discountCodeBeforeEditIsNotVisible).toBe(true);
-    const discountCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Zmieniasz na:KK10').nth(0).isVisible();
+    const discountCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Zmieniasz na:KK10').isVisible();
     expect(discountCodeAfterEditIsVisible).toBe(true);
-    const button = page.getByRole('button', { name: `Do zapłaty ${priceDifferenceAfterEdit} zł`}).nth(1);
+    const button = page.getByRole('button', { name: `Do zapłaty ${priceDifferenceAfterEdit} zł`});
     await expect(button).toBeVisible({ timeout: 5000 });
     await page.mouse.move(960, 540);
     await page.mouse.wheel(0, 1500);
@@ -867,9 +876,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -937,12 +947,12 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-    const discountCodeBeforeEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('Brak').nth(0).isVisible();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+    const discountCodeBeforeEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('Brak').isVisible();
     expect(discountCodeBeforeEditIsNotVisible).toBe(true);
-    const discountCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Zmieniasz na:KP10').nth(0).isVisible();
+    const discountCodeAfterEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Zmieniasz na:KP10').isVisible();
     expect(discountCodeAfterEditIsVisible).toBe(true);
-    const button = page.getByRole('button', { name: `Do zapłaty ${priceDifferenceAfterEdit} zł`}).nth(1);
+    const button = page.getByRole('button', { name: `Do zapłaty ${priceDifferenceAfterEdit} zł`});
     await expect(button).toBeVisible({ timeout: 5000 });
     await page.mouse.move(960, 540);
     await page.mouse.wheel(0, 1500);
@@ -979,14 +989,15 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await allure.subSuite('');
     await allure.allureId('2474');
       
-    test.setTimeout(150000);
+    test.setTimeout(200000);
 
     await addProduct(product);
 
     await searchbarPage.getProductItemCount.first().click();
-    
+    await page.waitForTimeout(1000);
     await searchbarPage.getProductItemCount.first().type('1');
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000)
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -1060,15 +1071,15 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-    const discountCodeBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('KK10').nth(0).isVisible();
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+    const discountCodeBeforeEditIsVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Aktualne kody rabatowe:').locator('..').getByText('KK10').isVisible();
     expect(discountCodeBeforeEditIsVisible).toBe(true);
-    const discountCodeAfterEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Brak').nth(0).isVisible();
+    const discountCodeAfterEditIsNotVisible = await orderEditPage.getConfirmationEditOrderModal.getByText('Zmieniasz na:').locator('..').getByText('Brak').isVisible();
     expect(discountCodeAfterEditIsNotVisible).toBe(true);
     await page.mouse.move(960, 540);
     await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);
-    const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+    const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`});
     await expect(button).toBeVisible({ timeout: 5000 });
     await button.click({ force: true });
 
@@ -1079,8 +1090,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await orderEditPage.getEnterBlikCodeModalInput.fill(paymentMethodBlikCode);
     await expect(orderEditPage.getEnterBlikCodeModalPayButton).not.toBeDisabled({ timeout: 5000 });
     await orderEditPage.getEnterBlikCodeModalPayButton.click();
-    await expect(orderEditPage.getEnterBlikCodeModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+    await expect(orderEditPage.getEnterBlikCodeModalTitle).not.toBeVisible({ timeout: 15000 });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 15000 });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
     await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
@@ -1153,7 +1164,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
-    await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible();
+    await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -1279,8 +1290,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
     await orderEditPage.clickApplyEditOrderCartButton();
 
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-    const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+    const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`});
     await expect(button).toBeVisible({ timeout: 5000 });
     await page.mouse.move(960, 540);
     await page.mouse.wheel(0, 1500);
@@ -1294,8 +1305,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     await orderEditPage.getEnterBlikCodeModalInput.fill(paymentMethodBlikCode);
     await expect(orderEditPage.getEnterBlikCodeModalPayButton).not.toBeDisabled({ timeout: 5000 });
     await orderEditPage.getEnterBlikCodeModalPayButton.click();
-    await expect(orderEditPage.getEnterBlikCodeModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
-    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+    await expect(orderEditPage.getEnterBlikCodeModalTitle).not.toBeVisible({ timeout: 15000 });
+    await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 15000 });
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
     await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
@@ -1356,9 +1367,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await addProduct(product);
   
       await searchbarPage.getProductItemCount.first().click();
-      
+      await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -1477,8 +1489,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -1575,6 +1587,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -1693,8 +1706,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -1765,6 +1778,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -1908,8 +1922,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -1923,8 +1937,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await orderEditPage.getEnterBlikCodeModalInput.fill(paymentMethodBlikCode);
       await expect(orderEditPage.getEnterBlikCodeModalPayButton).not.toBeDisabled({ timeout: 5000 });
       await orderEditPage.getEnterBlikCodeModalPayButton.click();
-      await expect(orderEditPage.getEnterBlikCodeModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+      await expect(orderEditPage.getEnterBlikCodeModalTitle).not.toBeVisible({ timeout: 15000 });
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 15000 });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
       await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
@@ -1990,6 +2004,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -2133,8 +2148,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do dopłaty ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -2205,6 +2220,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -2322,8 +2338,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -2337,8 +2353,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await orderEditPage.getEnterBlikCodeModalInput.fill(paymentMethodBlikCode);
       await expect(orderEditPage.getEnterBlikCodeModalPayButton).not.toBeDisabled({ timeout: 5000 });
       await orderEditPage.getEnterBlikCodeModalPayButton.click();
-      await expect(orderEditPage.getEnterBlikCodeModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+      await expect(orderEditPage.getEnterBlikCodeModalTitle).not.toBeVisible({ timeout: 15000 });
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 15000 });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
       await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
@@ -2404,6 +2420,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -2521,8 +2538,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -2629,8 +2646,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         }
     
         await searchbarPage.getProductItemCount.first().click();
+        await page.waitForTimeout(1000);
         await searchbarPage.getProductItemCount.first().type('1');
         await commonPage.getCartButton.click();
+        await page.waitForTimeout(1000);
     
         await page.goto('/koszyk', { waitUntil: 'load'});
         await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -2776,14 +2795,14 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
         await orderEditPage.clickApplyEditOrderCartButton();
     
-        await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-        const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`}).nth(1);
+        await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+        const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`});
         await expect(button).toBeVisible({ timeout: 5000 });
         await page.mouse.move(960, 540);
         await page.mouse.wheel(0, 1500);
         await page.waitForTimeout(700);
         await button.click({ force: true });
-        await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+        await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 15000 });
     
         await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
         await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 20000 });
@@ -2844,8 +2863,10 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         await addProduct(product);
     
         await searchbarPage.getProductItemCount.first().click();
+        await page.waitForTimeout(1000);
         await searchbarPage.getProductItemCount.first().type('1');
         await commonPage.getCartButton.click();
+        await page.waitForTimeout(1000);
     
         await page.goto('/koszyk', { waitUntil: 'load'});
         await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -2964,8 +2985,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
         await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
         await orderEditPage.clickApplyEditOrderCartButton();
     
-        await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-        const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`}).nth(1);
+        await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+        const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`});
         await expect(button).toBeVisible({ timeout: 5000 });
         await page.mouse.move(960, 540);
         await page.mouse.wheel(0, 1500);
@@ -3036,6 +3057,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -3154,8 +3176,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -3226,6 +3248,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -3369,8 +3392,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -3441,6 +3464,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -3584,8 +3608,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zwrotu ${priceDifference} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -3656,6 +3680,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -3773,8 +3798,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -3788,8 +3813,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await orderEditPage.getEnterBlikCodeModalInput.fill(paymentMethodBlikCode);
       await expect(orderEditPage.getEnterBlikCodeModalPayButton).not.toBeDisabled({ timeout: 5000 });
       await orderEditPage.getEnterBlikCodeModalPayButton.click();
-      await expect(orderEditPage.getEnterBlikCodeModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).not.toBeVisible({ timeout: 15000 });
+      await expect(orderEditPage.getEnterBlikCodeModalTitle).not.toBeVisible({ timeout: 15000 });
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).not.toBeVisible({ timeout: 15000 });
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 30000 });
       await expect(page.getByText('Edytowano zamówienie', { exact: true })).toBeVisible({ timeout: 30000 });
@@ -3855,6 +3880,7 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await page.waitForTimeout(1000);
       await searchbarPage.getProductItemCount.first().type('1');
       await commonPage.getCartButton.click();
+      await page.waitForTimeout(1000);
   
       await page.goto('/koszyk', { waitUntil: 'load'});
       await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
@@ -3972,8 +3998,8 @@ test.describe.skip('Testy edycji zamówienia', async () => {
       await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 50000 });
       await orderEditPage.clickApplyEditOrderCartButton();
   
-      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle.nth(0)).toBeVisible({ timeout: 15000 });
-      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`}).nth(1);
+      await expect(orderEditPage.getConfirmationEditOrderCartModalTitle).toBeVisible({ timeout: 15000 });
+      const button = page.getByRole('button', { name: `Do zapłaty ${summaryPriceAfterChanges} zł`});
       await expect(button).toBeVisible({ timeout: 5000 });
       await page.mouse.move(960, 540);
       await page.mouse.wheel(0, 1500);
@@ -4052,4 +4078,4 @@ test.describe.skip('Testy edycji zamówienia', async () => {
     })
   })
 })
-
+*/

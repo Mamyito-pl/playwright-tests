@@ -12,7 +12,7 @@ test.describe('Testy kodów rabatowych', async () => {
   
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 

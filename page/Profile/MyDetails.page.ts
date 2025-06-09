@@ -41,7 +41,7 @@ export default class MyDetailsPage {
     }
 
     async clickModalSaveButton() {
-        return this.getModalSaveButton.click();
+        return this.getModalSaveButton.click({ force: true, delay: 300 });
     }
 
     async clickModalConfirmButton() {

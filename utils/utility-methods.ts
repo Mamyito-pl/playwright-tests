@@ -52,11 +52,23 @@ export async function tryClickApplyButton(page: any, productsListPage: any, maxA
 export async function gotoWithRetry(page, url, maxRetries = 3) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      await page.goto(url, { waitUntil: 'load' });
+      if (!page || page.isClosed()) {
+        throw new Error('Strona została zamknięta');
+      }
+      
+      await page.goto(url, { 
+        waitUntil: 'load'
+      });
       return;
     } catch (error) {
-      if (attempt === maxRetries) throw error;
-      console.log(`Próba ${attempt} nieudana, próbuję ponownie...`);
+      console.log(`Próba ${attempt}/${maxRetries} nieudana: ${error.message}`);
+      
+      if (attempt === maxRetries) {
+        throw new Error(`Nie udało się załadować strony po ${maxRetries} próbach: ${error.message}`);
+      }
+      
+      // Czekaj 2 sekundy przed kolejną próbą
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
 }

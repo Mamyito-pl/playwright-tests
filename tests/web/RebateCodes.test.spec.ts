@@ -29,7 +29,8 @@ test.describe('Testy kodów rabatowych', async () => {
     searchbarPage = new SearchbarPage(page);
     cartPage = new CartPage(page);
     deliveryPage = new DeliveryPage(page);
-    await page.goto('/', { waitUntil: 'load' });
+    
+    await utility.gotoWithRetry(page, '/');
     
     await utility.addGlobalStyles(page);
 

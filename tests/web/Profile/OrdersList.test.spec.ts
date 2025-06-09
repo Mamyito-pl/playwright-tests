@@ -10,11 +10,15 @@ test.describe('Testy listy zamówień', async () => {
   let ordersPage: OrdersPage;
   
   test.beforeEach(async ({ page }) => {
-    await page.goto('/', { waitUntil: 'load'})
+
+    await utility.gotoWithRetry(page, '/');
+
     await utility.addGlobalStyles(page);
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
+    
     ordersPage = new OrdersPage(page);
   })
   

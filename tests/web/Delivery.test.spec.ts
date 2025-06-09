@@ -15,7 +15,7 @@ test.describe('Testy dostawy', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);

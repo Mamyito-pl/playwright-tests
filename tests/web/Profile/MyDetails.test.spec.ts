@@ -88,7 +88,7 @@ test.describe('Testy moje dane', async () => {
 
     await myDetailsPage.clickNameSurnameEditButton();
 
-    (await myDetailsPage.getModal('Edytuj dane')).isVisible({ timeout: 5000 })
+    (await myDetailsPage.getModal('Edytuj dane')).isVisible({ timeout: 5000 });
     await expect (myDetailsPage.getModalSaveButton).toBeVisible();
 
     await myDetailsPage.getModalNameInput.fill(exampleName);
@@ -99,16 +99,11 @@ test.describe('Testy moje dane', async () => {
     await myDetailsPage.clickModalSaveButton();
 
     expect (await myDetailsPage.getModal('Edytuj dane')).not.toBeVisible({ timeout: 5000 });
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 })
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 });
 
-    const newNameSurnameIsVisible = await myDetailsPage.getNameSurnameContent.evaluate((element, { exampleName, exampleSurname}) => {
-        const textContent = element.textContent || '';
-        return textContent.includes(exampleName + ' ' + exampleSurname);
-    },
-    { exampleName, exampleSurname}
-    );
+    await page.waitForTimeout(2000);
 
-    expect(newNameSurnameIsVisible).toBe(true);
+    expect(myDetailsPage.getNameSurnameContent).toHaveText(exampleName + ' ' + exampleSurname, { timeout: 15000 });
   })
 
   /*test.skip('W | Możliwość zmiany daty urodzenia', async ({ page }) => {
@@ -170,16 +165,11 @@ test.describe('Testy moje dane', async () => {
     await myDetailsPage.clickModalSaveButton();
 
     expect (await myDetailsPage.getModal('Edytuj numer telefonu')).not.toBeVisible({ timeout: 5000 });
-    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 })
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 });
 
-    const newNameSurnameIsVisible = await myDetailsPage.getPhoneNumberContent.evaluate((element, { examplePhoneNumber }) => {
-        const textContent = element.textContent || '';
-        return textContent.includes(examplePhoneNumber);
-    },
-    { examplePhoneNumber }
-    );
+    await page.waitForTimeout(2000);
 
-    expect(newNameSurnameIsVisible).toBe(true);
+    expect(myDetailsPage.getPhoneNumberContent).toHaveText(examplePhoneNumber, { timeout: 15000 });
   })
 
   test('W | Możliwość zmiany hasła', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {

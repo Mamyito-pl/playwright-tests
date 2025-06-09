@@ -34,7 +34,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 

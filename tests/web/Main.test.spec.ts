@@ -26,7 +26,7 @@ test.describe('Testy strony głównej', async () => {
 
   test.beforeEach(async ({ page }) => {
     
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -184,6 +184,10 @@ test.describe('Testy strony głównej', async () => {
 
     const firstItemInSlider = page.locator('div[data-cy="bestsellery-product-card-slider"]').first()
 
+    await mainPage.getBestsellersSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
+
     await mainPage.getSectionGetLeftButton.nth(1).isDisabled();
     await mainPage.getSectionGetRightButton.nth(1).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
@@ -205,6 +209,10 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 600);
     await page.waitForTimeout(700);
 
+    await mainPage.getBestsellersSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
+
     await mainPage.getSectionShowAllLink('bestsellery').click();
     await expect(page).toHaveURL(`${baseURL}` + '/bestsellery', { timeout: 10000 });
     await expect(productsListPage.getSpecialProductCategoryTitle('Bestsellery')).toBeVisible({ timeout: 10000 });
@@ -223,6 +231,10 @@ test.describe('Testy strony głównej', async () => {
     await page.waitForTimeout(700);
     
     const firstItemInSlider = page.locator('div[data-sentry-component="CategoriesSection"] section a[rel="nofollow"]').first()
+
+    await mainPage.getCategoriesSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
 
     await mainPage.getSectionGetLeftButton.nth(2).isDisabled();
     await mainPage.getSectionGetRightButton.nth(2).click({ force: true, delay: 300 });
@@ -244,6 +256,10 @@ test.describe('Testy strony głównej', async () => {
 
     await page.mouse.wheel(0, 1200);
     await page.waitForTimeout(700);
+
+    await mainPage.getCategoriesSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
 
     await mainPage.getSectionShowAllLink('kategorie').click();
     await expect(page).toHaveURL(`${baseURL}` + '/kategorie', { timeout: 10000 });
@@ -267,6 +283,10 @@ test.describe('Testy strony głównej', async () => {
     const itemName = await firstItemInSlider.last().innerText();
     const modifiedItemName = itemName.length > 1 ? itemName.slice(1, -1) : '';
 
+    await mainPage.getCategoriesSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
+
     await firstItemInSlider.click();
     await expect(page).toHaveURL(`${baseURL}` + itemLink, { timeout: 10000 });
     await expect(productsListPage.getProductCategoryTitle(modifiedItemName)).toBeVisible({ timeout: 10000 });
@@ -287,6 +307,10 @@ test.describe('Testy strony głównej', async () => {
     await page.waitForTimeout(700);
 
     const firstItemInSlider = page.locator('div[data-cy="nowosci-product-card-slider"]').first()
+
+    await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
 
     await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
     await mainPage.getSectionGetRightButton.nth(3).click({ force: true, delay: 300 });
@@ -311,6 +335,10 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 2000);
     await page.waitForTimeout(700);
 
+    await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
+
     await mainPage.getSectionShowAllLink('nowosci').click();
     await expect(page).toHaveURL(`${baseURL}` + '/nowosci', { timeout: 10000 });
     await expect(productsListPage.getSpecialProductCategoryTitle('Nowości')).toBeVisible({ timeout: 10000 });
@@ -332,6 +360,10 @@ test.describe('Testy strony głównej', async () => {
 
     const firstItemInSlider = page.locator('div[data-cy="most_frequently_bought-product-card-slider"]').first();
 
+    await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
+
+    await page.waitForTimeout(2000);
+
     await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();
     await mainPage.getSectionGetRightButton.nth(4).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
@@ -352,6 +384,10 @@ test.describe('Testy strony głównej', async () => {
     await page.waitForTimeout(700);
     await page.mouse.wheel(0, 2000);
     await page.waitForTimeout(700);
+
+    await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
+    
+    await page.waitForTimeout(2000);
 
     await mainPage.getSectionShowAllLink('najczesciej-kupowane').click();
     await page.waitForLoadState();

@@ -37,7 +37,7 @@ test.describe('Testy szczegółów produktu', async () => {
     commonPage = new CommonPage(page);
     cartPage = new CartPage(page);
 
-    await page.goto('/', { waitUntil: 'load' });
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 

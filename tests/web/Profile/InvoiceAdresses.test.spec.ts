@@ -14,7 +14,7 @@ test.describe('Testy dane do faktury', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await utility.gotoWithRetry(page, '/');
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
