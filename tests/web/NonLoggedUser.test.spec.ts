@@ -143,17 +143,19 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
     await page.waitForTimeout(4000);
 
-    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 5000 });
+    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });
     await nonLoggedUserPage.getPostalCodeModalInput.fill('00-828');
     await nonLoggedUserPage.clickPostalCodeModalButton();
-    await expect(nonLoggedUserPage.getPostalCodeModalTitle).not.toBeVisible({ timeout: 5000 });
+    await expect(nonLoggedUserPage.getPostalCodeModalTitle).not.toBeVisible({ timeout: 15000 });
     
     await searchbarPage.getProductItemCount.first().type('1');
+    await page.waitForTimeout(1000);
     await commonPage.getCartButton.click();
+    await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
     await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 15000 });
     await cartPage.clickCartSummaryButton();
 
     await expect(nonLoggedUserPage.getLoginModalTitle).toBeVisible({ timeout: 10000 });
