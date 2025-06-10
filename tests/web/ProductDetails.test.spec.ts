@@ -296,10 +296,12 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await expect(productDetailsPage.getDeleteProductModal).toBeVisible({ timeout: 5000 });
     await expect(productDetailsPage.getConfirmDeleteModalButton).toBeVisible();
-    await productDetailsPage.getConfirmDeleteModalButton.click({ force: true, delay: 300 });
-
+    await page.waitForTimeout(1000);
+    await productDetailsPage.getConfirmDeleteModalButton.click({ force: true, delay: 500 });
+    await page.waitForTimeout(1000);
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
-    await page.waitForTimeout(4000);
+
+    await page.waitForTimeout(5000);
     await expect(commonPage.getCartProductsPrice).toHaveText('0,00 zł');
   })
   
