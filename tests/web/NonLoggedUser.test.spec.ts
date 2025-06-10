@@ -145,6 +145,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
 
     await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });
     await nonLoggedUserPage.getPostalCodeModalInput.fill('00-828');
+    await page.waitForTimeout(1000);
+    await expect(nonLoggedUserPage.getPostalCodeModalButton).toBeEnabled({ timeout: 15000 });
     await nonLoggedUserPage.clickPostalCodeModalButton();
     await expect(nonLoggedUserPage.getPostalCodeModalTitle).not.toBeVisible({ timeout: 15000 });
     
