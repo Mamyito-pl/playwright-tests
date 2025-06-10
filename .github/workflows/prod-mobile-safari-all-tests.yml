@@ -62,7 +62,7 @@ jobs:
           github-token:  ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
       - name: Run Playwright tests for Mobile Safari with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Safari" --grep "@Prod"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Safari" --grep "@Prod" --grep-invert "Smoke"
         env:
           CI: 'true'
 

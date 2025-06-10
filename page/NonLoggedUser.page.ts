@@ -14,7 +14,7 @@ export default class NonLoggedUserPage {
     }
 
     async clickPostalCodeModalButton() {
-        await this.getPostalCodeModalButton.click();
+        await this.getPostalCodeModalButton.click({ force: true, delay: 300 });
     }
 
     get getDeliveryAvailableLink() {

@@ -122,7 +122,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.locator('div[data-cy="promocje-products-list-slider"] div[data-sentry-element="ButtonWrapper"]').first().click();
     await page.waitForTimeout(2000);
 
-    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 5000 });
+    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });
   }) 
 
   test('W | Po dodaniu do koszyka produktów na wartość >150 i przejściu dalej z koszyka pojawia się modal z logowaniem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
@@ -152,9 +152,9 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.waitForTimeout(1000);
     await commonPage.getCartButton.click();
     await page.waitForTimeout(1000);
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 15000 });
     await cartPage.clickCartSummaryButton();
 

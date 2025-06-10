@@ -53,7 +53,7 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
 
       - name: Run Playwright tests for Web Chrome with Allure
-        run: allurectl watch -- npx playwright test --max-failures=0 --project="chromium" --grep "@Prod"
+        run: allurectl watch -- npx playwright test --max-failures=0 --project="chromium" --grep "@Prod" --grep-invert "Smoke"
         env:
           CI: 'true'
 

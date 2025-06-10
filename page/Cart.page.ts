@@ -114,7 +114,6 @@ export default class CartPage {
     }
 
     get getCartDrawerToCartButton() {
-        //return this.mobile ? this.page.locator('#cart-drawer-content-tablet #to_cart_button').getByText('Do kasy') : this.page.locator('#cart-drawer-content-desktop #to_cart_button').getByText('Do kasy');
         return this.page.getByRole('button', { name: 'Do kasy' });
     }
 
