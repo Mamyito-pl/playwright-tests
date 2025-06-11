@@ -325,7 +325,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('1693');
 
-      test.setTimeout(330000);
+      test.setTimeout(230000);
 
       await addProduct(product);
 
@@ -335,7 +335,9 @@ test.describe('Testy płatności', async () => {
       await commonPage.getCartButton.click();
       await page.waitForTimeout(1000);
 
-      await page.goto('/koszyk', { waitUntil: 'load'});
+      await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+      await cartPage.clickCartDrawerToCartButton();
+      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
@@ -1030,7 +1032,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('1694');
 
-      test.setTimeout(350000);
+      test.setTimeout(250000);
 
       await addProduct(product);
 
@@ -1040,7 +1042,9 @@ test.describe('Testy płatności', async () => {
       await commonPage.getCartButton.click();
       await page.waitForTimeout(1000);
 
-      await page.goto('/koszyk', { waitUntil: 'load'});
+      await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+      await cartPage.clickCartDrawerToCartButton();
+      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
@@ -1112,7 +1116,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Zapłata kartą przy odbiorze');
       await allure.allureId('688');
 
-      test.setTimeout(300000);
+      test.setTimeout(200000);
 
       await addProduct(product);
 
@@ -1122,7 +1126,9 @@ test.describe('Testy płatności', async () => {
       await commonPage.getCartButton.click();
       await page.waitForTimeout(1000);
 
-      await page.goto('/koszyk', { waitUntil: 'load'});
+      await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+      await cartPage.clickCartDrawerToCartButton();
+      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });

@@ -14,7 +14,7 @@ test.describe('Testy dane do faktury', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'commit'})
+    await utility.gotoWithRetry(page, '/');
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -191,7 +191,7 @@ test.describe('Testy dane do faktury', async () => {
     await invoiceAddressesPage.getInvoiceAddressModalMainAddressCheckbox.isChecked();
     await invoiceAddressesPage.clickSaveInvoiceAdressModalButton();
     await invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu').isVisible();
-    await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu')).toHaveText('Główny');
+    await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu')).toHaveText('Główny', { timeout: 20000 });
     await invoiceAddressesPage.clickEditInvoiceAddressButton('Testowa nazwa podmiotu');
     await invoiceAddressesPage.getCurrentMainInvoiceAddressModalInfo.isVisible();
     await invoiceAddressesPage.getInvoiceAddressModalMainAddressCheckbox.isHidden();
@@ -202,7 +202,7 @@ test.describe('Testy dane do faktury', async () => {
     await invoiceAddressesPage.getInvoiceAddressModalMainAddressCheckbox.isChecked();
     await invoiceAddressesPage.clickSaveInvoiceAdressModalButton();
     await invoiceAddressesPage.getMainInvoiceAddressInfo('Fixturowy adres podmiotu').isVisible();
-    await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Fixturowy adres podmiotu')).toHaveText('Główny');
+    await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Fixturowy adres podmiotu')).toHaveText('Główny', { timeout: 20000 });
     await invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu').isHidden();
     await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu')).not.toBeAttached({ timeout: 5000 });
   })

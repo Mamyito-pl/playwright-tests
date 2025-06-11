@@ -8,6 +8,8 @@ import * as utility from '../../../utils/utility-methods';
 
 test.describe.configure({ mode: 'serial'})
 
+test.setTimeout(80000);
+
 test.describe('Testy ulubionych produktów', async () => {
 
   let commonPage: CommonPage;
@@ -16,7 +18,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -38,7 +40,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1488');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
 
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
   })
@@ -101,7 +103,9 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1490');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
@@ -131,7 +135,9 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1491');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
@@ -161,8 +167,10 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1492');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
-    
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
+
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
     await favouritesPage.getSortSelect('Najtańsze za kg/litr');
@@ -194,8 +202,10 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1493');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
-    
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
+
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
     await favouritesPage.getSortSelect('Najdroższe za kg/litr');
@@ -225,8 +235,10 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1494');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
-    
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
+
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
     await favouritesPage.getSortSelect('od A do Z');
@@ -333,8 +345,10 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1495');
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
-    
+    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+
+    await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
+
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
     await favouritesPage.getSortSelect('od Z do A');

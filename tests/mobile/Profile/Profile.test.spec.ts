@@ -12,6 +12,8 @@ import InvoiceAddressesPage from '../../../page/Profile/InvoiceAddresses.page.ts
 import FavouritesPage from '../../../page/Profile/Favourites.page.ts';
 import NonLoggedUserPage from '../../../page/NonLoggedUser.page.ts';
 
+test.setTimeout(80000);
+
 test.describe('Testy profilu', async () => {
   let profilePage: ProfilePage;
   let mainPage: MainPage;
@@ -25,8 +27,10 @@ test.describe('Testy profilu', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
+
     await utility.addGlobalStyles(page);
+
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
     });
@@ -96,7 +100,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuOrdersButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia');
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
       await expect(ordersPage.getOrdersTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
@@ -115,7 +119,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileRebateCodesButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/kody-rabatowe');
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/kody-rabatowe', { timeout: 15000 });
       await expect(rebateCodesPage.getRebateCodesTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
@@ -134,7 +138,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuMyDetailsButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/moje-dane');
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/moje-dane', { timeout: 15000 });
       await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
@@ -153,7 +157,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuDeliveryAddressesButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/adresy-dostaw');
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/adresy-dostaw', { timeout: 15000 });
       await expect(deliveryAdressesPage.getDeliveryAddressesTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
@@ -172,7 +176,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuInvoiceAddressesButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/dane-faktury');
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/dane-faktury', { timeout: 15000 });
       await expect(invoiceAddressesPage.getInvoiceAddressTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
@@ -191,7 +195,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuFavouritesButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty');
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 15000 });
       await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })

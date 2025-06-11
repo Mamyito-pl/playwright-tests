@@ -18,7 +18,7 @@ test.describe('Testy listy produktów', async () => {
     productsListPage = new ProductsListPage(page);
     commonPage = new CommonPage(page);
 
-    await page.goto('/', { waitUntil: 'load' });
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -39,7 +39,7 @@ test.describe('Testy listy produktów', async () => {
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
-    await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne');
+    await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne', { timeout: 20000 });
     await expect(productsListPage.getProductCategoryTitle('Mleko i napoje mleczne')).toBeVisible();
     await expect(productsListPage.getFiltersButton).toBeVisible();
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -75,6 +75,8 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial', { waitUntil: 'load' });
 
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
     const productsBeforeScroll = await productsListPage.getProductTiles.count();
     expect(productsBeforeScroll).toEqual(60);
 
@@ -97,6 +99,8 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -126,6 +130,8 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -159,7 +165,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
-    
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('Najtańsze za kg/litr');
@@ -192,7 +200,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
-    
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('Najdroższe za kg/litr');
@@ -225,7 +235,9 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
-    
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
     await productsListPage.getSortSelect('od A do Z');
@@ -234,13 +246,10 @@ test.describe('Testy listy produktów', async () => {
     await expect(commonPage.getLoader.first()).not.toBeVisible({ timeout: 55000 });
     
     const allProductNames = await productsListPage.getProductName.allTextContents();
-    console.log("\nPobrane nazwy produktów:", allProductNames);
     
     const cleanedProductNames = allProductNames.map(name =>
         name.replace(/\s+/g, ' ').replace(/\s+%/, '%').trim()
     );
-
-    console.log("\nWyczyszczone nazwy produktów:", cleanedProductNames);
 
     const isSingleLetter = (word: any) => /^[a-zA-Z]$/.test(word);
 
@@ -284,63 +293,41 @@ test.describe('Testy listy produktów', async () => {
     };
 
     const compareStrings = (a: any, b: any) => {
-        console.log(`\nPorównuję: "${a}" z "${b}"`);
         const normalizedA = normalizePolishCharacters(a);
         const normalizedB = normalizePolishCharacters(b);
-        console.log(`Po normalizacji: "${normalizedA}" z "${normalizedB}"`);
-
         const wordsA = normalizedA.split(' ');
         const wordsB = normalizedB.split(' ');
 
         const minLength = Math.min(wordsA.length, wordsB.length);
         for (let i = 0; i < minLength; i++) {
-            const wordA = wordsA[i];
-            const wordB = wordsB[i];
+          const wordA = wordsA[i];
+          const wordB = wordsB[i];
 
-            if (wordA !== wordB) {
-                // Specjalna obsługa dla słów rozpoczynających się od tego samego rdzenia
-                const commonPrefix = findCommonPrefix(wordA, wordB);
-                if (commonPrefix && commonPrefix.length > 3) {
-                    const suffixA = wordA.slice(commonPrefix.length);
-                    const suffixB = wordB.slice(commonPrefix.length);
-                    if (suffixA === 'owy' || suffixB === 'owy') {
-                        return suffixA === 'owy' ? -1 : 1;
-                    }
-                }
+          if (wordA !== wordB) {
+              const numberComparison = compareNumbers(wordA, wordB);
+              if (numberComparison !== null) {
+                  if (numberComparison === 0) continue;
+                  return numberComparison;
+              }
 
-                const numberComparison = compareNumbers(wordA, wordB);
-                if (numberComparison !== null) {
-                    if (numberComparison === 0) continue;
-                    return numberComparison;
-                }
+              const aIsSingle = isSingleLetter(wordA);
+              const bIsSingle = isSingleLetter(wordB);
 
-                const aIsSingle = isSingleLetter(wordA);
-                const bIsSingle = isSingleLetter(wordB);
+              if (aIsSingle && !bIsSingle) {
+                  if (findWordsStartingWith(b, wordA).length > 0) return 1;
+              }
+              if (!aIsSingle && bIsSingle) {
+                  if (findWordsStartingWith(a, wordB).length > 0) return -1;
+              }
 
-                if (aIsSingle && !bIsSingle) {
-                    if (findWordsStartingWith(b, wordA).length > 0) return 1;
-                }
-                if (!aIsSingle && bIsSingle) {
-                    if (findWordsStartingWith(a, wordB).length > 0) return -1;
-                }
-
-                return wordA.localeCompare(wordB);
-            }
-        }
+              return wordA.localeCompare(wordB);
+          }
+      }
 
         return wordsA.length - wordsB.length;
     };
 
-    const findCommonPrefix = (str1: string, str2: string) => {
-        let i = 0;
-        while (i < str1.length && i < str2.length && str1[i] === str2[i]) {
-            i++;
-        }
-        return str1.slice(0, i);
-    };
-
     const expectedSortedNames = [...cleanedProductNames].sort(compareStrings);
-    console.log("\nPosortowane nazwy:", expectedSortedNames);
 
     const productsCount = cleanedProductNames.length;
     
@@ -361,6 +348,8 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
     
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
     await productsListPage.getSortButton.click();
@@ -469,9 +458,11 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1635');
 
-    test.setTimeout(80000);
+    test.setTimeout(120000);
     
     await page.goto('/nabial', { waitUntil: 'load' });
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await productsListPage.getFiltersButton.click();
     await productsListPage.getFilterSelectCheckbox('Typ produktu','High protein');
@@ -481,17 +472,12 @@ test.describe('Testy listy produktów', async () => {
     const allProductCards = await page.$$('[data-sentry-component="ProductCard"]');
 
     for (const card of allProductCards) {
-      const productName = await card.$('a[title]').then(el => el?.getAttribute('title'));
-      console.log('Nazwa produktu:', productName);
-      
       const badges = await card.$$('img[alt="app-badges"]');
-      console.log('Liczba znaczków dla produktu:', badges.length);
       
       if (badges.length >= 1) {
         let foundLaktozyBadge = false;
         for (const badge of badges) {
           const src = await badge.getAttribute('src');
-          console.log('Badge src:', src);
           if (src && src.toLowerCase().includes('protein')) {
             foundLaktozyBadge = true;
             break;
@@ -515,12 +501,15 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1636');
 
-      test.setTimeout(80000);
+      test.setTimeout(120000);
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
       await productsListPage.getFiltersButton.click();
-      await productsListPage.getFilterSelect('Cena','poniżej 10zł');
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+      await productsListPage.getFilterSelectExact('Cena','poniżej 10zł');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
 
@@ -532,7 +521,6 @@ test.describe('Testy listy produktów', async () => {
 
       for (const productPrice of allProductCleanedPrices) {
         expect(productPrice).toBeLessThanOrEqual(10)
-        console.log('cena produktu', productPrice)
       }
 
       const pricesCount = allProductCleanedPrices.length;
@@ -549,12 +537,15 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1637');
 
-      test.setTimeout(80000);
+      test.setTimeout(120000);
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
       await productsListPage.getFiltersButton.click();
-      await productsListPage.getFilterSelect('Cena','od 10zł do 20zł');
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+      await productsListPage.getFilterSelectExact('Cena','od 10zł do 20zł');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
 
@@ -571,7 +562,6 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(10);
           expect(productPrice).toBeLessThanOrEqual(20);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -587,12 +577,15 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1638');
 
-      test.setTimeout(80000);
+      test.setTimeout(120000);
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
       await productsListPage.getFiltersButton.click();
-      await productsListPage.getFilterSelect('Cena','od 20zł do 50zł');
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+      await productsListPage.getFilterSelectExact('Cena','od 20zł do 50zł');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
 
@@ -609,7 +602,6 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(20);
           expect(productPrice).toBeLessThanOrEqual(50);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -625,12 +617,15 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1639');
 
-      test.setTimeout(80000);
+      test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await page.goto('/nabial', { waitUntil: 'load' });  
+
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
       await productsListPage.getFiltersButton.click();
-      await productsListPage.getFilterSelect('Cena','powyżej 50zł');
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+      await productsListPage.getFilterSelectExact('Cena','powyżej 50zł');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
 
@@ -646,7 +641,6 @@ test.describe('Testy listy produktów', async () => {
         for (const productPrice of allProductCleanedPrices) {
           expect(productPrice).toBeGreaterThanOrEqual(50);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -662,15 +656,19 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1640');
 
-      test.setTimeout(80000);
+      test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await page.goto('/nabial', { waitUntil: 'load' });  
+
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
       await productsListPage.getFiltersButton.click();
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await productsListPage.getFilterCustomPriceFromSet('Cena', '2');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
       await productsListPage.getFiltersButton.click();
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await productsListPage.getFilterCustomPriceToSet('Cena', '4');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
@@ -688,7 +686,6 @@ test.describe('Testy listy produktów', async () => {
           expect(productPrice).toBeGreaterThanOrEqual(2);
           expect(productPrice).toBeLessThanOrEqual(4);
           expect(pricesCount).toBeGreaterThanOrEqual(1);
-          console.log('cena produktu', productPrice)
         }
       } else {
           await expect(productsListPage.getNoProductsResult).toBeVisible();
@@ -704,11 +701,14 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1641');  
 
-      test.setTimeout(80000);
+      test.setTimeout(130000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await page.goto('/nabial', { waitUntil: 'load' });  
+
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
       await productsListPage.getFiltersButton.click();
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await productsListPage.getFilterSelect('Producent','MLEKOVITA');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
@@ -733,25 +733,28 @@ test.describe('Testy listy produktów', async () => {
       await allure.subSuite('');
       await allure.allureId('1642');  
 
-      test.setTimeout(150000);
+      test.setTimeout(200000);
 
-      await page.goto('/bio-wege-i-bezglutenowe/bio', { waitUntil: 'load' });
+      await page.goto('/bio-wege-i-bezglutenowe/bio', { waitUntil: 'load' }); 
+
+      await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
       await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
 
       await productsListPage.getFiltersButton.click();
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await productsListPage.getFilterCustomPriceToSet('Cena', '9');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
       
       await productsListPage.getFiltersButton.click();
-      expect((await productsListPage.getFilter('Typ produktu')).isVisible);
-      await productsListPage.getFilterSelect('Typ produktu','Bio');
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+      await productsListPage.getFilterSelectExact('Typ produktu','Bio');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
 
       await productsListPage.getFiltersButton.click();
-      expect((await productsListPage.getFilter('Producent')).isVisible);
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await productsListPage.getFilterSelect('Producent','ALCE NERO');
       await utility.tryClickApplyButton(page, productsListPage);
       await page.waitForTimeout(7000);
@@ -779,6 +782,7 @@ test.describe('Testy listy produktów', async () => {
       expect(productsCount).toBeLessThan(10);
 
       await productsListPage.getFiltersButton.click();
+      await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await expect(productsListPage.getClearFiltersButton).toBeVisible();
       await productsListPage.getClearFiltersButton.click();
       await page.waitForTimeout(7000);

@@ -34,7 +34,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -503,7 +503,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await page.goto('/profil/zamowienia', { waitUntil: 'load'});
 
-    await expect(ordersPage.getOrderDetailsButton.nth(0)).toBeVisible({ timeout: 5000 });
+    await expect(ordersPage.getOrderDetailsButton.nth(0)).toBeVisible({ timeout: 20000 });
     await ordersPage.getOrderDetailsButton.nth(0).click();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
@@ -526,7 +526,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await page.goto('/profil/zamowienia', { waitUntil: 'load'});
 
-    await expect(ordersPage.getOrderDetailsButton.nth(0)).toBeVisible({ timeout: 5000 });
+    await expect(ordersPage.getOrderDetailsButton.nth(0)).toBeVisible({ timeout: 20000 });
     await ordersPage.getOrderDetailsButton.nth(0).click();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });

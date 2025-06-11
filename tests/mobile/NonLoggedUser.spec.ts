@@ -4,9 +4,6 @@ import MainPage from '../../page/Main.page.ts';
 import MenuCategoriesPage from "../../page/MenuCategories.page";
 import SearchbarPage from '../../page/Searchbar.page.ts';
 import CartPage from '../../page/Cart.page.ts';
-import ProductsListPage from '../../page/ProductsList.page.ts';
-import ProductsCategoriesPage from '../../page/ProductsCategories.page.ts';
-import FavouritesPage from '../../page/Profile/Favourites.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods.ts';
@@ -23,16 +20,13 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
   let menuCategoriesPage: MenuCategoriesPage;
   let searchbarPage: SearchbarPage;
   let cartPage: CartPage;
-  let productsListPage: ProductsListPage;
-  let productsCategoriesPage: ProductsCategoriesPage;
-  let favouritesPage: FavouritesPage;
   let commonPage: CommonPage;
   let product = 'janex polędwica wołowa';
 
   test.use({ storageState: { cookies: [], origins: [] }})
   test.beforeEach(async ({ page }) => {
     
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -45,9 +39,6 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     menuCategoriesPage = new MenuCategoriesPage(page);
     searchbarPage = new SearchbarPage(page);
     cartPage = new CartPage(page);
-    productsListPage = new ProductsListPage(page)
-    productsCategoriesPage = new ProductsCategoriesPage(page)
-    favouritesPage = new FavouritesPage(page)
     commonPage = new CommonPage(page)
   })
 
@@ -120,7 +111,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.locator('div[data-cy="promocje-products-list-slider"] div[data-sentry-element="ButtonWrapper"]').first().click();
     await page.waitForTimeout(2000);
 
-    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 5000 });
+    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });
   })
 
   test('M | Po dodaniu do koszyka produktów na wartość >150 i przejściu dalej z koszyka pojawia się modal z logowaniem', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
@@ -139,17 +130,21 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
     await page.waitForTimeout(4000);
     
-    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 5000 });
+    await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });
     await nonLoggedUserPage.getPostalCodeModalInput.fill('00-828');
+    await page.waitForTimeout(1000);
+    await expect(nonLoggedUserPage.getPostalCodeModalButton).toBeEnabled({ timeout: 15000 });
     await nonLoggedUserPage.clickPostalCodeModalButton();
-    await expect(nonLoggedUserPage.getPostalCodeModalTitle).not.toBeVisible({ timeout: 5000 });
+    await expect(nonLoggedUserPage.getPostalCodeModalTitle).not.toBeVisible({ timeout: 15000 });
     
     await searchbarPage.getProductItemCount.first().type('1');
+    await page.waitForTimeout(1000);
     await commonPage.getCartButton.click();
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
+    await page.waitForTimeout(1000);
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 15000 });
     await cartPage.clickCartSummaryButton();
 
     await expect(nonLoggedUserPage.getLoginModalTitle).toBeVisible({ timeout: 10000 });

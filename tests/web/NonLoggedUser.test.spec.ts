@@ -4,9 +4,6 @@ import MainPage from '../../page/Main.page.ts';
 import MenuCategoriesPage from "../../page/MenuCategories.page";
 import SearchbarPage from '../../page/Searchbar.page.ts';
 import CartPage from '../../page/Cart.page.ts';
-import ProductsListPage from '../../page/ProductsList.page.ts';
-import ProductsCategoriesPage from '../../page/ProductsCategories.page.ts';
-import FavouritesPage from '../../page/Profile/Favourites.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../fixtures/fixtures.ts';
 import * as utility from '../../utils/utility-methods.ts';
@@ -20,9 +17,6 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
   let menuCategoriesPage: MenuCategoriesPage;
   let searchbarPage: SearchbarPage;
   let cartPage: CartPage;
-  let productsListPage: ProductsListPage;
-  let productsCategoriesPage: ProductsCategoriesPage;
-  let favouritesPage: FavouritesPage;
   let commonPage: CommonPage;
   let product = 'janex polędwica wołowa';
 
@@ -42,9 +36,6 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     menuCategoriesPage = new MenuCategoriesPage(page);
     searchbarPage = new SearchbarPage(page);
     cartPage = new CartPage(page);
-    productsListPage = new ProductsListPage(page)
-    productsCategoriesPage = new ProductsCategoriesPage(page)
-    favouritesPage = new FavouritesPage(page)
     commonPage = new CommonPage(page)
   })
 

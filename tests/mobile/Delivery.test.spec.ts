@@ -15,7 +15,7 @@ test.describe('Testy dostawy', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -582,6 +582,7 @@ test.describe('Testy dostawy', async () => {
         attempts++;
       }
 
+      await deliveryPage.getAddNewInvoiceAddressButton.scrollIntoViewIfNeeded();
       await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
 
       await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 3000 });

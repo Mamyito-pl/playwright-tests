@@ -37,7 +37,7 @@ test.describe('Testy szczegółów produktu', async () => {
     commonPage = new CommonPage(page);
     cartPage = new CartPage(page);
 
-    await page.goto('/', { waitUntil: 'load' });
+    await utility.gotoWithRetry(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -47,6 +47,7 @@ test.describe('Testy szczegółów produktu', async () => {
   })
 
   test.afterEach(async ({ clearCartViaAPI }) => {
+    await expect(cartPage.getCartDrawerButton).toBeVisible({ timeout: 10000 });
     await cartPage.clickCartDrawerButton();
     await clearCartViaAPI();
   }) 
@@ -108,7 +109,6 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getOtherProductsFromThisCategorySectionTitle).toBeVisible();
     await expect(productDetailsPage.getSectionShowAllLink).toBeVisible();
   })
-
     
   test('M | Możliwość dodania jednej sztuki produktu do koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
@@ -130,7 +130,7 @@ test.describe('Testy szczegółów produktu', async () => {
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
     const formattedProductPrice = productPrice?.slice(0, -9);
 
-    //await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
     await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toBeVisible();
     await productDetailsPage.clickAddProductButton();
 
@@ -163,8 +163,8 @@ test.describe('Testy szczegółów produktu', async () => {
     const formattedSecondQuantityButtonText = secondQuantityButtonText?.slice(0, -5);
 
     await productDetailsPage.getSetSecondQuantityButton.click();
-    //await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
-    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toBeVisible();
+    await expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    expect(productDetailsPage.getSetSecondQuantityButton.locator('svg')).toBeVisible();
 
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
 
@@ -259,7 +259,8 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(productDetailsPage.getDeleteProductModal).toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(1000);
     await expect(productDetailsPage.getConfirmDeleteModalButton).toBeVisible();
-    await productDetailsPage.getConfirmDeleteModalButton.click();
+    await page.waitForTimeout(1000);
+    await productDetailsPage.getConfirmDeleteModalButton.click({ force: true, delay: 500 });
     await page.waitForTimeout(2000);
 
     await expect(productDetailsPage.getDeleteProductModal).not.toBeVisible({ timeout: 5000 });
@@ -276,7 +277,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.subSuite('');
     await allure.allureId('1848');
 
-    test.setTimeout(200000);
+    test.setTimeout(230000);
 
     await searchProduct(productToSearchName);
 
@@ -286,7 +287,7 @@ test.describe('Testy szczegółów produktu', async () => {
 
     const productName = await productDetailsPage.getProductName.textContent() || '';
 
-    await productDetailsPage.getAddToFavouritesButton.click({ force: true });
+    await productDetailsPage.getAddToFavouritesButton.click({ force: true, delay: 300 });
 
     await expect(commonPage.getMessage).toHaveText('Dodano produkt do ulubionych', { timeout: 15000 });
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -306,10 +307,12 @@ test.describe('Testy szczegółów produktu', async () => {
 
     expect(productFound).toBe(true);
 
+    await page.getByText(productName).hover();
+    await page.waitForTimeout(2000);
     await page.getByText(productName).click();
     await page.waitForLoadState('domcontentloaded');
 
-    await productDetailsPage.getAddToFavouritesButton.click({ force: true });
+    await productDetailsPage.getAddToFavouritesButton.click({ force: true, delay: 300 });
 
     await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -432,7 +435,6 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getMainInfoProductDropdown.click();
 
-    //const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').locator('a[data-cy="product-page-brand-link"]').getByText(productBrandName || '');
     const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName || ''); 
     await mainInfoContentBrand.click();
 

@@ -203,7 +203,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })  
 
-  test.skip('W | Możliwość sortowania po najtańszych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Możliwość sortowania po najtańszych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -242,7 +242,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
 
-  test.skip('W | Możliwość sortowania po najdroższych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Możliwość sortowania po najdroższych produktach za kg/l', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -530,17 +530,12 @@ test.describe('Testy listy produktów', async () => {
     const allProductCards = await page.$$('[data-sentry-component="ProductCard"]');
 
     for (const card of allProductCards) {
-      const productName = await card.$('a[title]').then(el => el?.getAttribute('title'));
-      console.log('Nazwa produktu:', productName);
-      
       const badges = await card.$$('img[alt="app-badges"]');
-      console.log('Liczba znaczków dla produktu:', badges.length);
       
       if (badges.length >= 1) {
         let foundLaktozyBadge = false;
         for (const badge of badges) {
           const src = await badge.getAttribute('src');
-          console.log('Badge src:', src);
           if (src && src.toLowerCase().includes('protein')) {
             foundLaktozyBadge = true;
             break;
@@ -571,7 +566,7 @@ test.describe('Testy listy produktów', async () => {
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
-      await productsListPage.getFilterSelect('Cena','poniżej 10zł');
+      await productsListPage.getFilterSelectExact('Cena','poniżej 10zł');
       await page.waitForTimeout(7000);
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
@@ -605,7 +600,7 @@ test.describe('Testy listy produktów', async () => {
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
-      await productsListPage.getFilterSelect('Cena','od 10zł do 20zł');
+      await productsListPage.getFilterSelectExact('Cena','od 10zł do 20zł');
       await page.waitForTimeout(7000);
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
@@ -643,7 +638,7 @@ test.describe('Testy listy produktów', async () => {
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
-      await productsListPage.getFilterSelect('Cena','od 20zł do 50zł');
+      await productsListPage.getFilterSelectExact('Cena','od 20zł do 50zł');
       await page.waitForTimeout(7000);
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
@@ -681,7 +676,7 @@ test.describe('Testy listy produktów', async () => {
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
-      await productsListPage.getFilterSelect('Cena','powyżej 50zł');
+      await productsListPage.getFilterSelectExact('Cena','powyżej 50zł');
       await page.waitForTimeout(7000);
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
@@ -794,7 +789,7 @@ test.describe('Testy listy produktów', async () => {
       await productsListPage.getFilterCustomPriceToSet('Cena', '9');
       await page.waitForTimeout(7000);
       
-      await productsListPage.getFilterSelect('Typ produktu','Bio');
+      await productsListPage.getFilterSelectExact('Typ produktu','Bio');
       await page.waitForTimeout(7000);
 
       await productsListPage.getFilterSelect('Producent','ALCE NERO');

@@ -20,14 +20,14 @@ export default class ProductsListPage {
         await option.click();
     }
 
-    async getFilterSelect(filterName: string, selectName: string) {
+    async getFilterSelectExact(filterName: string, selectName: string) {
 
         const filter = this.mobile 
             ? this.getSettingsDrawer.getByText(filterName, { exact: true })
             : await this.getFilter(filterName);
 
         const filterSelect = this.mobile 
-            ? this.getSettingsDrawer.getByText(selectName)
+            ? this.getSettingsDrawer.getByText(selectName, { exact: true })
             : (await this.getFilterDropdown(filterName)).getByText(selectName);
 
         const radioInput = this.mobile 
@@ -40,33 +40,34 @@ export default class ProductsListPage {
         await this.page.waitForTimeout(1000);
         await filter.click({ force: true, delay: 300 });
         await this.page.waitForTimeout(2000);
+        await filterSelect.scrollIntoViewIfNeeded();
+        await this.page.waitForTimeout(2000);
         await filterSelect.click({ force: true, delay: 300 });
+    }
 
-        /*let isChecked = false;
-        for (let i = 0; i < 3; i++) {
-            try {
-                await filterSelect.click({ force: true, delay: 300 });
-                // Sprawdzamy pseudoelement ::after
-                await this.page.waitForTimeout(2000);
-                const afterColor = await radioInput.evaluate((el) => {
-                    const afterStyle = window.getComputedStyle(el, '::after');
-                    return afterStyle.backgroundColor;
-                });
-                if (afterColor === 'rgb(78, 180, 40)') {
-                    isChecked = true;
-                    break;
-                }
-                await this.page.waitForTimeout(500);
-            } catch (e) {
-                // Jeśli nie udało się sprawdzić, próbujemy ponownie
-                await this.page.waitForTimeout(500);
-            }
-        }
-        
-        if (!isChecked) {
-            throw new Error('Nie udało się zaznaczyć filtra po 3 próbach - pseudoelement ::after nie ma odpowiedniego koloru.');
-        }*/
-        
+    async getFilterSelect(filterName: string, selectName: string) {
+
+        const filter = this.mobile 
+            ? this.getSettingsDrawer.getByText(filterName, { exact: true })
+            : await this.getFilter(filterName);
+
+        const filterSelect = this.mobile 
+            ? this.getSettingsDrawer.getByText(selectName + ' (')
+            : (await this.getFilterDropdown(filterName)).getByText(selectName);
+
+        const radioInput = this.mobile 
+            ? this.getSettingsDrawer.getByText(selectName).locator('..').getByRole('radio', { name: selectName })
+            : (await this.getFilterDropdown(filterName)).locator('..').getByRole('radio', { name: selectName });
+
+
+        await expect(filter).toBeVisible({ timeout: 5000 });
+        await filter.scrollIntoViewIfNeeded();
+        await this.page.waitForTimeout(1000);
+        await filter.click({ force: true, delay: 300 });
+        await this.page.waitForTimeout(2000);
+        await filterSelect.scrollIntoViewIfNeeded();
+        await this.page.waitForTimeout(2000);
+        await filterSelect.click({ force: true, delay: 300 });  
     }
 
     async getFilterSelectCheckbox(filterName: string, selectName: string) {
@@ -76,7 +77,7 @@ export default class ProductsListPage {
             : await this.getFilter(filterName);
 
         const filterSelect = this.mobile 
-            ? this.getSettingsDrawer.getByText(selectName)
+            ? this.getSettingsDrawer.getByText(selectName, { exact: true })
             : (await this.getFilterDropdown(filterName)).getByText(selectName);
 
         const filterSelectCheckboxChecked = this.mobile 

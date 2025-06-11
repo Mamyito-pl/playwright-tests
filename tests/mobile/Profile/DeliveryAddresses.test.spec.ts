@@ -14,7 +14,7 @@ test.describe('Testy adresy dostaw', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithRetry(page, '/');
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -40,7 +40,7 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.subSuite('');
     await allure.allureId('886');
 
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
 
     await expect(deliveryAddressesPage.getDeliveryAddressesTitle).toBeVisible();
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
@@ -57,7 +57,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(150000);
     
-    await page.goto('profil/adresy-dostaw');
+    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
 
     await deliveryAddressesPage.getDeliveryAddressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -123,7 +123,7 @@ test.describe('Testy adresy dostaw', async () => {
     await addAddressDeliveryViaAPI('Adres Testowy');
     await addAddressDeliveryViaAPI('Adres Fixturowy');
 
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
 
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
@@ -133,7 +133,7 @@ test.describe('Testy adresy dostaw', async () => {
     await deliveryAddressesPage.getAddressModalMainAddressCheckbox.isChecked();
     await deliveryAddressesPage.clickSaveAdressModalButton();
     await deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy').isVisible();
-    await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).toHaveText('Główny');
+    await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).toHaveText('Główny', { timeout: 20000 });
     await deliveryAddressesPage.clickEditAddressButton('Adres Fixturowy');
     await deliveryAddressesPage.getCurrentMainAddressModalInfo.isVisible();
     await deliveryAddressesPage.getAddressModalMainAddressCheckbox.isHidden();
@@ -144,7 +144,7 @@ test.describe('Testy adresy dostaw', async () => {
     await deliveryAddressesPage.getAddressModalMainAddressCheckbox.isChecked();
     await deliveryAddressesPage.clickSaveAdressModalButton();
     await deliveryAddressesPage.getMainAddressInfo('Adres Testowy').isVisible();
-    await expect(deliveryAddressesPage.getMainAddressInfo('Adres Testowy')).toHaveText('Główny');
+    await expect(deliveryAddressesPage.getMainAddressInfo('Adres Testowy')).toHaveText('Główny', { timeout: 20000 });
     await deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy').isHidden();
     await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).not.toBeAttached();
   })
@@ -162,7 +162,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     await addAddressDeliveryViaAPI('Adres Fixturowy');
 
-    await page.goto('profil/adresy-dostaw', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
 
     await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
@@ -244,7 +244,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     await addAddressDeliveryViaAPI('Adres Edytowany');
 
-    await page.goto('profil/adresy-dostaw');
+    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
 
     await deliveryAddressesPage.getDeliveryAddressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 

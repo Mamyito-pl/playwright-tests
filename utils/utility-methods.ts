@@ -38,7 +38,7 @@ export async function retryUntil200(fn, maxRetries = 10, delay = 1000) {
 export async function tryClickApplyButton(page: any, productsListPage: any, maxAttempts = 3) {
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     await productsListPage.clickApplyButton();
-    await page.waitForTimeout(7000);
+    await page.waitForTimeout(10000);
     
     const isDropdownVisible = await page.locator('.MuiPaper-root').isVisible();
     if (!isDropdownVisible) break;

@@ -31,7 +31,7 @@ export default class MenuCategoriesPage {
     }
 
     async getMenuCategoriesSubCategoryTitleMobile(subCategoryTitle: string) {
-        return this.page.locator('div[data-sentry-element="Column"]').getByText(subCategoryTitle);
+        return this.page.locator('div[data-sentry-element="Column"]').getByText(subCategoryTitle, { exact: true });
     }
 
     get getMenuCategoriesTitle() {

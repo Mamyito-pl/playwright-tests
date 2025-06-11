@@ -12,9 +12,12 @@ test.describe('Testy kategorii produktów', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await page.goto('/kategorie', { waitUntil: 'load' });
+    await utility.gotoWithRetry(page, '/kategorie');
 
     await utility.addGlobalStyles(page);
+
+    const warzywaOwoceLink = page.locator('a[href="/warzywa-i-owoce"]:nth-of-type(2)');
+    await expect(warzywaOwoceLink).toBeVisible({ timeout: 20000 });
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -54,7 +57,7 @@ test.describe('Testy kategorii produktów', async () => {
 
     await warzywaOwoceLink.click();
 
-    await expect(page).toHaveURL('/warzywa-i-owoce', { timeout: 15000});
+    await expect(page).toHaveURL('/warzywa-i-owoce', { timeout: 15000 });
 
     await expect(productsListPage.getProductCategoryTitle('Warzywa i owoce')).toBeVisible();
   })
@@ -74,7 +77,7 @@ test.describe('Testy kategorii produktów', async () => {
 
     await warzywaOwoceSubCategoryLink.click();
 
-    await expect(page).toHaveURL('/warzywa-i-owoce/owoce', { timeout: 15000});
+    await expect(page).toHaveURL('/warzywa-i-owoce/owoce', { timeout: 15000 });
 
     await expect(productsListPage.getProductCategoryTitle('Owoce')).toBeVisible();
   })
