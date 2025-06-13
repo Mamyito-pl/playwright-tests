@@ -178,7 +178,7 @@ export default class CartPage {
     }
 
     get getTotalSummaryValue() {
-        return this.page.locator(this.mobile ? '[data-sentry-element="TabletContent"] [data-cy="cart-summary-total-price"]' : '[data-sentry-element="SummaryColumn"] [data-cy="cart-summary-total-price"]')
+        return this.page.locator(this.mobile ? 'div[data-sentry-component="MobileSummary"] [data-cy="cart-summary-total-price"]' : '[data-sentry-element="SummaryColumn"] [data-cy="cart-summary-total-price"]')
     }
 
     get getSummaryExpandButton() {

@@ -65,6 +65,8 @@ test.describe('Testy kodów rabatowych', async () => {
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
 
+    await cartPage.getCartExpandCollapseButton.click({ force: true, delay: 300 });
+
     const totalSummaryValue = await cartPage.getTotalSummaryValue.last().textContent();
 
     const totalSummaryValueFormatted = totalSummaryValue?.slice(10, -3) || ''
@@ -172,6 +174,8 @@ test.describe('Testy kodów rabatowych', async () => {
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
 
+    await cartPage.getCartExpandCollapseButton.click({ force: true, delay: 300 });
+
     const totalSummaryValue = await cartPage.getTotalSummaryValue.last().textContent();
 
     const totalSummaryValueFormatted = totalSummaryValue?.slice(10, -3) || ''
@@ -278,6 +282,8 @@ test.describe('Testy kodów rabatowych', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
+
+    await cartPage.getCartExpandCollapseButton.click({ force: true, delay: 300 });
 
     const totalSummaryValue = await cartPage.getTotalSummaryValue.last().textContent();
 
