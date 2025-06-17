@@ -8,6 +8,8 @@ on:
       ALLURE_USERNAME:
         description:
         required: false
+  schedule:
+    - cron: "50 7,13 * * *"
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
@@ -16,13 +18,13 @@ env:
   ALLURE_PROJECT_ID: 1
   ALLURE_RESULTS: "allure-results"
   ALLURE_LAUNCH_NAME: "Performance Tests PROD"
-  GITHUB-TOKEN: ${{ secrets.ALLURE_GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
 jobs:
   test:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       actions: read
     env:
       URL: ${{ secrets.PROD_URL_SECRET }}
@@ -32,6 +34,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: feature/performance-tests
+          token: ${{ secrets.ALLURE_GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -66,3 +71,21 @@ jobs:
 
       - name: Generate allure report
         run: npx allure generate allure-results --clean
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Commit and push CSV results
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALLURE_GITHUB_TOKEN }}
+        run: |
+          git add tests/performance-tests/pageSpeedResults.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Aktualizacja wyników testów wydajności"
+            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+            git push origin feature/performance-tests
+          else
+            echo "Brak zmian w pliku CSV do commitowania"
+          fi
