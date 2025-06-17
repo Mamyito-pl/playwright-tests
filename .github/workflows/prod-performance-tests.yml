@@ -9,8 +9,8 @@ on:
         description:
         required: false
   schedule:
-    - cron: "0 7 * * *"
-    - cron: "0 13 * * *"
+    - cron: "35 6 * * *"
+    - cron: "35 13 * * *"
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
@@ -56,7 +56,11 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
 
       - name: Run Playwright tests for Web Chrome with Allure
+<<<<<<< HEAD
         run: allurectl watch -- npx playwright test --max-failures=0 --project="firefox" --grep "@Performance"
+=======
+        run: allurectl watch -- npx playwright test tests/performance-tests/performance-tests.test.spec.ts --max-failures=0 --project="Performance"
+>>>>>>> master
         env:
           CI: 'true'
 
