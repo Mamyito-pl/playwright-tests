@@ -25,7 +25,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       actions: read
     env:
       URL: ${{ secrets.PROD_URL_SECRET }}
@@ -35,6 +35,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: feature/performance-tests
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -69,3 +72,18 @@ jobs:
 
       - name: Generate allure report
         run: npx allure generate allure-results --clean
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Commit and push CSV results
+        run: |
+          git add tests/performance-tests/pageSpeedResults.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Aktualizacja wyników testów wydajności - $(date +'%Y-%m-%d %H:%M')"
+            git push origin feature/performance-tests
+          else
+            echo "Brak zmian w pliku CSV do commitowania"
+          fi
