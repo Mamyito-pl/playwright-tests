@@ -9,8 +9,7 @@ on:
         description:
         required: false
   schedule:
-    - cron: "35 6 * * *"
-    - cron: "35 13 * * *"
+    - cron: "45 6,13 * * *"
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
