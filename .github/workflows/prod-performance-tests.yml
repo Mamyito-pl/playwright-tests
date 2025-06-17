@@ -81,7 +81,7 @@ jobs:
         run: |
           git add tests/performance-tests/pageSpeedResults.csv
           if ! git diff --cached --quiet; then
-            git commit -m "Aktualizacja wyników testów wydajności - $(date +'%Y-%m-%d %H:%M')"
+            git commit -m "Aktualizacja wyników testów wydajności"
             git push origin feature/performance-tests
           else
             echo "Brak zmian w pliku CSV do commitowania"
