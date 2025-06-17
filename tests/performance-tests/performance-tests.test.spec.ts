@@ -23,7 +23,7 @@ test.describe('Testy wydajnościowe', async () => {
   
     const metricsJson = await metricsResponse[0].json();
   
-    const loadTime = metricsJson.load_time?.current;
+    const loadTime = metricsJson.load_time?.current ? `${metricsJson.load_time.current} ms` : undefined;
     const gradeScore = metricsJson.yslow_score?.current;
     const requests = metricsJson.request?.current;
     const size = metricsJson.size?.current ? `${(metricsJson.size.current / 1024 / 1024).toFixed(1)} MB` : undefined;
