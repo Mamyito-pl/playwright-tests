@@ -88,8 +88,12 @@ test.describe('Testy wydajnościowe', async () => {
       const csvPath = 'tests/performance-tests/pageSpeedResults.csv';
 
       const now = new Date();
-      const today = now.toLocaleDateString('pl-PL');
-      const hour = now.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+      const today = now.toLocaleDateString('pl-PL', { timeZone: 'Europe/Warsaw' });
+      const hour = now.toLocaleTimeString('pl-PL', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        timeZone: 'Europe/Warsaw'
+      });
 
       const headers = [
         'Data',
