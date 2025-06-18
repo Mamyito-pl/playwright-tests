@@ -48,8 +48,8 @@ test.describe('Testy kodów rabatowych', async () => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
-    await allure.parentSuite('Koszyk');
-    await allure.suite('Testy koszyka');
+    await allure.parentSuite('Kody rabatowe');
+    await allure.suite('Testy kodów rabatowych');
     await allure.subSuite('Kody rabatowe');
     await allure.allureId('2330');
 
