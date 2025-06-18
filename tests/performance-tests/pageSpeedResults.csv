@@ -1,1 +1,3 @@
 Data,Godzina,Load time,Requests,Performance grade,Page size,LCP Desktop,LCP Mobile,INP Desktop,INP Mobile,CLS Desktop,CLS Mobile,FCP Desktop,FCP Mobile,TTFB Desktop,TTFB Mobile,Wydajność Desktop,Wydajność Mobile
+
+"18.06.2025","15:41","968 ms","51","83","3.0 MB","2 s","2.6 s","371 ms","1,086 ms","0.27","0.12","1.6 s","2 s","0.9 s","1.1 s","59","41"
