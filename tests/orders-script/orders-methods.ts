@@ -1,5 +1,8 @@
 import fs from 'fs/promises';
-import { Page } from 'playwright';
+import { test as baseTest, Page } from '@playwright/test';
+import CartPage from '../../page/Cart.page.ts';
+
+let cartPage: CartPage;
 
 type Address = {
     city: string;
@@ -7,6 +10,16 @@ type Address = {
     house_number: string;
     postal_code: string;
     phone_number: string;
+    first_name: string;
+    last_name: string;
+};
+
+type User = {
+    email: string;
+    password: string;
+};
+
+type MyFixtures = {
 };
 
 const ADDRESSES_FILE = './tests/orders-script/addresses.json';
@@ -47,34 +60,74 @@ export async function fillPassword(page: Page, text: string, delay: number = 50)
     }
 }
 
-export async function addDeliveryAddress(page: Page, address: Address, addressName: string) {
+export async function clearCartViaAPI(page: Page, user: User) {
     const tokenResponse = await page.request.post(`${process.env.APIURL}/api/login`, {
         headers: {
             'Accept': 'application/json'
         },
         data: {
-            email: `${process.env.EMAIL}`,
-            password: `${process.env.PASSWORD}`,
+            email: user.email,
+            password: user.password,
         },
     });
 
     const responseBodyToken = await tokenResponse.json();
     const token = responseBodyToken.data.token;
 
-    const addDeliveryAddressResponse = await page.request.post(`${process.env.APIURL}/api/addresses`, {
+    console.log(token);
+
+    const cartIDResponse = await page.request.post(`${process.env.APIURL}/api/cart`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    
+    const responseBodyCartID = await cartIDResponse.json();
+    const items = responseBodyCartID.data.items;
+    const cart_id = responseBodyCartID.data.id;
+
+    if (!items || items.length === 0) {
+        console.log('Koszyk jest już pusty');
+        return;
+    }
+
+    const deleteItemsFromCart = await page.request.delete(`${process.env.APIURL}/api/cart/${cart_id}/items`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    expect(deleteItemsFromCart.status()).toBe(200);
+
+    console.log(`Wyczyszczono koszyk użytkownika: ${user.email}`);
+}
+
+export async function addDeliveryAddressViaAPI(page: Page, address: Address, addressName: string, user: User) {
+    const tokenResponse = await page.request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+            'Accept': 'application/json'
+        },
+        data: {
+            email: user.email,
+            password: user.password,
+        },
+    });
+
+    const responseBodyToken = await tokenResponse.json();
+    const token = responseBodyToken.data.token;
+
+    const addDeliveryAddress = await page.request.post(`${process.env.APIURL}/api/addresses`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
         data: {
             city: address.city,
-            first_name: "Jan",
-            last_name: "Kowalski", 
+            first_name: address.first_name,
+            last_name: address.last_name,
             house_number: address.house_number,
             icon_color: "#ffa31a",
             icon_type: "home",
             is_default: false,
-            latitude: 11,
-            longitude: 11,
             name: addressName,
             phone_number: address.phone_number,
             postal_code: address.postal_code,
@@ -87,6 +140,10 @@ export async function addDeliveryAddress(page: Page, address: Address, addressNa
         },
     });
 
-    return addDeliveryAddressResponse;
+    return addDeliveryAddress;
 }
+
+export const test = baseTest.extend<MyFixtures>({});
+  
+export const expect = test.expect;
 

@@ -1,8 +1,8 @@
 import { firefox } from 'playwright';
 import * as utility from '../../utils/utility-methods';
-import { getNextFreeAddress, loadJson } from './orders-methods';
+import { getNextFreeAddress, loadJson, clearCartViaAPI, addDeliveryAddressViaAPI } from './orders-methods';
 import * as utilityOrders from './orders-methods';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './orders-methods';
 import LoginPage from '../../page/Login.page';
 import CommonPage from '../../page/Common.page';
 import SearchbarPage from '../../page/Searchbar.page';
@@ -11,14 +11,22 @@ import DeliveryPage from '../../page/Delivery.page';
 import PaymentsPage from '../../page/Payments.page';
 
 type User = { email: string; password: string };
-type Address = { city: string; street: string; house_number: string; postal_code: string; phone_number: string };
+type Address = { city: string; street: string; house_number: string; postal_code: string; phone_number: string; first_name: string; last_name: string };
 
 const USERS_FILE = './tests/orders-script/users.json';
+
+let currentPage: any;
+let currentUser: User;
+let currentBrowser: any;
 
 async function processUser(user: User, address: Address) {
   const browser = await firefox.launch({ headless: false });
   const context = await browser.newContext();
   const page = await context.newPage();
+  
+  currentPage = page;
+  currentUser = user;
+  currentBrowser = browser;
 
   const loginPage = new LoginPage(page);
   const commonPage = new CommonPage(page);
@@ -75,17 +83,7 @@ async function processUser(user: User, address: Address) {
   await utility.addGlobalStyles(page);
   await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 15000 });
 
-  await page.evaluate(async (address) => {
-    await fetch(`${process.env.URL}/api/delivery`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ address }),
-    });
-  }, address);
-
-  console.log(`✅ Adres dodany dla: ${user.email}`);
+  await addDeliveryAddressViaAPI(page, address, 'test', user);
 
   await searchbarPage.clickSearchbar();
   await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -117,11 +115,12 @@ async function processUser(user: User, address: Address) {
   await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
   await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
   await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
-
-  await browser.close();
 }
 
 test.describe('Orders Script', () => {
+
+  test.setTimeout(2000000);
+
   test('Proces dodawania adresów dla użytkowników', async () => {
     const users: User[] = await loadJson(USERS_FILE);
 
