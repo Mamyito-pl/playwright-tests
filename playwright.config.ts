@@ -11,7 +11,7 @@ export default defineConfig({
 
   retries: process.env.CI ? 2 : 0,
 
-  workers: 1,
+  workers: 3,
 
   reporter: [['html'], ['allure-playwright', {
     detail: true,
@@ -102,6 +102,15 @@ export default defineConfig({
     {
       name: 'Performance',
       testDir: './tests/performance-tests',
+      use: {
+        browserName: 'firefox',
+        baseURL: process.env.URL,
+      },
+    },
+    
+    {
+      name: 'OrdersScript',
+      testDir: './tests/orders-script',
       use: {
         browserName: 'firefox',
         baseURL: process.env.URL,
