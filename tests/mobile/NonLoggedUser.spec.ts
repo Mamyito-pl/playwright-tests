@@ -108,7 +108,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.allureId('2522');
 
     await expect(mainPage.getDiscountsSection).toBeVisible();
-    await page.locator('div[data-cy="promocje-products-list-slider"] div[data-sentry-element="ButtonWrapper"]').first().click();
+    await page.locator('[data-cy="promocje-products-list-slider"] div[data-sentry-element="ButtonWrapper"]').first().click();
     await page.waitForTimeout(2000);
 
     await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });

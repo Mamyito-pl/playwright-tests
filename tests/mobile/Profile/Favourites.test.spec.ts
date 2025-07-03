@@ -56,7 +56,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     test.setTimeout(130000);
 
-    const firstItemName = page.locator('div[data-cy="promocje-products-list-slider"] h3').first();
+    const firstItemName = page.locator('[data-cy="promocje-products-list-slider"] h3').first();
     const firstItemNameText = await firstItemName.textContent() || '';
 
     const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true, delay: 300 });

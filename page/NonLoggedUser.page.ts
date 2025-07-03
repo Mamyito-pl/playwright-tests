@@ -26,7 +26,7 @@ export default class NonLoggedUserPage {
     }
 
     get getLoginLink() {
-        return this.mobile ? this.page.locator('div[data-cy="login-button"]').getByText('Logowanie') : this.page.getByRole('link', { name: 'Logowanie' }) 
+        return this.mobile ? this.page.locator('[data-cy="login-button"]').getByText('Logowanie') : this.page.getByRole('link', { name: 'Logowanie' }) 
     }
 
     get getRegisterLink() {

@@ -435,7 +435,7 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await productDetailsPage.getMainInfoProductDropdown.click();
 
-    const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName || ''); 
+    const mainInfoContentBrand = page.locator('div[class*="MuiCollapse-entered"]').getByText(productBrandName  + ' >'|| ''); 
     await mainInfoContentBrand.click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/marki/' + formattedProductBrandName, { timeout: 10000 });
@@ -459,7 +459,7 @@ test.describe('Testy szczegółów produktu', async () => {
 
     await page.waitForSelector('text="Informacje główne"', { timeout: 15000, state: 'visible' });
 
-    const firstItemInSlider = page.locator('div[data-cy="inne-produkty-z-tej-kategorii-product-card-slider"]').first();
+    const firstItemInSlider = page.locator('[data-cy="inne-produkty-z-tej-kategorii-product-card-slider"]').first();
 
     await productDetailsPage.getSliderSectionGetLeftButton.isDisabled();
     await productDetailsPage.getSliderSectionGetRightButton.click();

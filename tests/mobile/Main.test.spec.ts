@@ -114,7 +114,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.subSuite('');
     await allure.allureId('1262');
     
-    const firstItemInSlider = page.locator('div[data-cy="promocje-product-card-slider"]').first()
+    const firstItemInSlider = page.locator('[data-cy="promocje-product-card-slider"]').first()
 
     await mainPage.getSectionGetLeftButton.nth(0).isDisabled();
     await mainPage.getSectionGetRightButton.nth(0).click({ force: true, delay: 300 });
@@ -160,7 +160,7 @@ test.describe('Testy strony głównej', async () => {
       await page.waitForTimeout(700);
     }
 
-    const firstItemInSlider = page.locator('div[data-cy="bestsellery-product-card-slider"]').first()
+    const firstItemInSlider = page.locator('[data-cy="bestsellery-product-card-slider"]').first()
 
     await mainPage.getBestsellersSection.scrollIntoViewIfNeeded();
     await page.waitForTimeout(2000);
@@ -326,7 +326,7 @@ test.describe('Testy strony głównej', async () => {
       await page.waitForTimeout(700);
     }
 
-    const firstItemInSlider = page.locator('div[data-cy="nowosci-product-card-slider"]').first()
+    const firstItemInSlider = page.locator('[data-cy="nowosci-product-card-slider"]').first()
 
     await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
     await page.waitForTimeout(2000);
