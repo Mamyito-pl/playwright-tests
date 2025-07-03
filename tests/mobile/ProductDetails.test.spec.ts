@@ -312,6 +312,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await page.getByText(productName).click();
     await page.waitForLoadState('domcontentloaded');
 
+    await expect(productDetailsPage.getAddToFavouritesButton).toBeVisible({ timeout: 15000 });
     await productDetailsPage.getAddToFavouritesButton.click({ force: true, delay: 300 });
 
     await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });

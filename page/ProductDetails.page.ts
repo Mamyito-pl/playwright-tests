@@ -120,10 +120,10 @@ export default class ProductDetailsPage {
     }
 
     get getSliderSectionGetLeftButton() {
-        return this.page.locator('div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
+        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
     }
 
     get getSliderSectionGetRightButton() {
-        return this.page.locator('div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
+        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
     }
 }
