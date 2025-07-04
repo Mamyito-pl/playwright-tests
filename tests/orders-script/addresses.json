@@ -765,9 +765,9 @@
     "last_name": "Kozłowska"
   },
   {
-    "street": "Górnośląska",
-    "house_number": "7/9",
-    "postal_code": "00-445",
+    "street": "aleja Jana Pawła II",
+    "house_number": "18",
+    "postal_code": "00-116",
     "city": "Warszawa",
     "phone_number": "586789012",
     "first_name": "Patrycja",
@@ -783,16 +783,16 @@
     "last_name": "Mazurek"
   },
   {
-    "street": "Kamionek",
-    "house_number": "81",
-    "postal_code": "04-032",
+    "street": "Zbaraska",
+    "house_number": "1",
+    "postal_code": "04-014",
     "city": "Warszawa",
     "phone_number": "588901234",
     "first_name": "Barbara",
     "last_name": "Krupa"
   },
   {
-    "street": "Waszyngtona",
+    "street": "Jerzego Waszyngtona",
     "house_number": "25",
     "postal_code": "03-904",
     "city": "Warszawa",

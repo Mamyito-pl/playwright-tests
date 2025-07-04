@@ -345,11 +345,11 @@ export const test = baseTest.extend<MyFixtures>({
           phone_number: "555666777",
           postal_code: "00-828",
           street: "aleja Jana Pawła II",
-          staircase_number: "1",
-          flat_number: "30",
+          //staircase_number: "1",
+          //flat_number: "30",
           type: "delivery",
-          client_delivery_notes: "Testowa notatka",
-          floor: "2"
+          //client_delivery_notes: "Testowa notatka",
+          //floor: "2"
         },
       });
 

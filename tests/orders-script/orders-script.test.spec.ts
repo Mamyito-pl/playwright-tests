@@ -105,6 +105,7 @@ async function processUser(user: User, address: Address) {
   await cartPage.clickCartSummaryButton();
   //await page.waitForSelector("button[data-sentry-component='DeliverySlotItem']", { timeout: 10000 });
   await expect(page.getByRole('button', { name: 'Zarezerwuj termin' })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole('button', { name: 'Zarezerwuj termin' })).toBeEnabled({ timeout: 10000 });
   await page.getByRole('button', { name: 'Zarezerwuj termin' }).click();
   // przyisk edycji adresu
   await page.locator('#__next > main > div > div.sc-b2e34c36-1.gBsBzR > div.sc-b2e34c36-2.ha-dfdF > div.sc-7bf558d8-0.daBIjg > div.sc-e7f63802-0.ctcwVS > div.sc-e7f63802-5.csnSFh > div.sc-4ba0a65-1.khxMBL > div > svg').click();
@@ -126,10 +127,13 @@ async function processUser(user: User, address: Address) {
   await page.locator('div[class*="sc-2a32734a"] div[class*="biOiAb"] label').first().scrollIntoViewIfNeeded();
   await expect(page.locator('div[class*="sc-2a32734a"] div[class*="biOiAb"] label').first()).toBeVisible({ timeout: 10000 });
   await page.locator('div[class*="sc-2a32734a"] div[class*="biOiAb"] label').first().click({ force: true });
+  await expect(page.getByRole('button', { name: 'Zapisz rezerwacje' })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole('button', { name: 'Zapisz rezerwacje' })).toBeEnabled({ timeout: 10000 });
   await page.getByRole('button', { name: 'Zapisz rezerwacje' }).click();
   await cartPage.clickCartSummaryPaymentButton();
   await page.getByLabel('Płatność kartą przy odbiorze').check({ force: true });
   await paymentsPage.checkStatue();
+  await page.waitForTimeout(1000);
   await cartPage.clickCartPaymentConfirmationButton();
   await page.waitForSelector("#cart_summary_payment_confirmation", { timeout: 15000, state: 'hidden' });
 
