@@ -34,7 +34,7 @@ export default class PaymentsPage {
     }
 
     async checkStatue() {
-        await this.getStatueCheckbox.check();
+        await this.getStatueCheckbox.check({ force: true });
     }
 
     async enterBlikCode(blikCode: string) {
@@ -74,7 +74,7 @@ export default class PaymentsPage {
     }
 
     get getStatueCheckbox() {
-        return this.page.getByText('Akceptuję').locator('..').locator('..').locator('span');
+        return this.page.getByText('Akceptuję').locator('..').locator('span');
     }
 
     get getCloseIconButtonRepeatOrderWindow() {
