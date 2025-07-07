@@ -132,11 +132,8 @@ export async function addDeliveryAddressViaAPI(page: Page, address: Address, add
             phone_number: address.phone_number,
             postal_code: address.postal_code,
             street: address.street,
-            staircase_number: "1",
-            flat_number: "30",
             type: "delivery",
             client_delivery_notes: "Testowa notatka",
-            floor: "2"
         },
     });
 
