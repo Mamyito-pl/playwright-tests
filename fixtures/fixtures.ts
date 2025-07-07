@@ -50,8 +50,7 @@ export const test = baseTest.extend<MyFixtures>({
       let urlWithParam = url;
 
       if (!url.includes('testy-automatyczne')) {
-        const separator = url.includes('?') ? '&' : '?';
-        urlWithParam = url + separator + 'testy-automatyczne';
+        urlWithParam = url + '?testy-automatyczne';
       }
       
       return originalGoto.call(page, urlWithParam, options);

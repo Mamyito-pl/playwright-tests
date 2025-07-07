@@ -261,7 +261,7 @@ test.describe('Testy koszyka', async () => {
     await allure.allureId('474');
     
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
     await expect(cartPage.getCartReturnButton).toBeVisible();
     await cartPage.getCartReturnButton.click();
     await page.waitForTimeout(1000);

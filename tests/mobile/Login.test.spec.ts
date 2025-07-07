@@ -19,7 +19,7 @@ test.describe('Testy logowania', async () => {
     commonPage = new CommonPage(page);
     mainLogoutPage = new MainLogoutPage(page);
     
-    await utility.gotoWithRetry(page, '/logowanie');
+    await utility.gotoWithRetry(page, '/logowanie?testy-automatyczne');
     await page.waitForTimeout(2000);
     await utility.addGlobalStyles(page);
     })

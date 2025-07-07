@@ -1113,7 +1113,7 @@ test.describe('Testy płatności', async () => {
       };
 
       await page.goto('profil/zamówienia', { waitUntil: 'load'});
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia'), { timeout: 20000 });
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia?testy-automatyczne'), { timeout: 20000 });
     
       const lastOrderDetailsButton = page.locator('svg[class="tabler-icon tabler-icon-eye"]');
       await lastOrderDetailsButton.first().click();
