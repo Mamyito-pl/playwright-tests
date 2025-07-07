@@ -54,7 +54,7 @@ test.describe('Testy wydajnościowe', async () => {
     const performanceScoreDesktopScrap = await desktopSection.locator('text[class="lh-exp-gauge__percentage"]').textContent();
     const LCPscoreDesktop = await desktopSection.getByText('Largest Contentful Paint (LCP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
     const INPscoreDesktop = await desktopSection.getByText('Interaction to Next Paint (INP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
-    const CLSscoreDesktop = await desktopSection.getByText('Cumulative Layout Shift (CLS)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
+    const CLSscoreDesktop = await desktopSection.getByText('Cumulative Layout Shift (CLS)').locator('..').locator('..').locator('div').nth(1).locator('span span span').last().textContent();
     const FCPscoreDesktop = await desktopSection.getByText('First Contentful Paint (FCP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
     const TTFBscoreDesktop = await desktopSection.getByText('Time to First Byte (TTFB)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
   
