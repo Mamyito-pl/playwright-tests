@@ -1,4 +1,4 @@
-import { expect, test as setup } from '@playwright/test';
+import { test as setup, expect } from '../fixtures/fixtures.ts';
 import LoginPage from "../page/Login.page.ts";
 import MainLogoutPage from "../page/MainLogout.page.ts";
 import CommonPage from '../page/Common.page.ts';

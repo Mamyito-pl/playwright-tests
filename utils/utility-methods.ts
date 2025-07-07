@@ -56,7 +56,6 @@ export async function gotoWithRetry(page, url, maxRetries = 3) {
         throw new Error('Strona została zamknięta');
       }
       
-      //await page.goto(url + '?test', { 
       await page.goto(url, { 
         waitUntil: 'load'
       });

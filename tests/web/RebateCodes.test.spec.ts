@@ -61,7 +61,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
@@ -168,7 +168,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});
@@ -275,7 +275,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
 
     await expect(cartPage.getCartAvailableCodesButton).toBeVisible({ timeout: 15000});

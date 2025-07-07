@@ -44,6 +44,21 @@ type MyFixtures = {
 };
 
 export const test = baseTest.extend<MyFixtures>({
+  page: async ({ page }, use) => {
+    const originalGoto = page.goto;
+    page.goto = async (url: string, options?: any) => {
+      let urlWithParam = url;
+
+      if (!url.includes('testy-automatyczne')) {
+        const separator = url.includes('?') ? '&' : '?';
+        urlWithParam = url + separator + 'testy-automatyczne';
+      }
+      
+      return originalGoto.call(page, urlWithParam, options);
+    };
+    
+    await use(page);
+  },
 
   loginManual: async ({ page }, use) => {
     
@@ -55,7 +70,7 @@ export const test = baseTest.extend<MyFixtures>({
       page.on('framenavigated', async () => {
         await utility.addGlobalStyles(page);
       });
-      await page.goto('/logowanie', { waitUntil: 'domcontentloaded' });
+      await page.goto('/logowanie?testy-automatyczne', { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(2000);
       await loginPage.enterEmail(`${process.env.EMAIL}`);
       await loginPage.enterPassword(`${process.env.PASSWORD}`);
@@ -75,7 +90,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const clearCart = async (): Promise<void> => {
 
-      await page.goto('/koszyk', { waitUntil: 'load'});
+      await page.goto('/koszyk?testy-automatyczne', { waitUntil: 'load'});
       await page.waitForTimeout(2000);
 
       if (await cartPage.getClearCartButton.isDisabled()) {
