@@ -81,8 +81,6 @@ export const test = baseTest.extend<MyFixtures>({
     await use(login);
   },
 
-  storageState: 'playwright/.auth/user.json',
-
   clearCart: async ({ page }, use) => {
 
     cartPage = new CartPage(page);

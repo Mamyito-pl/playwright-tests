@@ -1063,8 +1063,8 @@ test.describe('Testy płatności', async () => {
         await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 20000 });
       };
 
-      await page.goto('profil/zamówienia', { waitUntil: 'load'});
-      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia?testy-automatyczne'), { timeout: 20000 });
+      await page.goto('profil/zamowienia', { waitUntil: 'load'});
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?testy-automatyczne'), { timeout: 20000 });
     
       const lastOrderDetailsButton = page.locator('#profile_order_details_button');
       await lastOrderDetailsButton.first().click();
