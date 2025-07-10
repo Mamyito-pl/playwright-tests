@@ -42,7 +42,7 @@ test.describe('Testy listy zamówień', async () => {
     });
 
     await page.goto('/profil/zamowienia', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia');
+    await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne');
     await expect(ordersPage.getOrdersTitle).toBeVisible({ timeout: 15000 });
     await expect(ordersPage.getOrdersTotal).toContainText(orderTotal || '');
     await expect(ordersPage.getOrderDetailsButton.first()).toBeVisible({ timeout: 15000 });

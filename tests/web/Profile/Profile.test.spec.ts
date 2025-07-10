@@ -252,7 +252,7 @@ test.describe('Testy profilu', async () => {
       await allure.allureId('2586');
 
       await utility.gotoWithRetry(page, '/profil/zamowienia');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileRebateCodesButton).toBeVisible();
       await profilePage.getProfileRebateCodesButton.click();  
       await page.waitForLoadState('load');
@@ -270,7 +270,7 @@ test.describe('Testy profilu', async () => {
       await allure.allureId('2587');
 
       await utility.gotoWithRetry(page, '/profil/zamowienia');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuMyDetailsButton).toBeVisible();
       await profilePage.getProfileMenuMyDetailsButton.click();  
       await page.waitForLoadState('load');
@@ -288,7 +288,7 @@ test.describe('Testy profilu', async () => {
       await allure.allureId('2588');
 
       await utility.gotoWithRetry(page, '/profil/zamowienia');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuDeliveryAddressesButton).toBeVisible();
       await profilePage.getProfileMenuDeliveryAddressesButton.click();  
       await page.waitForLoadState('load');
@@ -306,7 +306,7 @@ test.describe('Testy profilu', async () => {
       await allure.allureId('2589');
 
       await utility.gotoWithRetry(page, '/profil/zamowienia');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileRebateCodesButton).toBeVisible();
       await profilePage.getProfileMenuInvoiceAddressesButton.click();  
       await page.waitForLoadState('load');
@@ -324,7 +324,7 @@ test.describe('Testy profilu', async () => {
       await allure.allureId('2590');
 
       await utility.gotoWithRetry(page, '/profil/zamowienia');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuFavouritesButton).toBeVisible();
       await profilePage.getProfileMenuFavouritesButton.click();  
       await page.waitForLoadState('load');
@@ -342,7 +342,7 @@ test.describe('Testy profilu', async () => {
       await allure.allureId('2591');
 
       await utility.gotoWithRetry(page, '/profil/zamowienia');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuLogOutButton).toBeVisible();
       await profilePage.getProfileMenuLogOutButton.click();
       await expect(nonLoggedUserPage.getDeliveryAvailableLink).toBeVisible({ timeout: 10000 });

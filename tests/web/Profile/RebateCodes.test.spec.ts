@@ -33,7 +33,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await allure.allureId('2566');
 
     await page.goto('/profil/kody-rabatowe', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/profil/kody-rabatowe');
+    await expect(page).toHaveURL(`${baseURL}` + '/profil/kody-rabatowe?testy-automatyczne');
     await expect(rebateCodesPage.getRebateCodesTitle).toBeVisible({ timeout: 15000 });
 
     await expect(rebateCodesPage.getRebateCodesAllFilterButton).toBeVisible({ timeout: 5000 });
