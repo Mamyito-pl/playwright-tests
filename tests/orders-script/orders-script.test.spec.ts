@@ -78,7 +78,7 @@ async function processUser(user: User, address: Address) {
   await page.waitForTimeout(1000);
   await loginPage.clickLoginButton();
   await page.waitForTimeout(1000);
-  //await addDeliveryAddressViaAPI(page, address, 'test', user);
+  await addDeliveryAddressViaAPI(page, address, 'test', user);
   await expect(page).toHaveURL(`${process.env.URL}`, { timeout: 20000 });
   await page.waitForLoadState('domcontentloaded');
   await utility.addGlobalStyles(page);
@@ -98,20 +98,36 @@ async function processUser(user: User, address: Address) {
   await commonPage.getCartButton.click();
   await page.waitForTimeout(1000);
 
+  await page.goto('/mrozonki-i-lody-2', { waitUntil: 'domcontentloaded'});
+  for (let i = 0; i < 2; i++) {
+    await page.locator("div[data-sentry-component='ProductCard'] button:has-text('Dodaj')").first().click({ force: true, delay: 300 });
+    await page.waitForTimeout(3000);
+  }
+  await page.goto('/piekarnia-i-cukiernia', { waitUntil: 'domcontentloaded'});
+  for (let i = 0; i < 2; i++) {
+    await page.locator("div[data-sentry-component='ProductCard'] button:has-text('Dodaj')").first().click({ force: true, delay: 300 });
+    await page.waitForTimeout(3000);
+  }
+  await page.goto('/chemia-i-srodki-czystosci', { waitUntil: 'domcontentloaded'});
+  for (let i = 0; i < 2; i++) {
+    await page.locator("div[data-sentry-component='ProductCard'] button:has-text('Dodaj')").first().click({ force: true, delay: 300 });
+    await page.waitForTimeout(3000);
+  }
+  await commonPage.getCartButton.click();
   await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
   await cartPage.clickCartDrawerToCartButton();
-  await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
   await page.waitForSelector("div[data-sentry-element='InsideWrapper']", { timeout: 10000 });
+  await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
   await cartPage.clickCartSummaryButton();
   //await page.waitForSelector("button[data-sentry-component='DeliverySlotItem']", { timeout: 10000 });
   await expect(page.getByRole('button', { name: 'Zarezerwuj termin' })).toBeVisible({ timeout: 10000 });
   await expect(page.getByRole('button', { name: 'Zarezerwuj termin' })).toBeEnabled({ timeout: 10000 });
   await page.getByRole('button', { name: 'Zarezerwuj termin' }).click();
   // przycisk edycji adresu
-  /*await page.locator('#__next > main > div > div.sc-b2e34c36-1.gBsBzR > div.sc-b2e34c36-2.ha-dfdF > div.sc-7bf558d8-0.daBIjg > div.sc-e7f63802-0.ctcwVS > div.sc-e7f63802-5.csnSFh > div.sc-4ba0a65-1.khxMBL > div > svg').click();
+  await page.locator('#__next > main > div > div.sc-b2e34c36-1.gBsBzR > div.sc-b2e34c36-2.ha-dfdF > div.sc-7bf558d8-0.daBIjg > div.sc-e7f63802-0.ctcwVS > div.sc-e7f63802-5.csnSFh > div.sc-4ba0a65-1.khxMBL > div > svg').click();
   await page.locator('#delivery_address_save_button').click();
   await page.waitForTimeout(5000);
-  //const confirmModal = page.locator('#modal-portal > div:nth-child(2) > div');
+  const confirmModal = page.locator('#modal-portal > div:nth-child(2) > div');
   
   if (await confirmModal.isVisible({ timeout: 15000 })) {
     console.log('Modal potwierdzenia adresu jest widoczny - klikam "Popraw adres"');
@@ -119,10 +135,10 @@ async function processUser(user: User, address: Address) {
     await page.locator('#delivery_address_save_button').click();
   } else {
     console.log('Modal potwierdzenia adresu nie jest widoczny - kontynuuję');
-  }*/
-  await expect(page.getByText('08 lip')).toBeVisible({ timeout: 10000 });
-  await page.getByText('08 lip').click();
-  await page.getByText('08 lip').click();
+  }
+  await expect(page.getByText('11 lip')).toBeVisible({ timeout: 10000 });
+  await page.getByText('11 lip').click();
+  await page.getByText('11 lip').click();
   //selektory do slotu
   await page.locator('div[class*="sc-2a32734a"] div[class*="biOiAb"] label').first().scrollIntoViewIfNeeded();
   await expect(page.locator('div[class*="sc-2a32734a"] div[class*="biOiAb"] label').first()).toBeVisible({ timeout: 10000 });
