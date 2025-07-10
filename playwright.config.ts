@@ -112,7 +112,7 @@ export default defineConfig({
       name: 'OrdersScript',
       testDir: './tests/orders-script',
       use: {
-        browserName: 'chromium',
+        browserName: 'firefox',
         viewport: { width: 1920, height: 1080 },
         baseURL: process.env.URL,
       },
