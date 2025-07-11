@@ -40,6 +40,8 @@ test.describe('Testy wydajnościowe', async () => {
     
     if (await page.getByText('Oops! Something went wrong.').isVisible()) {
       await page.click('button:has-text("Analyze")');
+    } else {
+      console.log('PageSpeed results are visible');
     }
 
     await performanceScoreMobile.waitFor({ state: 'visible', timeout: 120000 });
@@ -55,8 +57,10 @@ test.describe('Testy wydajnościowe', async () => {
 
     if (await page.getByText('Oops! Something went wrong.').isVisible()) {
       await page.click('button:has-text("Analyze")');
+    } else {
+      console.log('PageSpeed results are visible');
     }
-    
+
     const desktopSection = page.locator('div[aria-labelledby="desktop_tab"]');
     const performanceScoreDesktop = await desktopSection.locator('text[class="lh-exp-gauge__percentage"]');
     await performanceScoreDesktop.waitFor({ state: 'visible', timeout: 120000 });
