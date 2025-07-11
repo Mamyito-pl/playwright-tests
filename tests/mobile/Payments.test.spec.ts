@@ -327,6 +327,8 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(230000);
 
+      await utility.autoAddParamOnNavigation(page);
+
       await addProduct(product);
 
       await searchbarPage.getProductItemCount.first().click();
@@ -1034,6 +1036,8 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(250000);
 
+      await utility.autoAddParamOnNavigation(page);
+
       await addProduct(product);
 
       await searchbarPage.getProductItemCount.first().click();
@@ -1117,6 +1121,8 @@ test.describe('Testy płatności', async () => {
       await allure.allureId('688');
 
       test.setTimeout(200000);
+
+      await utility.autoAddParamOnNavigation(page);
 
       await addProduct(product);
 

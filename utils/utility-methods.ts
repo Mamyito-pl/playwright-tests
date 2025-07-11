@@ -1,3 +1,5 @@
+import { Frame, Page } from "@playwright/test";
+
 export async function addGlobalStyles(page) {
   const cssRules = `
   div[data-sentry-element='PromptContainer'] { display: none !important; }
@@ -71,4 +73,19 @@ export async function gotoWithRetry(page, url, maxRetries = 3) {
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
+}
+
+export async function autoAddParamOnNavigation(page: Page, param = 'testy-automatyczne') {
+  page.on('framenavigated', async (frame: Frame) => {
+    const url = frame.url();
+    console.log(`Frame navigated to: ${url}`);
+    if (!url.includes(param) && frame === page.mainFrame()) {
+      const separator = url.includes('?') ? '&' : '?';
+      const newUrl = `${url}${separator}${param}`;
+      console.log(`Redirecting to: ${newUrl}`);
+      await page.goto(newUrl);
+    } else {
+      console.log(`Param ${param} already in URL or not main frame`);
+    }
+  });
 }
