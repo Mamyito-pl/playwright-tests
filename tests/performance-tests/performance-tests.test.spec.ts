@@ -37,6 +37,11 @@ test.describe('Testy wydajnościowe', async () => {
     await page.click('input[inputmode="url"]');
     await page.fill('input[inputmode="url"]', TEST_URL);
     await page.click('button:has-text("Analyze")');
+    
+    if (await page.getByText('Oops! Something went wrong.').isVisible()) {
+      await page.click('button:has-text("Analyze")');
+    }
+
     await performanceScoreMobile.waitFor({ state: 'visible', timeout: 120000 });
   
     const performanceScoreMobileScrap = await page.locator('text[class="lh-exp-gauge__percentage"]').first().textContent();
@@ -47,6 +52,11 @@ test.describe('Testy wydajnościowe', async () => {
     const TTFBscoreMobile = await page.getByText('Time to First Byte (TTFB)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
   
     await page.click('#desktop_tab');
+
+    if (await page.getByText('Oops! Something went wrong.').isVisible()) {
+      await page.click('button:has-text("Analyze")');
+    }
+    
     const desktopSection = page.locator('div[aria-labelledby="desktop_tab"]');
     const performanceScoreDesktop = await desktopSection.locator('text[class="lh-exp-gauge__percentage"]');
     await performanceScoreDesktop.waitFor({ state: 'visible', timeout: 120000 });
