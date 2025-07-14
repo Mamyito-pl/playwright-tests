@@ -75,17 +75,12 @@ export async function gotoWithRetry(page, url, maxRetries = 3) {
   }
 }
 
-export async function autoAddParamOnNavigation(page: Page, param = 'testy-automatyczne') {
-  page.on('framenavigated', async (frame: Frame) => {
-    const url = frame.url();
-    console.log(`Frame navigated to: ${url}`);
-    if (!url.includes(param) && frame === page.mainFrame()) {
-      const separator = url.includes('?') ? '&' : '?';
-      const newUrl = `${url}${separator}${param}`;
-      console.log(`Redirecting to: ${newUrl}`);
-      await page.goto(newUrl);
-    } else {
-      console.log(`Param ${param} already in URL or not main frame`);
-    }
-  });
+export async function addTestParam(page: Page, param = 'testy-automatyczne') {
+  const currentUrl = page.url();
+  if (!currentUrl.includes(param)) {
+    const separator = currentUrl.includes('?') ? '&' : '?';
+    const newUrl = `${currentUrl}${separator}${param}`;
+    console.log(`Adding test param to URL: ${newUrl}`);
+    await page.goto(newUrl, { waitUntil: 'domcontentloaded' });
+  }
 }

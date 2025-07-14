@@ -327,8 +327,6 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(230000);
 
-      await utility.autoAddParamOnNavigation(page);
-
       await addProduct(product);
 
       await searchbarPage.getProductItemCount.first().click();
@@ -339,14 +337,20 @@ test.describe('Testy płatności', async () => {
 
       await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
       await cartPage.clickCartDrawerToCartButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await page.getByLabel('Kod BLIK').check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
@@ -1036,8 +1040,6 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(250000);
 
-      await utility.autoAddParamOnNavigation(page);
-
       await addProduct(product);
 
       await searchbarPage.getProductItemCount.first().click();
@@ -1048,14 +1050,20 @@ test.describe('Testy płatności', async () => {
 
       await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
       await cartPage.clickCartDrawerToCartButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await page.getByLabel('Przelew online').check();
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -1122,8 +1130,6 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(200000);
 
-      await utility.autoAddParamOnNavigation(page);
-
       await addProduct(product);
 
       await searchbarPage.getProductItemCount.first().click();
@@ -1134,14 +1140,20 @@ test.describe('Testy płatności', async () => {
 
       await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
       await cartPage.clickCartDrawerToCartButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
+      await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+      await utility.addTestParam(page);
       await page.getByLabel('Płatność kartą przy odbiorze').check();
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
