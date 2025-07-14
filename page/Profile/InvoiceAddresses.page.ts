@@ -17,11 +17,11 @@ export default class InvoiceAddressesPage {
     }
 
     async clickEditInvoiceAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
+        return this.page.getByText(addressName).locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-pencil "]').click();
     }
 
     async clickDeleteInvoiceAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash "]').click();
     }
 
     getMainInvoiceAddressInfo(addressName: string) {
