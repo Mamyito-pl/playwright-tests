@@ -46,7 +46,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getSortButton).toBeVisible();
   })
 
-  test('M | Możliwość przejścia do innej kategorii poprzez breadcrumb', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Możliwość przejścia do innej kategorii poprzez breadcrumb', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
@@ -65,7 +65,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getBreadcrumbs).toContainText('Nabiał');
   })
 
-  test('M | Po zescrollowaniu w dół następne produkty są załadowywane', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Po zescrollowaniu w dół następne produkty są załadowywane', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
@@ -224,7 +224,7 @@ test.describe('Testy listy produktów', async () => {
     expect(pricesCount).toBeGreaterThan(1);
   })
 
-  test('M | Możliwość sortowania od A do Z', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Możliwość sortowania od A do Z', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
@@ -337,7 +337,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThan(1);
   })
   
-  test('M | Możliwość sortowania od Z do A', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Możliwość sortowania od Z do A', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
@@ -450,7 +450,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThan(1);
   })
   
-  test('M | Możliwość filtrowania po typie produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Możliwość filtrowania po typie produktu', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
@@ -492,7 +492,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThanOrEqual(1);
   })
   
-  test.describe('Filtrowanie po cenie', async () => {
+  test.describe('Filtrowanie po cenie', { tag: ['@Prod', '@Beta'] }, async () => {
     test('M | Możliwość filtrowania po cenie poniżej 10 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Mobilne', 'Lista produktów');

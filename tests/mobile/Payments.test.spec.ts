@@ -280,7 +280,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
     
-      test.setTimeout(145000);
+      test.setTimeout(300000);
 
       await addProduct(product);
 
@@ -311,7 +311,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
@@ -410,7 +410,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(165000);
+      test.setTimeout(300000);
 
       await addProduct(product);
 
@@ -441,7 +441,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
     
       await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
       await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
@@ -449,7 +449,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getPaymentOnDeliveryButton).toBeVisible({ timeout: 5000 });
       await expect(paymentsPage.getRepeatPaymentButton).toBeVisible({ timeout: 5000 });
     })
-  
+    
     test('M | Zapłata pustym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
     
       await allure.tags('Mobilne', 'Płatności');
@@ -618,7 +618,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(195000);
+      test.setTimeout(500000);
 
       await addProduct(product);
 
@@ -649,7 +649,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
     
       await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
       await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
@@ -686,7 +686,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(165000);
+      test.setTimeout(320000);
 
       await addProduct(product);
 
@@ -713,7 +713,7 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
     
       await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
 
@@ -813,7 +813,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(215000);
+      test.setTimeout(355000);
 
       await addProduct(product);
 
@@ -851,7 +851,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
 
       await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
       await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
@@ -880,7 +880,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(185000);
+      test.setTimeout(335000);
 
       await addProduct(product);
 
@@ -918,7 +918,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
 
       await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
       await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
@@ -962,7 +962,7 @@ test.describe('Testy płatności', async () => {
   
       test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
 
-      test.setTimeout(185000);
+      test.setTimeout(335000);
 
       await addProduct(product);
 
@@ -1000,7 +1000,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
 
       await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
       await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });

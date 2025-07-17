@@ -91,9 +91,21 @@ test.describe('Testy moje dane', async () => {
     (await myDetailsPage.getModal('Edytuj dane')).isVisible({ timeout: 5000 });
     await expect (myDetailsPage.getModalSaveButton).toBeVisible();
 
-    await myDetailsPage.getModalNameInput.fill(exampleName);
+    await myDetailsPage.getModalNameInput.click();
+    await page.waitForTimeout(1000);
+    await myDetailsPage.getModalNameInput.clear();
+    await page.waitForTimeout(1000);
+    await myDetailsPage.getModalNameInput.click();
+    await page.waitForTimeout(1000);
+    await page.keyboard.type(exampleName);
     await expect(myDetailsPage.getModalNameInput).toHaveValue(exampleName);
-    await myDetailsPage.getModalSurnameInput.fill(exampleSurname);
+    await myDetailsPage.getModalSurnameInput.click();
+    await page.waitForTimeout(1000);
+    await myDetailsPage.getModalSurnameInput.clear();
+    await page.waitForTimeout(1000);
+    await myDetailsPage.getModalSurnameInput.click();
+    await page.waitForTimeout(1000);
+    await page.keyboard.type(exampleSurname);
     await expect(myDetailsPage.getModalSurnameInput).toHaveValue(exampleSurname);
     await page.waitForTimeout(2000);
     await myDetailsPage.clickModalSaveButton();
@@ -106,7 +118,7 @@ test.describe('Testy moje dane', async () => {
     expect(myDetailsPage.getNameSurnameContent).toHaveText(exampleName + ' ' + exampleSurname, { timeout: 15000 });
   })
 
-  /*test.skip('W | Możliwość zmiany daty urodzenia', async ({ page }) => {
+  /*test.skip('W | Możliwość zmiany daty urodzenia', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -159,8 +171,14 @@ test.describe('Testy moje dane', async () => {
     (await myDetailsPage.getModal('Edytuj numer telefonu')).isVisible({ timeout: 5000 });
     await expect (myDetailsPage.getModalSaveButton).toBeVisible();
     
+    await myDetailsPage.getModalPhoneNumberInput.click();
+    await page.waitForTimeout(1000);
     await myDetailsPage.getModalPhoneNumberInput.clear();
-    await myDetailsPage.getModalPhoneNumberInput.fill(examplePhoneNumber);
+    await page.waitForTimeout(1000);
+    await myDetailsPage.getModalPhoneNumberInput.click();
+    await page.waitForTimeout(1000);
+    await page.keyboard.type(examplePhoneNumber);
+    await page.waitForTimeout(2000);
 
     await myDetailsPage.clickModalSaveButton();
 
@@ -197,6 +215,7 @@ test.describe('Testy moje dane', async () => {
     await myDetailsPage.getModalCurrentPasswordInput.fill(`${process.env.PASSWORD}`);
     await myDetailsPage.getModalNewPasswordInput.fill(examplePassword);
     await myDetailsPage.getModalNewPasswordConfirmationInput.fill(examplePassword);
+    await page.waitForTimeout(1000);
 
     await myDetailsPage.clickModalSaveButton();
 
