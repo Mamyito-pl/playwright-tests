@@ -124,7 +124,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.allureId('2523');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await searchbarPage.enterProduct(product);
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click({ force: true, delay: 300 });
@@ -160,7 +160,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.allureId('2524');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await searchbarPage.enterProduct('wódka');
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
 
@@ -183,7 +183,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.allureId('2525');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await searchbarPage.enterProduct('wódka');
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
 
@@ -200,7 +200,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.allureId('2526');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await searchbarPage.enterProduct('wódka');
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
 

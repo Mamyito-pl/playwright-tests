@@ -94,7 +94,7 @@ export default class CartPage {
     }
 
     get getProductItemCount() {
-        return this.page.locator(selectors.CartPage.common.productCartListItemCount)
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[class*="item_count_button"] div[data-sentry-element="ProductQuantityInput"] div input' : 'div[data-sentry-element="InsideWrapper"] div[class*="item_count_button"] div[data-sentry-element="ProductQuantityInput"] div input').last();;
     }
 
     get getCartDrawer() {
@@ -170,7 +170,7 @@ export default class CartPage {
     }
 
     get getSummaryDeleteDiscountCodeButton() {
-        return this.page.getByRole('button', { name: 'Usuń' });
+        return this.page.getByRole('button', { name: 'Usuń', exact: true });
     }
 
     get getDiscountCodesTitle() {

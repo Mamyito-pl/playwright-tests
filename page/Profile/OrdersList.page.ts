@@ -21,6 +21,6 @@ export default class OrderDetailsPage {
     }
 
     get getOrderDetailsButton() {
-        return this.page.locator(this.mobile ? '#profile_order_details_button' : 'svg[class="tabler-icon tabler-icon-eye"]');
+        return this.page.locator(this.mobile ? '#profile_order_details_button' : 'svg[class*="tabler-icon tabler-icon-eye"]');
     }
 }

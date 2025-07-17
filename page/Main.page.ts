@@ -26,7 +26,7 @@ export default class MainPage {
     }
 
     get getFavouritesButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] svg[class="tabler-icon tabler-icon-heart"]' : 'a[href="/profil/ulubione-produkty"]')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-heart"]' : 'a[href="/profil/ulubione-produkty"]')
     }
 
     get getStrefaMamityButton() {
@@ -126,10 +126,10 @@ export default class MainPage {
     }
 
     get getSectionGetLeftButton() {
-        return this.page.locator(`section div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-left"]`);
+        return this.page.locator(`section div[data-sentry-element="Header"] button svg[class*="tabler-icon tabler-icon-arrow-left"]`);
     }
 
     get getSectionGetRightButton() {
-        return this.page.locator(`section div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-right"]`);
+        return this.page.locator(`section div[data-sentry-element="Header"] button svg[class*="tabler-icon tabler-icon-arrow-right"]`);
     }
 }

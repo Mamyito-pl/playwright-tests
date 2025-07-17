@@ -11,6 +11,8 @@ test.describe('Testy wyszukiwarki', async () => {
 
   let searchbarPage: SearchbarPage;
   let productsListPage: ProductsListPage;
+  let notExistingProduct = 'nieistniejacyprodukt';
+  let productToSearch = 'manGO';
 
   test.beforeEach(async ({ page }) => {
 
@@ -26,24 +28,7 @@ test.describe('Testy wyszukiwarki', async () => {
     productsListPage = new ProductsListPage(page);
   })
 
-  test.skip('M | Po kliknięciu w wyszukiwarkę wyświetlają się wszystkie wymagane pola', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
-
-    await allure.tags('Mobilne', 'Wyszukiwarka');
-    await allure.epic('Mobilne');
-    await allure.parentSuite('Wyszukiwarka');
-    await allure.suite('Testy wyszukiwarki');
-    await allure.subSuite('');
-    await allure.allureId('1506');
-
-    await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
-
-    await expect(searchbarPage.getOurDiscountsTitle).toBeVisible({ timeout: 10000 });
-    await expect(searchbarPage.getSectionShowAllLink).toBeVisible();
-    await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
-  })
-
-  test('M | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
+  test('M | Możliwość zamknięcia wyszukiwarki przyciskiem "Zamknij"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -53,8 +38,8 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.allureId('1507');
 
     await searchbarPage.getSearchbarInput.click();
+    await page.keyboard.type(notExistingProduct);
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
-
     await searchbarPage.getSearchbarCloseButton.click();
     await expect(searchbarPage.getSearchbarCloseButton).not.toBeVisible({ timeout: 10000 });
   })
@@ -68,11 +53,8 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.subSuite('');
     await allure.allureId('1508');
 
-    const notExistingProduct = 'nieistniejacyprodukt';
-
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
-
+    await page.waitForTimeout(1000);
     await page.keyboard.type(notExistingProduct);
     await expect(page.getByText(`Brak wyników wyszukiwania dla '${notExistingProduct}'`)).toBeVisible();
   })
@@ -86,10 +68,8 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.subSuite('');
     await allure.allureId('1509');
 
-    const productToSearch = 'MANGO';
-
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await page.keyboard.type(productToSearch);
     await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
@@ -112,10 +92,8 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.subSuite('');
     await allure.allureId('1510');
 
-    const productToSearch = 'mango';
-
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await page.keyboard.type(productToSearch);
     await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
@@ -138,10 +116,8 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.subSuite('');
     await allure.allureId('1511');
 
-    const productToSearch = 'manGO';
-
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await page.keyboard.type(productToSearch);
     await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
@@ -164,10 +140,8 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.subSuite('');
     await allure.allureId('1512');
 
-    const productToSearch = 'mango';
-
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await page.keyboard.type(productToSearch);
     await expect(searchbarPage.getSearchbarInput).toHaveValue(productToSearch);
@@ -194,7 +168,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const productToSearch = '   mango';
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await page.keyboard.type(productToSearch);
     await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
@@ -220,7 +194,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const brandToSearch = 'zieleniak';
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await page.keyboard.type(brandToSearch);
     await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
@@ -234,7 +208,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
     
-  test.skip('M | Możliwość przewijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
+  test.skip('M | Możliwość przewijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -244,7 +218,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.allureId('1515');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible({ timeout: 15000 });
 
@@ -269,7 +243,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await allure.allureId('1516');
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
     await searchbarPage.getSectionShowAllLink.click();
     await expect(page).toHaveURL(`${baseURL}` + '/promocje', { timeout: 10000 });

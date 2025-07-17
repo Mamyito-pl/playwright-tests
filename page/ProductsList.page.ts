@@ -170,11 +170,11 @@ export default class ProductsListPage {
     }
 
     get getHorizontalMenuButton() {
-        return this.page.locator('svg[class="tabler-icon tabler-icon-arrow-bar-down"]');
+        return this.page.locator('svg[class*="tabler-icon tabler-icon-arrow-bar-down"]');
     }
 
     get getVerticalMenuButton() {
-        return this.page.locator('svg[class="tabler-icon tabler-icon-arrow-bar-right"]');
+        return this.page.locator('svg[class*="tabler-icon tabler-icon-arrow-bar-right"]');
     }
 
     get getVerticalMenu() {
@@ -222,7 +222,7 @@ export default class ProductsListPage {
     }
 
     get getCloseIconButton() {
-        return this.page.locator('svg[class="tabler-icon tabler-icon-x"]');
+        return this.page.locator('svg[class*="tabler-icon tabler-icon-x"]');
     }
 
     get getSaveButtonSettingsDrawer() {

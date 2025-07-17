@@ -23,13 +23,6 @@ test.describe('Testy dane do faktury', async () => {
     commonPage = new CommonPage(page);
     invoiceAddressesPage = new InvoiceAddressesPage(page);
   })
-
-  test.afterEach(async ({ deleteInvoiceAddressViaAPI }) => {
-
-    await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu');
-    await deleteInvoiceAddressViaAPI('Fixturowy adres podmiotu')
-    await deleteInvoiceAddressViaAPI('Edytowana nazwa podmiotu')
-  })
   
   test('M | Strona dane do faktury otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
@@ -110,6 +103,8 @@ test.describe('Testy dane do faktury', async () => {
 
     await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
+    await page.waitForTimeout(3000);
+
     await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
 
     await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
@@ -181,6 +176,8 @@ test.describe('Testy dane do faktury', async () => {
     await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
     await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
 
+    await page.waitForTimeout(3000);
+
     await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
 
     await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
@@ -219,6 +216,8 @@ test.describe('Testy dane do faktury', async () => {
     test.setTimeout(120000);
 
     await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
+
+    await page.waitForTimeout(3000);
     
     await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
 
@@ -236,5 +235,12 @@ test.describe('Testy dane do faktury', async () => {
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForSelector('text=Edytowana nazwa podmiotu', { strict: true , state: 'hidden' });
+  })
+
+  test.afterEach(async ({ deleteInvoiceAddressViaAPI }) => {
+
+    await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu');
+    await deleteInvoiceAddressViaAPI('Fixturowy adres podmiotu')
+    await deleteInvoiceAddressViaAPI('Edytowana nazwa podmiotu')
   })
 })
