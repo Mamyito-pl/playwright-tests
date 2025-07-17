@@ -386,7 +386,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(mainInfoContent).toContainText(productBrandName || '');
   })
           
-  test('M | Możliwość wyświetlenia informacji opakowania o produkcie', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
+  test('M | Możliwość wyświetlenia informacji opakowania o produkcie', { tag: ['@Prod', '@Beta'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');

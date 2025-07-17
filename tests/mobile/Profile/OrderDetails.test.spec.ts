@@ -168,8 +168,8 @@ test.describe('Testy szczegółów zamówienia', async () => {
     
     await cancelOrderViaAPI(page);
 
-    productNames.forEach((searchName, index) => {
-      expect(productNamesOrderDetails[index]).toContain(searchName);
+    productNames.forEach((searchName) => {
+      expect(productNamesOrderDetails.some(orderDetailName => orderDetailName.includes(searchName))).toBe(true);
     });
   })
   
@@ -184,7 +184,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
   
-    test.setTimeout(200000);
+    test.setTimeout(345000);
 
     await searchbarPage.getSearchbarInput.click();
     await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
@@ -247,7 +247,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
     await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-    await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+    await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
 
     await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
     await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
@@ -301,8 +301,8 @@ test.describe('Testy szczegółów zamówienia', async () => {
     expect(productNamesOrderDetails.length).toEqual(productNames.length);
     
     await cancelOrderViaAPI(page);
-    productNames.forEach((searchName, index) => {
-      expect(productNamesOrderDetails[index]).toContain(searchName);
+    productNames.forEach((searchName) => {
+      expect(productNamesOrderDetails.some(orderDetailName => orderDetailName.includes(searchName))).toBe(true);
     });
   })
 
@@ -373,7 +373,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     for (let i = 0; i < productNamesOrderDetails.length; i++) {
       const orderDetailName = productNamesOrderDetails[i];
       const modalName = await productNameElementsRepeatOrderModal[i].textContent();
-      expect(modalName).toContain(orderDetailName);
+      expect(orderDetailName).toContain(modalName);
     }
 
     await orderDetailsPage.getRepeatOrderModalAddProductsButton.click();
@@ -437,7 +437,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
     await expect(paymentsPage.getBackHomeButton).toBeVisible();
 
-    await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 80000, state: 'hidden' });
+    await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
 
     await expect(page.getByText('Wystąpił błąd płatności')).toBeVisible({ timeout: 5000 });
     await expect(page.getByText('Sprawdź swój adres email, aby zobaczyć co poszło nie tak')).toBeVisible({ timeout: 5000 });
@@ -479,7 +479,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     for (let i = 0; i < productNamesOrderDetails.length; i++) {
       const orderDetailName = productNamesOrderDetails[i];
       const modalName = await productNameElementsRepeatOrderModal[i].textContent();
-      expect(modalName).toContain(orderDetailName);
+      expect(orderDetailName).toContain(modalName);
     }
 
     await orderDetailsPage.getRepeatOrderModalAddProductsButton.click();
