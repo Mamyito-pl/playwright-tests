@@ -492,7 +492,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThanOrEqual(1);
   })
   
-  test.describe.skip('Filtrowanie po cenie', { tag: ['@Prod', '@Beta'] }, async () => {
+  test.describe('Filtrowanie po cenie', { tag: ['@Prod', '@Beta'] }, async () => {
     test('M | Możliwość filtrowania po cenie poniżej 10 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Mobilne', 'Lista produktów');
