@@ -208,7 +208,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
     
-  test.skip('M | Możliwość przewijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Możliwość przewijania slidera nasze promocje', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -219,6 +219,8 @@ test.describe('Testy wyszukiwarki', async () => {
 
     await searchbarPage.getSearchbarInput.click();
     await page.waitForTimeout(1000);
+
+    await page.keyboard.type(notExistingProduct);
 
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible({ timeout: 15000 });
 
@@ -233,7 +235,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSliderLeftButton.isDisabled();
   })
 
-  test.skip('M | Możliwość przejścia do naszych promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL}) => {
+  test('M | Możliwość przejścia do naszych promocji poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL}) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
@@ -244,6 +246,7 @@ test.describe('Testy wyszukiwarki', async () => {
 
     await searchbarPage.getSearchbarInput.click();
     await page.waitForTimeout(1000);
+    await page.keyboard.type(notExistingProduct);
     await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
     await searchbarPage.getSectionShowAllLink.click();
     await expect(page).toHaveURL(`${baseURL}` + '/promocje', { timeout: 10000 });

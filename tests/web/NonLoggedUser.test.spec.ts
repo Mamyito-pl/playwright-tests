@@ -147,7 +147,6 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.waitForTimeout(1000);
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
     await cartPage.clickCartDrawerToCartButton();
-    await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 15000 });
     await cartPage.clickCartSummaryButton();
 

@@ -114,7 +114,7 @@ export default class CartPage {
     }
 
     get getCartDrawerToCartButton() {
-        return this.page.getByRole('button', { name: 'Do kasy' });
+        return this.page.locator(this.mobile ? "#cart-drawer-content-tablet #to_cart_button" : "#cart-drawer-content-desktop #to_cart_button");
     }
 
     get getCartSummaryButton() {
@@ -154,7 +154,7 @@ export default class CartPage {
     }
 
     get getCartDrawerCloseIconButton() {
-        return this.page.locator('div[data-cy="cart-drawer-close-icon"]');
+        return this.page.locator('button[aria-label="Zamknij"]');
     }
 
     get getCartPaymentButton() {

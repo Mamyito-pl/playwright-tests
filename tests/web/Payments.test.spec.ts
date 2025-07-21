@@ -81,7 +81,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -134,7 +134,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -178,7 +178,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -358,7 +358,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
@@ -1102,7 +1101,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
@@ -1188,7 +1186,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });

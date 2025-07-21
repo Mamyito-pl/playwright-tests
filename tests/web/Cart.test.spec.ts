@@ -206,9 +206,16 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('443');
     
-    const product = 'woda';
+    const product = 'JANEX Polędwica wołowa';
 
     await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
+    await cartPage.clickCartDrawerButton();
+    await page.waitForTimeout(1000);
+    
     await cartPage.clickCartDrawerButton();
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();

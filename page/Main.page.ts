@@ -26,35 +26,35 @@ export default class MainPage {
     }
 
     get getFavouritesButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-heart"]' : 'a[href="/profil/ulubione-produkty"]')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] svg[class*="tabler-icon tabler-icon-heart"]' : 'a[href="/profil/ulubione"]')
     }
 
     get getStrefaMamityButton() {
-        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] a[href="/strefa-mamity"] button:has-text("Strefa Niskich Cen")' : 'div[data-sentry-element="WebContent"] a[href="/strefa-mamity"] button:has-text("Strefa Niskich Cen")')
+        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] [data-sentry-component="LandingMobileButtonsSection"] a[href="/strefa-mamity"]:has-text("Strefa Niskich Cen")' : 'header a[href="/strefa-mamity"]:has-text("Strefa Niskich Cen")')
     }
 
     get getDiscountsButton() {
-        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] a[href="/promocje"] button:has-text("Promocje")' : 'div[data-sentry-element="WebContent"] a[href="/promocje"] button:has-text("Promocje")')
+        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] [data-sentry-component="LandingMobileButtonsSection"] a[href="/promocje"]:has-text("Promocje")' : 'header a[href="/promocje"]:has-text("Promocje")')
     }
 
     get getNewProductsButton() {
-        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] a[href="/nowosci"] button:has-text("Nowości")' : 'div[data-sentry-element="WebContent"] a[href="/nowosci"] button:has-text("Nowości")')
+        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] [data-sentry-component="LandingMobileButtonsSection"] a[href="/nowosci"]:has-text("Nowości")' : 'header a[href="/nowosci"]:has-text("Nowości")')
     }
 
     get getBestsellersButton() {
-        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] a[href="/bestsellery"] button:has-text("Bestsellery")' : 'div[data-sentry-element="WebContent"] a[href="/bestsellery"] button:has-text("Bestsellery")')
+        return this.page.locator(this.mobile ? 'main[data-sentry-element="AppContent"] [data-sentry-component="LandingMobileButtonsSection"] a[href="/bestsellery"]:has-text("Bestsellery")' : 'header a[href="/bestsellery"]:has-text("Bestsellery")')
     }
 
     get getRecentlyBoughtButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="AppContent"] a[href="/najczesciej-kupowane"] button:has-text("Najczęściej kupowane")' : 'div[data-sentry-element="WebContent"] a[href="/najczesciej-kupowane"] button:has-text("Najczęściej kupowane")')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="AppContent"] a[href="/najczesciej-kupowane"]:has-text("Najczęściej kupowane")' : 'div[data-sentry-element="WebContent"] a[href="/najczesciej-kupowane"]:has-text("Najczęściej kupowane")')
     }
 
     get getAboutDeliveryButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="AppContent"] a[href="/o-dostawie/obszary-dostawy"] button:has-text("O dostawie")' : 'div[data-sentry-element="WebContent"] a[href="/o-dostawie/obszary-dostawy"] button:has-text("O dostawie")')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="AppContent"] [data-sentry-component="LandingMobileButtonsSection"] a[href="/o-dostawie/obszary-dostawy"]:has-text("O dostawie")' : 'header a[href="/o-dostawie/obszary-dostawy"]:has-text("O dostawie")')
     }
 
     get getPaymentMethodsButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="AppContent"] a[href="/o-dostawie/metody-platnosci"] button:has-text("Metody płatności")' : 'div[data-sentry-element="WebContent"] a[href="/o-dostawie/metody-platnosci"] button:has-text("Metody płatności")')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="AppContent"] [data-sentry-component="LandingMobileButtonsSection"] a[href="/o-dostawie/metody-platnosci"]:has-text("Metody płatności")' : 'header a[href="/o-dostawie/metody-platnosci"]:has-text("Metody płatności")')
     }
 
     get getBannersSection() {

@@ -18,13 +18,11 @@ export default class ProductDetailsPage {
     }
 
     get getIncreaseProductButton() {
-        //return this.page.locator('#add_to_cart_increment_button');
-        return this.page.locator('div[class*="add_to_cart_increment_button"]');
+        return this.page.locator('button[class*="add_to_cart_increment_button"]');
     }
 
     get getDecreaseProductButton() {
-        //return this.page.locator('#add_to_cart_decrement_button');
-        return this.page.locator('div[class*="add_to_cart_decrement_button"]');
+        return this.page.locator('button[class*="add_to_cart_decrement_button"]');
     }
 
     get getProductItemCount() {

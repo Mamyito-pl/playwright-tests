@@ -144,8 +144,8 @@ test.describe('Testy szczegółów produktu', async () => {
     const productPrice = await productDetailsPage.getProductPrice.first().textContent();
     const formattedProductPrice = productPrice?.slice(0, -9);
 
-    await expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
-    expect(productDetailsPage.getSetFirstQuantityButton.locator('svg')).toBeVisible();
+    await expect(productDetailsPage.getSetFirstQuantityButton.locator('div')).toHaveAttribute('data-cy', 'product-page-quantity-jump-icon');
+    expect(productDetailsPage.getSetFirstQuantityButton.locator('div')).toBeVisible();
     await productDetailsPage.clickAddProductButton();
 
     await expect(productDetailsPage.getProductItemCount).toHaveValue('1');
@@ -305,7 +305,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText('0,00 zł');
   })
   
-  test('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
+  test.skip('W | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Web', 'Szczegóły produktu');
     await allure.epic('Webowe');

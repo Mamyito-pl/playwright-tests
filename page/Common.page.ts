@@ -24,6 +24,10 @@ export default class CommonPage {
         return this.page.locator('div[role="status"]');
     }
 
+    get getAlert() {
+        return this.page.locator('div[role="alert"]').first();
+    }
+
     get getLoader() {
         return this.page.locator('svg[class*="MuiCircularProgress-svg"]');
     }

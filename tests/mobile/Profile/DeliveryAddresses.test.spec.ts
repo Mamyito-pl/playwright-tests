@@ -24,13 +24,6 @@ test.describe('Testy adresy dostaw', async () => {
     deliveryAddressesPage = new DeliveryAddressesPage(page);
   })
   
-  test.afterEach(async ({ deleteDeliveryAddressViaAPI }) => {
-
-    await deleteDeliveryAddressViaAPI('Adres Testowy');
-    await deleteDeliveryAddressViaAPI('Adres Fixturowy');
-    await deleteDeliveryAddressViaAPI('Adres Edytowany');
-  })
-  
   test('M | Strona adresy dostaw pojawia się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
@@ -121,7 +114,10 @@ test.describe('Testy adresy dostaw', async () => {
     test.setTimeout(120000);
     
     await addAddressDeliveryViaAPI('Adres Testowy');
+    await page.waitForTimeout(2222)
     await addAddressDeliveryViaAPI('Adres Fixturowy');
+
+    await page.waitForTimeout(3000);
 
     await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
 
@@ -260,5 +256,12 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForSelector('text=Adres Edytowany', { state: 'hidden' });
+  })
+
+  test.afterEach(async ({ deleteDeliveryAddressViaAPI }) => {
+
+    await deleteDeliveryAddressViaAPI('Adres Testowy');
+    await deleteDeliveryAddressViaAPI('Adres Fixturowy');
+    await deleteDeliveryAddressViaAPI('Adres Edytowany');
   })
 })

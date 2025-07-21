@@ -59,7 +59,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await clearCartViaAPI();
   }) 
 
-  test('W | Złożone prawidłowo zamówienie powinno wyświetlić się ze wszystkimi wymaganymi polami', { tag: ['@Beta', '@Test'] }, async ({ page, baseURL, cancelOrderViaAPI }) => {
+  test('W | Złożone prawidłowo zamówienie powinno wyświetlić się ze wszystkimi wymaganymi polami', { tag: ['@Beta', '@Test', '@Prod'] }, async ({ page, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -103,10 +103,15 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
 
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel(paymentMethod).check();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    await page.getByText(paymentMethod).click({ force: true });
     await paymentsPage.checkStatue();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
@@ -216,7 +221,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await deliveryPage.getDeliverySlotButton.first().click();
 
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Przelew online').check();
+    await page.getByText('Przelew online').click({ force: true });
     await paymentsPage.checkStatue();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
@@ -314,7 +319,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     });
   })
       
-  test('W | Możliwość ponownego zamówienia po złożeniu prawidłowego zamówienia', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
+  test('W | Możliwość ponownego zamówienia po złożeniu prawidłowego zamówienia', { tag: ['@Beta', '@Test', '@Prod'] }, async ({ page, addProduct, baseURL, cancelOrderViaAPI }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -335,13 +340,19 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForTimeout(1000);
 
     await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
 
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -417,7 +428,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Przelew online').check();
+    await page.getByText('Przelew online').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
