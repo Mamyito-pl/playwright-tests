@@ -1,0 +1,9 @@
+config:
+  target: "https://mamyito-front.test.desmart.live"
+  phases:
+    - duration: 30
+      arrivalRate: 100
+scenarios:
+  - flow:
+      - get:
+          url: "/"
