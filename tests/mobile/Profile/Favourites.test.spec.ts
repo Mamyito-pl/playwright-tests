@@ -45,7 +45,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
   })
 
-  test.skip('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
+  test('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -55,6 +55,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1489');
 
     test.setTimeout(130000);
+
+    await expect(commonPage.getCartButton).toBeVisible();
 
     const firstItemName = page.locator('[data-cy="promocje-products-list-slider"] h3').first();
     const firstItemNameText = await firstItemName.textContent() || '';

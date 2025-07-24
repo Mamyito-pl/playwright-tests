@@ -42,7 +42,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
   })
 
-  test.skip('W | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
+  test('W | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -52,6 +52,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1497');
 
     test.setTimeout(70000);
+
+    await expect(commonPage.getCartButton).toBeVisible();
 
     const firstItemName = page.locator('[data-cy="promocje-products-list-slider"] h3').first();
     const firstItemNameText = await firstItemName.textContent() || '';

@@ -401,7 +401,7 @@ test.describe('Testy płatności', async () => {
           break;
         }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-        await page.waitForTimeout(7000);
+        await page.waitForTimeout(9000);
         tries++;
       }
 
@@ -1148,7 +1148,7 @@ test.describe('Testy płatności', async () => {
           break;
         }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-        await page.waitForTimeout(7000);
+        await page.waitForTimeout(9000);
         tries++;
       }
 
@@ -1230,7 +1230,7 @@ test.describe('Testy płatności', async () => {
           break;
         }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-        await page.waitForTimeout(7000);
+        await page.waitForTimeout(9000);
         tries++;
       }
 

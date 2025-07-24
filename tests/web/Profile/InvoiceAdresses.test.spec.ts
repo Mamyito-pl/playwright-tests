@@ -105,7 +105,7 @@ test.describe('Testy dane do faktury', async () => {
 
     await page.waitForTimeout(3000);
 
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
     await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -178,7 +178,7 @@ test.describe('Testy dane do faktury', async () => {
 
     await page.waitForTimeout(3000);
 
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
     await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
     await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
@@ -219,7 +219,7 @@ test.describe('Testy dane do faktury', async () => {
 
     await page.waitForTimeout(3000);
     
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
     await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
