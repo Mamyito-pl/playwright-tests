@@ -50,7 +50,7 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2005');
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible();
     await expect(myDetailsPage.getNameSurnameLabel).toBeVisible();
@@ -79,7 +79,7 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2007');
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     const exampleName = faker.person.firstName();
     const exampleSurname = faker.person.lastName();
@@ -160,7 +160,7 @@ test.describe('Testy moje dane', async () => {
     await allure.subSuite('');
     await allure.allureId('2009');
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     const examplePhoneNumber = (faker.number.int(1) + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
@@ -201,7 +201,7 @@ test.describe('Testy moje dane', async () => {
 
     test.setTimeout(60000);
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
@@ -252,7 +252,7 @@ test.describe('Testy moje dane', async () => {
 
     await newsletterSignOutViaAPI();
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -274,7 +274,7 @@ test.describe('Testy moje dane', async () => {
 
     await smsConsentViaAPI(false);
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -296,7 +296,7 @@ test.describe('Testy moje dane', async () => {
 
     await newsletterSignInViaAPI();
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -327,7 +327,7 @@ test.describe('Testy moje dane', async () => {
 
     await smsConsentViaAPI(true);
 
-    await utility.gotoWithRetry(page, '/profil/moje-dane');
+    await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 

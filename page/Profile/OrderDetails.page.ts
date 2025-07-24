@@ -73,11 +73,11 @@ export default class OrderDetailsPage {
     }
 
     get getRepeatOrderModal() {
-        return this.page.locator('div[data-sentry-element="Modal"] div[data-sentry-element="ProductName"]');
+        return this.page.locator('#modal-portal div[role="dialog"] div[role="dialog"]');
     }
 
     get getRepeatOrderModalProductNames() {
-        return this.page.locator('div[data-sentry-element="Modal"] div[data-sentry-element="ProductName"]');
+        return this.page.locator('div[role="dialog"] div[data-sentry-element="ProductName"]');
     }
 
     get getRepeatOrderModalAddProductsButton() {

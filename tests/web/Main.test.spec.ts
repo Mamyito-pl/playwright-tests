@@ -461,7 +461,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1227');
 
     await mainPage.getFavouritesButton.click()
-    await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 10000 });
+    await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione', { timeout: 10000 });
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
   })
       

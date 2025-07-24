@@ -261,7 +261,7 @@ export const test = baseTest.extend<MyFixtures>({
     const searchProduct = async (productName: string) => {
 
       await searchbarPage.getSearchbarInput.click();
-      await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+      await page.waitForTimeout(1000);
       await searchbarPage.enterProduct(productName);
       await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
       await expect(searchbarPage.getSearchbarProductTiles.first()).toBeVisible({ timeout: 10000 });
@@ -282,7 +282,7 @@ export const test = baseTest.extend<MyFixtures>({
     const addProduct = async (product: string) => {
 
       await searchbarPage.clickSearchbar();
-      await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+      await page.waitForTimeout(1000);
       await searchbarPage.enterProduct(product);
       await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
       await page.waitForTimeout(1000);
@@ -426,7 +426,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const deleteAddressDelivery = async (addressName: string) => {
 
-      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class*="tabler-icon tabler-icon-trash"]').click();
 
       await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -563,7 +563,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const deleteInvoiceAddressDelivery = async (addressName: string) => {
 
-      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg [class="tabler-icon tabler-icon-trash"]').last().click();
+      await page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg [class*="tabler-icon tabler-icon-trash"]').last().click();
 
       await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();

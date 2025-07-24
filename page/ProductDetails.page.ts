@@ -18,13 +18,11 @@ export default class ProductDetailsPage {
     }
 
     get getIncreaseProductButton() {
-        //return this.page.locator('#add_to_cart_increment_button');
-        return this.page.locator('div[class*="add_to_cart_increment_button"]');
+        return this.page.locator('button[class*="add_to_cart_increment_button"]');
     }
 
     get getDecreaseProductButton() {
-        //return this.page.locator('#add_to_cart_decrement_button');
-        return this.page.locator('div[class*="add_to_cart_decrement_button"]');
+        return this.page.locator('button[class*="add_to_cart_decrement_button"]');
     }
 
     get getProductItemCount() {
@@ -92,11 +90,11 @@ export default class ProductDetailsPage {
     }
 
     get getSliderLeftButton() {
-        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
+        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Controls"] button svg[class*="tabler-icon tabler-icon-arrow-left"]');
     }
 
     get getSliderRightButton() {
-        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
+        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Controls"] button svg[class*="tabler-icon tabler-icon-arrow-right"]');
     }
 
     get getDeleteProductModal() {
@@ -120,10 +118,10 @@ export default class ProductDetailsPage {
     }
 
     get getSliderSectionGetLeftButton() {
-        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
+        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Header"] button svg[class*="tabler-icon tabler-icon-arrow-left"]');
     }
 
     get getSliderSectionGetRightButton() {
-        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Header"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
+        return this.page.locator('#inne-produkty-z-tej-kategorii div[data-sentry-element="Header"] button svg[class*="tabler-icon tabler-icon-arrow-right"]');
     }
 }

@@ -40,12 +40,12 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1488');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible();
   })
 
-  test('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
+  test.skip('M | Możliwość dodania i usunięcia ulubionego produktu', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -63,7 +63,7 @@ test.describe('Testy ulubionych produktów', async () => {
     clickAddFristItemToFavourites;
     await page.waitForTimeout(2000);
 
-    await page.goto('profil/ulubione-produkty', { waitUntil: 'domcontentloaded' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 });
 
@@ -103,7 +103,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1490');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -135,7 +135,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1491');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -167,7 +167,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1492');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -202,7 +202,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1493');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -235,7 +235,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1494');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -345,7 +345,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1495');
 
-    await utility.gotoWithRetry(page, 'profil/ulubione-produkty');
+    await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 

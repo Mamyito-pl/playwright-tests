@@ -17,11 +17,11 @@ export default class DeliveryAdressesPage {
     }
 
     async clickEditAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-pencil"]').click();
+        return this.page.getByText(addressName).locator('..').locator('..').locator('div').locator('div').locator('svg[class*="tabler-icon tabler-icon-pencil "]').click();
     }
 
     async clickDeleteAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('div').locator('div').locator('svg[class="tabler-icon tabler-icon-trash"]').click();
+        return this.page.getByText(addressName).locator('..').locator('..').locator('div').locator('div').locator('svg[class*="tabler-icon tabler-icon-trash "]').click();
     }
 
     get getAddNewAddressButton() {

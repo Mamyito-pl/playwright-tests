@@ -7,7 +7,7 @@ export default class ProfilePage {
     }
 
     get getProfileMenuTitle() {
-        return this.page.locator('div[data-sentry-element="MenuList"]').locator('..').getByText('Profil');
+        return this.page.locator('#profile-menu').getByText('Profil');
     }
 
     get getProfileMenuLoggedUser() {

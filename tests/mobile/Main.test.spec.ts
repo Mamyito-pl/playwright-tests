@@ -71,9 +71,13 @@ test.describe('Testy strony głównej', async () => {
     await expect(menuCategoriesPage.getMenuCategoriesButton).toBeVisible();
     await expect(searchbarPage.getSearchbarInput).toBeVisible()
 
+    await mainPage.getStrefaMamityButton.scrollIntoViewIfNeeded();
     await expect(mainPage.getStrefaMamityButton).toBeVisible();
+    await mainPage.getDiscountsButton.scrollIntoViewIfNeeded();
     await expect(mainPage.getDiscountsButton).toBeVisible();
+    await mainPage.getNewProductsButton.scrollIntoViewIfNeeded();
     await expect(mainPage.getNewProductsButton).toBeVisible();
+    await mainPage.getBestsellersButton.scrollIntoViewIfNeeded();
     await expect(mainPage.getBestsellersButton).toBeVisible();
 
     await expect(mainPage.getBanerSlider).toBeVisible();
@@ -510,7 +514,7 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1277');
 
     await mainPage.getFavouritesButton.click()
-    await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 10000 });
+    await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione', { timeout: 10000 });
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });
   })
 

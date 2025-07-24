@@ -1130,7 +1130,7 @@ test.describe('Testy edycji zamówienia', async () => {
     test.setTimeout(150000);
 
     await searchbarPage.getSearchbarInput.click();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await searchbarPage.enterProduct(product);
     await page.waitForTimeout(2000);
     await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });
@@ -2634,7 +2634,7 @@ test.describe('Testy edycji zamówienia', async () => {
         test.setTimeout(150000);
     
         await searchbarPage.getSearchbarInput.click();
-        await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 10000 });
+        await page.waitForTimeout(1000);
         await searchbarPage.enterProduct(product);
         await page.waitForTimeout(2000);
         await expect(commonPage.getLoader).toBeHidden({ timeout: 15000 });

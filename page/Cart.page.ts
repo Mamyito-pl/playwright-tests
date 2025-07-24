@@ -94,7 +94,7 @@ export default class CartPage {
     }
 
     get getProductItemCount() {
-        return this.page.locator(selectors.CartPage.common.productCartListItemCount)
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[class*="item_count_button"] div[data-sentry-element="ProductQuantityInput"] div input' : 'div[data-sentry-element="InsideWrapper"] div[class*="item_count_button"] div[data-sentry-element="ProductQuantityInput"] div input').last();;
     }
 
     get getCartDrawer() {
@@ -114,7 +114,7 @@ export default class CartPage {
     }
 
     get getCartDrawerToCartButton() {
-        return this.page.getByRole('button', { name: 'Do kasy' });
+        return this.page.locator(this.mobile ? "#cart-drawer-content-tablet #to_cart_button" : "#cart-drawer-content-desktop #to_cart_button");
     }
 
     get getCartSummaryButton() {
@@ -154,7 +154,7 @@ export default class CartPage {
     }
 
     get getCartDrawerCloseIconButton() {
-        return this.page.locator('div[data-cy="cart-drawer-close-icon"]');
+        return this.page.locator('button[aria-label="Zamknij"]');
     }
 
     get getCartPaymentButton() {
@@ -170,7 +170,7 @@ export default class CartPage {
     }
 
     get getSummaryDeleteDiscountCodeButton() {
-        return this.page.getByRole('button', { name: 'Usuń' });
+        return this.page.getByRole('button', { name: 'Usuń', exact: true });
     }
 
     get getDiscountCodesTitle() {

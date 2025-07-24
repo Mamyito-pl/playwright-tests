@@ -12,7 +12,7 @@ export default class FooterPage {
     }
 
     async getSectionTitle(titleName: string) {
-        return this.page.locator('div[data-sentry-element="SectionTitle"]').getByText(titleName);
+        return this.page.locator('h2[data-sentry-element="SectionTitle"]').getByText(titleName);
     }
 
     async getFooterSubTitleLink(subTitleLinkName: string) {

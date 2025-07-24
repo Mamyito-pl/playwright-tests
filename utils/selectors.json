@@ -30,7 +30,7 @@
             "cartSummaryPaymentButton": "#cart_summary_proceed_payment_button",
             "cartSummaryPaymentConfirmationButton": "#cart_summary_payment_confirmation",
             "cartReturnButton": "#authentication_return_button",
-            "deleteProductCartIcon": "#cart_remove_product",
+            "deleteProductCartIcon": "button[aria-label*='Usuń produkt']",
             "cartDrawerToCartButton": "#to_cart_button"
         },
         "web": {
@@ -108,7 +108,7 @@
             "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent'] p[data-cy='product-card-current-price']",
             "searchbarProductCardIncreaseButton": "div[data-testid='search-results'] svg[class*='tabler-icon tabler-icon-plus']",
             "searchbarProductCardDecreaseButton": "div[data-testid='search-results'] svg[class*='tabler-icon tabler-icon-minus']",
-            "searchbarProductItemCount": "div[data-testid='search-results'] div[data-sentry-element='StyledProductQuantityInput'] div input"
+            "searchbarProductItemCount": "div[data-testid='search-results'] div[data-sentry-element='ProductQuantityInput'] div input"
         }
     },
     "Newsletter": {

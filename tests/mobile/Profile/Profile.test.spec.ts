@@ -138,7 +138,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuMyDetailsButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/moje-dane', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/dane', { timeout: 15000 });
       await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })
@@ -195,7 +195,7 @@ test.describe('Testy profilu', async () => {
       await expect(profilePage.getProfileMenuTitle).toBeVisible();
       await profilePage.getProfileMenuFavouritesButton.click();
       await page.waitForLoadState('load');
-      await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione-produkty', { timeout: 15000 });
+      await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione', { timeout: 15000 });
       await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuLoggedUser).not.toBeVisible();
     })

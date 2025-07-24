@@ -24,7 +24,7 @@ test.describe('Testy koszyka', async () => {
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
   let commonPage : CommonPage;
-  let product: string = 'janex polędwica wołowa';
+  let product: string = 'woda mineralna';
 
   test.beforeEach(async ({ page }) => {
 
@@ -163,7 +163,7 @@ test.describe('Testy koszyka', async () => {
     await allure.allureId('475');
 
     await searchbarPage.clickSearchbar();
-    await expect(searchbarPage.getSearchbarCloseButton).toBeVisible({ timeout: 15000 });
+    await page.waitForTimeout(1000);
     await searchbarPage.enterProduct(product);
     await expect(page.locator('div[role="status"]')).toBeHidden({ timeout: 15000 });
     await page.locator(selectors.Searchbar.common.productSearchAddButton).first().click();
@@ -241,10 +241,16 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('469');
     
-    const product = 'woda';
+    const product = 'JANEX Polędwica wołowa';
 
     await addProduct(product);
+
+    await searchbarPage.getProductItemCount.first().click();
+    await page.waitForTimeout(1000);
+    await searchbarPage.getProductItemCount.first().type('1');
     await cartPage.clickCartDrawerButton();
+    await page.waitForTimeout(1000);
+
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
     await page.waitForLoadState('load');

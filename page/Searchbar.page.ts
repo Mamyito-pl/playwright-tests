@@ -86,10 +86,10 @@ export default class SearchbarPage {
     }
 
     get getSliderLeftButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-left"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-left"]');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="Controls"] button svg[class*="tabler-icon tabler-icon-arrow-left"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Controls"] button svg[class*="tabler-icon tabler-icon-arrow-left"]');
     }
 
     get getSliderRightButton() {
-        return this.page.locator(this.mobile ?'div[data-sentry-element="TabletContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-right"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Controls"] button svg[class="tabler-icon tabler-icon-arrow-right"]');
+        return this.page.locator(this.mobile ?'div[data-sentry-element="TabletContent"] div[data-sentry-element="Controls"] button svg[class*="tabler-icon tabler-icon-arrow-right"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="Controls"] button svg[class*="tabler-icon tabler-icon-arrow-right"]');
     }
 }

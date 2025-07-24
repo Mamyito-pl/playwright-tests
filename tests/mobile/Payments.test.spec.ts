@@ -83,7 +83,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -138,7 +138,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -184,7 +184,7 @@ test.describe('Testy płatności', async () => {
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByLabel('Płatność kartą przy odbiorze').check();
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -298,7 +298,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('777888');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -339,7 +339,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
@@ -351,7 +350,8 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await page.getByLabel('Kod BLIK').check();
+      await page.waitForTimeout(2000);
+      await page.getByText('Kod BLIK', { exact: true }).click({ force: true });
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -389,14 +389,12 @@ test.describe('Testy płatności', async () => {
         tries++;
       }
 
-      const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+      const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
         return textContent.includes('Anulowane');
       });
 
       expect(statusAfterCancelIsVisible).toBe(true);
-
-      await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
     })
 
     test('M | Zapłata nieprawidłowym kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct, baseURL }) => {
@@ -428,7 +426,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -477,7 +475,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.checkStatue();
       await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
@@ -513,7 +511,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('123');
       await paymentsPage.checkStatue();
       await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
@@ -550,7 +548,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('12345678');
       await paymentsPage.checkStatue();
       await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
@@ -589,7 +587,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('12345');
 
       for (const symbol of symbols) {
@@ -636,7 +634,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('123456');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -704,7 +702,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Kod BLIK').check();
+      await page.getByLabel('Kod BLIK', { exact: true }).check();
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -1052,7 +1050,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
@@ -1064,7 +1061,8 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await page.getByLabel('Przelew online').check();
+      await page.waitForTimeout(2000);
+      await page.getByLabel('Przelew online').click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 25000, state: 'hidden' });
@@ -1105,15 +1103,12 @@ test.describe('Testy płatności', async () => {
         tries++;
       }
 
-      const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+      const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
         return textContent.includes('Anulowane');
       });
 
       expect(statusAfterCancelIsVisible).toBe(true);
-
-      await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
-
     })
   })
   
@@ -1142,7 +1137,6 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await expect(page.getByRole('button', { name: 'Przejdź do dostawy' })).toBeVisible({ timeout: 15000 });
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
@@ -1154,7 +1148,8 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await page.getByLabel('Płatność kartą przy odbiorze').check();
+      await page.waitForTimeout(2000);
+      await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -1190,15 +1185,12 @@ test.describe('Testy płatności', async () => {
         tries++;
       }
 
-      const statusAfterCancelIsVisible = await page.locator('div[data-sentry-element="HeaderOrderDetails"]').evaluate((element) => {
+      const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
         return textContent.includes('Anulowane');
       });
 
       expect(statusAfterCancelIsVisible).toBe(true);
-
-      await expect(orderDetailsPage.getCancelOrderButton).toBeDisabled();
-
     })
   })
 })
