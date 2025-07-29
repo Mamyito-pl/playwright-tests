@@ -298,6 +298,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const addAddressDelivery = async (addressName: string) => {
 
+      await expect(deliveryPage.getAddNewAddressButton).toBeVisible();
       await deliveryPage.clickAddNewAddressButton();
       await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();
@@ -494,6 +495,7 @@ export const test = baseTest.extend<MyFixtures>({
 
     const addInvoiceAddressDelivery = async (addressName: string) => {
       
+      await expect(deliveryPage.getAddNewInvoiceAddressButton).toBeVisible();
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toBeVisible();

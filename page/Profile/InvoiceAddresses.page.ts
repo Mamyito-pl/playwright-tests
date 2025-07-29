@@ -13,7 +13,7 @@ export default class InvoiceAddressesPage {
     }
 
     async clickAddNewInvoiceAddressButton() {
-        await this.getAddNewInvoiceAddressButton.click({ force: true });
+        await this.getAddNewInvoiceAddressButton.click({ force: true, delay: 300 });
     }
 
     async clickEditInvoiceAddressButton(addressName: string) {

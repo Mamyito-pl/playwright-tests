@@ -13,7 +13,7 @@ export default class DeliveryAdressesPage {
     }
 
     async clickAddNewAddressButton() {
-        await this.getAddNewAddressButton.click();
+        await this.getAddNewAddressButton.click({ force: true, delay: 300 });
     }
 
     async clickEditAddressButton(addressName: string) {

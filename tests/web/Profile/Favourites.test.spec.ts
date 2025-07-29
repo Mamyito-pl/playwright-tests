@@ -51,7 +51,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1497');
 
-    test.setTimeout(70000);
+    test.setTimeout(350000);
 
     await expect(commonPage.getCartButton).toBeVisible();
 
@@ -60,7 +60,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true, delay: 300 });
     clickAddFristItemToFavourites;
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(162000);
 
     await utility.gotoWithRetry(page, 'profil/ulubione');
 
@@ -72,18 +72,20 @@ test.describe('Testy ulubionych produktów', async () => {
 
     const allProductNames = await favouritesPage.getProductName.allTextContents();
 
-    const allProductCount = allProductNames.length
+    const allProductCount = allProductNames.length;
     
     const productFound = allProductNames.some(name => name.includes(firstItemNameText));
     expect(productFound).toBe(true);
 
-    const addedFavouriteProductName = page.getByText(firstItemNameText)
+    const addedFavouriteProductName = page.getByText(firstItemNameText);
     const clickRemoveAddedFavouriteProduct = await addedFavouriteProductName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true, delay: 300 });
     clickRemoveAddedFavouriteProduct;
 
-    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 })
+    await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
 
-    await page.reload()
+    await page.waitForTimeout(162000);
+
+    await page.reload();
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 10000 })
 

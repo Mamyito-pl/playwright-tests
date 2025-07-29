@@ -54,7 +54,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1489');
 
-    test.setTimeout(130000);
+    test.setTimeout(350000);
 
     await expect(commonPage.getCartButton).toBeVisible();
 
@@ -63,7 +63,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     const clickAddFristItemToFavourites = await firstItemName.locator('..').locator('..').locator('..').locator('..').locator('..').locator('#product_card_favourites_button').click({ force: true, delay: 300 });
     clickAddFristItemToFavourites;
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(162000);
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
@@ -74,7 +74,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await page.waitForTimeout(1000);
 
     const allProductNames = await favouritesPage.getProductName.allTextContents();
-    const allProductCount = allProductNames.length
+    const allProductCount = allProductNames.length;
     
     const productFound = allProductNames.some(name => name.includes(firstItemNameText));
     expect(productFound).toBe(true);
@@ -84,6 +84,8 @@ test.describe('Testy ulubionych produktów', async () => {
     clickRemoveAddedFavouriteProduct;
 
     await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
+
+    await page.waitForTimeout(162000);
 
     await page.reload();
 

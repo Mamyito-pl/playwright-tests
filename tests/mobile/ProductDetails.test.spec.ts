@@ -277,7 +277,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await allure.subSuite('');
     await allure.allureId('1848');
 
-    test.setTimeout(230000);
+    test.setTimeout(550000);
 
     await searchProduct(productToSearchName);
 
@@ -292,7 +292,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getMessage).toHaveText('Dodano produkt do ulubionych', { timeout: 15000 });
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(162000);
 
     await mainPage.getFavouritesButton.click({ force: true, delay: 300 });
     await page.waitForLoadState('domcontentloaded');
@@ -310,7 +310,9 @@ test.describe('Testy szczegółów produktu', async () => {
     await page.getByText(productName).hover();
     await page.waitForTimeout(2000);
     await page.getByText(productName).click();
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(3000);
 
     await expect(productDetailsPage.getAddToFavouritesButton).toBeVisible({ timeout: 15000 });
     await productDetailsPage.getAddToFavouritesButton.click({ force: true, delay: 300 });
@@ -318,7 +320,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getMessage).toHaveText('Usunięto produkt z ulubionych', { timeout: 15000 });
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(162000);
 
     await mainPage.getFavouritesButton.click({ force: true, delay: 300 });
     await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 15000 });

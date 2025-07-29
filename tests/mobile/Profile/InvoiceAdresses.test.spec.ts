@@ -50,7 +50,7 @@ test.describe('Testy dane do faktury', async () => {
 
     test.setTimeout(100000);
     
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
     await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
@@ -90,7 +90,7 @@ test.describe('Testy dane do faktury', async () => {
     await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
   })
     
-  test.skip('M | Możliwość edycji danych do faktury', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addInvoiceAddressViaAPI }) => {
+  test('M | Możliwość edycji danych do faktury', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addInvoiceAddressDelivery }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -101,13 +101,10 @@ test.describe('Testy dane do faktury', async () => {
 
     test.setTimeout(120000);
 
-    await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
-    await page.waitForTimeout(3000);
-
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
-
-    await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
+    await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await page.waitForSelector('text=Fixturowy adres podmiotu', { timeout: 5000, state: 'visible' });
 
@@ -162,7 +159,7 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('200');
   })
     
-  test.skip('M | Możliwość ustawienia głównych danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
+  test('M | Możliwość ustawienia głównych danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressDelivery }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -172,16 +169,11 @@ test.describe('Testy dane do faktury', async () => {
     await allure.allureId('1481');
 
     test.setTimeout(120000);
-    
-    await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
-    await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
 
-    await page.waitForTimeout(3000);
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
-
-    await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
-    await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
+    await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
+    await addInvoiceAddressDelivery('Testowa nazwa podmiotu');
 
     await invoiceAddressesPage.clickEditInvoiceAddressButton('Testowa nazwa podmiotu');
     await invoiceAddressesPage.getInvoiceAddressModalMainAddressCheckbox.check();
@@ -204,7 +196,7 @@ test.describe('Testy dane do faktury', async () => {
     await expect(invoiceAddressesPage.getMainInvoiceAddressInfo('Testowa nazwa podmiotu')).not.toBeAttached({ timeout: 5000 });
   })
         
-  test.skip('M | Możliwość usunięcia danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
+  test('M | Możliwość usunięcia danych do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressDelivery }) => {
 
     await allure.tags('Mobilne', 'Profil');
     await allure.epic('Mobilne');
@@ -215,13 +207,10 @@ test.describe('Testy dane do faktury', async () => {
       
     test.setTimeout(120000);
 
-    await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
+    await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
-    await page.waitForTimeout(3000);
-    
-    await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
-
-    await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
+    await addInvoiceAddressDelivery('Edytowana nazwa podmiotu');
+    await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
 
     await invoiceAddressesPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
 
