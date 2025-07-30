@@ -69,7 +69,6 @@ export async function gotoWithRetry(page, url, maxRetries = 3) {
         throw new Error(`Nie udało się załadować strony po ${maxRetries} próbach: ${error.message}`);
       }
       
-      // Czekaj 2 sekundy przed kolejną próbą
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }

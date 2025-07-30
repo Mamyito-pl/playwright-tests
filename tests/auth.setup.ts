@@ -37,7 +37,6 @@ setup('Autoryzacja', async ({ page }) => {
       }
     } catch (error) {
       if (error.message.includes('503')) {
-        console.log(`Otrzymano 503, próba ${attempt + 1} z ${maxRetries}`);
         await page.waitForTimeout(1000);
         attempt++;
       } else {
