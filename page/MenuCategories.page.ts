@@ -17,11 +17,11 @@ export default class MenuCategoriesPage {
     }
 
     get getMenuCategoriesButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledTabletContent"] svg[class*="tabler-icon tabler-icon-menu-2"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="StyledWebContent"] ');
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledTabletContent"] svg[class*="tabler-icon tabler-icon-menu-2"]' : 'div[data-sentry-element="WebContent"] div[data-sentry-element="StyledWebContent"]');
     }
 
     get getMenuCategories() {
-        return this.page.locator(this.mobile ? 'li[data-cy=category-menu-item-mobile]' : 'li[data-sentry-element="WebContent"] section');
+        return this.page.locator(this.mobile ? 'li[data-cy=category-menu-item-mobile]' : 'li[role="treeitem"]');
     }
 
     // Mobile

@@ -176,6 +176,7 @@ test.describe('Testy koszyka', async () => {
 
     await expect(cartPage.getCartDrawer).toBeHidden();
     await cartPage.clickCartDrawerButton();
+    await page.waitForTimeout(500);
     await expect(cartPage.getCartDrawer).toBeVisible();
     await searchbarPage.clickSearchbar();
     await expect(cartPage.getCartDrawer).toBeHidden();
@@ -216,7 +217,6 @@ test.describe('Testy koszyka', async () => {
     await cartPage.clickCartDrawerButton();
     await page.waitForTimeout(1000);
     
-    await cartPage.clickCartDrawerButton();
     await expect(cartPage.getCartDrawerToCartButton).toBeEnabled();
     await cartPage.getCartDrawerToCartButton.click();
     await page.waitForLoadState('load');

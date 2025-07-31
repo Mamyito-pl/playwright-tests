@@ -18,7 +18,7 @@ export default class SearchbarPage {
     }
 
     async clickSearchbar() {
-        await this.getSearchbarInput.click();
+        await this.getSearchbarInput.click({ force: true });
     }
 
     async clickIncreaseProductButton() {

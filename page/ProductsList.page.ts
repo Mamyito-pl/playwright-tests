@@ -186,19 +186,19 @@ export default class ProductsListPage {
     }
 
     get getProductTypeFilter() {
-        return this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Typ produktu');
+        return this.mobile? this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Typ produktu') : this.page.locator('div[data-sentry-element="HeaderContent"] div[data-sentry-element="Wrapper"] div[data-sentry-element="FiltersWrapper"]').getByText('Typ produktu');
     }
 
     get getPriceFilter() {
-        return this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Cena');
+        return this.mobile? this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Cena') : this.page.locator('div[data-sentry-element="HeaderContent"] div[data-sentry-element="Wrapper"] div[data-sentry-element="FiltersWrapper"]').getByText('Cena');
     }
 
     get getManufacturerFilter() {
-        return this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Producent');
+        return this.mobile? this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Producent') : this.page.locator('div[data-sentry-element="HeaderContent"] div[data-sentry-element="Wrapper"] div[data-sentry-element="FiltersWrapper"]').getByText('Producent');
     }
 
     get getAvailableInDeliveryFilter() {
-        return this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Dostępność w dostawie');
+        return this.mobile? this.page.locator('div[data-sentry-element="PanelHeader"]').getByText('Dostępność w dostawie') : this.page.locator('div[data-sentry-element="HeaderContent"] div[data-sentry-element="Wrapper"] div[data-sentry-element="FiltersWrapper"]').getByText('Dostępność w dostawie');
     }
 
     get getFiltersButton() {
