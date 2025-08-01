@@ -22,6 +22,8 @@ test.describe('Testy menu kategorii', async () => {
 
     menuCategoriesPage = new MenuCategoriesPage(page);
     productsListPage = new ProductsListPage(page);
+
+    await page.waitForTimeout(1000);
   })
 
   test('M | Menu kategorii otwiera się z obecnymi kategoriami', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
