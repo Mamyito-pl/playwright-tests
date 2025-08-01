@@ -79,7 +79,6 @@ export async function addTestParam(page: Page, param = 'testy-automatyczne') {
   if (!currentUrl.includes(param)) {
     const separator = currentUrl.includes('?') ? '&' : '?';
     const newUrl = `${currentUrl}${separator}${param}`;
-    console.log(`Adding test param to URL: ${newUrl}`);
     await page.goto(newUrl, { waitUntil: 'domcontentloaded' });
   }
 }
