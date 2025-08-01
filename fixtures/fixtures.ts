@@ -47,13 +47,28 @@ export const test = baseTest.extend<MyFixtures>({
   page: async ({ page }, use) => {
     const originalGoto = page.goto;
     page.goto = async (url: string, options?: any) => {
-      let urlWithParam = url;
 
+      if (!page || page.isClosed()) {
+        throw new Error('Strona została zamknięta');
+      }
+
+      let urlWithParam = url;
       if (!url.includes('testy-automatyczne')) {
         urlWithParam = url + '?testy-automatyczne';
       }
+
+      const defaultOptions = {
+        waitUntil: 'domcontentloaded',
+        timeout: 30000,
+        ...options
+      };
       
-      return originalGoto.call(page, urlWithParam, options);
+      try {
+        return await originalGoto.call(page, urlWithParam, defaultOptions);
+      } catch (error) {
+        console.log(`Błąd podczas nawigacji do ${urlWithParam}: ${error.message}`);
+        throw error;
+      }
     };
     
     await use(page);
