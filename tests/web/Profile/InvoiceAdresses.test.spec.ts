@@ -35,6 +35,8 @@ test.describe('Testy dane do faktury', async () => {
 
     await page.goto('profil/dane-faktury', { waitUntil: 'domcontentloaded' });
 
+    await expect(commonPage.getCartButton).toBeVisible({ timeout: 10000 });
+
     await expect(invoiceAddressesPage.getInvoiceAddressTitle).toBeVisible();
     await expect(invoiceAddressesPage.getAddNewInvoiceAddressButton).toBeVisible();
   })
@@ -51,6 +53,8 @@ test.describe('Testy dane do faktury', async () => {
     test.setTimeout(100000);
     
     await page.goto('profil/dane-faktury', { waitUntil: 'load' });
+
+    await expect(commonPage.getCartButton).toBeVisible({ timeout: 10000 });
 
     await invoiceAddressesPage.getInvoiceAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
@@ -102,6 +106,8 @@ test.describe('Testy dane do faktury', async () => {
     test.setTimeout(120000);
 
     await page.goto('profil/dane-faktury', { waitUntil: 'load' });
+
+    await expect(commonPage.getCartButton).toBeVisible({ timeout: 10000 });
 
     await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -172,6 +178,8 @@ test.describe('Testy dane do faktury', async () => {
 
     await page.goto('profil/dane-faktury', { waitUntil: 'load' });
 
+    await expect(commonPage.getCartButton).toBeVisible({ timeout: 10000 });
+
     await addInvoiceAddressDelivery('Fixturowy adres podmiotu');
     await addInvoiceAddressDelivery('Testowa nazwa podmiotu');
 
@@ -211,6 +219,8 @@ test.describe('Testy dane do faktury', async () => {
     test.setTimeout(120000);
     
     await page.goto('profil/dane-faktury', { waitUntil: 'load' });
+
+    await expect(commonPage.getCartButton).toBeVisible({ timeout: 10000 });
 
     await addInvoiceAddressDelivery('Edytowana nazwa podmiotu');
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });

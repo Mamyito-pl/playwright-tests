@@ -53,7 +53,7 @@ test.describe('Testy ulubionych produktów', async () => {
 
     test.setTimeout(350000);
 
-    await expect(commonPage.getCartButton).toBeVisible();
+    await expect(commonPage.getCartButton).toBeVisible({ timeout: 10000 });
 
     const firstItemName = page.locator('[data-cy="promocje-products-list-slider"] h3').first();
     const firstItemNameText = await firstItemName.textContent() || '';

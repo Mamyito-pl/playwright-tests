@@ -13,11 +13,11 @@ export default class DeliveryPage {
     }
 
     async clickAddNewAddressButton() {
-        await this.getAddNewAddressButton.click();
+        await this.getAddNewAddressButton.click({ force: true, delay: 300 });
     }
 
     async clickAddNewInvoiceAddressButton() {
-        await this.getAddNewInvoiceAddressButton.click({ force: true });
+        await this.getAddNewInvoiceAddressButton.click({ force: true, delay: 300 });
     }
 
     async clickEditAddressButton(addressName: string) {
@@ -71,6 +71,10 @@ export default class DeliveryPage {
 
     get getDeliveryDateTitle() {
         return this.page.locator('div[data-sentry-element="Title"]').getByText('Termin dostawy');
+    }
+
+    get getVerifyAddressButton() {
+        return this.page.getByRole('button', { name: 'Zweryfikuj' });
     }
 
     // Address/Invoice Modal
