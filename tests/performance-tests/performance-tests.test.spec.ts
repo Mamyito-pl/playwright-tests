@@ -49,7 +49,7 @@ test.describe('Testy wydajnościowe', async () => {
     const performanceScoreMobileScrap = await page.locator('text[class="lh-exp-gauge__percentage"]').first().textContent();
     const LCPscoreMobile = await page.getByText('Largest Contentful Paint (LCP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
     const INPscoreMobile = await page.getByText('Interaction to Next Paint (INP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
-    const CLSscoreMobile = await page.getByText('Cumulative Layout Shift (CLS)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
+    const CLSscoreMobile = await page.getByText('Cumulative Layout Shift (CLS)').locator('..').locator('..').locator('div').nth(1).locator('div').locator('span').locator('span').nth(1).textContent();
     const FCPscoreMobile = await page.getByText('First Contentful Paint (FCP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
     const TTFBscoreMobile = await page.getByText('Time to First Byte (TTFB)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
   
