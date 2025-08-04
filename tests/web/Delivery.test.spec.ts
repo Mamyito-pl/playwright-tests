@@ -97,7 +97,9 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa');
 
-      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
+      const noAdressInfo = page.getByText('Podaj swój adres, aby sprawdzić czy do Ciebie dojedziemy');
+
+      await noAdressInfo.waitFor({ state: 'visible', timeout: 10000 })
 
       await deliveryPage.clickAddNewAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
