@@ -52,6 +52,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.goto('/profil/dane');
 
+    await page.waitForLoadState('load');
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible();
     await expect(myDetailsPage.getNameSurnameLabel).toBeVisible();
     await expect(myDetailsPage.getNameSurnameEditButton).toBeVisible();
@@ -80,6 +82,8 @@ test.describe('Testy moje dane', async () => {
     await allure.allureId('2007');
 
     await page.goto('/profil/dane');
+
+    await page.waitForLoadState('load');
 
     const exampleName = faker.person.firstName();
     const exampleSurname = faker.person.lastName();
@@ -162,6 +166,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.goto('/profil/dane');
 
+    await page.waitForLoadState('load');
+
     const examplePhoneNumber = (faker.number.int(1) + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
@@ -202,6 +208,8 @@ test.describe('Testy moje dane', async () => {
     test.setTimeout(60000);
 
     await page.goto('/profil/dane');
+
+    await page.waitForLoadState('load');
 
     const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
@@ -254,6 +262,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.goto('/profil/dane');
 
+    await page.waitForLoadState('load');
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
@@ -276,6 +286,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.goto('/profil/dane');
 
+    await page.waitForLoadState('load');
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await expect(page.locator('div[data-sentry-component="UserSMSConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
@@ -297,6 +309,8 @@ test.describe('Testy moje dane', async () => {
     await newsletterSignInViaAPI();
 
     await page.goto('/profil/dane');
+
+    await page.waitForLoadState('load');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -328,6 +342,8 @@ test.describe('Testy moje dane', async () => {
     await smsConsentViaAPI(true);
 
     await page.goto('/profil/dane');
+
+    await page.waitForLoadState('load');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 

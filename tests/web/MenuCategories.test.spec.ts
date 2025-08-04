@@ -98,6 +98,8 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1026');
 
+    await page.waitForLoadState('networkidle');
+
     await menuCategoriesPage.clickMenuCategoriesButton();
 
     await menuCategoriesPage.getMenuCategoriesWrapper.getByText('Warzywa i owoce').click();
@@ -114,6 +116,8 @@ test.describe('Testy menu kategorii', async () => {
     await allure.suite('Testy menu kategorii');
     await allure.subSuite('');
     await allure.allureId('1027');
+
+    await page.waitForLoadState('networkidle');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
