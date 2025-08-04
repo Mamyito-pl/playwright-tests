@@ -12,7 +12,7 @@ test.describe('Testy menu kategorii', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await utility.gotoWithRetry(page, '/');
+    await page.goto('/', { waitUntil: 'load' });
 
     await utility.addGlobalStyles(page);
 
@@ -56,6 +56,8 @@ test.describe('Testy menu kategorii', async () => {
     await menuCategoriesPage.clickMenuCategoriesButton();
 
     await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+
+    await page.waitForTimeout(1000);
     
     await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
 
@@ -81,6 +83,8 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
+    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+
     await page.waitForTimeout(1000);
 
     await menuCategoriesPage.getMenuCategoriesWrapper.getByText('Warzywa i owoce').hover();
@@ -102,6 +106,10 @@ test.describe('Testy menu kategorii', async () => {
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
+    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+
+    await page.waitForTimeout(1000);
+
     await menuCategoriesPage.getMenuCategoriesWrapper.getByText('Warzywa i owoce').click();
 
     await expect(page).toHaveURL(`${baseURL}` + '/warzywa-i-owoce', { timeout: 10000 });
@@ -120,6 +128,10 @@ test.describe('Testy menu kategorii', async () => {
     await page.waitForLoadState('networkidle');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
+
+    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+
+    await page.waitForTimeout(1000);
 
     await menuCategoriesPage.getMenuCategoriesWrapper.getByText('Warzywa i owoce').hover();
     await menuCategoriesPage.getMenuCategoriesWrapper.getByText('Grzyby').click();

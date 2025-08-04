@@ -524,7 +524,7 @@ test.describe('Testy listy produktów', async () => {
     const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
-    expect((await productsListPage.getFilter('Typ produktu')).isVisible);
+    expect((await productsListPage.getFilter('Typ produktu')).isVisible({ timeout: 10000 }));
     await productsListPage.getFilterSelectCheckbox('Typ produktu','High protein');
     await page.waitForTimeout(7000);
     
