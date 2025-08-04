@@ -66,7 +66,7 @@ test.describe('Testy dostawy', async () => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
 
-    await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+    await page.goto('/dostawa', { waitUntil: 'load' });
 
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
@@ -103,7 +103,7 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(100000);
       
-      await page.goto('/dostawa');
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
@@ -203,7 +203,7 @@ test.describe('Testy dostawy', async () => {
 
       await addAddressDeliveryViaAPI('Adres Fixturowy');
 
-      await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
@@ -285,7 +285,7 @@ test.describe('Testy dostawy', async () => {
 
       await addAddressDeliveryViaAPI('Adres Edytowany');
 
-      await page.goto('/dostawa');
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
@@ -317,7 +317,7 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(150000);
       
-      await page.goto('/dostawa');
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -410,7 +410,7 @@ test.describe('Testy dostawy', async () => {
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
-      await page.goto('/dostawa');
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -459,7 +459,7 @@ test.describe('Testy dostawy', async () => {
 
       await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
-      await page.goto('/dostawa');
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -561,7 +561,7 @@ test.describe('Testy dostawy', async () => {
 
       await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
       
-      await page.goto('/dostawa');
+      await page.goto('/dostawa', { waitUntil: 'load' });
 
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
 
