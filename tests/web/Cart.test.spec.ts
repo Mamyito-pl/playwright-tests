@@ -227,7 +227,7 @@ test.describe('Testy koszyka', async () => {
     
     test.setTimeout(80000);
 
-    test('W | Możliwość dodania do koszyka wody', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka wody', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -275,7 +275,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka bułki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka bułki', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -323,7 +323,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka banana', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka banana', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -371,7 +371,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');

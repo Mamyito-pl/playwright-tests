@@ -279,7 +279,7 @@ test.describe('Testy koszyka', async () => {
 
     test.setTimeout(120000);
     
-    test('M | Możliwość dodania do koszyka wody', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka wody', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
       
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -326,7 +326,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('M | Możliwość dodania do koszyka bułki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka bułki', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -373,7 +373,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('M | Możliwość dodania do koszyka banana', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka banana', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
       
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');
@@ -420,7 +420,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
     
-    test('M | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('M | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
       
       await allure.tags('Mobilne', 'Koszyk');
       await allure.epic('Mobilne');

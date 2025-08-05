@@ -16,6 +16,10 @@ export default class DeliveryPage {
         await this.getAddNewAddressButton.click({ force: true, delay: 300 });
     }
 
+    async clickCloseAddressModalButton() {
+        await this.getCloseAddressModalButton.click({ force: true, delay: 300 });
+    }
+
     async clickAddNewInvoiceAddressButton() {
         await this.getAddNewInvoiceAddressButton.click({ force: true, delay: 300 });
     }
@@ -39,6 +43,10 @@ export default class DeliveryPage {
 
     async getEditAddressButton(addressName: string) {
         return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('div').locator('div').locator('svg[class*="tabler-icon tabler-icon-pencil "]');
+    }
+
+    get getCloseAddressModalButton() {
+        return this.page.locator('button[aria-label="Zamknij"]');
     }
 
     get getDeliverySlotButton() {

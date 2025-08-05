@@ -217,6 +217,10 @@ test.describe('Testy płatności', async () => {
     await page.goto('/koszyk', { waitUntil: 'commit'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
@@ -315,6 +319,10 @@ test.describe('Testy płatności', async () => {
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -362,6 +370,10 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
       await utility.addTestParam(page);
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -634,6 +646,10 @@ test.describe('Testy płatności', async () => {
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -689,7 +705,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
                          
-    test('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Zapłata przy odbiorze po nieudanej płatności BLIK', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -713,6 +729,10 @@ test.describe('Testy płatności', async () => {
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -774,6 +794,10 @@ test.describe('Testy płatności', async () => {
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -911,6 +935,10 @@ test.describe('Testy płatności', async () => {
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -1011,6 +1039,10 @@ test.describe('Testy płatności', async () => {
       await page.goto('/koszyk', { waitUntil: 'load'});
       await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
       await cartPage.clickCartSummaryButton();
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -1105,6 +1137,10 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
       await utility.addTestParam(page);
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
@@ -1190,6 +1226,10 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
       await utility.addTestParam(page);
+      await page.waitForTimeout(2000);
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();

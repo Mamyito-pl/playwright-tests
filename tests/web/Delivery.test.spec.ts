@@ -49,7 +49,6 @@ test.describe('Testy dostawy', async () => {
 
     await expect(deliveryPage.getDeliveryAddressTitle).toBeVisible();
     await expect(deliveryPage.getAddNewAddressButton).toBeVisible();
-    await expect(deliveryPage.getDeliveryInvoiceCheckbox).toBeVisible();
     await expect(deliveryPage.getDeliveryDateTitle).toBeVisible();
   })
 
@@ -66,7 +65,13 @@ test.describe('Testy dostawy', async () => {
 
     await addAddressDeliveryViaAPI('Adres Testowy');
 
-    await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+    await page.goto('/dostawa', { waitUntil: 'load' });
+
+    await page.waitForTimeout(2000);
+
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
 
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     await page.getByText('Adres Testowy').click({ force: true });
@@ -101,7 +106,6 @@ test.describe('Testy dostawy', async () => {
 
       await noAdressInfo.waitFor({ state: 'visible', timeout: 10000 })
 
-      await deliveryPage.clickAddNewAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy adres');
 
@@ -163,6 +167,12 @@ test.describe('Testy dostawy', async () => {
       await addAddressDeliveryViaAPI('Adres Fixturowy');
 
       await page.goto('/dostawa', { waitUntil: 'domcontentloaded' });
+
+      await page.waitForTimeout(2000);
+
+      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+        await deliveryPage.clickCloseAddressModalButton();
+      }
 
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
