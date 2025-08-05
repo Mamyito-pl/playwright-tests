@@ -33,6 +33,8 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1024');
 
+    await page.waitForLoadState('networkidle');
+
     await menuCategoriesPage.clickMenuCategoriesButton();
 
     await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
@@ -52,6 +54,8 @@ test.describe('Testy menu kategorii', async () => {
     await allure.suite('Testy menu kategorii');
     await allure.subSuite('');
     await allure.allureId('1025');
+
+    await page.waitForLoadState('networkidle');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
@@ -80,6 +84,8 @@ test.describe('Testy menu kategorii', async () => {
     await allure.suite('Testy menu kategorii');
     await allure.subSuite('');
     await allure.allureId('1028');
+
+    await page.waitForLoadState('networkidle');
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
