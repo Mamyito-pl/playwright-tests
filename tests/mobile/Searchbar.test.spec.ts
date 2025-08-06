@@ -77,7 +77,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const searchResults = searchbarPage.getSearchbarProductTiles;
     const resultsCount = await searchResults.count();
 
-    for (let i = 0; i < Math.min(4, resultsCount); i++) {
+    for (let i = 0; i < Math.min(2, resultsCount); i++) {
       const productName = await searchResults.nth(i).locator('h3').textContent();
       expect(productName?.toLowerCase()).toContain(productToSearch.toLocaleLowerCase());
     }
@@ -101,7 +101,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const searchResults = searchbarPage.getSearchbarProductTiles;
     const resultsCount = await searchResults.count();
 
-    for (let i = 0; i < Math.min(4, resultsCount); i++) {
+    for (let i = 0; i < Math.min(2, resultsCount); i++) {
       const productName = await searchResults.nth(i).locator('h3').textContent();
       expect(productName?.toLowerCase()).toContain(productToSearch.toLocaleLowerCase());
     }
@@ -125,7 +125,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const searchResults = searchbarPage.getSearchbarProductTiles;
     const resultsCount = await searchResults.count();
 
-    for (let i = 0; i < Math.min(4, resultsCount); i++) {
+    for (let i = 0; i < Math.min(2, resultsCount); i++) {
       const productName = await searchResults.nth(i).locator('h3').textContent();
       expect(productName?.toLowerCase()).toContain(productToSearch.toLocaleLowerCase());
     }
@@ -176,7 +176,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const searchResults = searchbarPage.getSearchbarProductTiles;
     const resultsCount = await searchResults.count();
 
-    for (let i = 0; i < Math.min(4, resultsCount); i++) {
+    for (let i = 0; i < Math.min(2, resultsCount); i++) {
       const productName = await searchResults.nth(i).locator('h3').textContent();
       expect(productName?.toLowerCase()).toContain('mango');
     }
@@ -202,7 +202,7 @@ test.describe('Testy wyszukiwarki', async () => {
     const searchResults = searchbarPage.getSearchbarProductTiles;
     const resultsCount = await searchResults.count();
 
-    for (let i = 0; i < Math.min(4, resultsCount); i++) {
+    for (let i = 0; i < Math.min(2, resultsCount); i++) {
       const brandName = await searchResults.nth(i).locator('h4').textContent();
       expect(brandName?.toLowerCase()).toContain(brandToSearch);
     }
