@@ -217,10 +217,6 @@ test.describe('Testy płatności', async () => {
     await page.goto('/koszyk', { waitUntil: 'commit'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
-    await page.waitForTimeout(2000);
-    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
-      await deliveryPage.clickCloseAddressModalButton();
-    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
