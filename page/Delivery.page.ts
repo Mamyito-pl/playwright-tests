@@ -74,7 +74,7 @@ export default class DeliveryPage {
     }
 
     get getDeliveryInvoiceCheckbox() {
-        return this.page.locator('span[data-sentry-element="CheckboxMark"]');
+        return this.page.getByText('Chcę otrzymać fakturę');
     }
 
     get getDeliveryDateTitle() {
