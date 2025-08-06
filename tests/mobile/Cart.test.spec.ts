@@ -151,6 +151,8 @@ test.describe('Testy koszyka', async () => {
     await cartPage.clickDeleteProductCartConfirmButton();
     await page.reload()
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
+    const productCountAfterDelete = await cartPage.getProductList.count();
+    expect(productCountAfterDelete).toBe(0);
   }) 
 
   test('M | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
