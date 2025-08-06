@@ -116,6 +116,8 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    await expect(productsListPage.getHorizontalMenu).toBeVisible({ timeout: 15000 });
+
     const productsBeforeScroll = await productsListPage.getProductTiles.count();
     expect(productsBeforeScroll).toEqual(60);
 

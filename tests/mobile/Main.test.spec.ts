@@ -257,8 +257,12 @@ test.describe('Testy strony głównej', async () => {
       await page.evaluate(async () => {
         window.scrollBy(0, 1250)
         await new Promise(r => setTimeout(r, 700));
+        window.scrollBy(0, 1250)
+        await new Promise(r => setTimeout(r, 700));
       });
     } else {
+      await page.mouse.wheel(0, 1200);
+      await page.waitForTimeout(700);
       await page.mouse.wheel(0, 1200);
       await page.waitForTimeout(700);
     }

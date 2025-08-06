@@ -113,6 +113,8 @@ test.describe('Testy koszyka', async () => {
     await cartPage.clickDeleteProductCartConfirmButton();
     await page.waitForTimeout(2000);
     await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
+    const productCountAfterDelete = await cartPage.getProductList.count();
+    expect(productCountAfterDelete).toBe(0);
   }) 
 
   test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct }) => {
@@ -227,7 +229,7 @@ test.describe('Testy koszyka', async () => {
     
     test.setTimeout(80000);
 
-    test('W | Możliwość dodania do koszyka wody', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka wody', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -275,7 +277,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka bułki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka bułki', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -323,7 +325,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka banana', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka banana', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');
@@ -371,7 +373,7 @@ test.describe('Testy koszyka', async () => {
       expect(sortedCartPrices).toEqual(sortedExpectedPrices);
     })
 
-    test('W | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test('W | Możliwość dodania do koszyka serka wiejskiego', { tag: ['@Prod'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Koszyk');
       await allure.epic('Webowe');

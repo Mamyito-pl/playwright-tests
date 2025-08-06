@@ -69,7 +69,6 @@
             "paymentOnDeliveryButton": "button:has-text('Zapłać przy odbiorze')",
             "repeatPaymentButton": "button:has-text('Ponów płatność')",
             "blikTextboxPlaceholder": "label[class*='MuiInputLabel-outlined']",
-            "blikTextboxHelperText": "p[class*='MuiFormHelperText-contained']",
             "closeIconButtonRepeatOrderWindow": "svg[class='sc-f8f81ad2-4 fA-DbFc']",
             "addProductsButtonRepeatOrderWindow": "button:has-text('Dodaj produkty')",
             "cancelButtonRepeatOrderWindow": "button:has-text('Anuluj')"

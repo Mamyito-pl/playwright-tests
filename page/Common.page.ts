@@ -45,6 +45,6 @@ export default class CommonPage {
     }
 
     get getModalCloseIcon() {
-        return this.page.locator('svg[data-cy="modal-close-icon"]');
+        return this.page.locator('button[aria-label="Zamknij"]');
     }
 }

@@ -70,7 +70,7 @@ export default class PaymentsPage {
     }
 
     get getBlikTextboxHelperText() {
-        return this.page.locator(selectors.PaymentsPage.common.blikTextboxHelperText);
+        return this.page.locator('#blikCode-helper-text');
     }
 
     get getStatueCheckbox() {
