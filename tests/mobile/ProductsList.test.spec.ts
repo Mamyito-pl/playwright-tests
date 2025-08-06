@@ -466,6 +466,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await productsListPage.getFiltersButton.click();
+    await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
     await productsListPage.getFilterSelectCheckbox('Typ produktu','High protein');
     await utility.tryClickApplyButton(page, productsListPage);
     await page.waitForTimeout(7000);
