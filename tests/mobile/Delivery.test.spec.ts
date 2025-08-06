@@ -69,10 +69,6 @@ test.describe('Testy dostawy', async () => {
 
     await page.waitForTimeout(2000);
 
-    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
-      await deliveryPage.clickCloseAddressModalButton();
-    }
-
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
     await page.getByText('Adres Testowy').click({ force: true, delay: 300 });
 
@@ -179,6 +175,8 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa', { waitUntil: 'load' });
 
+      await page.waitForTimeout(2000);
+
       await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
       await page.waitForSelector('text=Adres Fixturowy', { state: 'visible' });
 
@@ -212,10 +210,6 @@ test.describe('Testy dostawy', async () => {
       await page.goto('/dostawa', { waitUntil: 'load' });
 
       await page.waitForTimeout(2000);
-
-      if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
-        await deliveryPage.clickCloseAddressModalButton();
-      }
 
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
 
@@ -299,6 +293,8 @@ test.describe('Testy dostawy', async () => {
 
       await page.goto('/dostawa', { waitUntil: 'load' });
 
+      await page.waitForTimeout(2000);
+
       await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 })
 
       await deliveryPage.clickDeleteAddressButton('Adres Edytowany');
@@ -316,7 +312,7 @@ test.describe('Testy dostawy', async () => {
     })
   })
 
-  test.describe('Faktura', async () => {
+  test.describe.only('Faktura', async () => {
     
     test('M | Możliwość dodania podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
       
@@ -329,9 +325,9 @@ test.describe('Testy dostawy', async () => {
 
       test.setTimeout(150000);
       
-      await page.goto('/dostawa', { waitUntil: 'load' });
+      await page.goto('/platnosc', { waitUntil: 'load' });
 
-      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
       let attempts = 0;
@@ -422,9 +418,9 @@ test.describe('Testy dostawy', async () => {
 
       const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
       
-      await page.goto('/dostawa', { waitUntil: 'load' });
+      await page.goto('/platnosc', { waitUntil: 'load' });
 
-      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
 
       await page.waitForSelector('text="Chcę otrzymać fakturę"', { timeout: 30000, state: 'visible' });
 
@@ -471,9 +467,9 @@ test.describe('Testy dostawy', async () => {
 
       await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
-      await page.goto('/dostawa', { waitUntil: 'load' });
+      await page.goto('/platnosc', { waitUntil: 'load' });
 
-      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
       let attempts = 0;
@@ -573,9 +569,9 @@ test.describe('Testy dostawy', async () => {
 
       await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
       
-      await page.goto('/dostawa', { waitUntil: 'load' });
+      await page.goto('/platnosc', { waitUntil: 'load' });
 
-      await deliveryPage.getDeliveryAddressTitle.waitFor({ state: 'visible', timeout: 10000 });
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
 
       const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
       let attempts = 0;
