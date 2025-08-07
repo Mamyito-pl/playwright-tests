@@ -98,9 +98,8 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa');
 
-      const noAdressInfo = page.getByText('Podaj swój adres, aby sprawdzić czy do Ciebie dojedziemy');
-
-      await noAdressInfo.waitFor({ state: 'visible', timeout: 10000 })
+      await expect(deliveryPage.getAddNewAddressButton).toBeVisible();
+      await deliveryPage.getAddNewAddressButton.click();
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy adres');
@@ -303,7 +302,7 @@ test.describe('Testy dostawy', async () => {
     })
   })
 
-  test.describe.only('Faktura', async () => {
+  test.describe('Faktura', async () => {
     
     test('W | Możliwość dodania podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
