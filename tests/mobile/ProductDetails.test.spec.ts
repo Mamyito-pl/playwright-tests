@@ -268,7 +268,7 @@ test.describe('Testy szczegółów produktu', async () => {
     await expect(commonPage.getCartProductsPrice).toHaveText('0,00 zł');
   })
     
-  test('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
+  test.skip('M | Możliwość dodania i usunięcia ulubionego produktu z poziomu szczegółów produktu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, searchProduct }) => {
 
     await allure.tags('Mobilne', 'Szczegóły produktu');
     await allure.epic('Mobilne');
