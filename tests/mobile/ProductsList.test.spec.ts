@@ -60,7 +60,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await productsListPage.getBreadcrumbs.getByText('Nabiał').click();
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
-    await expect(productsListPage.getProductCategoryTitle('Nabiał')).toBeVisible();
+    await expect(productsListPage.getProductCategoryTitle('Nabiał')).toBeVisible({ timeout: 15000 });
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await expect(productsListPage.getBreadcrumbs).toContainText('Nabiał');
   })

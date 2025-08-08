@@ -105,7 +105,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1498');
 
-    await page.goto('profil/ulubione', { waitUntil: 'networkidle' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -137,7 +137,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1499');
 
-    await page.goto('profil/ulubione', { waitUntil: 'networkidle' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -169,7 +169,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1500');
 
-    await page.goto('profil/ulubione', { waitUntil: 'networkidle' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     
@@ -204,7 +204,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1501');
 
-    await page.goto('profil/ulubione', { waitUntil: 'networkidle' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     
@@ -237,7 +237,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1502');
 
-    await page.goto('profil/ulubione', { waitUntil: 'networkidle' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     
@@ -347,7 +347,7 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1503');
 
-    await page.goto('profil/ulubione', { waitUntil: 'networkidle' });
+    await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     

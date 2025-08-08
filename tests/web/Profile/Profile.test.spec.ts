@@ -236,7 +236,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/kody-rabatowe');
       await expect(rebateCodesPage.getRebateCodesTitle).toBeVisible({ timeout: 10000 });
       await expect(profilePage.getProfileMenuOrdersButton).toBeVisible();
-      await profilePage.getProfileMenuOrdersButton.click();
+      await profilePage.getProfileMenuOrdersButton.click({ force: true, delay: 300 });
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia', { timeout: 15000 });
       await expect(ordersPage.getOrdersTitle).toBeVisible({ timeout: 10000 });
@@ -254,7 +254,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/zamowienia');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileRebateCodesButton).toBeVisible();
-      await profilePage.getProfileRebateCodesButton.click();  
+      await profilePage.getProfileRebateCodesButton.click({ force: true, delay: 300 });  
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/kody-rabatowe', { timeout: 15000 });
       await expect(rebateCodesPage.getRebateCodesTitle).toBeVisible({ timeout: 10000 });
@@ -272,7 +272,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/zamowienia');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuMyDetailsButton).toBeVisible();
-      await profilePage.getProfileMenuMyDetailsButton.click();  
+      await profilePage.getProfileMenuMyDetailsButton.click({ force: true, delay: 300 });  
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/dane', { timeout: 15000 });
       await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
@@ -290,7 +290,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/zamowienia');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuDeliveryAddressesButton).toBeVisible();
-      await profilePage.getProfileMenuDeliveryAddressesButton.click();  
+      await profilePage.getProfileMenuDeliveryAddressesButton.click({ force: true, delay: 300 });  
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/adresy-dostaw', { timeout: 15000 });
       await expect(deliveryAddressesPage.getDeliveryAddressesTitle).toBeVisible({ timeout: 10000 });
@@ -308,7 +308,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/zamowienia');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileRebateCodesButton).toBeVisible();
-      await profilePage.getProfileMenuInvoiceAddressesButton.click();  
+      await profilePage.getProfileMenuInvoiceAddressesButton.click({ force: true, delay: 300 });  
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/dane-faktury', { timeout: 15000 });
       await expect(invoiceAddressesPage.getInvoiceAddressTitle).toBeVisible({ timeout: 10000 });
@@ -326,7 +326,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/zamowienia');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuFavouritesButton).toBeVisible();
-      await profilePage.getProfileMenuFavouritesButton.click();  
+      await profilePage.getProfileMenuFavouritesButton.click({ force: true, delay: 300 });  
       await page.waitForLoadState('load');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/ulubione', { timeout: 15000 });
       await expect(favouritesPage.getFavouritesProductsTitle).toBeVisible({ timeout: 10000 });

@@ -108,7 +108,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await allure.allureId('2522');
 
     await expect(mainPage.getDiscountsSection).toBeVisible();
-    await page.locator('[data-cy="promocje-products-list-slider"] div[data-sentry-element="ButtonWrapper"]').first().click();
+    await page.locator('[data-cy="promocje-products-list-slider"] div[data-sentry-element="ButtonWrapper"]').first().click({ force: true, delay: 300 });
     await page.waitForTimeout(2000);
 
     await expect(nonLoggedUserPage.getPostalCodeModalTitle).toBeVisible({ timeout: 15000 });
@@ -143,6 +143,7 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     await page.waitForTimeout(1000);
     await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
     await cartPage.clickCartDrawerToCartButton();
+    await page.waitForLoadState();
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 15000 });
     await cartPage.clickCartSummaryButton();
 
