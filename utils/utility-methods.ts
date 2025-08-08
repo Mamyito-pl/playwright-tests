@@ -41,6 +41,7 @@ export async function tryClickApplyButton(page: any, productsListPage: any, maxA
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     await productsListPage.clickApplyButton();
     await page.waitForTimeout(10000);
+    await page.reload();
     
     const isDropdownVisible = await page.locator('.MuiPaper-root').isVisible();
     if (!isDropdownVisible) break;
