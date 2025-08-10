@@ -109,6 +109,8 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await utility.gotoWithRetry(page, 'profil/ulubione');
 
+    await page.waitForTimeout(1000);
+
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -141,6 +143,8 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await utility.gotoWithRetry(page, 'profil/ulubione');
 
+    await page.waitForTimeout(1000);
+
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -172,6 +176,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1492');
 
     await utility.gotoWithRetry(page, 'profil/ulubione');
+
+    await page.waitForTimeout(1000);
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
@@ -208,6 +214,8 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await utility.gotoWithRetry(page, 'profil/ulubione');
 
+    await page.waitForTimeout(1000);
+
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -242,6 +250,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await utility.gotoWithRetry(page, 'profil/ulubione');
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
+
+    await page.waitForTimeout(1000);
 
     await expect(favouritesPage.getSortButton).toBeVisible();
     await favouritesPage.getSortButton.click();
@@ -350,6 +360,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1495');
 
     await utility.gotoWithRetry(page, 'profil/ulubione');
+
+    await page.waitForTimeout(1000);
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 

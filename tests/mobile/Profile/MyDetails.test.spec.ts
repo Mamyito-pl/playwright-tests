@@ -86,6 +86,8 @@ test.describe('Testy moje dane', async () => {
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
+    await page.waitForTimeout(2000);
+
     await myDetailsPage.clickNameSurnameEditButton();
 
     (await myDetailsPage.getModal('Edytuj dane')).isVisible({ timeout: 5000 })
@@ -168,6 +170,8 @@ test.describe('Testy moje dane', async () => {
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
+    await page.waitForTimeout(2000);
+
     await myDetailsPage.clickPhoneNumberEditButton();
 
     (await myDetailsPage.getModal('Edytuj numer telefonu')).isVisible({ timeout: 5000 });
@@ -208,6 +212,8 @@ test.describe('Testy moje dane', async () => {
     const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
+
+    await page.waitForTimeout(2000);
 
     await myDetailsPage.clickPasswordEditButton();
 
@@ -259,6 +265,8 @@ test.describe('Testy moje dane', async () => {
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
+    await page.waitForTimeout(2000);
+
     await myDetailsPage.getNewsletterApprovalLabel.scrollIntoViewIfNeeded();
 
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
@@ -283,6 +291,8 @@ test.describe('Testy moje dane', async () => {
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
+    await page.waitForTimeout(2000);
+
     await myDetailsPage.getSMSApprovalLabel.scrollIntoViewIfNeeded();
 
     await expect(page.locator('div[data-sentry-component="UserSMSConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
@@ -306,6 +316,8 @@ test.describe('Testy moje dane', async () => {
     await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
+
+    await page.waitForTimeout(2000);
 
     await myDetailsPage.getNewsletterApprovalLabel.scrollIntoViewIfNeeded();
 
@@ -339,6 +351,8 @@ test.describe('Testy moje dane', async () => {
     await utility.gotoWithRetry(page, '/profil/dane');
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
+    
+    await page.waitForTimeout(2000);
 
     await myDetailsPage.getSMSApprovalLabel.scrollIntoViewIfNeeded();
 

@@ -58,7 +58,7 @@ test.describe('Testy listy produktów', async () => {
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
-    await productsListPage.getBreadcrumbs.getByText('Nabiał').click();
+    await productsListPage.getBreadcrumbs.getByText('Nabiał').click({ force: true, delay: 300 });
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
     await expect(productsListPage.getProductCategoryTitle('Nabiał')).toBeVisible({ timeout: 15000 });
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
@@ -101,6 +101,8 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    await page.waitForTimeout(1000);
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -131,6 +133,8 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    await page.waitForTimeout(1000);
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -167,6 +171,8 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    await page.waitForTimeout(1000);
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -202,6 +208,8 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    await page.waitForTimeout(1000);
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -236,6 +244,8 @@ test.describe('Testy listy produktów', async () => {
     test.setTimeout(80000);
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+
+    await page.waitForTimeout(1000);
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -350,6 +360,8 @@ test.describe('Testy listy produktów', async () => {
     
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    await page.waitForTimeout(1000);
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -463,10 +475,13 @@ test.describe('Testy listy produktów', async () => {
     
     await page.goto('/nabial', { waitUntil: 'load' });
 
+    await page.waitForTimeout(1000);
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     await productsListPage.getFiltersButton.click();
     await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
     await productsListPage.getFilterSelectCheckbox('Typ produktu','High protein');
     await utility.tryClickApplyButton(page, productsListPage);
     await page.waitForTimeout(7000);
