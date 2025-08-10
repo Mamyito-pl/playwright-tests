@@ -57,6 +57,8 @@ test.describe('Testy listy produktów', async () => {
 
     await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
 
+    await page.waitForTimeout(2000);
+
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await productsListPage.getBreadcrumbs.getByText('Nabiał').click({ force: true, delay: 300 });
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
