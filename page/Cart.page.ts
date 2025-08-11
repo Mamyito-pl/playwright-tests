@@ -30,7 +30,7 @@ export default class CartPage {
     }
 
     async clickCartDrawerButton() {
-        await this.getCartDrawerButton.click();
+        await this.getCartDrawerButton.click({ force: true, delay: 200 });
     }
 
     async clickClearCartButton() {

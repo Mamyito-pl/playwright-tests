@@ -13,7 +13,7 @@ export default class MenuCategoriesPage {
     }
 
     async clickMenuCategoriesButton() {
-        return this.getMenuCategoriesButton.click({ force: true, delay: 100 });
+        return this.getMenuCategoriesButton.click({ force: true, delay: 200 });
     }
 
     get getMenuCategoriesButton() {

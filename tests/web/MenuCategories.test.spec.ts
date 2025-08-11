@@ -33,7 +33,9 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1024');
 
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
@@ -55,7 +57,9 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1025');
 
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
@@ -85,7 +89,9 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1028');
 
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
@@ -108,7 +114,9 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1026');
 
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
@@ -131,7 +139,9 @@ test.describe('Testy menu kategorii', async () => {
     await allure.subSuite('');
     await allure.allureId('1027');
 
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
 
     await menuCategoriesPage.clickMenuCategoriesButton();
 
