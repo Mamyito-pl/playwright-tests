@@ -1,111 +1,79 @@
 import { defineConfig, devices } from '@playwright/test';
 
+/**
+ * Read environment variables from file.
+ * https://github.com/motdotla/dotenv
+ */
+// import dotenv from 'dotenv';
+// import path from 'path';
+// dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+/**
+ * See https://playwright.dev/docs/test-configuration.
+ */
 export default defineConfig({
-  testDir: './tests',
-
-  timeout: 80000,
-
+  testDir: './tests/dmytrotus',
+  /* Run tests in files in parallel */
   fullyParallel: true,
-
-  forbidOnly: false,
-
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env.CI,
+  /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-
-  workers: 1,
-
-  reporter: [['html'], ['allure-playwright', {
-    detail: true,
-    outputFolder: "allure-results",
-    suiteTitle: false,
-    categories: [
-      {
-        name: "Outdated tests",
-        messageRegex: ".*FileNotFound.*",
-      },
-    ],
-    environmentInfo: {
-      framework: "playwright",
-    },
-  }]],
+  /* Opt out of parallel tests on CI. */
+  workers: process.env.CI ? 1 : undefined,
+  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  reporter: 'html',
+  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    trace: 'off',
-    screenshot: "only-on-failure",
-    video: 'retain-on-failure',
+    /* Base URL to use in actions like `await page.goto('/')`. */
+    // baseURL: 'http://localhost:3000',
+
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    trace: 'on-first-retry',
   },
 
+  /* Configure projects for major browsers */
   projects: [
-
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
-
     {
       name: 'chromium',
-      testDir: './tests/web',
-      use: { 
-        ...devices['Desktop Chrome'],
-        storageState: "playwright/.auth/user.json",
-        baseURL: process.env.URL,
-        viewport: { width: 1920, height: 1080}
-       },
-       dependencies: ["setup"],
+      use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
-      testDir: './tests/web',
-      use: { 
-        ...devices['Desktop Firefox'],
-        storageState: "playwright/.auth/user.json",
-        baseURL: process.env.URL,
-        viewport: { width: 1920, height: 1080},
-       },
-       dependencies: ["setup"],
+      use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
-      testDir: './tests/web',
-      use: { 
-        ...devices['Desktop Safari'],
-        storageState: "playwright/.auth/user.json",
-        baseURL: process.env.URL,
-        viewport: { width: 1920, height: 1080}
-       },
-       dependencies: ["setup"],
+      use: { ...devices['Desktop Safari'] },
     },
 
-    {
-      name: 'Mobile Chrome',
-      testDir: './tests/mobile',
-      use: {
-        browserName: 'chromium',
-        storageState: "playwright/.auth/user.json",
-        ...devices['Pixel 5'],
-        viewport: { width: 393, height: 851 },
-        baseURL: process.env.URL,
-      },
-      dependencies: ["setup"],
-    },
+    /* Test against mobile viewports. */
+    // {
+    //   name: 'Mobile Chrome',
+    //   use: { ...devices['Pixel 5'] },
+    // },
+    // {
+    //   name: 'Mobile Safari',
+    //   use: { ...devices['iPhone 12'] },
+    // },
 
-    {
-      name: 'Mobile Safari',
-      testDir: './tests/mobile',
-      use: {
-        browserName: 'webkit',
-        storageState: "playwright/.auth/user.json",
-        ...devices['iPhone 14'],
-        viewport: { width: 390, height: 844 },
-        baseURL: process.env.URL,
-      },
-      dependencies: ["setup"],
-    },
+    /* Test against branded browsers. */
+    // {
+    //   name: 'Microsoft Edge',
+    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    // },
+    // {
+    //   name: 'Google Chrome',
+    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    // },
+  ],
 
-    {
-      name: 'Performance',
-      testDir: './tests/performance-tests',
-      use: {
-        browserName: 'firefox',
-        baseURL: process.env.URL,
-      },
-    },
-  ]
+  /* Run your local dev server before starting the tests */
+  // webServer: {
+  //   command: 'npm run start',
+  //   url: 'http://localhost:3000',
+  //   reuseExistingServer: !process.env.CI,
+  // },
 });

@@ -1,0 +1,9 @@
+services:
+    playwright-service:
+        image: ghcr.io/dmytrotus/node22:playwright
+        stdin_open: true 
+        command: bash
+        working_dir: /app
+        volumes:
+          - .:/app
+          - /app/node_modules/

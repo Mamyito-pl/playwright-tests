@@ -1,0 +1,52 @@
+name: Playwright Web/Mobile Tests PROD
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/dmytrotus/node22:playwright
+    
+    defaults:
+      run:
+        working-directory: /app
+
+    steps:
+      - name: Checkout repository into /app
+        uses: actions/checkout@v3
+      
+      # - name: Show project structure
+      #   run: |
+      #     cd /app
+      #     ls -l
+      #     cd /node_modules
+      #     ls -l
+
+      - name: Copy tests
+        run: |
+          mkdir -p /app/tests/dmytrotus
+          cp -R $GITHUB_WORKSPACE/tests/dmytrotus/* /app/tests/dmytrotus
+
+      - name: Fix browser path
+        run: |
+          # Create the expected cache directory and link to container browsers
+          mkdir -p /github/home/.cache
+          # Find and link the actual browser location (adjust path as needed)
+          if [ -d "/ms-playwright" ]; then
+            ln -sf /ms-playwright /github/home/.cache/ms-playwright
+          elif [ -d "/root/.cache/ms-playwright" ]; then
+            ln -sf /root/.cache/ms-playwright /github/home/.cache/ms-playwright
+          fi
+
+      - name: Check permissions
+        run: |
+          ls -ld /app
+          ls -ld /app/node_modules/playwright-core
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
