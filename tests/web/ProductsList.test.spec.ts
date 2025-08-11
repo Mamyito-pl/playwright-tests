@@ -28,7 +28,7 @@ test.describe('Testy listy produktów', async () => {
     });
   })
 
-  test.only('W | Lista produktów otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Lista produktów otwiera się ze wszystkimi wymaganymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Lista produktów');
     await allure.epic('Webowe');
@@ -543,6 +543,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     expect((await productsListPage.getFilter('Typ produktu')).isVisible({ timeout: 10000 }));
+    await page.waitForTimeout(1000);
     await productsListPage.getFilterSelectCheckbox('Typ produktu','High protein');
     await page.waitForTimeout(7000);
     

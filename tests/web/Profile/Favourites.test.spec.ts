@@ -107,6 +107,8 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
+    await page.waitForTimeout(1000);
+
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -139,6 +141,8 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
+    await page.waitForTimeout(1000);
+
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
 
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -170,6 +174,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1500');
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
+
+    await page.waitForTimeout(1000);
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     
@@ -206,6 +212,8 @@ test.describe('Testy ulubionych produktów', async () => {
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
 
+    await page.waitForTimeout(1000);
+
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     
     await expect(favouritesPage.getSortButton).toBeVisible();
@@ -238,6 +246,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1502');
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
+
+    await page.waitForTimeout(1000);
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     
@@ -348,6 +358,8 @@ test.describe('Testy ulubionych produktów', async () => {
     await allure.allureId('1503');
 
     await page.goto('profil/ulubione', { waitUntil: 'domcontentloaded' });
+
+    await page.waitForTimeout(1000);
 
     await favouritesPage.getProductName.first().waitFor({ state: 'visible', timeout: 15000 });
     

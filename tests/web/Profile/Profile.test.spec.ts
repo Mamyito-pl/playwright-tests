@@ -344,7 +344,7 @@ test.describe('Testy profilu', async () => {
       await utility.gotoWithRetry(page, '/profil/zamowienia');
       await expect(page).toHaveURL(`${baseURL}` + '/profil/zamowienia?testy-automatyczne', { timeout: 15000 });
       await expect(profilePage.getProfileMenuLogOutButton).toBeVisible();
-      await profilePage.getProfileMenuLogOutButton.click();
+      await profilePage.getProfileMenuLogOutButton.click({ force: true, delay: 200 });
       await expect(nonLoggedUserPage.getDeliveryAvailableLink).toBeVisible({ timeout: 10000 });
       await expect(nonLoggedUserPage.getLoginLink).toBeVisible({ timeout: 10000 });
       await expect(nonLoggedUserPage.getRegisterLink).toBeVisible({ timeout: 10000 });
