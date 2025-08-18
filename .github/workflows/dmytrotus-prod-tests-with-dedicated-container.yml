@@ -28,6 +28,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Copy tests
+        run: |
+          mkdir -p /app/tests
+          cp -R $GITHUB_WORKSPACE/tests/* /app/tests
+
+      - name: Fix browser path
+        run: |
+          # Create the expected cache directory and link to container browsers
+          mkdir -p /github/home/.cache
+          # Find and link the actual browser location (adjust path as needed)
+          if [ -d "/ms-playwright" ]; then
+            ln -sf /ms-playwright /github/home/.cache/ms-playwright
+          elif [ -d "/root/.cache/ms-playwright" ]; then
+            ln -sf /root/.cache/ms-playwright /github/home/.cache/ms-playwright
+          fi
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:

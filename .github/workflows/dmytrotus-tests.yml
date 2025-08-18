@@ -1,6 +1,6 @@
 name: Playwright Web/Mobile Tests PROD
 
-on:
+#on:
   # push:
   #   branches:
   #     - 'feature/dedicated-*'
