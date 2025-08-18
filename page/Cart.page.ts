@@ -169,6 +169,10 @@ export default class CartPage {
         return this.page.locator('div[data-cy="active-codes-description"]')
     }
 
+    get getActiveCodeValue() {
+        return this.page.locator(this.mobile ? '#cart-summary span[data-cy="active-codes-badge"]' : '#cart-floating-div span[data-cy="active-codes-badge"]')
+    }
+
     get getSummaryDeleteDiscountCodeButton() {
         return this.page.getByRole('button', { name: 'Usuń', exact: true });
     }
