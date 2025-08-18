@@ -44,15 +44,6 @@ jobs:
             ln -sf /root/.cache/ms-playwright /github/home/.cache/ms-playwright
           fi
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-          check-latest: true
-
-      - name: Install and configure allurectl using Github Actions
-        uses: allure-framework/setup-allurectl@v1
-
       - name: Run Playwright tests for Mobile Chrome with Allure
         run: allurectl watch -- npx playwright test --max-failures=0 --project="Mobile Chrome" --grep "@ProdSmoke"
         env:
