@@ -8,3 +8,5 @@ COPY package*.json ./
 RUN npm install
 
 RUN npx playwright install --with-deps
+
+RUN npm install -D allure-playwright

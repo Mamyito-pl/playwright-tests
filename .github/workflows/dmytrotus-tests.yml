@@ -3,7 +3,7 @@ name: Playwright Web/Mobile Tests PROD
 on:
   push:
     branches:
-      - 'feature/*'
+      - 'feature/dedicated-*'
 
 jobs:
   test:
