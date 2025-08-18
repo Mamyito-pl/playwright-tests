@@ -1170,8 +1170,9 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
       await paymentsPage.checkStatue();
+      await page.waitForTimeout(1000);
+      await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
