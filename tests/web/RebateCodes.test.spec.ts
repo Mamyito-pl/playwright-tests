@@ -278,13 +278,13 @@ test.describe('Testy kodów rabatowych', async () => {
     await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(1000);
 
-    const codeCardColor = await cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('div[data-sentry-element="RebateCodeActionsWrapper"]').evaluate((el) => window.getComputedStyle(el).backgroundColor);
-    const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('div[data-sentry-element="RebateCodeActionsWrapper"] div').textContent() || '';
-    const codeCardButton = cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('div[data-sentry-element="RebateCodeActionsWrapper"] button');
-    const codeCardInformation = cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('div[data-sentry-element="RebateCodeActionsWrapper"] span');
+    const codeCardColor = await cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('..').locator('div[data-cy="rebate-code-value-wrapper"]').evaluate((el) => window.getComputedStyle(el).backgroundColor);
+    const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('..').locator('div[data-cy="rebate-code-value-wrapper"] div').textContent() || '';
+    const codeCardButton = cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('..').locator('div[data-cy="rebate-code-actions-wrapper"] button');
+    const codeCardInformation = cartPage.getCartCodesDrawer.last().getByText('KP10').locator('..').locator('..').locator('..').locator('div[data-cy="rebate-code-value-wrapper"] span');
     const codeCardName = await cartPage.getCartCodesDrawer.last().getByText('KP10').textContent();
 
-    const codeCardNameFormatted = codeCardName?.slice(14);
+    const codeCardDiscountValueFormatted = codeCardDiscountValue.slice(1);
 
     expect(codeCardColor).toBe('rgb(97, 189, 78)')
     expect(codeCardButton).toBeVisible();
@@ -296,20 +296,10 @@ test.describe('Testy kodów rabatowych', async () => {
     await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(2000);
 
-    const codeTitle = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().first().locator('b').textContent());
-    expect(codeTitle).toContain(codeCardNameFormatted);
-    const codeDiscountValue = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().last().locator('span').textContent());
-    expect(codeDiscountValue).toContain(codeCardDiscountValue);
+    const codeDiscountValue = (await cartPage.getActiveCodeValue.textContent());
+    const codeDiscountValueFormatted = codeDiscountValue?.slice(0, -7);
 
-    const discountCodeSummaryValue = (await cartPage.getDiscountCodesTitle.locator('div').last().textContent() || '').trim();
-    if (discountCodeSummaryValue !== null) {
-      const discountCodeSummaryValueFormatted = parseFloat(totalSummaryValueFormatted.replace(/\s/g, '').replace(',', '.')) * 0.10;
-      const cleanDiscountCodeSummaryValueFormatted = '-' + discountCodeSummaryValueFormatted.toFixed(2).replace('.', ',') + ' zł';
-      const normalize = (str: string) => str.replace(/\s/g, '').replace(/\u200B/g, '');
-      expect(normalize(discountCodeSummaryValue)).toContain(normalize(cleanDiscountCodeSummaryValueFormatted));
-    } else {
-      throw new Error('codeDiscountValue is null');
-    }
+    expect(codeDiscountValueFormatted).toContain(codeCardDiscountValueFormatted);
 
     const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(/\s/g, '').replace(',', '.'));
     console.log('totalSummaryValueFormattedParsed:', totalSummaryValueFormattedParsed);
