@@ -6,6 +6,7 @@ import CartPage from '../page/Cart.page.ts';
 import SearchbarPage from '../page/Searchbar.page.ts';
 import DeliveryPage from '../page/Delivery.page.ts';
 import CommonPage from '../page/Common.page.ts'
+import ProductsListPage from '../page/ProductsList.page.ts';
 import * as selectors from '../utils/selectors.json';
 import * as utility from '../utils/utility-methods';
 
@@ -15,7 +16,7 @@ let cartPage: CartPage;
 let searchbarPage : SearchbarPage;
 let deliveryPage : DeliveryPage;
 let commonPage: CommonPage;
-
+let productsListPage: ProductsListPage;
 
 type MyFixtures = {
     loginManual: () => Promise<void>;
@@ -41,6 +42,7 @@ type MyFixtures = {
     cancelOrderViaAPI: (page: Page) => Promise<void>;
     cancelEditOrderViaAPI: (page: Page) => Promise<void>;
     detachDeliverySlotViaAPI: () => Promise<void>;
+    addProductsByValue: (maxValue: number) => Promise<void>;
 };
 
 export const test = baseTest.extend<MyFixtures>({
@@ -736,6 +738,60 @@ export const test = baseTest.extend<MyFixtures>({
       expect(detachDeliverySlot.status()).toBe(200);
     };
     await use(detachDeliverySlotViaAPI);
+  },
+
+  addProductsByValue: async ({ page }, use) => {
+
+    commonPage = new CommonPage(page);
+    productsListPage = new ProductsListPage(page);
+
+    const addProductsByValue = async (maxValue: number): Promise<void> => {
+      let currentValue = 0;
+      let addedCount = 0;
+      
+      await page.goto(`${process.env.URL}/multipaki`, { waitUntil: 'load' });
+      await productsListPage.getProductCategoryTitle('Multipaki').waitFor({ state: 'visible', timeout: 15000 });
+      await page.waitForTimeout(10000);
+
+      const productPriceElements = await page.locator('[data-cy="product-card-current-price"]').all();
+      const limitedElements = productPriceElements.slice(0, 12);
+      const productPrices: number[] = [];
+      
+      for (let i = 0; i < limitedElements.length; i++) {
+        const priceText = await limitedElements[i].textContent();
+        if (priceText !== null) {
+          const priceValue = parseFloat(priceText.replace(/[^\d.,]/g, '').replace(',', '.'));
+          if (!isNaN(priceValue)) {
+            productPrices.push(priceValue);
+          }
+        }
+      }
+      
+      console.log(`Dostępne ceny produktów: ${productPrices.join(', ')}zł`);
+
+      for (let i = 0; i < productPrices.length && currentValue < maxValue; i++) {
+        const priceValue = productPrices[i];
+        
+        if ((currentValue + priceValue) <= maxValue) {
+          await page.locator(selectors.ProductsListPage.common.productCardAddButton).first().click({ force: true, delay: 300 });
+          await page.waitForTimeout(4000);
+          currentValue += priceValue;
+          addedCount++;
+          
+          console.log(`Dodano produkt za ${priceValue}zł, łączna wartość: ${currentValue}zł`);
+        } else {
+          console.log(`Pominięto produkt za ${priceValue}zł (suma ${currentValue + priceValue}zł przekroczyłaby maksimum ${maxValue}zł)`);
+        }
+      }
+      
+      if (currentValue >= 150) {
+        console.log(`✅ Dodano ${addedCount} produktów na łączną wartość: ${currentValue}zł (przedział 150-${maxValue}zł)`);
+      } else {
+        console.log(`❌ Dodano ${addedCount} produktów na łączną wartość: ${currentValue}zł - nie osiągnięto minimum 150zł`);
+      }
+    };
+
+    await use(addProductsByValue);
   }
 });
 

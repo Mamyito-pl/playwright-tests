@@ -24,7 +24,7 @@ test.describe('Testy koszyka', async () => {
   let navigationPage: NavigationPage;
   let searchbarPage : SearchbarPage;
   let commonPage : CommonPage;
-  let product: string = 'woda mineralna';
+  let product: string = 'janex polędwica wołowa';
 
   test.beforeEach(async ({ page }) => {
 

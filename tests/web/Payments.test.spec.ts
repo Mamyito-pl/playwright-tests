@@ -339,7 +339,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
     
-    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProductsByValue, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -350,13 +350,8 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(250000);
 
-      await addProduct(product);
-
-      await searchbarPage.getProductItemCount.first().click();
-      await page.waitForTimeout(1000);
-      await searchbarPage.getProductItemCount.first().type('1');
+      await addProductsByValue(180);
       await commonPage.getCartButton.click();
-      await page.waitForTimeout(1000);
 
       await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
       await cartPage.clickCartDrawerToCartButton();
@@ -409,9 +404,11 @@ test.describe('Testy płatności', async () => {
           break;
         }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-        await page.waitForTimeout(9000);
+        await page.waitForTimeout(11000);
         tries++;
       }
+
+      await page.waitForTimeout(2000);
 
       const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1106,7 +1103,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
         
-    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Próba płatności przelewem online powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProductsByValue, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1117,13 +1114,8 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(230000);
 
-      await addProduct(product);
-
-      await searchbarPage.getProductItemCount.first().click();
-      await page.waitForTimeout(1000);
-      await searchbarPage.getProductItemCount.first().type('1');
+      await addProductsByValue(180);
       await commonPage.getCartButton.click();
-      await page.waitForTimeout(1000);
 
       await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
       await cartPage.clickCartDrawerToCartButton();
@@ -1180,9 +1172,11 @@ test.describe('Testy płatności', async () => {
           break;
         }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-        await page.waitForTimeout(9000);
+        await page.waitForTimeout(11000);
         tries++;
       }
+
+      await page.waitForTimeout(2000);
 
       const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
@@ -1195,7 +1189,7 @@ test.describe('Testy płatności', async () => {
 
   test.describe('Zapłata kartą przy odbiorze', async () => {
   
-    test('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test('W | Zapłata kartą przy odbiorze', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProductsByValue, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1206,13 +1200,8 @@ test.describe('Testy płatności', async () => {
 
       test.setTimeout(230000);
 
-      await addProduct(product);
-
-      await searchbarPage.getProductItemCount.first().click();
-      await page.waitForTimeout(1000);
-      await searchbarPage.getProductItemCount.first().type('1');
+      await addProductsByValue(180);
       await commonPage.getCartButton.click();
-      await page.waitForTimeout(1000);
 
       await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
       await cartPage.clickCartDrawerToCartButton();
@@ -1266,9 +1255,11 @@ test.describe('Testy płatności', async () => {
           break;
         }
         await orderDetailsPage.getCancelConfirmationButton.click({ force: true, delay: 300 });
-        await page.waitForTimeout(9000);
+        await page.waitForTimeout(11000);
         tries++;
       }
+
+      await page.waitForTimeout(2000);
 
       const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
