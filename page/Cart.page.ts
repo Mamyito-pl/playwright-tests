@@ -18,11 +18,11 @@ export default class CartPage {
     }
     
     async clickCartSummaryButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_proceed_button' : '#cart-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_proceed_button' : '#cart-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
     }
 
     async clickCartSummaryPaymentButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_proceed_button' : '#delivery-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_proceed_button' : '#delivery-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
     }
 
     async clickShowCartButton() {
@@ -70,11 +70,11 @@ export default class CartPage {
     }
 
     get getCartPaymentConfirmationButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_payment_confirmation' : '#payment-floating-div #cart_summary_payment_confirmation')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_payment_confirmation' : '#payment-floating-div #cart_summary_payment_confirmation')
     }
 
     get getCartPaymentConfirmationDisabledButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] #cart_summary_proceed_payment_button' : '#payment-floating-div #cart_summary_proceed_payment_button')
+        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_proceed_payment_button' : '#payment-floating-div #cart_summary_proceed_payment_button')
     }
 
     get getProductCartConfirmButton() {
