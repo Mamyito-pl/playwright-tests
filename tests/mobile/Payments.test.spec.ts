@@ -392,6 +392,8 @@ test.describe('Testy płatności', async () => {
         tries++;
       }
 
+      await page.waitForTimeout(2000);
+
       const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
         return textContent.includes('Anulowane');
@@ -1125,6 +1127,8 @@ test.describe('Testy płatności', async () => {
         tries++;
       }
 
+      await page.waitForTimeout(2000);
+
       const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
         return textContent.includes('Anulowane');
@@ -1206,6 +1210,8 @@ test.describe('Testy płatności', async () => {
         await page.waitForTimeout(7000);
         tries++;
       }
+
+      await page.waitForTimeout(2000);
 
       const statusAfterCancelIsVisible = await page.locator('#ordersHeadline').locator('..').last().first().evaluate((element) => {
         const textContent = element.textContent || '';
