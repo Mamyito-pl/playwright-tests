@@ -153,7 +153,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSearchbarClearButton.click();
     await expect(searchbarPage.getSearchbarInput).not.toHaveValue(productToSearch);
     await expect(searchbarPage.getSearchbarClearButton).not.toBeVisible();
-    await expect(searchbarPage.getSearchbarProductTiles.first()).not.toBeVisible({ timeout: 5000 })
+    await expect(searchbarPage.getSearchbarProductTiles.first()).not.toBeVisible({ timeout: 10000 })
   })
   
   test('M | Produkt wyszukiwany ze spacjami na początku prawidłowo się wyszukuje', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
@@ -247,7 +247,7 @@ test.describe('Testy wyszukiwarki', async () => {
     await searchbarPage.getSearchbarInput.click();
     await page.waitForTimeout(1000);
     await page.keyboard.type(notExistingProduct);
-    await expect(searchbarPage.getOurDiscountsSection).toBeVisible();
+    await expect(searchbarPage.getOurDiscountsSection).toBeVisible({ timeout: 15000 });
     await searchbarPage.getSectionShowAllLink.click();
     await expect(page).toHaveURL(`${baseURL}` + '/promocje', { timeout: 10000 });
     await expect(productsListPage.getProductCategoryTitle('Promocje')).toBeVisible({ timeout: 15000 });

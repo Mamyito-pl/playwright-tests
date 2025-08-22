@@ -114,8 +114,9 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
     await utility.addTestParam(page);
     await page.waitForTimeout(2000);
-    await page.getByText(paymentMethod).click({ force: true });
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethod).click({ force: true });
     await cartPage.clickCartExpandCollapseButton();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
@@ -231,8 +232,10 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
-    await page.getByText('Przelew online').click({ force: true });
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText('Przelew online').click({ force: true });
     await cartPage.clickCartExpandCollapseButton();
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
@@ -350,8 +353,9 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
     await utility.addTestParam(page);
     await page.waitForTimeout(2000);
-    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -396,6 +400,12 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await expect(orderDetailsPage.getRepeatOrderModal).not.toBeVisible({ timeout: 5000 });
 
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 10000 });
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
     await cancelOrderViaAPI(page);
 
     await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 5000 });
@@ -430,8 +440,10 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-    await page.getByText('Przelew online').click({ force: true });
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText('Przelew online').click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -501,6 +513,12 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await orderDetailsPage.getRepeatOrderModalAddProductsButton.click();
 
     await expect(orderDetailsPage.getRepeatOrderModal).not.toBeVisible({ timeout: 5000 });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 10000 });
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
 
     await cancelOrderViaAPI(page);
 

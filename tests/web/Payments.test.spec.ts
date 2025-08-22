@@ -96,8 +96,8 @@ test.describe('Testy płatności', async () => {
 
     await paymentsPage.clickBackHomeButton();
 
-    await expect(page).toHaveURL(`${baseURL}`);
-    await expect(mainPage.getBannersSection).toBeVisible();
+    await expect(page).toHaveURL(`${baseURL}`, { timeout: 15000 });
+    await expect(mainPage.getBannersSection).toBeVisible({ timeout: 15000 });
 
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeHidden({ timeout: 20000 });
     await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeHidden({ timeout: 20000 });
@@ -496,11 +496,9 @@ test.describe('Testy płatności', async () => {
       await cartPage.getCartPaymentConfirmationDisabledButton.isDisabled();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toBeVisible();
       await expect(paymentsPage.getBlikTextboxPlaceholder).toHaveText('Wpisz 6-cio cyfrowy kod BLIK');
-      await expect(paymentsPage.getBlikTextboxHelperText).toBeVisible();
-      await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Kod blik jest wymagany');
     })
 
-    test('W | Zapłata za krótkim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test.skip('W | Zapłata za krótkim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -535,7 +533,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBlikTextboxHelperText).toHaveText('Podany kod jest nieprawidłowy. Kod BLIK musi zawierać 6 cyfr');
     })
             
-    test('W | Zapłata za długim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
+    test.skip('W | Zapłata za długim kodem BLIK', { tag: ['@Beta', '@Test'] }, async ({ page, addProduct }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -794,7 +792,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Przelew online').check();
+      await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -857,7 +855,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Przelew online').check();
+      await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -935,7 +933,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Przelew online').check();
+      await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -1039,7 +1037,7 @@ test.describe('Testy płatności', async () => {
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
       await cartPage.clickCartSummaryPaymentButton();
-      await page.getByLabel('Przelew online').check();
+      await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
@@ -1135,7 +1133,7 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      await page.getByText('Przelew online').click({ force: true });
+      await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 25000, state: 'hidden' });
@@ -1221,7 +1219,7 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
+      await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });

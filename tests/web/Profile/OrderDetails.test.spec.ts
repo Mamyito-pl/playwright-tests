@@ -396,6 +396,12 @@ test.describe('Testy szczegółów zamówienia', async () => {
 
     await expect(orderDetailsPage.getRepeatOrderModal).not.toBeVisible({ timeout: 5000 });
 
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 10000 });
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
+
     await cancelOrderViaAPI(page);
 
     await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 5000 });
@@ -513,6 +519,12 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await orderDetailsPage.getRepeatOrderModalAddProductsButton.click();
 
     await expect(orderDetailsPage.getRepeatOrderModal).not.toBeVisible({ timeout: 5000 });
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 10000 });
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/profil/zamowienia\\?order=.*'), { timeout: 30000 });
 
     await cancelOrderViaAPI(page);
 

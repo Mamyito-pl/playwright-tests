@@ -59,7 +59,7 @@ test.describe('Testy kategorii produktów', async () => {
 
     await expect(page).toHaveURL('/warzywa-i-owoce', { timeout: 15000 });
 
-    await expect(productsListPage.getProductCategoryTitle('Warzywa i owoce')).toBeVisible();
+    await expect(productsListPage.getProductCategoryTitle('Warzywa i owoce')).toBeVisible({ timeout: 15000 });
   })
 
   test('M | Możliwość przejścia do wybranej podkategorii danej kategorii', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe('Testy kategorii produktów', async () => {
 
     await expect(page).toHaveURL('/warzywa-i-owoce/owoce', { timeout: 15000 });
 
-    await expect(productsListPage.getProductCategoryTitle('Owoce')).toBeVisible();
+    await expect(productsListPage.getProductCategoryTitle('Owoce')).toBeVisible({ timeout: 15000 });
   })
 })
 

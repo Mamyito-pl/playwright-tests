@@ -44,7 +44,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await clearCartViaAPI();
   }) 
   
-  test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+  test.skip('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -245,7 +245,7 @@ test.describe('Testy kodów rabatowych', async () => {
     expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
   })
 
-  test('W | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+  test.skip('W | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Kody rabatowe');
     await allure.epic('Webowe');

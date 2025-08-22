@@ -161,7 +161,7 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 600);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     const firstItemInSlider = page.locator('[data-cy="bestsellery-product-card-slider"]').first()
@@ -196,7 +196,7 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 600);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     await mainPage.getBestsellersSection.scrollIntoViewIfNeeded();
@@ -225,7 +225,7 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1200);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
     
     const firstItemInSlider = page.locator('div[data-sentry-component="CategoriesSection"] section a[rel="nofollow"]').first()
@@ -262,9 +262,9 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1200);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
       await page.mouse.wheel(0, 1200);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     await mainPage.getCategoriesSection.scrollIntoViewIfNeeded();
@@ -293,7 +293,7 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1200);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     const firstItemInSlider = page.locator('div[data-sentry-component="CategoriesSection"] section a[rel="nofollow"]').first();
@@ -329,9 +329,9 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1500);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
       await page.mouse.wheel(0, 500);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     const firstItemInSlider = page.locator('[data-cy="nowosci-product-card-slider"]').first()
@@ -368,9 +368,9 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1500);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
       await page.mouse.wheel(0, 500);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
@@ -401,9 +401,9 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1550);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
       await page.mouse.wheel(0, 600);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     const firstItemInSlider = page.locator('#most_frequently_bought div[data-sentry-component="ProductCard"]').first()
@@ -438,9 +438,9 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1550);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
       await page.mouse.wheel(0, 600);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
@@ -544,9 +544,9 @@ test.describe('Testy strony głównej', async () => {
       });
     } else {
       await page.mouse.wheel(0, 1500);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
       await page.mouse.wheel(0, 1700);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1200);
     }
 
     await expect(mainPage.getNewsletterSection).toBeVisible();
