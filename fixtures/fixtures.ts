@@ -660,8 +660,12 @@ export const test = baseTest.extend<MyFixtures>({
       const token = responseBodyToken.data.token;
 
       const url = new URL(page.url());
-      const saleOrderId = url.searchParams.get('order');
+      let saleOrderId = url.searchParams.get('order');
       if (!saleOrderId) throw new Error('Brak saleOrderId w URL');
+      
+      if (saleOrderId.includes('?testy-automatyczne')) {
+        saleOrderId = saleOrderId.split('?testy-automatyczne')[0];
+      }
 
       const response = await request.patch(`${process.env.APIURL}/api/sale-orders/${saleOrderId}/cancel`, {
         headers: {
@@ -687,8 +691,13 @@ export const test = baseTest.extend<MyFixtures>({
       const token = responseBodyToken.data.token;
 
       const url = new URL(page.url());
-      const saleOrderId = url.searchParams.get('order');
+      let saleOrderId = url.searchParams.get('order');
       if (!saleOrderId) throw new Error('Brak saleOrderId w URL');
+      
+      // Usuń ?testy-automatyczne z saleOrderId jeśli istnieje
+      if (saleOrderId.includes('?testy-automatyczne')) {
+        saleOrderId = saleOrderId.split('?testy-automatyczne')[0];
+      }
 
       const response = await request.delete(`${process.env.APIURL}/api/sale-orders/${saleOrderId}/edit-cancel`, {
         headers: {
