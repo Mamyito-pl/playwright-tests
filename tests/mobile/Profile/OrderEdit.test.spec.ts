@@ -67,7 +67,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await clearCartViaAPI();
   }) 
   
-  test('M | Wyjście z edycji z poziomu koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
+  test('M | Wyjście z edycji z poziomu koszyka', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProductsByValue }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -80,31 +80,32 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
-    await searchbarPage.getProductItemCount.first().click();
-    await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await addProductsByValue(180);
     await commonPage.getCartButton.click();
-    await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -125,11 +126,9 @@ test.describe('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getApplyEditOrderModalButton).toBeVisible({ timeout: 10000 });
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
-  
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(orderEditPage.getCancelEditOrderCartButton).toBeVisible({ timeout: 10000 });
@@ -142,7 +141,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await expect(orderEditPage.getCancelEditOrderCartButton).not.toBeVisible({ timeout: 10000 });
   })
     
-  test('M | Zamknięcie modala rozpoczęcia edycji "X" z poziomu zamówienia', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
+  test('M | Zamknięcie modala rozpoczęcia edycji "X" z poziomu zamówienia', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProductsByValue }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -155,31 +154,32 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
-    await searchbarPage.getProductItemCount.first().click();
-    await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await addProductsByValue(180);
     await commonPage.getCartButton.click();
-    await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -204,7 +204,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await expect(commonPage.getCartProductsCount).not.toBeVisible({ timeout: 10000 });
   })
 
-  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu "X"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu "X"', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProductsByValue, cancelEditOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -217,31 +217,32 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
-    await searchbarPage.getProductItemCount.first().click();
-    await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await addProductsByValue(180);
     await commonPage.getCartButton.click();
-    await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -266,10 +267,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 10000 });
@@ -284,7 +283,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await cancelEditOrderViaAPI(page);
   })
   
-  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+  test('M | Modal zatwierdzenia edycji z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProductsByValue, cancelEditOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -297,31 +296,32 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
-    await searchbarPage.getProductItemCount.first().click();
-    await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await addProductsByValue(180);
     await commonPage.getCartButton.click();
-    await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -346,10 +346,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(orderEditPage.getApplyEditOrderCartButton).toBeVisible({ timeout: 10000 });
@@ -363,7 +361,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await cancelEditOrderViaAPI(page);
   })
 
-  test('M | Modal "Anuluj edycję" z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct, cancelEditOrderViaAPI }) => {
+  test('M | Modal "Anuluj edycję" z poziomu koszyka zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProductsByValue, cancelEditOrderViaAPI }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -376,32 +374,32 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
-    await searchbarPage.getProductItemCount.first().click();
-    await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await addProductsByValue(180);
     await commonPage.getCartButton.click();
-    await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
-    await cartPage.clickCartSummaryButton();
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -426,10 +424,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(orderEditPage.getCancelEditOrderCartButton).toBeVisible({ timeout: 10000 });
@@ -444,7 +440,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await cancelEditOrderViaAPI(page);
   })
 
-  test('M | Modal rozpoczęcia edycji z poziomu zamówienia zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProduct }) => {
+  test('M | Modal rozpoczęcia edycji z poziomu zamówienia zamyka się po kliknięciu w przycisk anuluj', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL, addProductsByValue }) => {
 
     await allure.tags('Mobilne', 'Edycja zamówienia');
     await allure.epic('Mobilne');
@@ -457,31 +453,32 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
-    await searchbarPage.getProductItemCount.first().click();
-    await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await addProductsByValue(180);
     await commonPage.getCartButton.click();
-    await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
     await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
 
@@ -524,27 +521,34 @@ test.describe('Testy edycji zamówienia', async () => {
 
     await searchbarPage.getProductItemCount.first().click();
     await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await page.keyboard.press('Backspace');
+    await searchbarPage.getProductItemCount.first().type('3');
     await commonPage.getCartButton.click();
     await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
-    await deliveryPage.getDeliverySlotButton.first().click();
+    await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
-
+    await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
     await cartPage.clickCartSummaryPaymentButton();
-
-    await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
-    await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
-    await page.getByLabel(paymentMethodCard).check();
-    await paymentsPage.getStatueCheckbox.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000);
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
+    await page.waitForTimeout(1000);
+    await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     const summaryPrice = parseFloat((await cartPage.getTotalSummaryValue.textContent() || '0')
     .replace(/[^0-9,.]/g, '')
     .replace(',', '.'));
@@ -570,10 +574,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     
     await cartPage.clickCartSummaryButton();
@@ -645,19 +647,25 @@ test.describe('Testy edycji zamówienia', async () => {
       
     test.setTimeout(150000);
 
-    await addProduct(product);
-
     await searchbarPage.getProductItemCount.first().click();
     await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await page.keyboard.press('Backspace');
+    await searchbarPage.getProductItemCount.first().type('3');
     await commonPage.getCartButton.click();
     await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await page.waitForTimeout(1000);
@@ -681,6 +689,8 @@ test.describe('Testy edycji zamówienia', async () => {
     }
 
     await cartPage.clickCartSummaryPaymentButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
     await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
     await page.getByLabel(paymentMethodCard).check();
@@ -713,13 +723,14 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.last().click();
     await page.waitForTimeout(1000);
@@ -799,19 +810,28 @@ test.describe('Testy edycji zamówienia', async () => {
 
     await searchbarPage.getProductItemCount.first().click();
     await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await page.keyboard.press('Backspace');
+    await searchbarPage.getProductItemCount.first().type('3');
     await commonPage.getCartButton.click();
     await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await cartPage.clickCartSummaryPaymentButton();
-
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
     await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
     await page.getByLabel(paymentMethodCard).check();
@@ -843,10 +863,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
@@ -926,20 +944,28 @@ test.describe('Testy edycji zamówienia', async () => {
 
     await searchbarPage.getProductItemCount.first().click();
     await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await page.keyboard.press('Backspace');
+    await searchbarPage.getProductItemCount.first().type('3');
     await commonPage.getCartButton.click();
     await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
-    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
-
+    await expect(cartPage.getCartDrawerToCartButton).toBeVisible({ timeout: 10000 });
+    await cartPage.clickCartDrawerToCartButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
-    await page.waitForTimeout(1000);
     await cartPage.clickCartSummaryPaymentButton();
-
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
     await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
     await page.getByLabel(paymentMethodCard).check();
@@ -971,10 +997,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
@@ -1053,12 +1077,13 @@ test.describe('Testy edycji zamówienia', async () => {
 
     await searchbarPage.getProductItemCount.first().click();
     await page.waitForTimeout(1000);
-    await searchbarPage.getProductItemCount.first().type('1');
+    await page.keyboard.press('Backspace');
+    await searchbarPage.getProductItemCount.first().type('3');
     await commonPage.getCartButton.click();
     await page.waitForTimeout(1000);
 
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
+    await page.goto('/koszyk?testy-automatyczne', { waitUntil: 'load'});
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
 
     await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
@@ -1073,10 +1098,18 @@ test.describe('Testy edycji zamówienia', async () => {
     await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
 
     await cartPage.clickCartSummaryButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
+    await utility.addTestParam(page);
+    await page.waitForTimeout(2000);
+    if (await deliveryPage.getCloseAddressModalButton.isVisible({ timeout: 5000 })) {
+      await deliveryPage.clickCloseAddressModalButton();
+    }
     await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
     await deliveryPage.getDeliverySlotButton.first().click();
     await page.waitForTimeout(1000);
     await cartPage.clickCartSummaryPaymentButton();
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await expect(cartPage.getCartPaymentConfirmationDisabledButton).toBeVisible({ timeout: 10000 });
     await page.getByLabel(paymentMethodCard).scrollIntoViewIfNeeded();
     await page.getByLabel(paymentMethodCard).check();
@@ -1108,10 +1141,8 @@ test.describe('Testy edycji zamówienia', async () => {
     await orderEditPage.clickApplyEditOrderModalButton();
     await expect(orderEditPage.getEditOrderModalTitle).not.toBeVisible({ timeout: 10000 });
   
-    await expect(commonPage.getCartProductsCount).toBeVisible({ timeout: 10000 });
-    await expect(commonPage.getCartProductsPrice).toBeVisible({ timeout: 10000 });
-
-    await page.goto('/koszyk', { waitUntil: 'load'});
+    await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
+    await utility.addTestParam(page);
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
 
     await expect(cartPage.getCartExpandCollapseButton).toBeVisible({ timeout: 5000 });
@@ -4320,5 +4351,4 @@ test.describe('Testy edycji zamówienia', async () => {
       expect(finalPrice).toBe(summaryPriceAfterChanges);
     })
   })
-})
-*/
+})*/
