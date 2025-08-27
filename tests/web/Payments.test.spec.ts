@@ -367,6 +367,7 @@ test.describe('Testy płatności', async () => {
       }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
+      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -1129,6 +1130,7 @@ test.describe('Testy płatności', async () => {
       }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
+      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -1215,6 +1217,7 @@ test.describe('Testy płatności', async () => {
       }
       await page.waitForSelector(selectors.DeliveryPage.common.deliverySlot, { timeout: 10000 });
       await deliveryPage.getDeliverySlotButton.first().click();
+      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
