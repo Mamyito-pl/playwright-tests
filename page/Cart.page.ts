@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 import * as selectors from '../utils/selectors.json';
 import { isMobile } from '../utils/utility-methods.ts';
+import { expect } from "@playwright/test";
 
 export default class CartPage {
     private mobile: boolean;
@@ -14,15 +15,16 @@ export default class CartPage {
 
 
     async clickCartPaymentConfirmationButton() {
+        await expect(this.getCartPaymentConfirmationButton).toHaveCSS('background-color', 'rgb(249, 127, 21)');
         await this.getCartPaymentConfirmationButton.click({ force: true });
     }
     
     async clickCartSummaryButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_proceed_button' : '#cart-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? '[data-cy="mobile-cart-checkout-button"]' : '[data-cy="desktop-cart-checkout-button"]').click({ force: true, delay: 300 });
     }
 
     async clickCartSummaryPaymentButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_proceed_button' : '#delivery-floating-div #cart_summary_proceed_button').click({ force: true, delay: 300 });
+        return this.page.locator(this.mobile ? '[data-cy="mobile-delivery-checkout-button"]' : '[data-cy="desktop-delivery-checkout-button"]').click({ force: true, delay: 300 });
     }
 
     async clickShowCartButton() {
@@ -70,11 +72,11 @@ export default class CartPage {
     }
 
     get getCartPaymentConfirmationButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_payment_confirmation' : '#payment-floating-div #cart_summary_payment_confirmation')
+        return this.page.locator(this.mobile ? '[data-cy="mobile-payment-checkout-button"]' : '[data-cy="desktop-payment-checkout-button"]')
     }
 
     get getCartPaymentConfirmationDisabledButton() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="StickyTabletContent"] #cart_summary_proceed_payment_button' : '#payment-floating-div #cart_summary_proceed_payment_button')
+        return this.page.locator(this.mobile ? '[data-cy="mobile-payment-checkout-button"]' : '[data-cy="desktop-payment-checkout-button"]')
     }
 
     get getProductCartConfirmButton() {
@@ -114,7 +116,7 @@ export default class CartPage {
     }
 
     get getCartDrawerToCartButton() {
-        return this.page.locator(this.mobile ? "#cart-drawer-content-tablet #to_cart_button" : "#cart-drawer-content-desktop #to_cart_button");
+        return this.page.locator(this.mobile ? '[data-cy="mobile-drawer-checkout-button"]' : '[data-cy="desktop-drawer-checkout-button"]');
     }
 
     get getCartSummaryButton() {

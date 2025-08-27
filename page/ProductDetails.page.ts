@@ -78,7 +78,7 @@ export default class ProductDetailsPage {
     }
 
     get getOtherProductsFromThisCategorySectionTitle() {
-        return this.page.getByText('Inne produkty z tej kategorii');
+        return this.page.getByText('Podobne produkty');
     }
 
     get getOtherProductsFromThisCategorySection() {

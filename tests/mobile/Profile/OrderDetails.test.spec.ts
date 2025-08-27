@@ -110,6 +110,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+    await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
     await cartPage.clickCartSummaryPaymentButton();
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
     await utility.addTestParam(page);
@@ -230,6 +231,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+    await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
     await cartPage.clickCartSummaryPaymentButton();
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
     await page.waitForTimeout(2000);
@@ -349,6 +351,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+    await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
     await cartPage.clickCartSummaryPaymentButton();
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
     await utility.addTestParam(page);
@@ -439,6 +442,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
     await page.waitForTimeout(1000);
     await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+    await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
     await cartPage.clickCartSummaryPaymentButton();
     await page.waitForTimeout(2000);
     await paymentsPage.checkStatue();
