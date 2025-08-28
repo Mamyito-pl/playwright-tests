@@ -28,7 +28,6 @@
             "cartDrawer": "div[class*='MuiDrawer-paperAnchorRight']",
             "cartSummaryButton": "#cart_summary_proceed_button",
             "cartSummaryPaymentButton": "#cart_summary_proceed_payment_button",
-            "cartSummaryPaymentConfirmationButton": "#cart_summary_payment_confirmation",
             "cartReturnButton": "#authentication_return_button",
             "deleteProductCartIcon": "button[aria-label*='Usuń produkt']",
             "cartDrawerToCartButton": "#to_cart_button"
