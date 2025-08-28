@@ -122,7 +122,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
@@ -242,7 +242,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     const paymentTotalPrice = await cartPage.getTotalSummaryValue.textContent();
     const paymentTotalPriceFormatted = paymentTotalPrice?.slice(10);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
   
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
     await przelewy24Page.clickMainTransferButton();
@@ -360,7 +360,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
@@ -449,7 +449,7 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText('Przelew online').click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
     await przelewy24Page.clickMainTransferButton();

@@ -107,7 +107,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -181,7 +181,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -244,7 +244,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -323,7 +323,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -401,7 +401,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -480,7 +480,7 @@ test.describe('Testy edycji zamówienia', async () => {
     await page.waitForTimeout(1000);
     await page.getByText(paymentMethodCard, { exact: true }).click({ force: true });
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -554,7 +554,7 @@ test.describe('Testy edycji zamówienia', async () => {
     .replace(',', '.'));
     console.log(summaryPrice);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -702,7 +702,7 @@ test.describe('Testy edycji zamówienia', async () => {
     .replace(',', '.'));
     console.log(summaryPrice);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -843,7 +843,7 @@ test.describe('Testy edycji zamówienia', async () => {
     .replace(',', '.'));
     console.log(summaryPrice);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -977,7 +977,7 @@ test.describe('Testy edycji zamówienia', async () => {
     .replace(',', '.'));
     console.log(summaryPrice);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -1121,7 +1121,7 @@ test.describe('Testy edycji zamówienia', async () => {
     .replace(',', '.'));
     console.log(summaryPrice);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -1256,7 +1256,7 @@ test.describe('Testy edycji zamówienia', async () => {
     .replace(',', '.'));
     console.log(summaryPrice);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
@@ -1528,7 +1528,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -1770,7 +1770,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -1967,7 +1967,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
       await przelewy24Page.clickMainTransferButton();
@@ -2200,7 +2200,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
       await przelewy24Page.clickMainTransferButton();
@@ -2423,7 +2423,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -2630,7 +2630,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -2870,7 +2870,7 @@ test.describe('Testy edycji zamówienia', async () => {
         .replace(',', '.'));
         console.log(summaryPrice);
         await cartPage.clickCartPaymentConfirmationButton();
-        await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+        await cartPage.waitForPaymentConfirmationButton();
 
         await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
         await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -3105,7 +3105,7 @@ test.describe('Testy edycji zamówienia', async () => {
         .replace(',', '.'));
         console.log(summaryPrice);
         await cartPage.clickCartPaymentConfirmationButton();
-        await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+        await cartPage.waitForPaymentConfirmationButton();
     
         await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
         await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -3304,7 +3304,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -3503,7 +3503,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
       await przelewy24Page.clickMainTransferButton();
@@ -3728,7 +3728,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'), { timeout: 15000 });
       await przelewy24Page.clickMainTransferButton();
@@ -3953,7 +3953,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -4162,7 +4162,7 @@ test.describe('Testy edycji zamówienia', async () => {
       .replace(',', '.'));
       console.log(summaryPrice);
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
   
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();

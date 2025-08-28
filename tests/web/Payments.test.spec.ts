@@ -84,7 +84,7 @@ test.describe('Testy płatności', async () => {
     await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
@@ -137,7 +137,7 @@ test.describe('Testy płatności', async () => {
     await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(paymentsPage.getRepeatOrderButton).toBeVisible();
@@ -181,7 +181,7 @@ test.describe('Testy płatności', async () => {
     await page.getByText('Płatność kartą przy odbiorze').click({ force: true });
     await paymentsPage.checkStatue();
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
   
     await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
     await expect(paymentsPage.getOrderDetailsButton).toBeVisible();
@@ -224,7 +224,7 @@ test.describe('Testy płatności', async () => {
     await paymentsPage.checkStatue();
     await page.waitForTimeout(1000);
     await cartPage.clickCartPaymentConfirmationButton();
-    await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 7000, state: 'hidden' });
+    await cartPage.waitForPaymentConfirmationButton();
 
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
     await przelewy24Page.clickMainTransferButton();
@@ -326,7 +326,7 @@ test.describe('Testy płatności', async () => {
       await paymentsPage.enterBlikCode('777888');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -376,7 +376,7 @@ test.describe('Testy płatności', async () => {
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -450,7 +450,7 @@ test.describe('Testy płatności', async () => {
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -649,7 +649,7 @@ test.describe('Testy płatności', async () => {
       await paymentsPage.enterBlikCode('123456');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
@@ -732,7 +732,7 @@ test.describe('Testy płatności', async () => {
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
 
@@ -796,7 +796,7 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
       await przelewy24Page.clickMainTransferButton();
@@ -859,7 +859,7 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
       await przelewy24Page.clickMainTransferButton();
@@ -937,7 +937,7 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
       await przelewy24Page.clickMainTransferButton();
@@ -1041,7 +1041,7 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnRequest/'));
       await przelewy24Page.clickMainTransferButton();
@@ -1138,7 +1138,7 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 25000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       if (`${process.env.URL}` == 'https://mamyito.pl') {
         await expect(page).toHaveURL(new RegExp('^https://go.przelewy24.pl/trnRequest/'), { timeout: 20000 });
@@ -1225,7 +1225,7 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await page.waitForSelector(selectors.CartPage.common.cartSummaryPaymentConfirmationButton, { timeout: 15000, state: 'hidden' });
+      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
