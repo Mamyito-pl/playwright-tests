@@ -13,6 +13,9 @@ export default class CartPage {
         this.mobile = isMobile(viewport.width);
     }
 
+    async waitForPaymentConfirmationButton() {
+        await this.page.waitForSelector(this.mobile ? '[data-cy="mobile-payment-checkout-button"]' : '[data-cy="desktop-payment-checkout-button"]', { timeout: 15000, state: 'hidden' });
+    }
 
     async clickCartPaymentConfirmationButton() {
         await expect(this.getCartPaymentConfirmationButton).toHaveCSS('background-color', 'rgb(249, 127, 21)');
