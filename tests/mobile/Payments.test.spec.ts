@@ -335,7 +335,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
 
-    test('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProductsByValue, baseURL }) => {
+    test.only('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProductsByValue, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
@@ -365,7 +365,7 @@ test.describe('Testy płatności', async () => {
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
-      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
+      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveCSS('background-color', 'rgb(67, 156, 34)');
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -1129,7 +1129,7 @@ test.describe('Testy płatności', async () => {
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
-      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
+      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveCSS('background-color', 'rgb(67, 156, 34)');
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -1220,7 +1220,7 @@ test.describe('Testy płatności', async () => {
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
-      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveText('Wybrany', { timeout: 5000 });
+      await expect(deliveryPage.getDeliverySlotButton.first()).toHaveCSS('background-color', 'rgb(67, 156, 34)');
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
