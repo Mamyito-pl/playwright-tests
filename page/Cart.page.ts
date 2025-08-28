@@ -14,6 +14,7 @@ export default class CartPage {
     }
 
     async waitForPaymentConfirmationButton() {
+        await this.page.waitForTimeout(3000);
         await this.page.waitForSelector(this.mobile ? '[data-cy="mobile-payment-checkout-button"]' : '[data-cy="desktop-payment-checkout-button"]', { timeout: 15000, state: 'hidden' });
     }
 
