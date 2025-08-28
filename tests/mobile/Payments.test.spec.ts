@@ -335,7 +335,7 @@ test.describe('Testy płatności', async () => {
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
     })
 
-    test.only('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProductsByValue, baseURL }) => {
+    test('M | Zapłata nieprawidłowym kodem BLIK powinna utworzyć zamówienie', { tag: ['@ProdSmoke'] }, async ({ page, addProductsByValue, baseURL }) => {
 
       await allure.tags('Mobilne', 'Płatności');
       await allure.epic('Mobilne');
