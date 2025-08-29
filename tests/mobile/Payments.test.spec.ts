@@ -365,6 +365,7 @@ test.describe('Testy płatności', async () => {
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+      await page.waitForTimeout(2000);
       await expect(deliveryPage.getDeliverySlotButton.first()).toHaveCSS('background-color', 'rgb(67, 156, 34)');
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
@@ -375,7 +376,6 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Kod BLIK', { exact: true }).click({ force: true });
       await paymentsPage.enterBlikCode('123123');
       await cartPage.clickCartPaymentConfirmationButton();
-      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przetwarzanie płatności....')).toBeVisible({ timeout: 20000 });
@@ -1129,6 +1129,7 @@ test.describe('Testy płatności', async () => {
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+      await page.waitForTimeout(2000);
       await expect(deliveryPage.getDeliverySlotButton.first()).toHaveCSS('background-color', 'rgb(67, 156, 34)');
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
@@ -1139,7 +1140,6 @@ test.describe('Testy płatności', async () => {
       await page.getByText('Przelew online', { exact: true }).click({ force: true });
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
-      await cartPage.waitForPaymentConfirmationButton();
 
       if (`${process.env.URL}` == 'https://mamyito.pl') {
         await expect(page).toHaveURL(new RegExp('^https://go.przelewy24.pl/trnRequest/'), { timeout: 20000 });
@@ -1220,6 +1220,7 @@ test.describe('Testy płatności', async () => {
       await deliveryPage.getDeliverySlotButton.first().evaluate((el) => el.scrollIntoView({ behavior: 'auto', block: 'center' }));
       await page.waitForTimeout(1000);
       await deliveryPage.getDeliverySlotButton.first().click({ force: true, delay: 300 });
+      await page.waitForTimeout(2000);
       await expect(deliveryPage.getDeliverySlotButton.first()).toHaveCSS('background-color', 'rgb(67, 156, 34)');
       await cartPage.clickCartSummaryPaymentButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
@@ -1229,7 +1230,6 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(1000);
       await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
       await cartPage.clickCartPaymentConfirmationButton();
-      await cartPage.waitForPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
