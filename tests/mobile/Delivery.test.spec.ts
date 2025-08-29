@@ -106,9 +106,6 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa', { waitUntil: 'load' });
 
-      await expect(deliveryPage.getAddNewAddressButton).toBeVisible();
-      await deliveryPage.getAddNewAddressButton.click();
-
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy adres');
 
