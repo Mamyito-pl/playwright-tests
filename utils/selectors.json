@@ -103,10 +103,7 @@
     "Searchbar": {
         "common": {
             "productSearchAddButton": "div[data-testid='search-results'] div[data-sentry-component='ProductCard'] button:has-text('Dodaj')",
-            "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent'] p[data-cy='product-card-current-price']",
-            "searchbarProductCardIncreaseButton": "div[data-testid='search-results'] svg[class*='tabler-icon tabler-icon-plus']",
-            "searchbarProductCardDecreaseButton": "div[data-testid='search-results'] svg[class*='tabler-icon tabler-icon-minus']",
-            "searchbarProductItemCount": "div[data-testid='search-results'] div[data-sentry-element='ProductQuantityInput'] div input"
+            "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent'] p[data-cy='product-card-current-price']"
         }
     },
     "Newsletter": {
