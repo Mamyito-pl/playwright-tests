@@ -22,15 +22,15 @@ export default class SearchbarPage {
     }
 
     async clickIncreaseProductButton() {
-        return this.page.locator(selectors.Searchbar.common.searchbarProductCardIncreaseButton).click({ delay: 300 });
+        return this.mobile ? this.page.locator('div[data-sentry-element="TabletContent"] div[data-testid="search-results"] svg[class*="tabler-icon tabler-icon-plus"]').click({ delay: 300 }) : this.page.locator('div[data-sentry-element="WebContent"] div[data-testid="search-results"] svg[class*="tabler-icon tabler-icon-plus"]').click({ delay: 300 });
     }
 
     async clickDecreaseProductButton() {
-        return this.page.locator(selectors.Searchbar.common.searchbarProductCardDecreaseButton).click({ delay: 300 });
+        return this.mobile ? this.page.locator('div[data-sentry-element="TabletContent"] div[data-testid="search-results"] svg[class*="tabler-icon tabler-icon-minus"]').click({ delay: 300 }) : this.page.locator('div[data-sentry-element="WebContent"] div[data-testid="search-results"] svg[class*="tabler-icon tabler-icon-minus"]').click({ delay: 300 });
     }
 
     get getProductItemCount() {
-        return this.page.locator(selectors.Searchbar.common.searchbarProductItemCount);
+        return this.mobile ? this.page.locator('div[data-sentry-element="TabletContent"] div[data-testid="search-results"] div[data-sentry-element="ProductQuantityInput"] div input') : this.page.locator('div[data-sentry-element="WebContent"] div[data-testid="search-results"] div[data-sentry-element="ProductQuantityInput"] div input');
     }
 
     get getSearchbarProductBrandNames() {

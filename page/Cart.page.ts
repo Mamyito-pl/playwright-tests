@@ -176,7 +176,7 @@ export default class CartPage {
     }
 
     get getActiveCodeValue() {
-        return this.page.locator(this.mobile ? '#cart-summary span[data-cy="active-codes-badge"]' : '#cart-floating-div span[data-cy="active-codes-badge"]')
+        return this.page.locator(this.mobile ? 'div[data-sentry-component="MobileSummary"] [data-cy="active-codes-badge"]' : 'div[data-sentry-element="SummaryColumn"] [data-cy="active-codes-badge"]')
     }
 
     get getSummaryDeleteDiscountCodeButton() {
