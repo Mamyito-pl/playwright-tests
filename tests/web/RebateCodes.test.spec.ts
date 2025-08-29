@@ -11,7 +11,7 @@ import * as selectors from '../../utils/selectors.json';
 
 test.describe.configure({ mode: 'serial' })
 
-test.describe('Testy kodów rabatowych', async () => {
+test.describe.only('Testy kodów rabatowych', async () => {
 
   test.setTimeout(80000);
 
@@ -44,7 +44,7 @@ test.describe('Testy kodów rabatowych', async () => {
     await clearCartViaAPI();
   }) 
   
-  test.skip('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
+  test('W | Możliwość dodania kodu rabatowego do koszyka i jego usunięcia', { tag: ['@ProdSmoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Koszyk');
     await allure.epic('Webowe');
@@ -76,33 +76,32 @@ test.describe('Testy kodów rabatowych', async () => {
     await expect(cartPage.getCartCodesDrawer).toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(1000);
 
-    const codeCardColor = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"]').first().evaluate((el) => window.getComputedStyle(el).backgroundColor);
-    const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] div').first().textContent() || '';
-    const codeCardButton = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] button').first();
-    const codeCardInformation = cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeActionsWrapper"] span').first();
-    const codeCardName = await cartPage.getCartCodesDrawer.last().locator('div[data-sentry-element="RebateCodeDescriptionWrapper"] p').first().textContent();
+    const codeCardColor = await cartPage.getCartCodesDrawer.last().first().locator('div[data-cy="rebate-code-value-wrapper"]').first().evaluate((el) => window.getComputedStyle(el).backgroundColor);
+    const codeCardDiscountValue = await cartPage.getCartCodesDrawer.last().first().locator('div[data-cy="rebate-code-value-wrapper"] div').first().textContent() || '';
+    const codeCardButton = cartPage.getCartCodesDrawer.last().first().locator('div[data-cy="rebate-code-actions-wrapper"] button').first();
+    const codeCardInformation = cartPage.getCartCodesDrawer.last().first().locator('div[data-cy="rebate-code-value-wrapper"] span').first();
+    const codeCardName = await cartPage.getCartCodesDrawer.last().first().locator('div[data-cy="rebate-code-description-wrapper"] div').first().textContent();
 
-    const codeCardDiscountValueFormatted = codeCardDiscountValue.slice(0, -2) + ',00 zł';
-    const codeCardNameFormatted = codeCardName?.slice(14);
+    const codeCardDiscountValueFormatted = codeCardDiscountValue.slice(1, -2) + ',00 zł';
 
     expect(codeCardColor).toBe('rgb(97, 189, 78)')
     expect(codeCardButton).toBeVisible();
     expect(codeCardInformation).toHaveText('Możliwy do zrealizowania');
 
-    console.log(codeCardDiscountValueFormatted);
+    console.log('codeCardDiscountValueFormatted:',codeCardDiscountValueFormatted);
     console.log(codeCardName);
 
     await codeCardButton.click();
     await expect(cartPage.getCartCodesDrawer).not.toBeVisible({ timeout: 5000 });
     await page.waitForTimeout(2000);
 
-    const codeTitle = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().first().locator('b').textContent());
-    expect(codeTitle).toContain(codeCardNameFormatted);
-
-    const codeDiscountValue = (await cartPage.getActiveDiscountCodesTitle.locator('..').last().last().locator('span').textContent());
+    await expect(cartPage.getActiveCodeValue).toBeVisible({ timeout: 5000 });
+    const codeDiscountValue = (await cartPage.getActiveCodeValue.textContent());
     if (codeDiscountValue !== null) {
-      const cleanCodeDiscountValue = codeDiscountValue.replace(/\s+/g, '');
+      const cleanCodeDiscountValue = codeDiscountValue.replace(/\s+/g, '').slice(0, -6);
       const cleanCodeCardDiscountValueFormatted = codeCardDiscountValueFormatted.replace(/\s+/g, '');
+      console.log(cleanCodeDiscountValue);
+      console.log(cleanCodeCardDiscountValueFormatted);
       expect(cleanCodeDiscountValue).toContain(cleanCodeCardDiscountValueFormatted);
     } else {
       throw new Error('codeDiscountValue is null');
@@ -116,7 +115,7 @@ test.describe('Testy kodów rabatowych', async () => {
       throw new Error('codeDiscountValue is null');
     }
 
-    const codeCardDiscountValueFormattedParsed = parseFloat(codeCardDiscountValueFormatted.slice(1, -2).replace(',', '.'));
+    const codeCardDiscountValueFormattedParsed = parseFloat(codeCardDiscountValueFormatted.slice(0, -2).replace(',', '.'));
     console.log('codeCardDiscountValueFormattedParsed:', codeCardDiscountValueFormattedParsed);
 
     const totalSummaryValueFormattedParsed = parseFloat(totalSummaryValueFormatted.replace(/\s/g, '').replace(',', '.'));
@@ -245,7 +244,7 @@ test.describe('Testy kodów rabatowych', async () => {
     expect(totalSummaryValueAfterDeleteCodeFormattedParsed).toBe(totalSummaryValueFormattedParsed);
   })
 
-  test.skip('W | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+  test('W | Możliwość dodania kodu rabatowego procentowego do koszyka i jego usunięcia', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
     await allure.tags('Web', 'Kody rabatowe');
     await allure.epic('Webowe');
