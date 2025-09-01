@@ -9,6 +9,7 @@ import CommonPage from '../page/Common.page.ts'
 import ProductsListPage from '../page/ProductsList.page.ts';
 import * as selectors from '../utils/selectors.json';
 import * as utility from '../utils/utility-methods';
+import InvoiceAddressesPage from '../page/Profile/InvoiceAddresses.page.ts';
 
 let loginPage: LoginPage;
 let mainLogoutPage: MainLogoutPage;
@@ -17,6 +18,7 @@ let searchbarPage : SearchbarPage;
 let deliveryPage : DeliveryPage;
 let commonPage: CommonPage;
 let productsListPage: ProductsListPage;
+let invoiceAddressesPage: InvoiceAddressesPage;
 
 type MyFixtures = {
     loginManual: () => Promise<void>;
@@ -33,7 +35,8 @@ type MyFixtures = {
     addSecondAddressDeliveryViaAPI: (addressName: any) => Promise<void>;
     deleteAddressDelivery: (addressName: any) => Promise<void>;
     deleteDeliveryAddressViaAPI: (addressName: any) => Promise<void>;
-    addInvoiceAddressDelivery: (addressName: any) => Promise<void>;
+    addCompanyInvoiceAddressDelivery: (addressName: any) => Promise<void>;
+    addPersonalInvoiceAddressDelivery: (addressName: any) => Promise<void>;
     addInvoiceAddressViaAPI: (addressName: any) => Promise<void>;
     deleteInvoiceAddressViaAPI: (addressName: any) => Promise<void>;
     deleteInvoiceAddressDelivery: (addressName: any) => Promise<void>;
@@ -506,11 +509,11 @@ export const test = baseTest.extend<MyFixtures>({
     await use(deleteDeliveryAddressViaAPI);
   },
 
-  addInvoiceAddressDelivery: async ({ page }, use) => {
+  addCompanyInvoiceAddressDelivery: async ({ page }, use) => {
 
     deliveryPage = new DeliveryPage(page);
 
-    const addInvoiceAddressDelivery = async (addressName: string) => {
+    const addCompanyInvoiceAddressDelivery = async (addressName: string) => {
       
       await expect(deliveryPage.getAddNewInvoiceAddressButton).toBeVisible();
       await deliveryPage.clickAddNewInvoiceAddressButton();
@@ -529,7 +532,36 @@ export const test = baseTest.extend<MyFixtures>({
 
       await page.getByText(addressName).isVisible();
     };
-    await use(addInvoiceAddressDelivery);
+    await use(addCompanyInvoiceAddressDelivery);
+  },
+
+  addPersonalInvoiceAddressDelivery: async ({ page }, use) => {
+
+    deliveryPage = new DeliveryPage(page);
+    invoiceAddressesPage = new InvoiceAddressesPage(page);
+
+    const addPersonalInvoiceAddressDelivery = async (addressName: string) => {
+      
+      await expect(invoiceAddressesPage.getAddNewInvoiceAddressButton).toBeVisible();
+      await invoiceAddressesPage.clickAddNewInvoiceAddressButton();
+      await page.waitForSelector('div[data-sentry-element="Modal"]', { state: 'visible', timeout: 10000 });
+      await expect(invoiceAddressesPage.getInvoiceAddressModal).toBeVisible();
+      await invoiceAddressesPage.selectInvoiceAddressType('Faktura imienna');
+      await expect(invoiceAddressesPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura imienna');
+      await invoiceAddressesPage.getInvoiceAddressModalAddressName.fill(addressName);
+      await invoiceAddressesPage.getPersonalInvoiceAddressModalAddressFirstName.fill('Jan');
+      await invoiceAddressesPage.getPersonalInvoiceAddressModalAddressLastName.fill('Kowalski');
+      await invoiceAddressesPage.getInvoiceAddressModalUserPostalCode.fill('00-828');
+      await invoiceAddressesPage.getInvoiceAddressModalUserCity.fill('Warszawa');
+      await invoiceAddressesPage.getInvoiceAddressModalUserStreet.fill('aleja Jana Pawła II');
+      await invoiceAddressesPage.getInvoiceAddressModalUserHouseNumber.fill('1');
+      await invoiceAddressesPage.getInvoiceAddressModalUserFlatNumber.fill('30');
+      await invoiceAddressesPage.clickSaveInvoiceAdressModalButton();
+      await page.waitForTimeout(3000)
+
+      await page.getByText(addressName).isVisible();
+    };
+    await use(addPersonalInvoiceAddressDelivery);
   },
   
   addInvoiceAddressViaAPI: async ({ request }, use) => {
