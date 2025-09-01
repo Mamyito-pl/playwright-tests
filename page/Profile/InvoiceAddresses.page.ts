@@ -24,12 +24,46 @@ export default class InvoiceAddressesPage {
         return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class*="tabler-icon tabler-icon-trash "]').click();
     }
 
+    async clickCompanyInvoiceButton() {
+        await this.getCompanyInvoiceButton.click({ force: true, delay: 300 });
+    }
+
+    async clickPersonalInvoiceButton() {
+        await this.getPersonalInvoiceButton.click({ force: true, delay: 300 });
+    }
+
+    async selectInvoiceAddressType(type: string) {
+        await this.getInvoiceAddressTypeDropdown.click({ force: true, delay: 300 });
+        await this.page.waitForTimeout(2000);
+        await this.getInvoiceAddressModal.getByText(type).click({ force: true, delay: 300 });
+    }
+
     getMainInvoiceAddressInfo(addressName: string) {
         return this.page.getByText(addressName).locator('..').locator('..').locator('div[data-cy="default-info-tag"]');
     }
 
     get getCurrentMainInvoiceAddressModalInfo() {
         return this.page.getByText('Obecnie wybrany adres główny');
+    }
+
+    get getCompanyInvoiceButton() {
+        return this.page.locator('#faktury-firmowe');
+    }
+
+    get getPersonalInvoiceButton() {
+        return this.page.locator('#faktury-imienne');
+    }
+
+    get getInvoiceAddressTypeDropdown() {
+        return this.page.locator('#invoice_address_type');
+    }
+
+    async EmptyCompanyInvoicesListNotificationIsVisible() {
+        return this.page.getByText('Nie dodano jeszcze żadnych danych do faktury firmowej.').isVisible();
+    }
+
+    async EmptyPersonalInvoicesListNotificationIsVisible() {
+        return this.page.getByText('Nie dodano jeszcze żadnych danych do faktury imiennej.').isVisible();
     }
 
     // Invoice Address Modal
@@ -84,6 +118,14 @@ export default class InvoiceAddressesPage {
 
     get getInvoiceAddressModalAddressSearchAddress() {
         return this.page.locator('#:rku:');
+    }
+
+    get getPersonalInvoiceAddressModalAddressFirstName() {
+        return this.page.locator('#invoice_address_first_name');
+    }
+
+    get getPersonalInvoiceAddressModalAddressLastName() {
+        return this.page.locator('#invoice_address_last_name');
     }
 
     get getInvoiceAddressModalCompanyName() {
