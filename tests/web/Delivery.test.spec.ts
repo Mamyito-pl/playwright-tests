@@ -34,6 +34,9 @@ test.describe('Testy dostawy', async () => {
     await deleteInvoiceAddressViaAPI('Testowa nazwa podmiotu')
     await deleteInvoiceAddressViaAPI('Fixturowy adres podmiotu')
     await deleteInvoiceAddressViaAPI('Edytowana nazwa podmiotu')
+    await deleteInvoiceAddressViaAPI('Faktura imienna')
+    await deleteInvoiceAddressViaAPI('Testowa nazwa faktury imiennej')
+    await deleteInvoiceAddressViaAPI('Edytowana Faktura imienna')
   })
   
   test('W | Okno dostawy otwiera się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
@@ -299,9 +302,9 @@ test.describe('Testy dostawy', async () => {
     })
   })
 
-  test.describe('Faktura', async () => {
+  test.describe('Faktura firmowa', async () => {
     
-    test('W | Możliwość dodania podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+    test('W | Możliwość dodania podmiotu do faktury firmowej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -338,6 +341,7 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.clickAddNewInvoiceAddressButton();
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy podmiot');
+      await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura firmowa');
 
       await expect(deliveryPage.getInvoiceAddressModalAddressName).toBeVisible();
       await deliveryPage.getInvoiceAddressModalAddressName.fill('Testowa nazwa podmiotu');
@@ -384,7 +388,7 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Testowa nazwa podmiotu', { timeout: 10000, state: 'visible' });
     })
 
-    test('W | Możliwość wyboru podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
+    test('W | Możliwość wyboru podmiotu do faktury firmowej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addCompanyInvoiceAddressDelivery }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -395,10 +399,7 @@ test.describe('Testy dostawy', async () => {
       
       test.setTimeout(150000);
 
-      await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
-      await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
-
-      const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
+      const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..').locator('..');
       
       await page.goto('/platnosc');
 
@@ -423,6 +424,9 @@ test.describe('Testy dostawy', async () => {
         attempts++;
       }
 
+      await addCompanyInvoiceAddressDelivery('Fixturowy adres podmiotu');
+      await addCompanyInvoiceAddressDelivery('Testowa nazwa podmiotu');
+
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
 
@@ -435,7 +439,7 @@ test.describe('Testy dostawy', async () => {
       await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
 
-    test('W | Możliwość edycji podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
+    test('W | Możliwość edycji podmiotu do faktury firmowej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addCompanyInvoiceAddressDelivery }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -445,8 +449,6 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('541');
       
       test.setTimeout(120000);
-
-      await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
 
       await page.goto('/platnosc');
 
@@ -472,12 +474,18 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
 
+      await addCompanyInvoiceAddressDelivery('Fixturowy adres podmiotu');
+
+      await expect(commonPage.getMessage).toBeVisible({ timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
+
       await page.waitForSelector('text=Fixturowy adres podmiotu', { timeout: 5000, state: 'visible' });
 
       await deliveryPage.clickEditInvoiceAddressButton('Fixturowy adres podmiotu');
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
+      await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura firmowa');
 
       await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Fixturowy adres podmiotu');
       await deliveryPage.getInvoiceAddressModalAddressName.fill('Edytowana nazwa podmiotu');
@@ -528,6 +536,7 @@ test.describe('Testy dostawy', async () => {
 
       await expect(deliveryPage.getAddressModal).toBeVisible();
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
+      await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura firmowa');
       await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Edytowana nazwa podmiotu')
       await expect(deliveryPage.getInvoiceAddressModalCompanyName).toHaveValue('Edytowana nazwa firmy');
       await expect(deliveryPage.getInvoiceAddressModalNIP).toHaveValue('1085179548');
@@ -538,7 +547,7 @@ test.describe('Testy dostawy', async () => {
       await expect(deliveryPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('200');
     })
     
-    test('W | Możliwość usunięcia podmiotu do faktury', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addInvoiceAddressViaAPI }) => {
+    test('W | Możliwość usunięcia podmiotu do faktury firmowej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addCompanyInvoiceAddressDelivery }) => {
 
       await allure.tags('Web', 'Dostawa');
       await allure.epic('Webowe');
@@ -548,8 +557,6 @@ test.describe('Testy dostawy', async () => {
       await allure.allureId('542');
 
       test.setTimeout(120000);
-
-      await addInvoiceAddressViaAPI('Edytowana nazwa podmiotu');
       
       await page.goto('/platnosc');
 
@@ -571,6 +578,13 @@ test.describe('Testy dostawy', async () => {
         
         attempts++;
       }
+
+      await addCompanyInvoiceAddressDelivery('Edytowana nazwa podmiotu');
+
+      await expect(commonPage.getMessage).toBeVisible({ timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
+
+      await page.waitForSelector('text=Edytowana nazwa podmiotu', { timeout: 5000, state: 'visible' });
 
       await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana nazwa podmiotu');
 
@@ -597,6 +611,317 @@ test.describe('Testy dostawy', async () => {
       }
 
       await page.waitForSelector('text=Edytowana nazwa podmiotu', { strict: true , state: 'hidden' });
+    })
+  })
+
+  test.describe('Faktura imienna', async () => {
+    
+    test('W | Możliwość dodania podmiotu do faktury imiennej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+
+      await allure.tags('Web', 'Dostawa');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
+      await allure.subSuite('Faktura');
+      await allure.allureId('3290');
+      
+      test.setTimeout(150000);
+      
+      await page.goto('/platnosc');
+
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
+
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+
+      await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+      await deliveryPage.clickAddNewInvoiceAddressButton();
+      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy podmiot');
+      await deliveryPage.selectInvoiceAddressType('Faktura imienna');
+      await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura imienna');
+
+      await expect(deliveryPage.getInvoiceAddressModalAddressName).toBeVisible();
+      await deliveryPage.getInvoiceAddressModalAddressName.fill('Testowa nazwa faktury imiennej');
+
+      await expect(deliveryPage.getPersonalInvoiceAddressModalAddressFirstName).toBeVisible();
+      await deliveryPage.getPersonalInvoiceAddressModalAddressFirstName.fill('Jan');
+
+      await expect(deliveryPage.getPersonalInvoiceAddressModalAddressLastName).toBeVisible();
+      await deliveryPage.getPersonalInvoiceAddressModalAddressLastName.fill('Kowalski');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserPostalCode).toBeVisible();
+      await deliveryPage.getInvoiceAddressModalUserPostalCode.fill('00-133');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserCity).toBeVisible();
+      await deliveryPage.getInvoiceAddressModalUserCity.fill('Warszawa');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserStreet).toBeVisible();
+      await deliveryPage.getInvoiceAddressModalUserStreet.fill('aleja Jana Pawła II');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserHouseNumber).toBeVisible();
+      await deliveryPage.getInvoiceAddressModalUserHouseNumber.fill('10');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserFlatNumber).toBeVisible();
+      await deliveryPage.getInvoiceAddressModalUserFlatNumber.fill('12');
+
+      await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
+      await deliveryPage.clickSaveAdressModalButton();
+
+      await expect(commonPage.getMessage).toHaveText('Dane zostały zapisane', { timeout: 15000 })
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+
+      await page.waitForSelector('text=Testowa nazwa faktury imiennej', { timeout: 10000, state: 'visible' });
+    })
+
+    test('W | Możliwość wyboru podmiotu do faktury imiennej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addPersonalInvoiceAddressDelivery }) => {
+
+      await allure.tags('Web', 'Dostawa');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
+      await allure.subSuite('Faktura');
+      await allure.allureId('3291');
+      
+      test.setTimeout(150000);
+
+      const targetAddress = page.getByText('Testowa nazwa faktury imiennej').locator('..').locator('..').locator('..').locator('..');
+      
+      await page.goto('/platnosc');
+
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
+
+      await page.waitForSelector('text="Chcę otrzymać fakturę"', { timeout: 30000, state: 'visible' });
+
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+
+      await addPersonalInvoiceAddressDelivery('Faktura imienna');
+      await addPersonalInvoiceAddressDelivery('Testowa nazwa faktury imiennej');
+
+      await page.waitForSelector('text=Faktura imienna', { state: 'visible' });
+      await page.waitForSelector('text=Testowa nazwa faktury imiennej', { state: 'visible' });
+
+      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
+
+      await page.getByText('Testowa nazwa faktury imiennej').click({ force: true, delay: 300 });
+
+      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
+
+      await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
+    })
+
+    test('W | Możliwość edycji podmiotu do faktury imiennej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addPersonalInvoiceAddressDelivery }) => {
+
+      await allure.tags('Web', 'Dostawa');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
+      await allure.subSuite('Faktura');
+      await allure.allureId('3292');
+      
+      test.setTimeout(120000);
+
+      await page.goto('/platnosc');
+
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
+
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+
+      await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
+      await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
+
+      await addPersonalInvoiceAddressDelivery('Faktura imienna');
+
+      await expect(commonPage.getMessage).toBeVisible({ timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
+
+      await page.waitForSelector('text=Faktura imienna', { timeout: 5000, state: 'visible' });
+
+      await deliveryPage.clickEditInvoiceAddressButton('Faktura imienna');
+
+      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
+
+      await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Faktura imienna');
+      await deliveryPage.getInvoiceAddressModalAddressName.fill('Edytowana Faktura imienna');
+
+      await expect(deliveryPage.getPersonalInvoiceAddressModalAddressFirstName).toHaveValue('Jan');
+      await deliveryPage.getPersonalInvoiceAddressModalAddressFirstName.fill('Janina');
+  
+      await expect(deliveryPage.getPersonalInvoiceAddressModalAddressLastName).toHaveValue('Kowalski');
+      await deliveryPage.getPersonalInvoiceAddressModalAddressLastName.fill('Kowalska');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserPostalCode).toHaveValue('00-828');
+      await deliveryPage.getInvoiceAddressModalUserPostalCode.fill('00-100');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserCity).toHaveValue('Warszawa');
+      await deliveryPage.getInvoiceAddressModalUserCity.fill('Magdalenka');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserStreet).toHaveValue('aleja Jana Pawła II');
+      await deliveryPage.getInvoiceAddressModalUserStreet.fill('Edytowana ulica');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserHouseNumber).toHaveValue('1');
+      await deliveryPage.getInvoiceAddressModalUserHouseNumber.fill('100');
+  
+      await expect(deliveryPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('30');
+      await deliveryPage.getInvoiceAddressModalUserFlatNumber.fill('200');
+
+      await expect(deliveryPage.getAddressModalSaveButton).toBeVisible();
+      await deliveryPage.clickSaveAdressModalButton();
+
+      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana Faktura imienna" został zaktualizowany.', { timeout: 15000 })
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+      
+      await page.waitForSelector('text=Edytowana Faktura imienna', { timeout: 5000, state: 'visible' });
+
+      await deliveryPage.clickEditInvoiceAddressButton('Edytowana Faktura imienna');
+
+      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
+      await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Edytowana Faktura imienna')
+      await expect(deliveryPage.getPersonalInvoiceAddressModalAddressFirstName).toHaveValue('Janina');
+      await expect(deliveryPage.getPersonalInvoiceAddressModalAddressLastName).toHaveValue('Kowalska');
+      await expect(deliveryPage.getInvoiceAddressModalUserPostalCode).toHaveValue('00-100');
+      await expect(deliveryPage.getInvoiceAddressModalUserCity).toHaveValue('Magdalenka');
+      await expect(deliveryPage.getInvoiceAddressModalUserStreet).toHaveValue('Edytowana ulica');
+      await expect(deliveryPage.getInvoiceAddressModalUserHouseNumber).toHaveValue('100');
+      await expect(deliveryPage.getInvoiceAddressModalUserFlatNumber).toHaveValue('200');
+    })
+    
+    test('W | Możliwość usunięcia podmiotu do faktury imiennej', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addPersonalInvoiceAddressDelivery }) => {
+
+      await allure.tags('Web', 'Dostawa');
+      await allure.epic('Webowe');
+      await allure.parentSuite('Dostawa');
+      await allure.suite('Testy dostawy');
+      await allure.subSuite('Faktura');
+      await allure.allureId('3293');
+
+      test.setTimeout(120000);
+      
+      await page.goto('/platnosc');
+
+      await expect(page.getByText('Potrzebujesz faktury do zamówienia?')).toBeVisible({ timeout: 10000 });
+
+      const checkbox = deliveryPage.getDeliveryInvoiceCheckbox;
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+
+      await addPersonalInvoiceAddressDelivery('Edytowana Faktura imienna');
+
+      await expect(commonPage.getMessage).toBeVisible({ timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
+
+      await page.waitForSelector('text=Edytowana Faktura imienna', { timeout: 5000, state: 'visible' });
+
+      await deliveryPage.clickDeleteInvoiceAddressButton('Edytowana Faktura imienna');
+
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 3000 });
+      await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
+      await expect(deliveryPage.getAddressModalDeleteAddressName('Edytowana Faktura imienna')).toContainText('Edytowana Faktura imienna');
+      await expect(deliveryPage.getAddressModalCancelButton).toBeVisible();
+      await expect(deliveryPage.getAddressModalConfirmationButton).toBeVisible();
+      await deliveryPage.getAddressModalConfirmationButton.click();
+      await expect(commonPage.getMessage).toHaveText('Adres "Edytowana Faktura imienna" został usunięty.', { timeout: 15000 });
+      await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
+
+      while (attempts < maxAttempts) {
+        await checkbox.waitFor({ state: 'visible' });
+        
+        if (!(await checkbox.isChecked())) {
+          await checkbox.click({ force: true, delay: 1000 });
+          console.log(`Próba ${attempts + 1}: Zaznaczono checkbox`);
+        } else {
+          console.log(`Próba ${attempts + 1}: Checkbox już zaznaczony`);
+        }
+        
+        attempts++;
+      }
+
+      await page.waitForSelector('text=Edytowana Faktura imienna', { strict: true , state: 'hidden' });
     })
   })
 })
