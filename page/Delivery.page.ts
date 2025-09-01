@@ -24,13 +24,19 @@ export default class DeliveryPage {
         await this.getAddNewInvoiceAddressButton.click({ force: true, delay: 300 });
     }
 
+    async selectInvoiceAddressType(type: string) {
+        await this.getInvoiceAddressTypeDropdown.click({ force: true, delay: 300 });
+        await this.page.waitForTimeout(2000);
+        await this.getAddressModal.getByText(type).click({ force: true, delay: 300 });
+    }
+
     async clickEditAddressButton(addressName: string) {
         const button = await this.getEditAddressButton(addressName);
         await button.click();
     }
 
     async clickEditInvoiceAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class*="tabler-icon tabler-icon-pencil"]').click();
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('..').locator('svg[class*="tabler-icon tabler-icon-pencil"]').click();
     }
 
     async clickDeleteAddressButton(addressName: string) {
@@ -38,7 +44,7 @@ export default class DeliveryPage {
     }
 
     async clickDeleteInvoiceAddressButton(addressName: string) {
-        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('svg[class*="tabler-icon tabler-icon-trash "]').click();
+        return this.page.getByText(addressName).locator('..').locator('..').locator('..').locator('..').locator('svg[class*="tabler-icon tabler-icon-trash "]').click();
     }
 
     async getEditAddressButton(addressName: string) {
@@ -111,11 +117,22 @@ export default class DeliveryPage {
         return this.page.locator(`div[data-sentry-element="Modal"] div[data-sentry-element="AddressName"]:has-text("${addressName}")`);
     }
 
-
     // Address Modal
+
+    get getInvoiceAddressTypeDropdown() {
+        return this.page.locator('#invoice_address_type');
+    }
 
     get getAddressModal() {
         return this.page.locator('div[data-sentry-element="Modal"]');
+    }
+
+    get getPersonalInvoiceAddressModalAddressFirstName() {
+        return this.page.locator('#invoice_address_first_name');
+    }
+    
+    get getPersonalInvoiceAddressModalAddressLastName() {
+        return this.page.locator('#invoice_address_last_name');
     }
 
     get getAddressModalAddressName() {
