@@ -11,7 +11,7 @@ import * as selectors from '../../utils/selectors.json';
 
 test.describe.configure({ mode: 'serial' })
 
-test.describe.only('Testy kodów rabatowych', async () => {
+test.describe('Testy kodów rabatowych', async () => {
 
   test.setTimeout(80000);
 
