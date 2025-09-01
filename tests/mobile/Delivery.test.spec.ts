@@ -412,7 +412,7 @@ test.describe('Testy dostawy', async () => {
       await addInvoiceAddressViaAPI('Fixturowy adres podmiotu');
       await addInvoiceAddressViaAPI('Testowa nazwa podmiotu');
 
-      const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..');
+      const targetAddress = page.getByText('Testowa nazwa podmiotu').locator('..').locator('..').locator('..').locator('..');
       
       await page.goto('/platnosc', { waitUntil: 'load' });
 
