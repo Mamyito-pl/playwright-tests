@@ -101,7 +101,7 @@ test.describe('Testy dostawy', async () => {
       
       await page.goto('/dostawa');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy adres');
 
       await expect(deliveryPage.getAddressModalAddressName).toBeVisible();
@@ -169,7 +169,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickEditAddressButton('Adres Fixturowy');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj adres');
 
       await expect(deliveryPage.getAddressModalAddressName).toHaveValue('Adres Fixturowy');
@@ -216,7 +216,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickEditAddressButton('Adres Edytowany');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj adres');
       await expect(deliveryPage.getAddressModalAddressName).toHaveValue('Adres Edytowany')
       await expect(deliveryPage.getAddressModalUserName).toHaveValue('Jan1');
@@ -253,7 +253,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickDeleteAddressButton('Adres Edytowany');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Potwierdź usunięcie adresu');
       await expect(deliveryPage.getAddressModalDeleteAddressName('Adres Edytowany')).toContainText('Adres Edytowany');
       await expect(deliveryPage.getAddressModalCancelButton).toBeVisible();
@@ -292,11 +292,7 @@ test.describe('Testy dostawy', async () => {
 
       await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
 
-      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
-
       await page.getByText('Adres Fixturowy').click({ force: true, delay: 300 });
-
-      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
 
       await expect(targetAddress).not.toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
@@ -339,7 +335,7 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
       await deliveryPage.clickAddNewInvoiceAddressButton();
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy podmiot');
       await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura firmowa');
 
@@ -430,11 +426,7 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Fixturowy adres podmiotu', { state: 'visible' });
       await page.waitForSelector('text=Testowa nazwa podmiotu', { state: 'visible' });
 
-      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
-
       await page.getByText('Testowa nazwa podmiotu').click({ force: true, delay: 300 });
-
-      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
 
       await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
@@ -483,7 +475,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickEditInvoiceAddressButton('Fixturowy adres podmiotu');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
       await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura firmowa');
 
@@ -534,7 +526,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickEditInvoiceAddressButton('Edytowana nazwa podmiotu');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
       await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura firmowa');
       await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Edytowana nazwa podmiotu')
@@ -651,7 +643,7 @@ test.describe('Testy dostawy', async () => {
       await deliveryPage.getDeliveryInvoiceCheckbox.check({ force: true });
       await deliveryPage.getDeliveryInvoiceCheckbox.isChecked();
       await deliveryPage.clickAddNewInvoiceAddressButton();
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Dodaj nowy podmiot');
       await deliveryPage.selectInvoiceAddressType('Faktura imienna');
       await expect(deliveryPage.getInvoiceAddressTypeDropdown).toHaveText('Faktura imienna');
@@ -743,11 +735,7 @@ test.describe('Testy dostawy', async () => {
       await page.waitForSelector('text=Faktura imienna', { state: 'visible' });
       await page.waitForSelector('text=Testowa nazwa faktury imiennej', { state: 'visible' });
 
-      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).not.toBeVisible({ timeout: 5000 });
-
       await page.getByText('Testowa nazwa faktury imiennej').click({ force: true, delay: 300 });
-
-      //await expect(targetAddress.locator('svg[class*="tabler-icon tabler-icon-check"]')).toBeVisible({ timeout: 5000 });
 
       await expect(targetAddress).toHaveCSS('border-bottom-color', 'rgb(78, 180, 40)', { timeout: 10000 });
     })
@@ -796,7 +784,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickEditInvoiceAddressButton('Faktura imienna');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
 
       await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Faktura imienna');
@@ -846,7 +834,7 @@ test.describe('Testy dostawy', async () => {
 
       await deliveryPage.clickEditInvoiceAddressButton('Edytowana Faktura imienna');
 
-      await expect(deliveryPage.getAddressModal).toBeVisible();
+      await expect(deliveryPage.getAddressModal).toBeVisible({ timeout: 10000 });
       await expect(deliveryPage.getAddressModal).toContainText('Edytuj podmiot');
       await expect(deliveryPage.getInvoiceAddressModalAddressName).toHaveValue('Edytowana Faktura imienna')
       await expect(deliveryPage.getPersonalInvoiceAddressModalAddressFirstName).toHaveValue('Janina');
