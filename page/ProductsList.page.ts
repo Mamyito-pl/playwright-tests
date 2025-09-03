@@ -117,7 +117,7 @@ export default class ProductsListPage {
     async getFilterCustomPriceToSet(filterName: string, priceTo: string) {
 
         const filter = this.mobile 
-            ? this.getSettingsDrawer.getByText(filterName, { exact: true })
+            ? this.getSettingsDrawer.locator('div h2').getByText(filterName, { exact: true }).locator('..')
             : await this.getFilter(filterName);
         
         await filter.click({ force: true, delay: 300 });
@@ -155,6 +155,10 @@ export default class ProductsListPage {
 
     async getOpenedFilter(filterName: string) {
         return this.page.locator('div[data-sentry-element="PanelHeader"]').getByText(`${filterName}`).locator('..');
+    }
+
+    get getFiltersCounter() {
+        return this.page.locator('div[class*="sc-f3c17cb7-5 cvsjqF"]');
     }
 
     get getBreadcrumbs() {
