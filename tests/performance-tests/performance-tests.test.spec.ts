@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
+import * as utility from '../../utils/utility-methods';
 
 test.describe('Testy wydajnościowe', async () => {
 
@@ -45,6 +46,8 @@ test.describe('Testy wydajnościowe', async () => {
     }
 
     await performanceScoreMobile.waitFor({ state: 'visible', timeout: 120000 });
+
+    await utility.removeElementsOnPageSpeed(page);
   
     const performanceScoreMobileScrap = await page.locator('text[class="lh-exp-gauge__percentage"]').first().textContent();
     const LCPscoreMobile = await page.getByText('Largest Contentful Paint (LCP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();
@@ -64,6 +67,8 @@ test.describe('Testy wydajnościowe', async () => {
     const desktopSection = page.locator('div[aria-labelledby="desktop_tab"]');
     const performanceScoreDesktop = await desktopSection.locator('text[class="lh-exp-gauge__percentage"]');
     await performanceScoreDesktop.waitFor({ state: 'visible', timeout: 120000 });
+
+    await utility.removeElementsOnPageSpeed(page);
 
     const performanceScoreDesktopScrap = await desktopSection.locator('text[class="lh-exp-gauge__percentage"]').textContent();
     const LCPscoreDesktop = await desktopSection.getByText('Largest Contentful Paint (LCP)').locator('..').locator('..').locator('div').nth(1).locator('span span span').textContent();

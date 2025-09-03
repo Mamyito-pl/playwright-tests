@@ -15,6 +15,21 @@ export async function addGlobalStyles(page) {
   }
 };
 
+export async function removeElementsOnPageSpeed(page: any) {
+  try {
+    await page.waitForSelector('span[data-is-tooltip-wrapper="true"]', { timeout: 5000 });
+    
+    await page.evaluate(() => {
+      const elements = document.querySelectorAll('span[data-is-tooltip-wrapper="true"]');
+      elements.forEach(el => el.remove());
+      console.log(`Usunięto ${elements.length} elementów tooltip-wrapper`);
+    });
+
+  } catch (error) {
+    console.error("Nie znaleziono elementów tooltip-wrapper:", error);
+  }
+};
+
 export const isMobile = (viewportWidth: number): boolean => {
     return viewportWidth <= 400;
 };
