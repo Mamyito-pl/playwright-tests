@@ -738,6 +738,8 @@ test.describe('Testy listy produktów', async () => {
 
       await page.goto('/nabial', { waitUntil: 'load' });
 
+      await page.waitForTimeout(3000);
+
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
