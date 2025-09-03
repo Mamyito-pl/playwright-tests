@@ -98,11 +98,11 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getVerticalMenuButton).toBeVisible();
     await expect(productsListPage.getHorizontalMenuButton).toBeVisible();
 
-    await productsListPage.getVerticalMenuButton.click();
+    await productsListPage.getVerticalMenuButton.click({ force: true, delay: 300 });
     await expect(productsListPage.getVerticalMenu).toBeVisible();
     await expect(productsListPage.getHorizontalMenu).not.toBeVisible();
 
-    await productsListPage.getHorizontalMenuButton.click();
+    await productsListPage.getHorizontalMenuButton.click({ force: true, delay: 300 });
     await expect(productsListPage.getHorizontalMenu).toBeVisible();
     await expect(productsListPage.getVerticalMenu).not.toBeVisible();
   })
