@@ -122,17 +122,21 @@ test.describe('Testy moje dane', async () => {
     expect(myDetailsPage.getNameSurnameContent).toHaveText(exampleName + ' ' + exampleSurname, { timeout: 15000 });
   })
 
-  /*test.skip('W | Możliwość zmiany daty urodzenia', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Możliwość zmiany daty urodzenia', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
     await allure.parentSuite('Profil');
     await allure.suite('Testy moje dane');
     await allure.subSuite('');
-    await allure.allureId('x');
+    await allure.allureId('2012');
+
+    await page.goto('/profil/dane');
+
+    await page.waitForLoadState('load');
 
     const exampleDateBirth = faker.date.birthdate({ min: 18, max: 65, mode: 'age' });
-    const formattedEDB = format(exampleDateBirth, 'yyyy.MM.dd');
+    const formattedEDB = format(exampleDateBirth, 'yyyy-MM-dd');
     
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -140,10 +144,17 @@ test.describe('Testy moje dane', async () => {
 
     (await myDetailsPage.getModal('Edytuj datę urodzenia')).isVisible({ timeout: 5000 });
     await expect (myDetailsPage.getModalSaveButton).toBeVisible();
+    await page.waitForTimeout(1000);
+    await myDetailsPage.getModalBirthDateInput.fill(formattedEDB)
+    await page.waitForTimeout(1000);
 
     await myDetailsPage.clickModalSaveButton();
 
-    expect (await myDetailsPage.getModal('Edytuj datę urodzenia')).not.toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(2000);
+    expect (await myDetailsPage.getModal('Edytuj datę urodzenia')).not.toBeVisible({ timeout: 10000 });
+    await expect(commonPage.getMessage).toHaveText('Pomyślnie zapisano zmiany', { timeout: 15000 });
+
+    await page.waitForTimeout(2000);
 
     const newNameSurnameIsVisible = await myDetailsPage.getDateBirthContent.evaluate((element, { formattedEDB }) => {
         const textContent = element.textContent || '';
@@ -153,7 +164,7 @@ test.describe('Testy moje dane', async () => {
     );
 
     expect(newNameSurnameIsVisible).toBe(true);
-  }) UNSKIP AFTER DONE TASK KAN-1202*/
+  })
 
   test('W | Możliwość zmiany numeru telefonu', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
