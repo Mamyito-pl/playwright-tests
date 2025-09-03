@@ -509,6 +509,46 @@ test.describe('Testy listy produktów', async () => {
     const productsCount = allProductCards.length;
     expect(productsCount).toBeGreaterThanOrEqual(1);
   })
+
+  test.skip('M | Po wybraniu filtrów pojawia się counter z prawidłową liczbą włączonych filtrów', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
+
+    await allure.tags('Mobilne', 'Lista produktów');
+    await allure.epic('Mobilne');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('3362');
+
+    test.setTimeout(120000);
+    
+    await page.goto('/nabial', { waitUntil: 'load' });
+
+    await page.waitForTimeout(1000);
+
+    await expect(productsListPage.getBreadcrumbs).toBeVisible();
+
+    await productsListPage.getFiltersButton.click();
+    await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
+    await productsListPage.getFilterSelectCheckbox('Typ produktu','Bez cukru');
+    await utility.tryClickApplyButton(page, productsListPage);
+    await page.waitForTimeout(7000);
+
+    await productsListPage.getFiltersButton.click();
+    await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+    await productsListPage.getFilterSelectExact('Cena','poniżej 10zł');
+    await utility.tryClickApplyButton(page, productsListPage);
+    await page.waitForTimeout(7000);
+    
+    await productsListPage.getFiltersButton.click();
+    await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
+    await productsListPage.getFilterSelect('Producent','MLEKOVITA');
+    await utility.tryClickApplyButton(page, productsListPage);
+    await page.waitForTimeout(7000);
+
+    await expect(productsListPage.getFiltersCounter).toBeVisible();
+    await expect(productsListPage.getFiltersCounter).toHaveText('3');
+  })
   
   test.describe.skip('Filtrowanie po cenie', { tag: ['@Prod', '@Beta'] }, async () => {
     test('M | Możliwość filtrowania po cenie poniżej 10 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
