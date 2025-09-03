@@ -75,6 +75,11 @@ export async function gotoWithRetry(page, url, maxRetries = 3) {
   }
 }
 
+export async function gotoWithoutParameter(page: Page, url: string) {
+  const originalGoto = Object.getPrototypeOf(page).goto;
+  await originalGoto.call(page, url);
+}
+
 export async function addTestParam(page: Page, param = 'testy-automatyczne') {
   const currentUrl = page.url();
   if (!currentUrl.includes(param)) {
