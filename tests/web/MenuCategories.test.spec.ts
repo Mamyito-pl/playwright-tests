@@ -37,9 +37,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.waitForTimeout(2000);
 
-    await menuCategoriesPage.clickMenuCategoriesButton();
-
-    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+    await utility.clickCategoriesButtonUntilVisible(page);
 
     await expect(menuCategoriesPage.getMenuCategories.locator('..')).toBeVisible();
 
@@ -61,9 +59,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.waitForTimeout(2000);
 
-    await menuCategoriesPage.clickMenuCategoriesButton();
-
-    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+    await utility.clickCategoriesButtonUntilVisible(page);
 
     await page.waitForTimeout(1000);
     
@@ -93,9 +89,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.waitForTimeout(2000);
 
-    await menuCategoriesPage.clickMenuCategoriesButton();
-
-    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+    await utility.clickCategoriesButtonUntilVisible(page);
 
     await page.waitForTimeout(1000);
 
@@ -118,9 +112,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.waitForTimeout(2000);
 
-    await menuCategoriesPage.clickMenuCategoriesButton();
-
-    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+    await utility.clickCategoriesButtonUntilVisible(page);
 
     await page.waitForTimeout(1000);
 
@@ -143,9 +135,7 @@ test.describe('Testy menu kategorii', async () => {
 
     await page.waitForTimeout(2000);
 
-    await menuCategoriesPage.clickMenuCategoriesButton();
-
-    await page.waitForSelector('[data-cy="category-menu-column-1"]', { state: 'visible', timeout: 10000 });
+    await utility.clickCategoriesButtonUntilVisible(page);
 
     await page.waitForTimeout(1000);
 

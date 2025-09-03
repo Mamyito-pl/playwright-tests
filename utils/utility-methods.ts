@@ -80,6 +80,33 @@ export async function gotoWithoutParameter(page: Page, url: string) {
   await originalGoto.call(page, url);
 }
 
+export async function clickCategoriesButtonUntilVisible(page: Page, categoriesButtonSelector?: string, categoryMenuSelector: string = '[data-cy="category-menu-column-1"]', maxAttempts: number = 5) {
+  const viewport = page.viewportSize();
+  if (!viewport) throw new Error('Viewport is null');
+  const mobile = isMobile(viewport.width);
+  
+  const buttonSelector = categoriesButtonSelector || (mobile ? 
+    'div[data-sentry-element="TabletContent"] div[data-sentry-element="StyledTabletContent"] svg[class*="tabler-icon tabler-icon-menu-2"]' : 
+    'div[data-sentry-element="WebContent"] div[data-sentry-element="StyledWebContent"]');
+    
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    await page.click(buttonSelector);
+    
+    try {
+      await page.waitForSelector(categoryMenuSelector, { state: 'visible', timeout: 3000 });
+      return;
+    } catch (error) {
+      console.log(`Próba ${attempt}/${maxAttempts}: Menu kategorii nie jest widoczne`);
+      
+      if (attempt === maxAttempts) {
+        throw new Error(`Menu kategorii nie stało się widoczne po ${maxAttempts} próbach`);
+      }
+      
+      await page.waitForTimeout(1000);
+    }
+  }
+}
+
 export async function addTestParam(page: Page, param = 'testy-automatyczne') {
   const currentUrl = page.url();
   if (!currentUrl.includes(param)) {
