@@ -306,7 +306,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura firmowa');
       await allure.allureId('539');
       
       test.setTimeout(150000);
@@ -390,7 +390,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura firmowa');
       await allure.allureId('540');
       
       test.setTimeout(150000);
@@ -437,7 +437,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura firmowa');
       await allure.allureId('541');
       
       test.setTimeout(120000);
@@ -545,7 +545,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura firmowa');
       await allure.allureId('542');
 
       test.setTimeout(120000);
@@ -614,7 +614,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura imienna');
       await allure.allureId('3290');
       
       test.setTimeout(150000);
@@ -699,7 +699,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura imienna');
       await allure.allureId('3291');
       
       test.setTimeout(150000);
@@ -746,7 +746,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura imienna');
       await allure.allureId('3292');
       
       test.setTimeout(120000);
@@ -852,7 +852,7 @@ test.describe('Testy dostawy', async () => {
       await allure.epic('Webowe');
       await allure.parentSuite('Dostawa');
       await allure.suite('Testy dostawy');
-      await allure.subSuite('Faktura');
+      await allure.subSuite('Faktura imienna');
       await allure.allureId('3293');
 
       test.setTimeout(120000);
