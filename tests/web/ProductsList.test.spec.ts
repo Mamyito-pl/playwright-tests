@@ -87,7 +87,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1660');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'networkidle' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('networkidle');
 
     await page.waitForTimeout(3000);
 
@@ -133,6 +134,8 @@ test.describe('Testy listy produktów', async () => {
     await page.waitForTimeout(700);
     await page.mouse.wheel(0, 5000);
     await page.waitForTimeout(1000);
+
+    await page.waitForTimeout(10000);
 
     const productsCount = await productsListPage.getProductTiles.count();
     expect(productsCount).toBeGreaterThan(60);
@@ -591,7 +594,8 @@ test.describe('Testy listy produktów', async () => {
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','poniżej 10zł');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -627,7 +631,8 @@ test.describe('Testy listy produktów', async () => {
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','od 10zł do 20zł');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -665,7 +670,8 @@ test.describe('Testy listy produktów', async () => {
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','od 20zł do 50zł');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -705,7 +711,8 @@ test.describe('Testy listy produktów', async () => {
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','powyżej 50zł');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -744,9 +751,10 @@ test.describe('Testy listy produktów', async () => {
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterCustomPriceFromSet('Cena', '2');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
       await productsListPage.getFilterCustomPriceToSet('Cena', '4');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
       console.log('ceny produktow raw', allProductPrices)
@@ -785,7 +793,8 @@ test.describe('Testy listy produktów', async () => {
 
       await page.waitForTimeout(2000);
       await productsListPage.getFilterSelect('Producent','MLEKOVITA');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
       
       const allProductBrands = await productsListPage.getProductBrand.allTextContents();
   
@@ -821,13 +830,16 @@ test.describe('Testy listy produktów', async () => {
       await page.waitForTimeout(2000);
 
       await productsListPage.getFilterCustomPriceToSet('Cena', '9');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
       
       await productsListPage.getFilterSelectExact('Typ produktu','Bio');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       await productsListPage.getFilterSelect('Producent','ALCE NERO');
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
+      await commonPage.getLoader.first().waitFor({ state: 'hidden' });
 
       const allProductNames = await productsListPage.getProductName.allTextContents();
       const allProductPrices = await productsListPage.getProductPrices.allTextContents();
@@ -853,7 +865,7 @@ test.describe('Testy listy produktów', async () => {
 
       await expect(productsListPage.getClearFiltersButton).toBeVisible();
       await productsListPage.getClearFiltersButton.click();
-      await page.waitForTimeout(7000);
+      await page.waitForTimeout(10000);
 
       const allProductNamesAfterClearFilter = await productsListPage.getProductName.allTextContents();
  
