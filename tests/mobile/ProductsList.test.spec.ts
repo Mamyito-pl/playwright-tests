@@ -510,7 +510,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThanOrEqual(1);
   })
 
-  test.skip('M | Po wybraniu filtrów pojawia się counter z prawidłową liczbą włączonych filtrów', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
+  test.only('M | Po wybraniu filtrów pojawia się counter z prawidłową liczbą włączonych filtrów', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
