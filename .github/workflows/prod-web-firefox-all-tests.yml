@@ -47,7 +47,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps firefox
+        run: npx playwright install --with-deps firefox chromium
 
       - name: Install dependencies for playwright and allure framework integration
         run: |
