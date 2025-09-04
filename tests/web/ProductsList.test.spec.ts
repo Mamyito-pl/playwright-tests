@@ -87,7 +87,7 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1660');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'networkidle' });
 
     await page.waitForTimeout(3000);
 
@@ -736,7 +736,7 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await page.goto('/nabial', { waitUntil: 'networkidle' });
 
       await page.waitForTimeout(3000);
 
