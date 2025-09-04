@@ -158,7 +158,7 @@ export default class ProductsListPage {
     }
 
     get getFiltersCounter() {
-        return this.page.locator('div[class*="sc-f3c17cb7-5 cvsjqF"]');
+        return this.page.locator('[data-cy="mobile-active-filters-counter"]');
     }
 
     get getBreadcrumbs() {
