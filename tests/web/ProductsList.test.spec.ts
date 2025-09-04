@@ -37,7 +37,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1643');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('load');
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne', { timeout: 20000 });
@@ -63,7 +64,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1644');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('load');
 
     await page.waitForTimeout(2000);
 
@@ -119,7 +121,8 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1645');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('load');
 
     await expect(productsListPage.getHorizontalMenu).toBeVisible({ timeout: 15000 });
 
@@ -152,7 +155,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -190,7 +194,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -228,7 +233,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -269,7 +275,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -308,7 +315,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -424,7 +432,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -540,7 +549,8 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial', { waitUntil: 'domcontentloaded' });
+    await utility.gotoWithoutParameter(page, '/nabial');
+    await page.waitForLoadState('domcontentloaded');
 
     await page.waitForTimeout(1000);
 
@@ -586,7 +596,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'domcontentloaded' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+      await page.waitForLoadState('domcontentloaded');
 
       await page.waitForTimeout(1000);
 
@@ -623,7 +634,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'domcontentloaded' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+      await page.waitForLoadState('domcontentloaded');
 
       await page.waitForTimeout(1000);
 
@@ -664,7 +676,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+      await page.waitForLoadState('load');
 
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
@@ -703,7 +716,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'domcontentloaded' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+      await page.waitForLoadState('domcontentloaded');
 
       await page.waitForTimeout(1000);
 
@@ -743,7 +757,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'networkidle' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+      await page.waitForLoadState('networkidle');
 
       await page.waitForTimeout(3000);
 
@@ -786,7 +801,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(80000);
 
-      await page.goto('/nabial', { waitUntil: 'domcontentloaded' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+      await page.waitForLoadState('domcontentloaded');
 
       const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
@@ -818,7 +834,8 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(150000);
 
-      await page.goto('/bio-wege-i-bezglutenowe/bio', { waitUntil: 'domcontentloaded' });
+      await utility.gotoWithoutParameter(page, '/bio-wege-i-bezglutenowe/bio');
+      await page.waitForLoadState('domcontentloaded');
 
       await page.waitForTimeout(1000);
 
