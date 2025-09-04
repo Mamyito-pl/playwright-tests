@@ -28,7 +28,7 @@ export default class ProductsListPage {
 
         const filterSelect = this.mobile 
             ? this.getSettingsDrawer.getByText(selectName, { exact: true })
-            : (await this.getFilterDropdown(filterName)).getByText(selectName);
+            : (await this.getFilterDropdown(filterName)).getByText(new RegExp(`^${selectName}$`));
 
         const radioInput = this.mobile 
             ? this.getSettingsDrawer.getByText(selectName).locator('..').getByRole('radio', { name: selectName })
@@ -36,6 +36,7 @@ export default class ProductsListPage {
 
 
         await expect(filter).toBeVisible({ timeout: 5000 });
+        await expect(filter).toBeAttached();
         await filter.scrollIntoViewIfNeeded();
         await this.page.waitForTimeout(1000);
         await filter.click({ force: true, delay: 300 });
@@ -78,7 +79,7 @@ export default class ProductsListPage {
 
         const filterSelect = this.mobile 
             ? this.getSettingsDrawer.getByText(selectName, { exact: true })
-            : (await this.getFilterDropdown(filterName)).getByText(selectName);
+            : (await this.getFilterDropdown(filterName)).getByText(new RegExp(`^${selectName}$`));
 
         const filterSelectCheckboxChecked = this.mobile 
             ? this.getSettingsDrawer.getByText(selectName).locator('..').locator('span')
@@ -130,7 +131,7 @@ export default class ProductsListPage {
     }
 
     async getFilter(filterName: string) {
-        return this.page.locator(this.mobile ? `div[data-sentry-element="DrawerContent"]:has-text('${filterName}')` : `h2[data-sentry-element="PanelTitle"]:has-text('${filterName}')`);
+        return this.page.locator(this.mobile ? `div[data-sentry-element="DrawerContent"]:text-is('${filterName}')` : `h2[data-sentry-element="PanelTitle"]:text-is('${filterName}')`);
     }
 
     async clickIncreaseProductButton() {
