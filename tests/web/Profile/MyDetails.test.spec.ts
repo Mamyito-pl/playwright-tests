@@ -283,6 +283,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForLoadState('load');
 
+    await page.waitForTimeout(3000);
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await expect(page.locator('div[data-sentry-component="UserNewsletterConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
@@ -307,6 +309,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForLoadState('load');
 
+    await page.waitForTimeout(3000);
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await expect(page.locator('div[data-sentry-component="UserSMSConsent"] span[data-sentry-element="Switch"]')).not.toHaveAttribute('class', /.*Mui-checked.*/);
@@ -330,6 +334,8 @@ test.describe('Testy moje dane', async () => {
     await page.goto('/profil/dane');
 
     await page.waitForLoadState('load');
+
+    await page.waitForTimeout(3000);
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -363,6 +369,8 @@ test.describe('Testy moje dane', async () => {
     await page.goto('/profil/dane');
 
     await page.waitForLoadState('load');
+
+    await page.waitForTimeout(3000);
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
