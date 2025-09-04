@@ -85,6 +85,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForLoadState('load');
 
+    await page.waitForTimeout(3000);
+
     const exampleName = faker.person.firstName();
     const exampleSurname = faker.person.lastName();
 
@@ -135,6 +137,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForLoadState('load');
 
+    await page.waitForTimeout(3000);
+
     const exampleDateBirth = faker.date.birthdate({ min: 18, max: 65, mode: 'age' });
     const formattedEDB = format(exampleDateBirth, 'yyyy-MM-dd');
     
@@ -179,6 +183,8 @@ test.describe('Testy moje dane', async () => {
 
     await page.waitForLoadState('load');
 
+    await page.waitForTimeout(3000);
+
     const examplePhoneNumber = (faker.number.int(1) + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
@@ -221,6 +227,8 @@ test.describe('Testy moje dane', async () => {
     await page.goto('/profil/dane');
 
     await page.waitForLoadState('load');
+
+    await page.waitForTimeout(3000);
 
     const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
