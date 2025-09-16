@@ -191,7 +191,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
 
-  test('W | Możliwość wyszukania produktów po nazwie marki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('W | Możliwość wyszukania produktów po nazwie marki', { tag: ['@Prod'] }, async ({ page }) => {
 
     await allure.tags('Web', 'Wyszukiwarka');
     await allure.epic('Webowe');

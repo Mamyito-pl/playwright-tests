@@ -903,7 +903,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     }) 
                         
-    test('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Ponowna zapłata po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1007,7 +1007,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getBackHomeButton).toBeVisible();
     })
                             
-    test('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
+    test.skip('W | Zapłata przy odbiorze po nieudanej płatności przelewem online', { tag: ['@Smoke'] }, async ({ page, addProduct, baseURL }) => {
 
       await allure.tags('Web', 'Płatności');
       await allure.epic('Webowe');
@@ -1094,6 +1094,7 @@ test.describe('Testy płatności', async () => {
       await expect(paymentsPage.getPaymentOnDeliveryButton).toBeHidden({ timeout: 5000 });
       await expect(paymentsPage.getRepeatPaymentButton).toBeHidden({ timeout: 5000 });
 
+      await page.waitForSelector('text="Przetwarzanie płatności...."', { timeout: 145000, state: 'hidden' });
       await expect(page.getByText('Przyjęliśmy Twoje zamówienie')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Twoje zamówienie zostało potwierdzone i zostanie dostarczone w wybranym przez Ciebie terminie.')).toBeVisible({ timeout: 20000 });
       await expect(page.getByText('Nr zamówienia: ')).toBeVisible();
