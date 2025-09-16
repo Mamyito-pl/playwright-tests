@@ -250,7 +250,24 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForLoadState('load')
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'), { timeout: 15000 });
     await page.waitForTimeout(1000);
-    await przelewy24Page.clickErrorPayButton();
+
+    const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+    const maxTries = 5;
+    let urlChanged = false;
+
+    for (let i = 0; i < maxTries; i++) {
+      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+
+      const currentUrl = page.url();
+      if (expectedUrlPattern.test(currentUrl)) {
+        urlChanged = true;
+        break;
+      }
+    }
+
+    expect(urlChanged).toBe(true);
+    
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'), { timeout: 15000 });
     await przelewy24Page.clickBackToShopButton();
     await page.waitForTimeout(2000);
@@ -457,7 +474,24 @@ test.describe('Testy szczegółów zamówienia', async () => {
     await page.waitForLoadState('load')
     await expect(page).toHaveURL(new RegExp('^https://vsa.przelewy24.pl/pl/payment'), { timeout: 15000 });
     await page.waitForTimeout(1000);
-    await przelewy24Page.clickErrorPayButton();
+
+    const expectedUrlPattern = /^https:\/\/sandbox-go\.przelewy24\.pl\/trnResult\//;
+    const maxTries = 5;
+    let urlChanged = false;
+
+    for (let i = 0; i < maxTries; i++) {
+      await przelewy24Page.clickErrorPayButton();
+      await page.waitForTimeout(1000);
+
+      const currentUrl = page.url();
+      if (expectedUrlPattern.test(currentUrl)) {
+        urlChanged = true;
+        break;
+      }
+    }
+
+    expect(urlChanged).toBe(true);
+    
     await expect(page).toHaveURL(new RegExp('^https://sandbox-go.przelewy24.pl/trnResult/'), { timeout: 15000 });
     await przelewy24Page.clickBackToShopButton();
     await page.waitForTimeout(2000);
