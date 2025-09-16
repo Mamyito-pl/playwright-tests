@@ -46,8 +46,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+      - name: Clear Playwright Cache and Reinstall
+        run: |
+          rm -rf ~/.cache/ms-playwright
+          npm uninstall @playwright/test playwright
+          npm install @playwright/test playwright
+          npx playwright install --force
+          npx playwright install-deps
 
       - name: Install dependencies for playwright and allure framework integration
         run: |
