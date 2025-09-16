@@ -510,7 +510,7 @@ test.describe('Testy listy produktów', async () => {
     expect(productsCount).toBeGreaterThanOrEqual(1);
   })
 
-  test.only('M | Po wybraniu filtrów pojawia się counter z prawidłową liczbą włączonych filtrów', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
+  test('M | Po wybraniu filtrów pojawia się counter z prawidłową liczbą włączonych filtrów', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Lista produktów');
     await allure.epic('Mobilne');
@@ -550,7 +550,7 @@ test.describe('Testy listy produktów', async () => {
     await expect(productsListPage.getFiltersCounter).toHaveText('3');
   })
   
-  test.describe.skip('Filtrowanie po cenie', { tag: ['@Prod', '@Beta'] }, async () => {
+  test.describe('Filtrowanie po cenie', { tag: ['@Prod', '@Beta'] }, async () => {
     test('M | Możliwość filtrowania po cenie poniżej 10 zł', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
 
       await allure.tags('Mobilne', 'Lista produktów');
