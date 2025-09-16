@@ -182,7 +182,7 @@ test.describe('Testy wyszukiwarki', async () => {
     }
   })
   
-  test('M | Możliwość wyszukania produktów po nazwie marki', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test('M | Możliwość wyszukania produktów po nazwie marki', { tag: ['@Prod'] }, async ({ page }) => {
 
     await allure.tags('Mobilne', 'Wyszukiwarka');
     await allure.epic('Mobilne');
