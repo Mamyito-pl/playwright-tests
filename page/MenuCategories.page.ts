@@ -43,7 +43,7 @@ export default class MenuCategoriesPage {
     }
 
     get getMenuCategoriesBackButton() {
-        return this.page.locator('button[variant="txtOnlyBlack"]:has-text("Powrót do poprzedniej kategorii")');
+        return this.page.getByText('Powrót do poprzedniej kategorii', { exact: true });
     }
 
     get getMenuCategoriesSubCategoryAllCategoryButton() {
