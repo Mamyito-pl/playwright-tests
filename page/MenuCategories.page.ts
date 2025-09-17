@@ -21,7 +21,7 @@ export default class MenuCategoriesPage {
     }
 
     get getMenuCategories() {
-        return this.page.locator(this.mobile ? 'li[data-cy=category-menu-item-mobile]' : 'li[role="treeitem"]');
+        return this.page.locator(this.mobile ? 'li[data-cy=category-menu-item-mobile]' : '#category-menu-column-1');
     }
 
     // Mobile
