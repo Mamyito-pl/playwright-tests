@@ -106,6 +106,8 @@ export default class ProductsListPage {
     
     async getFilterCustomPriceFromSet(filterName: string, priceFrom: string) {
 
+        await this.page.waitForTimeout(3000);
+
         const filter = this.mobile 
             ? this.getSettingsDrawer.getByText(filterName, { exact: true })
             : await this.getFilter(filterName);
@@ -116,6 +118,8 @@ export default class ProductsListPage {
     }
 
     async getFilterCustomPriceToSet(filterName: string, priceTo: string) {
+
+        await this.page.waitForTimeout(3000);
 
         const filter = this.mobile 
             ? this.getSettingsDrawer.locator('div h2').getByText(filterName, { exact: true }).locator('..')
