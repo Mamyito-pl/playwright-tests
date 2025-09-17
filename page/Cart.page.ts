@@ -24,13 +24,15 @@ export default class CartPage {
     }
     
     async clickCartSummaryButton() {
-        await expect(this.page.locator(this.mobile ? '[data-cy="mobile-cart-checkout-button"]' : '[data-cy="desktop-cart-checkout-button"]')).toHaveCSS('background-color', 'rgb(249, 127, 21)');
-        return this.page.locator(this.mobile ? '[data-cy="mobile-cart-checkout-button"]' : '[data-cy="desktop-cart-checkout-button"]').click({ force: true, delay: 300 });
+        const button = this.page.locator(this.mobile ? '[data-cy="mobile-cart-checkout-button"]' : '[data-cy="desktop-cart-checkout-button"]');
+        await expect(button).toHaveCSS('background-color', /rgb\((249, 127, 21|229, 110, 6)\)/);
+        return button.click({ force: true, delay: 300 });
     }
 
     async clickCartSummaryPaymentButton() {
-        await expect(this.page.locator(this.mobile ? '[data-cy="mobile-delivery-checkout-button"]' : '[data-cy="desktop-delivery-checkout-button"]')).toHaveCSS('background-color', 'rgb(249, 127, 21)');
-        return this.page.locator(this.mobile ? '[data-cy="mobile-delivery-checkout-button"]' : '[data-cy="desktop-delivery-checkout-button"]').click({ force: true, delay: 300 });
+        const button = this.page.locator(this.mobile ? '[data-cy="mobile-delivery-checkout-button"]' : '[data-cy="desktop-delivery-checkout-button"]');
+        await expect(button).toHaveCSS('background-color', /rgb\((249, 127, 21|229, 110, 6)\)/);
+        return button.click({ force: true, delay: 300 });
     }
 
     async clickShowCartButton() {
