@@ -14,7 +14,7 @@ test.describe('Testy adresy dostaw', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await utility.gotoWithRetry(page, '/');
+    await utility.gotoWithoutParameter(page, '/');
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
@@ -33,7 +33,7 @@ test.describe('Testy adresy dostaw', async () => {
     await allure.subSuite('');
     await allure.allureId('886');
 
-    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+    await utility.gotoWithoutParameter(page, 'profil/adresy-dostaw');
 
     await expect(deliveryAddressesPage.getDeliveryAddressesTitle).toBeVisible();
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
@@ -50,7 +50,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(150000);
     
-    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+    await utility.gotoWithoutParameter(page, 'profil/adresy-dostaw');
 
     await deliveryAddressesPage.getDeliveryAddressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -113,7 +113,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(120000);
 
-    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+    await utility.gotoWithoutParameter(page, 'profil/adresy-dostaw');
 
     await addAddressDelivery('Adres Testowy');
     await addAddressDelivery('Adres Fixturowy');
@@ -150,7 +150,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(100000);
 
-    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+    await utility.gotoWithoutParameter(page, 'profil/adresy-dostaw');
 
     await addAddressDelivery('Adres Fixturowy');
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -233,7 +233,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     test.setTimeout(150000);
 
-    await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+    await utility.gotoWithoutParameter(page, 'profil/adresy-dostaw');
 
     await addAddressDelivery('Adres Edytowany');
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });

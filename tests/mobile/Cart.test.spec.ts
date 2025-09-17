@@ -30,7 +30,9 @@ test.describe('Testy koszyka', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/', { waitUntil: 'load'})
+    await utility.gotoWithoutParameter(page, '/');
+
+    await page.waitForTimeout(4000);
 
     await utility.addGlobalStyles(page);
 
@@ -268,8 +270,9 @@ test.describe('Testy koszyka', async () => {
     await allure.subSuite('');
     await allure.allureId('474');
     
-    await page.goto('/koszyk', { waitUntil: 'load'});
-    await expect(page).toHaveURL(`${baseURL}` + '/koszyk?testy-automatyczne');
+    await utility.gotoWithoutParameter(page, '/koszyk');
+    await page.waitForTimeout(4000);
+    await expect(page).toHaveURL(`${baseURL}` + '/koszyk');
     await expect(cartPage.getCartReturnButton).toBeVisible();
     await cartPage.getCartReturnButton.click({ force: true, delay: 300 });
     await page.waitForTimeout(1000);

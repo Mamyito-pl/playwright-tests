@@ -19,7 +19,7 @@ test.describe('Testy listy produktów', async () => {
     productsListPage = new ProductsListPage(page);
     commonPage = new CommonPage(page);
 
-    await utility.gotoWithRetry(page, '/');
+    await utility.gotoWithoutParameter(page, '/');
 
     await utility.addGlobalStyles(page);
 
@@ -37,7 +37,7 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1626');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await expect(productsListPage.getBreadcrumbs).toContainText('Mleko i napoje mleczne', { timeout: 20000 });
@@ -55,7 +55,7 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1627');
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(2000);
 
@@ -76,13 +76,14 @@ test.describe('Testy listy produktów', async () => {
     await allure.subSuite('');
     await allure.allureId('1628');
 
-    await page.goto('/nabial', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial');
 
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
     const productsBeforeScroll = await productsListPage.getProductTiles.count();
     expect(productsBeforeScroll).toEqual(60);
 
+    await page.getByText('Opis kategorii').waitFor();
     await page.getByText('Opis kategorii').scrollIntoViewIfNeeded();
     await page.waitForTimeout(10000);
 
@@ -101,7 +102,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(1000);
 
@@ -134,7 +135,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(1000);
 
@@ -171,7 +172,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(1000);
 
@@ -208,7 +209,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(1000);
 
@@ -245,7 +246,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
 
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(1000);
 
@@ -360,7 +361,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(80000);
     
-    await page.goto('/nabial/mleko-i-napoje-mleczne', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
 
     await page.waitForTimeout(1000);
 
@@ -475,7 +476,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(120000);
     
-    await page.goto('/nabial', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial');
 
     await page.waitForTimeout(1000);
 
@@ -521,7 +522,7 @@ test.describe('Testy listy produktów', async () => {
 
     test.setTimeout(120000);
     
-    await page.goto('/nabial', { waitUntil: 'load' });
+    await utility.gotoWithoutParameter(page, '/nabial');
 
     await page.waitForTimeout(1000);
 
@@ -562,7 +563,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -598,7 +601,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -638,7 +643,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });
+      await utility.gotoWithoutParameter(page, '/nabial');
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -678,7 +685,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });  
+      await utility.gotoWithoutParameter(page, '/nabial');  
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -717,7 +726,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(120000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });  
+      await utility.gotoWithoutParameter(page, '/nabial');  
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -762,7 +773,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(130000);
 
-      await page.goto('/nabial', { waitUntil: 'load' });  
+      await utility.gotoWithoutParameter(page, '/nabial');  
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 
@@ -794,7 +807,9 @@ test.describe('Testy listy produktów', async () => {
 
       test.setTimeout(200000);
 
-      await page.goto('/bio-wege-i-bezglutenowe/bio', { waitUntil: 'load' }); 
+      await utility.gotoWithoutParameter(page, '/bio-wege-i-bezglutenowe/bio'); 
+
+      await page.waitForTimeout(4000);
 
       await expect(productsListPage.getBreadcrumbs).toBeVisible();
 

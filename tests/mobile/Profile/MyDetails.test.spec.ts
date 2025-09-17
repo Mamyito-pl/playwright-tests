@@ -51,6 +51,8 @@ test.describe('Testy moje dane', async () => {
     await allure.allureId('2006');
 
     await utility.gotoWithRetry(page, '/profil/dane');
+
+    await page.waitForTimeout(4000);
     
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible();
     await expect(myDetailsPage.getNameSurnameLabel).toBeVisible();
@@ -131,6 +133,8 @@ test.describe('Testy moje dane', async () => {
 
     await utility.gotoWithRetry(page, '/profil/dane');
 
+    await page.waitForTimeout(4000);
+
     const exampleDateBirth = faker.date.birthdate({ min: 18, max: 65, mode: 'age' });
     const formattedEDB = format(exampleDateBirth, 'yyyy-MM-dd');
     
@@ -172,6 +176,8 @@ test.describe('Testy moje dane', async () => {
     await allure.allureId('2013');
 
     await utility.gotoWithRetry(page, '/profil/dane');
+
+    await page.waitForTimeout(4000);
 
     const examplePhoneNumber = (faker.number.int(1) + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
@@ -215,6 +221,8 @@ test.describe('Testy moje dane', async () => {
     test.setTimeout(60000);
 
     await utility.gotoWithRetry(page, '/profil/dane');
+
+    await page.waitForTimeout(4000);
 
     const examplePassword = ('Tt-' + faker.number.int({ min: 100000000, max: 199999999 })).toString();
 
@@ -270,6 +278,8 @@ test.describe('Testy moje dane', async () => {
 
     await utility.gotoWithRetry(page, '/profil/dane');
 
+    await page.waitForTimeout(4000);
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await page.waitForTimeout(2000);
@@ -296,6 +306,8 @@ test.describe('Testy moje dane', async () => {
 
     await utility.gotoWithRetry(page, '/profil/dane');
 
+    await page.waitForTimeout(4000);
+
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
     await page.waitForTimeout(2000);
@@ -321,6 +333,8 @@ test.describe('Testy moje dane', async () => {
     await newsletterSignInViaAPI();
 
     await utility.gotoWithRetry(page, '/profil/dane');
+
+    await page.waitForTimeout(4000);
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
 
@@ -356,6 +370,8 @@ test.describe('Testy moje dane', async () => {
     await smsConsentViaAPI(true);
 
     await utility.gotoWithRetry(page, '/profil/dane');
+
+    await page.waitForTimeout(4000);
 
     await expect(myDetailsPage.getMyDetailsTitle).toBeVisible({ timeout: 10000 });
     

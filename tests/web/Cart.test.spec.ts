@@ -24,7 +24,9 @@ test.describe('Testy koszyka', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await utility.gotoWithRetry(page, '/');
+    await utility.gotoWithoutParameter(page, '/');
+
+    await page.waitForTimeout(4000);
 
     await utility.addGlobalStyles(page);
 

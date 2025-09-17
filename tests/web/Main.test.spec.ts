@@ -26,9 +26,9 @@ test.describe('Testy strony głównej', async () => {
 
   test.beforeEach(async ({ page }) => {
     
-    await utility.gotoWithRetry(page, '/');
+    await utility.gotoWithoutParameter(page, '/');
 
-    await utility.addGlobalStyles(page);
+    await page.waitForTimeout(4000);
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);

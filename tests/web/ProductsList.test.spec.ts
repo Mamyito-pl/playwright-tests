@@ -19,7 +19,7 @@ test.describe('Testy listy produktów', async () => {
     productsListPage = new ProductsListPage(page);
     commonPage = new CommonPage(page);
 
-    await utility.gotoWithRetry(page, '/');
+    await utility.gotoWithoutParameter(page, '/');
 
     await utility.addGlobalStyles(page);
 

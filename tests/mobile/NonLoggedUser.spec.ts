@@ -28,6 +28,8 @@ test.describe('Testy niezalogowanego użytkownika', async () => {
     
     await utility.gotoWithRetry(page, '/');
 
+    await page.waitForTimeout(4000);
+
     await utility.addGlobalStyles(page);
 
     page.on('framenavigated', async () => {

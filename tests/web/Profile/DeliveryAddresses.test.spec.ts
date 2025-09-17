@@ -14,7 +14,9 @@ test.describe('Testy adresy dostaw', async () => {
 
   test.beforeEach(async ({ page }) => {
 
-    await utility.gotoWithRetry(page, '/');
+    await utility.gotoWithoutParameter(page, '/');
+    
+    await page.waitForTimeout(4000);
 
     page.on('framenavigated', async () => {
       await utility.addGlobalStyles(page);
