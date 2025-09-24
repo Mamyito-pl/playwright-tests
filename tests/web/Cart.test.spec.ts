@@ -60,7 +60,11 @@ test.describe('Testy koszyka', async () => {
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickIncreaseProductButton();
     await page.waitForTimeout(5000);
@@ -81,7 +85,11 @@ test.describe('Testy koszyka', async () => {
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     for (let i = 0; i < 2; i++) {
       await cartPage.clickIncreaseProductButton();
@@ -109,14 +117,22 @@ test.describe('Testy koszyka', async () => {
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     await cartPage.clickDeleteProductCartIcon();
     await cartPage.clickDeleteProductCartConfirmButton();
     await page.waitForTimeout(2000);
-    await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
     const productCountAfterDelete = await cartPage.getProductList.count();
-    expect(productCountAfterDelete).toBe(0);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+      expect(productCountAfterDelete).toBe(1);
+    } else {
+      await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
+      expect(productCountAfterDelete).toBe(0);
+    }
   }) 
 
   test('W | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page, addProduct }) => {
@@ -135,7 +151,11 @@ test.describe('Testy koszyka', async () => {
     await page.goto('/koszyk', { waitUntil: 'load'});
     await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000});
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 

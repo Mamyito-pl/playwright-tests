@@ -91,6 +91,10 @@ export default class CartPage {
         return this.page.locator('div[data-sentry-element="ModalContent"]').getByText('Potwierdź');
     }
 
+    get getPromotionLabel() {
+        return this.getEmptyCartNotification.getByText('Promocje');
+    }
+
     get getEmptyCartNotification() {
         return this.page.locator('div[data-sentry-component="CartProductsList"]')
     }

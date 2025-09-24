@@ -79,8 +79,16 @@ test.describe('Testy koszyka', async () => {
     }
 
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('1');
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await page.waitForTimeout(1500);
     await cartPage.clickIncreaseProductButton();
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
@@ -109,9 +117,17 @@ test.describe('Testy koszyka', async () => {
     }
 
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('1');
     for (let i = 0; i < 2; i++) {
+      await page.evaluate(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+      await page.waitForTimeout(1500);
       await cartPage.clickIncreaseProductButton();
       await page.waitForTimeout(5000);
     };
@@ -147,14 +163,26 @@ test.describe('Testy koszyka', async () => {
     }
 
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('1');
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await page.waitForTimeout(1500);
     await cartPage.clickDeleteProductCartIcon();
     await cartPage.clickDeleteProductCartConfirmButton();
     await page.reload()
-    await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
     const productCountAfterDelete = await cartPage.getProductList.count();
-    expect(productCountAfterDelete).toBe(0);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+      expect(productCountAfterDelete).toBe(1);
+    } else {
+      await expect(cartPage.getEmptyCartNotification).toHaveText('Twój koszyk jest pusty');
+      expect(productCountAfterDelete).toBe(0);
+    }
   }) 
 
   test('M | Możliwość dodania produktu w ilości > 1 do koszyka', { tag: ['@ProdSmoke', '@Smoke'] }, async ({ page }) => {
@@ -188,7 +216,11 @@ test.describe('Testy koszyka', async () => {
     }
     
     const productCount = await cartPage.getProductList.count();
-    expect(productCount).toBe(1);
+    if (await cartPage.getPromotionLabel.isVisible()) {
+    expect(productCount).toBe(2);
+    } else {
+      expect(productCount).toBe(1);
+    }
     await expect(cartPage.getProductItemCount).toHaveValue('2');
   })
 
