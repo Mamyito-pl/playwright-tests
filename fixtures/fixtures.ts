@@ -46,6 +46,7 @@ type MyFixtures = {
     cancelEditOrderViaAPI: (page: Page) => Promise<void>;
     detachDeliverySlotViaAPI: () => Promise<void>;
     addProductsByValue: (maxValue: number) => Promise<void>;
+    removeDiscountCodeViaAPI: () => Promise<void>;
 };
 
 export const test = baseTest.extend<MyFixtures>({
@@ -833,6 +834,57 @@ export const test = baseTest.extend<MyFixtures>({
     };
 
     await use(addProductsByValue);
+  },
+
+  removeDiscountCodeViaAPI: async ({ request }, use) => {
+    
+    const removeDiscountCodeViaAPI = async (): Promise<void> => {
+      
+      const tokenResponse = await request.post(`${process.env.APIURL}/api/login`, {
+        headers: {
+          'Accept': 'application/json'
+      },
+        data: {
+          email: `${process.env.EMAIL}`,
+          password: `${process.env.PASSWORD}`,
+        },
+      });
+
+      const responseBodyToken = await tokenResponse.json();
+
+      const token = responseBodyToken.data.token;
+
+      const cartIDResponse = await request.post(`${process.env.APIURL}/api/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      const responseBodyCartID = await cartIDResponse.json();
+      const cart_id = responseBodyCartID.data.id;
+
+      const discountCodes = responseBodyCartID.data.discount_codes;
+
+      if (discountCodes && discountCodes.length > 0) {
+        const discount_code_id = discountCodes[0].id;
+
+        if (discount_code_id) {
+          console.log(`Usuwam kod rabatowy: ${discount_code_id}`);
+
+          const deleteDiscountCode = await request.delete(`${process.env.APIURL}/api/cart/${cart_id}/discount-code/${discount_code_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          expect(deleteDiscountCode.status()).toBe(200);
+        }
+      } else {
+        console.log("Brak kodu rabatowego — nic nie robię.");
+      }
+    };
+    
+    await use(removeDiscountCodeViaAPI);
   }
 });
 
