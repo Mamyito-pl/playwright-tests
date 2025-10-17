@@ -39,8 +39,9 @@ test.describe('Testy kodów rabatowych', async () => {
     });
   })
 
-  test.afterEach(async ({ clearCartViaAPI }) => {
+  test.afterEach(async ({ removeDiscountCodeViaAPI, clearCartViaAPI }) => {
     
+    await removeDiscountCodeViaAPI();
     await clearCartViaAPI();
   }) 
   
