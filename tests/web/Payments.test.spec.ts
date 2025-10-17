@@ -300,7 +300,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('464');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(170000);
 
@@ -357,7 +357,12 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      try {
+        await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      } catch (error) {
+        await page.reload();
+        await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      }
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -428,7 +433,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('451');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(170000);
 
@@ -623,7 +628,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('452');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(200000);
 
@@ -706,7 +711,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność BLIK');
       await allure.allureId('462');
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(170000);
 
@@ -771,7 +776,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('459');
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(150000);
 
@@ -838,7 +843,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('453');
   
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(220000);
 
@@ -912,7 +917,7 @@ test.describe('Testy płatności', async () => {
       await allure.subSuite('Płatność przelewem online');
       await allure.allureId('461');
 
-      test.skip(`${process.env.URL}` == 'https://mamyito.pl', 'Test wymaga złożenia zamówienia');
+      test.skip(`${process.env.APIURL}` == 'https://api.mamyito.pl', 'Test wymaga złożenia zamówienia');
 
       test.setTimeout(190000);
 
@@ -1121,7 +1126,12 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      try {
+        await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      } catch (error) {
+        await page.reload();
+        await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      }
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -1208,7 +1218,12 @@ test.describe('Testy płatności', async () => {
       await cartPage.clickCartDrawerToCartButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/koszyk'), { timeout: 20000 });
       await utility.addTestParam(page);
-      await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      try {
+        await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      } catch (error) {
+        await page.reload();
+        await page.waitForSelector(selectors.CartPage.common.productCartList, { timeout: 10000 });
+      }
       await cartPage.clickCartSummaryButton();
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/dostawa'), { timeout: 20000 });
       await utility.addTestParam(page);
@@ -1223,7 +1238,12 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
+      if (await commonPage.getLoader.isVisible({ timeout: 5000 })) {
+        await expect(commonPage.getLoader).toBeHidden({ timeout: 10000 });
+        await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
+      } else {
+        await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
+      }
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await cartPage.waitForPaymentConfirmationButton();
