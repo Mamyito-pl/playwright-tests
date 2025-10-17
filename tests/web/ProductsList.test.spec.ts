@@ -69,15 +69,38 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(2000);
 
-    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
-    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
-
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await productsListPage.getBreadcrumbs.getByText('Nabiał').click();
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
     await expect(productsListPage.getProductCategoryTitle('Nabiał')).toBeVisible({ timeout: 15000 });
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await expect(productsListPage.getBreadcrumbs).toContainText('Nabiał');
+  })
+
+  test('W | Możliwość przejścia do innej kategorii poprzez category tag', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
+
+    await allure.tags('Web', 'Lista produktów');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('3657');
+
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
+
+    const categoryTag = productsListPage.categoryTag.first().getByText('Strefa Niskich Cen');
+    
+    await expect(categoryTag).toBeVisible({ timeout: 20000 });
+
+    await expect(productsListPage.categoryTag.first()).not.toHaveCSS('background-color', 'rgb(254, 244, 235)');
+
+    await categoryTag.click();
+    await expect(page).toHaveURL('/strefa-mamity', { timeout: 10000 });
+    await expect(productsListPage.getProductCategoryTitle('Strefa Niskich Cen')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.categoryTag.first()).toHaveCSS('background-color', 'rgb(254, 244, 235)');
   })
 
   test('W | Zmiana widoku menu na pionowy i poziomy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
