@@ -170,6 +170,10 @@ export default class ProductsListPage {
         return this.page.locator(this.mobile ? 'div[data-sentry-element="Mobile"]' : 'div[data-sentry-element="Desktop"]');
     }
 
+    get getCategoryTag() {
+        return this.page.locator('a[data-cy="category-tag"]');
+    }
+
     get getBigBanner() {
         return this.page.locator('div[data-sentry-element="Desktop"]');
     }

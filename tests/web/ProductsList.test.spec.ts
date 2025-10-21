@@ -69,15 +69,38 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(2000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
-    await expect(breadcrumb).toBeVisible({ timeout: 20000 });
-
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await productsListPage.getBreadcrumbs.getByText('Nabiał').click();
     await expect(page).toHaveURL('/nabial', { timeout: 10000 });
     await expect(productsListPage.getProductCategoryTitle('Nabiał')).toBeVisible({ timeout: 15000 });
     await expect(productsListPage.getBreadcrumbs).toBeVisible();
     await expect(productsListPage.getBreadcrumbs).toContainText('Nabiał');
+  })
+
+  test('W | Możliwość przejścia do innej kategorii poprzez category tag', { tag: ['@Prod', '@Beta'] }, async ({ page }) => {
+
+    await allure.tags('Web', 'Lista produktów');
+    await allure.epic('Webowe');
+    await allure.parentSuite('Lista produktów');
+    await allure.suite('Testy listy produktów');
+    await allure.subSuite('');
+    await allure.allureId('3657');
+
+    await utility.gotoWithoutParameter(page, '/nabial/mleko-i-napoje-mleczne');
+    await page.waitForLoadState('load');
+
+    await page.waitForTimeout(2000);
+
+    const categoryTag = productsListPage.getCategoryTag.first().getByText('Strefa Niskich Cen');
+    
+    await expect(categoryTag).toBeVisible({ timeout: 20000 });
+
+    await expect(productsListPage.getCategoryTag.first()).not.toHaveCSS('background-color', 'rgb(254, 244, 235)');
+
+    await categoryTag.click();
+    await expect(page).toHaveURL('/strefa-mamity', { timeout: 10000 });
+    await expect(productsListPage.getProductCategoryTitle('Strefa Niskich Cen')).toBeVisible({ timeout: 15000 });
+    await expect(productsListPage.getCategoryTag.first()).toHaveCSS('background-color', 'rgb(254, 244, 235)');
   })
 
   test('W | Zmiana widoku menu na pionowy i poziomy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
@@ -94,7 +117,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(3000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
     await expect(productsListPage.getHorizontalMenu).toBeVisible();
@@ -160,7 +183,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -199,7 +222,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -238,7 +261,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -280,7 +303,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -320,7 +343,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -437,7 +460,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     await expect(productsListPage.getSortButton).toBeVisible();
@@ -554,7 +577,7 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(1000);
 
-    const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+    const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
     await expect(breadcrumb).toBeVisible({ timeout: 20000 });
     
     expect((await productsListPage.getFilter('Typ produktu')).isVisible({ timeout: 10000 }));
@@ -601,7 +624,7 @@ test.describe('Testy listy produktów', async () => {
 
       await page.waitForTimeout(1000);
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','poniżej 10zł');
@@ -639,7 +662,7 @@ test.describe('Testy listy produktów', async () => {
 
       await page.waitForTimeout(1000);
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','od 10zł do 20zł');
@@ -679,7 +702,7 @@ test.describe('Testy listy produktów', async () => {
       await utility.gotoWithoutParameter(page, '/nabial');
       await page.waitForLoadState('load');
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','od 20zł do 50zł');
@@ -721,7 +744,7 @@ test.describe('Testy listy produktów', async () => {
 
       await page.waitForTimeout(1000);
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterSelectExact('Cena','powyżej 50zł');
@@ -762,7 +785,7 @@ test.describe('Testy listy produktów', async () => {
 
       await page.waitForTimeout(3000);
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await productsListPage.getFilterCustomPriceFromSet('Cena', '2');
@@ -804,7 +827,7 @@ test.describe('Testy listy produktów', async () => {
       await utility.gotoWithoutParameter(page, '/nabial');
       await page.waitForLoadState('domcontentloaded');
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await page.waitForTimeout(2000);
@@ -839,7 +862,7 @@ test.describe('Testy listy produktów', async () => {
 
       await page.waitForTimeout(1000);
 
-      const breadcrumb = page.locator('div[data-sentry-element="CategoriesWrapper"] a p').first().getByText('Strefa Niskich Cen');
+      const breadcrumb = page.locator('a[data-cy="category-tag"]').first().getByText('Strefa Niskich Cen');
       await expect(breadcrumb).toBeVisible({ timeout: 20000 });
 
       await expect(productsListPage.getClearFiltersButton).not.toBeVisible();
@@ -881,7 +904,7 @@ test.describe('Testy listy produktów', async () => {
       expect(productsCount).toBeLessThan(10);
 
       await expect(productsListPage.getClearFiltersButton).toBeVisible();
-      await productsListPage.getClearFiltersButton.click();
+      await productsListPage.getClearFiltersButton.click({ force: true });
       await page.waitForTimeout(10000);
 
       const allProductNamesAfterClearFilter = await productsListPage.getProductName.allTextContents();

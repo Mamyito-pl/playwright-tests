@@ -858,7 +858,7 @@ test.describe('Testy listy produktów', async () => {
       await productsListPage.getFiltersButton.click();
       await expect(productsListPage.getSettingsDrawer).toBeVisible({ timeout: 10000 });
       await expect(productsListPage.getClearFiltersButton).toBeVisible();
-      await productsListPage.getClearFiltersButton.click();
+      await productsListPage.getClearFiltersButton.click({ force: true });
       await page.waitForTimeout(7000);
 
       const allProductNamesAfterClearFilter = await productsListPage.getProductName.allTextContents();
