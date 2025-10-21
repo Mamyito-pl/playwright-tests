@@ -1325,7 +1325,12 @@ test.describe('Testy płatności', async () => {
       await page.waitForTimeout(2000);
       await paymentsPage.checkStatue();
       await page.waitForTimeout(1000);
-      await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
+      if (await commonPage.getLoader.isVisible({ timeout: 5000 })) {
+        await expect(commonPage.getLoader).toBeHidden({ timeout: 10000 });
+        await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
+      } else {
+        await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
+      }
       await cartPage.clickCartPaymentConfirmationButton();
 
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/podsumowanie'), { timeout: 20000 });
