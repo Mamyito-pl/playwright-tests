@@ -91,16 +91,16 @@ test.describe('Testy listy produktów', async () => {
 
     await page.waitForTimeout(2000);
 
-    const categoryTag = productsListPage.categoryTag.first().getByText('Strefa Niskich Cen');
+    const categoryTag = productsListPage.getCategoryTag.first().getByText('Strefa Niskich Cen');
     
     await expect(categoryTag).toBeVisible({ timeout: 20000 });
 
-    await expect(productsListPage.categoryTag.first()).not.toHaveCSS('background-color', 'rgb(254, 244, 235)');
+    await expect(productsListPage.getCategoryTag.first()).not.toHaveCSS('background-color', 'rgb(254, 244, 235)');
 
     await categoryTag.click();
     await expect(page).toHaveURL('/strefa-mamity', { timeout: 10000 });
     await expect(productsListPage.getProductCategoryTitle('Strefa Niskich Cen')).toBeVisible({ timeout: 15000 });
-    await expect(productsListPage.categoryTag.first()).toHaveCSS('background-color', 'rgb(254, 244, 235)');
+    await expect(productsListPage.getCategoryTag.first()).toHaveCSS('background-color', 'rgb(254, 244, 235)');
   })
 
   test('W | Zmiana widoku menu na pionowy i poziomy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
