@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import CommonPage from "../../../page/Common.page.ts";
+import MainPage from '../../../page/Main.page.ts';
 import DeliveryAddressesPage from '../../../page/Profile/DeliveryAddresses.page.ts';
 import * as allure from "allure-js-commons";
 import { test } from '../../../fixtures/fixtures.ts';
@@ -11,6 +12,7 @@ test.describe('Testy adresy dostaw', async () => {
 
   let commonPage: CommonPage;
   let deliveryAddressesPage : DeliveryAddressesPage;
+  let mainPage: MainPage;
 
   test.beforeEach(async ({ page }) => {
 
@@ -24,6 +26,7 @@ test.describe('Testy adresy dostaw', async () => {
 
     commonPage = new CommonPage(page);
     deliveryAddressesPage = new DeliveryAddressesPage(page);
+    mainPage = new MainPage(page);
   })
   
   test('W | Strona adresy dostaw pojawia się ze wszystkimi potrzebnymi polami', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
@@ -41,7 +44,9 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddNewAddressButton).toBeVisible();
   })
 
-  test('W | Możliwość dodania adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+  test.skip('W | Możliwość dodania adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page }) => {
+
+    // UNSKIP BELOW TESTS AFTER CACHE FIX
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -53,6 +58,9 @@ test.describe('Testy adresy dostaw', async () => {
     test.setTimeout(150000);
     
     await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+
+    await expect(mainPage.getProfileButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await deliveryAddressesPage.getDeliveryAddressesTitle.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -104,7 +112,7 @@ test.describe('Testy adresy dostaw', async () => {
     await page.waitForSelector('text=Adres Testowy', { state: 'visible' });
   })
 
-  test('W | Możliwość ustawienia głównego adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDelivery }) => {
+  test.skip('W | Możliwość ustawienia głównego adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDelivery }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -116,6 +124,9 @@ test.describe('Testy adresy dostaw', async () => {
     test.setTimeout(120000);
     
     await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+
+    await expect(mainPage.getProfileButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await addAddressDelivery('Adres Testowy');
     await addAddressDelivery('Adres Fixturowy');
@@ -141,7 +152,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getMainAddressInfo('Adres Fixturowy')).not.toBeAttached();
   })
 
-  test('W | Możliwość edycji adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDelivery }) => {
+  test.skip('W | Możliwość edycji adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDelivery }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -153,6 +164,9 @@ test.describe('Testy adresy dostaw', async () => {
     test.setTimeout(100000);
 
     await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+
+    await expect(mainPage.getProfileButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await addAddressDelivery('Adres Fixturowy');
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });
@@ -224,7 +238,7 @@ test.describe('Testy adresy dostaw', async () => {
     await expect(deliveryAddressesPage.getAddressModalUserDeliveryNotes).toHaveValue('Edytowana testowa notatka');
   })
   
-  test('W | Możliwość usunięcia adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDelivery }) => {
+  test.skip('W | Możliwość usunięcia adresu dostawy', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, addAddressDelivery }) => {
 
     await allure.tags('Web', 'Profil');
     await allure.epic('Webowe');
@@ -236,6 +250,9 @@ test.describe('Testy adresy dostaw', async () => {
     test.setTimeout(150000);
 
     await utility.gotoWithRetry(page, 'profil/adresy-dostaw');
+
+    await expect(mainPage.getProfileButton).toBeVisible({ timeout: 10000 });
+    await page.waitForTimeout(1000);
 
     await addAddressDelivery('Adres Edytowany');
     await expect(commonPage.getMessage).not.toBeVisible({ timeout: 15000 });

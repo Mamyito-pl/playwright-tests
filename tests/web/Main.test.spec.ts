@@ -59,6 +59,8 @@ test.describe('Testy strony głównej', async () => {
     await page.waitForTimeout(700);
     await page.mouse.wheel(0, 5000);
     await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 7000);
+    await page.waitForTimeout(700);
 
     await expect(mainPage.getLogo).toBeVisible();
     await expect(searchbarPage.getSearchbarInput).toBeVisible()
@@ -227,7 +229,9 @@ test.describe('Testy strony głównej', async () => {
     await allure.subSuite('');
     await allure.allureId('1216');
 
-    await page.mouse.wheel(0, 1500);
+    await page.mouse.wheel(0, 1200);
+    await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 1700);
     await page.waitForTimeout(700);
     
     const firstItemInSlider = page.locator('div[data-sentry-component="CategoriesSection"] section a[rel="nofollow"]').first()
@@ -236,13 +240,13 @@ test.describe('Testy strony głównej', async () => {
 
     await page.waitForTimeout(2000);
 
-    await mainPage.getSectionGetLeftButton.nth(2).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(2).click({ force: true, delay: 300 });
+    await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
+    await mainPage.getSectionGetRightButton.nth(3).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
-    await mainPage.getSectionGetLeftButton.nth(2).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(2).click({ force: true, delay: 300 });
+    await mainPage.getSectionGetLeftButton.nth(3).isEnabled();
+    await mainPage.getSectionGetLeftButton.nth(3).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
-    await mainPage.getSectionGetLeftButton.nth(2).isDisabled();
+    await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
   })
   
   test('W | Możliwość przejścia do wszystkich kategorii poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
@@ -255,6 +259,8 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1217');
 
     await page.mouse.wheel(0, 1200);
+    await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 1700);
     await page.waitForTimeout(700);
 
     await mainPage.getCategoriesSection.scrollIntoViewIfNeeded();
@@ -276,6 +282,8 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1218');
 
     await page.mouse.wheel(0, 1200);
+    await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 1700);
     await page.waitForTimeout(700);
 
     const firstItemInSlider = page.locator('div[data-sentry-component="CategoriesSection"] section a[rel="nofollow"]').first();
@@ -302,9 +310,9 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1219');
     
     await page.mouse.wheel(0, 1500);
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1000);
     await page.mouse.wheel(0, 2000);
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1000);
 
     const firstItemInSlider = page.locator('[data-cy="nowosci-product-card-slider"]').first()
 
@@ -312,13 +320,13 @@ test.describe('Testy strony głównej', async () => {
 
     await page.waitForTimeout(2000);
 
-    await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
-    await mainPage.getSectionGetRightButton.nth(3).click({ force: true, delay: 300 });
+    await mainPage.getSectionGetLeftButton.nth(4).isDisabled();
+    await mainPage.getSectionGetRightButton.nth(4).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
-    await mainPage.getSectionGetLeftButton.nth(3).isEnabled();
-    await mainPage.getSectionGetLeftButton.nth(3).click({ force: true, delay: 300 });
+    await mainPage.getSectionGetLeftButton.nth(4).isEnabled();
+    await mainPage.getSectionGetLeftButton.nth(4).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
-    await mainPage.getSectionGetLeftButton.nth(3).isDisabled();
+    await mainPage.getSectionGetLeftButton.nth(4).isDisabled();
   })
   
   test('W | Możliwość przejścia do nowości poprzez link slidera', { tag: ['@Prod', '@Beta', '@Test'] }, async ({ page, baseURL }) => {
@@ -331,9 +339,9 @@ test.describe('Testy strony głównej', async () => {
     await allure.allureId('1220');
 
     await page.mouse.wheel(0, 1500);
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1000);
     await page.mouse.wheel(0, 2000);
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1000);
 
     await mainPage.getNewProductsSection.scrollIntoViewIfNeeded();
 
@@ -355,7 +363,7 @@ test.describe('Testy strony głównej', async () => {
     
     await page.mouse.wheel(0, 1500);
     await page.waitForTimeout(700);
-    await page.mouse.wheel(0, 2000);
+    await page.mouse.wheel(0, 2200);
     await page.waitForTimeout(1000);
 
     const firstItemInSlider = page.locator('[data-cy="most_frequently_bought-product-card-slider"]').first();
@@ -365,9 +373,9 @@ test.describe('Testy strony głównej', async () => {
     await page.waitForTimeout(2000);
 
     await expect(mainPage.getSectionGetRightButton.nth(4)).toBeEnabled();
-    await mainPage.getSectionGetRightButton.nth(4).click({ force: true, delay: 300 });
+    await mainPage.getSectionGetRightButton.nth(5).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).not.toBeInViewport({ timeout: 5000 });
-    await mainPage.getSectionGetLeftButton.nth(4).click({ force: true, delay: 300 });
+    await mainPage.getSectionGetLeftButton.nth(5).click({ force: true, delay: 300 });
     await expect(firstItemInSlider).toBeInViewport({ timeout: 5000 });
   })
   
@@ -495,6 +503,8 @@ test.describe('Testy strony głównej', async () => {
     await page.mouse.wheel(0, 3000);
     await page.waitForTimeout(700);
     await page.mouse.wheel(0, 5000);
+    await page.waitForTimeout(700);
+    await page.mouse.wheel(0, 7000);
     await page.waitForTimeout(700);
 
     await expect(mainPage.getNewsletterSection).toBeVisible();
