@@ -1,12 +1,16 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 import * as selectors from '../utils/selectors.json';
 import { isMobile } from '../utils/utility-methods.ts';
+import CommonPage from './Common.page.ts';
 
 export default class PaymentsPage {
     private mobile: boolean;
+    private commonPage: CommonPage;
 
     constructor(public page: Page) {
         this.page = page;
+        this.commonPage = new CommonPage(page);
+        
         const viewport = page.viewportSize();
         if (!viewport) throw new Error('Viewport is null');
         this.mobile = isMobile(viewport.width);
@@ -39,6 +43,15 @@ export default class PaymentsPage {
 
     async enterBlikCode(blikCode: string) {
         await this.page.locator(selectors.PaymentsPage.common.blikPaymentInput).fill(blikCode);
+    }
+
+    async waitForLoaderAndSelectPaymentMethod(paymentMethod: string) {
+      if (await this.commonPage.getLoader.isVisible({ timeout: 5000 })) {
+        await expect(this.commonPage.getLoader).toBeHidden({ timeout: 10000 });
+        await this.page.getByText(paymentMethod, { exact: true }).click({ force: true });
+      } else {
+        await this.page.getByText(paymentMethod, { exact: true }).click({ force: true });
+      }
     }
 
     get getOrderNumber() {

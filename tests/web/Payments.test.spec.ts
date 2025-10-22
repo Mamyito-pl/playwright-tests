@@ -377,7 +377,7 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      await page.getByText('Kod BLIK', { exact: true }).click({ force: true });
+      await paymentsPage.waitForLoaderAndSelectPaymentMethod('Kod BLIK');
       await paymentsPage.enterBlikCode('123123');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
@@ -1146,7 +1146,7 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      await page.getByText('Przelew online', { exact: true }).click({ force: true });
+      await paymentsPage.waitForLoaderAndSelectPaymentMethod('Przelew online');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await cartPage.waitForPaymentConfirmationButton();
@@ -1238,12 +1238,7 @@ test.describe('Testy płatności', async () => {
       await expect(page).toHaveURL(new RegExp(`${baseURL}` + '/platnosc'), { timeout: 20000 });
       await utility.addTestParam(page);
       await page.waitForTimeout(2000);
-      if (await commonPage.getLoader.isVisible({ timeout: 5000 })) {
-        await expect(commonPage.getLoader).toBeHidden({ timeout: 10000 });
-        await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
-      } else {
-        await page.getByText('Płatność kartą przy odbiorze', { exact: true }).click({ force: true });
-      }
+      await paymentsPage.waitForLoaderAndSelectPaymentMethod('Płatność kartą przy odbiorze');
       await paymentsPage.checkStatue();
       await cartPage.clickCartPaymentConfirmationButton();
       await cartPage.waitForPaymentConfirmationButton();
