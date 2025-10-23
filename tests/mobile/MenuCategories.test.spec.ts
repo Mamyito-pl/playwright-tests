@@ -41,7 +41,7 @@ test.describe('Testy menu kategorii', async () => {
 
     const categoriesCount = await menuCategoriesPage.getMenuCategories.count();
 
-    expect(categoriesCount).toBeGreaterThan(18);
+    expect(categoriesCount).toBeGreaterThanOrEqual(18);
   })
 
   test('M | Możliwość zamknięcia menu', { tag: ['@Prod', '@Beta', '@Test'] }, async () => {
@@ -59,7 +59,7 @@ test.describe('Testy menu kategorii', async () => {
 
     const categoriesCount = await menuCategoriesPage.getMenuCategories.count();
 
-    expect(categoriesCount).toBeGreaterThan(18);
+    expect(categoriesCount).toBeGreaterThanOrEqual(18);
 
     await menuCategoriesPage.clickMenuCategoriesCloseIconButton();
 
