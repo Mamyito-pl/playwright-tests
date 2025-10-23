@@ -9,6 +9,7 @@ export async function addGlobalStyles(page) {
   div[data-sentry-component="ExternalWidget"] { display: none !important; }
   #cookiescript_injected_wrapper { display: none !important; }
   div[class="snrs-modal-wrapper snrs-modal-show"] { display: none !important; }
+  #mmy-top-banner { display: none !important; }
   `;
 
   try {
