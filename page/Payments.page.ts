@@ -1,15 +1,12 @@
 import { Page, expect } from "@playwright/test";
 import * as selectors from '../utils/selectors.json';
 import { isMobile } from '../utils/utility-methods.ts';
-import CommonPage from './Common.page.ts';
 
 export default class PaymentsPage {
     private mobile: boolean;
-    private commonPage: CommonPage;
 
     constructor(public page: Page) {
         this.page = page;
-        this.commonPage = new CommonPage(page);
         
         const viewport = page.viewportSize();
         if (!viewport) throw new Error('Viewport is null');
@@ -46,12 +43,16 @@ export default class PaymentsPage {
     }
 
     async waitForLoaderAndSelectPaymentMethod(paymentMethod: string) {
-      if (await this.commonPage.getLoader.isVisible({ timeout: 5000 })) {
-        await expect(this.commonPage.getLoader).toBeHidden({ timeout: 10000 });
+      if (await this.getLoaderPaymentsPage.isVisible({ timeout: 5000 })) {
+        await expect(this.getLoaderPaymentsPage).toBeHidden({ timeout: 10000 });
         await this.page.getByText(paymentMethod, { exact: true }).click({ force: true });
       } else {
         await this.page.getByText(paymentMethod, { exact: true }).click({ force: true });
       }
+    }
+
+    get getLoaderPaymentsPage() {
+        return this.page.locator('svg[class*="MuiCircularProgress-svg"]').nth(1);
     }
 
     get getOrderNumber() {
