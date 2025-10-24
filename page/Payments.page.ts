@@ -52,7 +52,7 @@ export default class PaymentsPage {
     }
 
     get getLoaderPaymentsPage() {
-        return this.page.locator('svg[class*="MuiCircularProgress-svg"]').nth(1);
+        return this.page.locator('[data-sentry-element="PaymentSection"] svg[class*="MuiCircularProgress-svg"]');
     }
 
     get getOrderNumber() {
