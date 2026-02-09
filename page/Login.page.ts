@@ -8,13 +8,13 @@ export default class LoginPage {
     }
 
     async enterEmail(email: string) {
-        await this.page.locator('login_email-label').fill(email);
+        await this.page.locator('input[name="email"]').fill(email);
     }
 
     async enterPassword(text: string, delay = 50) {
-        await this.page.locator('#login_password').fill('');
+        await this.page.locator('input[name="password"]').fill('');
         for (let i = 0; i < text.length; i++) {
-          await this.page.locator('#login_password-label').fill(text.slice(0, i + 1));
+          await this.page.locator('input[name="password"]').fill(text.slice(0, i + 1));
           await new Promise(r => setTimeout(r, delay));
         }
     }

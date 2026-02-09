@@ -58,7 +58,7 @@ export default class SearchbarPage {
     }
 
     get getSearchbarInput() {
-        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] #search_hub_search_input" : "div[data-sentry-element='WebContent'] #search_hub_search_input");
+        return this.page.locator(this.mobile ? "div[data-sentry-element='TabletContent'] input[name='searchQuery']" : "div[data-sentry-element='WebContent'] input[name='searchQuery']");
     }
 
     get getSearchbarCloseButton() {

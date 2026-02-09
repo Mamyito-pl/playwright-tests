@@ -109,7 +109,7 @@ export default class CartPage {
     }
 
     get getProductItemCount() {
-        return this.page.locator(this.mobile ? 'div[data-sentry-element="TabletContent"] div[class*="item_count_button"] div[data-sentry-element="ProductQuantityInput"] div input' : 'div[data-sentry-element="InsideWrapper"] div[class*="item_count_button"] div[data-sentry-element="ProductQuantityInput"] div input').last();;
+        return this.page.locator(this.mobile ? '#cart-drawer-content-tablet div[data-sentry-element="TabletContent"] div[class*="item_count_button"] div input' : '#cart-drawer-content-desktop div[data-sentry-element="InsideWrapper"] div[class*="item_count_button"] div input');
     }
 
     get getCartDrawer() {

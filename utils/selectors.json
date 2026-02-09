@@ -102,7 +102,7 @@
     },
     "Searchbar": {
         "common": {
-            "productSearchAddButton": "div[data-testid='search-results'] div[data-sentry-component='ProductCard'] button:has-text('Dodaj')",
+            "productSearchAddButton": "div[data-testid='search-results'] div[data-sentry-component='ProductCard'] button:has-text('Do koszyka')",
             "searchbarProductPrice": "div[data-sentry-element='HubContent'] div[data-sentry-element='BuyingContent'] p[data-cy='product-card-current-price']"
         }
     },
